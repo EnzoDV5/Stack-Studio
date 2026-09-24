@@ -75,12 +75,12 @@ export function PageTransition({ children, preload, label }: PageTransitionProps
       .timeline()
       .fromTo(
         orange,
-        { yPercent: 100 },
+        { y: 0, yPercent: 100 },
         { yPercent: 0, duration: pageTransition.cover, ease: ease.inOut },
       )
       .fromTo(
         ink,
-        { yPercent: 100 },
+        { y: 0, yPercent: 100 },
         { yPercent: 0, duration: pageTransition.cover, ease: ease.inOut },
         pageTransition.offset,
       )
@@ -138,6 +138,12 @@ export function PageTransition({ children, preload, label }: PageTransitionProps
     scrollToTop()
     focusMain()
   }, [reducedMotion, location.pathname])
+
+  // GSAP would otherwise parse the inline translateY(100%) as a px y and stack yPercent on it.
+  useLayoutEffect(() => {
+    const root = rootRef.current
+    if (root) gsap.set(root.children, { y: 0, yPercent: 100 })
+  }, [])
 
   useEffect(() => {
     const root = rootRef.current

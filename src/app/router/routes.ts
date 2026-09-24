@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react'
 import { matchPath } from 'react-router'
-import { lazyPage, type PreloadableComponent } from '@/lib/lazy-page'
+import { eagerPage, lazyPage, type PreloadableComponent } from '@/lib/lazy-page'
+import { HomePage as Home } from '@/pages/Home'
 
 /**
  * Route table. Every page is its own lazily-loaded chunk. PageTransition calls
@@ -12,10 +13,8 @@ interface AppRoute {
   Page: PreloadableComponent<ComponentType>
 }
 
-const HomePage = lazyPage(
-  () => import('@/pages/Home'),
-  (m) => m.HomePage,
-)
+// Home is the front door (and the LCP page), so it ships in the main bundle; the rest are lazy.
+const HomePage = eagerPage(Home)
 const WorkPage = lazyPage(
   () => import('@/pages/Work'),
   (m) => m.WorkPage,

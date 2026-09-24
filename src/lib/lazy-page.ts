@@ -18,3 +18,10 @@ export function lazyPage<M, T extends ComponentType>(
   const Component = lazy(async () => ({ default: pick(await loadOnce()) }))
   return Object.assign(Component, { preload: loadOnce })
 }
+
+/** Wraps an eagerly imported page so it fits the same route table (preload is a no-op). */
+export function eagerPage<T extends ComponentType>(Component: T): PreloadableComponent<T> {
+  return Object.assign(Component, {
+    preload: () => Promise.resolve(),
+  }) as unknown as PreloadableComponent<T>
+}

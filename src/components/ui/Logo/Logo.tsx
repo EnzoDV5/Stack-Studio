@@ -30,7 +30,7 @@ export function Logo({ variant = 'full', className, title = 'Stack Studio' }: Lo
         <span className="flex items-baseline gap-2" aria-hidden="true">
           <span className="font-display text-[1.15em] font-extrabold tracking-[0.14em] uppercase">
             Stack
-          </span>
+          </span>{' '}
           <span className="font-mono text-[0.62em] tracking-[0.2em] uppercase opacity-70">
             Studio
           </span>

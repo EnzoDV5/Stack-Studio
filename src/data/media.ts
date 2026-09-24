@@ -12,7 +12,7 @@ import type { ImageAsset, VideoAsset } from '@/types'
 function picsum(seed: string, width: number, height: number, alt: string): ImageAsset {
   const url = (w: number) =>
     `https://picsum.photos/seed/${seed}/${w}/${Math.round((w * height) / width)}.webp`
-  const widths = [Math.round(width / 2), width].filter((w, i, all) => all.indexOf(w) === i)
+  const widths = [480, 800, 1200, 1600, 2400].filter((w) => w < width).concat(width)
   return {
     src: url(width),
     srcSet: widths.map((w) => `${url(w)} ${w}w`).join(', '),

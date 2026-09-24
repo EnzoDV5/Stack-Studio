@@ -72,6 +72,7 @@ export function WorkGrid({
                 key={project.slug}
                 project={project}
                 reveal={false}
+                priority={i === 0}
                 headingLevel="h2"
                 ctaLabel={labels.cardCta}
                 cursorLabel={labels.cursor}

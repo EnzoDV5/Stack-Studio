@@ -32,6 +32,10 @@ export function SplitReveal({
   delay = 0,
 }: SplitRevealProps) {
   const ref = useRef<HTMLElement>(null)
+  const splitRef = useRef<HTMLSpanElement>(null)
+  // aria-label is only valid on headings. Elsewhere, split an aria-hidden copy and keep a
+  // visually-hidden plain copy for assistive tech.
+  const isHeading = typeof Tag === 'string' && /^h[1-6]$/.test(Tag)
   const reducedMotion = useReducedMotion()
   const { ready } = useIntro()
 
@@ -46,7 +50,8 @@ export function SplitReveal({
         return
       }
 
-      SplitText.create(el, {
+      SplitText.create(isHeading ? el : (splitRef.current ?? el), {
+        aria: isHeading ? 'auto' : 'none',
         type: type === 'lines' ? 'lines' : 'words,lines',
         mask: type,
         linesClass: 'split-line',
@@ -70,14 +75,23 @@ export function SplitReveal({
     },
     {
       scope: ref,
-      dependencies: [reducedMotion, ready, trigger, type, delay],
+      dependencies: [reducedMotion, ready, trigger, type, delay, isHeading],
       revertOnUpdate: true,
     },
   )
 
   return (
     <Tag ref={ref} id={id} className={cn(className)}>
-      {children}
+      {isHeading || reducedMotion ? (
+        children
+      ) : (
+        <>
+          <span className="visually-hidden">{children}</span>
+          <span ref={splitRef} aria-hidden="true" className="block">
+            {children}
+          </span>
+        </>
+      )}
     </Tag>
   )
 }

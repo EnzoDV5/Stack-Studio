@@ -18,6 +18,8 @@ export interface ProjectCardProps {
   /** Reveal the media with a mask on scroll. */
   reveal?: boolean
   headingLevel?: 'h2' | 'h3'
+  /** Above-the-fold card (LCP): load the image eagerly. */
+  priority?: boolean
   className?: string
 }
 
@@ -33,6 +35,7 @@ export function ProjectCard({
   variant = 'grid',
   reveal = true,
   headingLevel: H = 'h3',
+  priority = false,
   className,
 }: ProjectCardProps) {
   const [hovering, setHovering] = useState(false)
@@ -43,6 +46,7 @@ export function ProjectCard({
     <div className="relative size-full overflow-hidden bg-ink-700">
       <Image
         image={project.thumbnail}
+        priority={priority}
         sizes={
           variant === 'feature'
             ? '(min-width: 1024px) 60vw, 100vw'
