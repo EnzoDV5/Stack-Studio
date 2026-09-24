@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="color-scheme" content="dark light" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!--
+      Static fallbacks for crawlers and link-preview bots that don't run JavaScript.
+      They are removed on boot (src/main.tsx) and React 19 renders per-page tags instead.
+      COPY: keep in sync with src/data/site.ts and src/data/pages.ts (home).
+    -->
+    <title data-static-meta>Stack Studio — Brand-led websites, built to convert</title>
+    <meta data-static-meta name="description" content="Stack Studio is a two-person web studio in Centurion, South Africa, building brand-led, cinematic websites and digital products for small businesses and NPOs." />
+    <meta data-static-meta property="og:type" content="website" />
+    <meta data-static-meta property="og:site_name" content="Stack Studio" />
+    <meta data-static-meta property="og:title" content="Stack Studio — Brand-led websites, built to convert" />
+    <meta data-static-meta property="og:description" content="Brand-led, cinematic websites and digital products for small businesses and NPOs. Centurion, South Africa." />
+    <meta data-static-meta property="og:image" content="https://stackstudio.co.za/og-image.png" />
+    <meta data-static-meta property="og:url" content="https://stackstudio.co.za/" />
+    <meta data-static-meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="padding: 2rem; font-family: system-ui, sans-serif; background: #0a0a0a; color: #f4f0ea">
+        Stack Studio needs JavaScript for this site. Email us at hello@stackstudio.co.za.
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
