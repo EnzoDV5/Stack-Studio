@@ -51,7 +51,11 @@ export function Preloader({ label }: PreloaderProps) {
           },
           0,
         )
-        .to('[data-preloader-bar]', { scaleX: 1, duration: preloader.count, ease: 'power2.inOut' }, 0)
+        .to(
+          '[data-preloader-bar]',
+          { scaleX: 1, duration: preloader.count, ease: 'power2.inOut' },
+          0,
+        )
         .add(() => markPreloaderDone())
         .to(rootRef.current, {
           yPercent: -100,
@@ -70,7 +74,7 @@ export function Preloader({ label }: PreloaderProps) {
       role="status"
       aria-live="polite"
       aria-label={label}
-      className="tone-dark fixed inset-0 z-(--z-preloader) flex flex-col justify-between"
+      className="fixed inset-0 z-(--z-preloader) flex flex-col justify-between tone-dark"
     >
       <GridOverlay fade="radial" />
       <div className="relative flex flex-1 items-center justify-center">
@@ -80,9 +84,9 @@ export function Preloader({ label }: PreloaderProps) {
           </div>
         </div>
       </div>
-      <div className="container-site relative flex items-end justify-between pb-8">
+      <div className="relative container-site flex items-end justify-between pb-8">
         <span className="eyebrow text-muted">{label}</span>
-        <span className="numeric font-mono text-heading-lg" aria-hidden="true">
+        <span className="font-mono numeric text-heading-lg" aria-hidden="true">
           <span ref={countRef}>0</span>
         </span>
       </div>

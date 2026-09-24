@@ -24,8 +24,14 @@ function CursorInner() {
 
       document.documentElement.classList.add('has-custom-cursor')
 
-      const ringX = gsap.quickTo(ring, 'x', { duration: cursorTokens.follow, ease: cursorTokens.followEase })
-      const ringY = gsap.quickTo(ring, 'y', { duration: cursorTokens.follow, ease: cursorTokens.followEase })
+      const ringX = gsap.quickTo(ring, 'x', {
+        duration: cursorTokens.follow,
+        ease: cursorTokens.followEase,
+      })
+      const ringY = gsap.quickTo(ring, 'y', {
+        duration: cursorTokens.follow,
+        ease: cursorTokens.followEase,
+      })
       const dotX = gsap.quickTo(dot, 'x', { duration: duration.micro / 2, ease: 'none' })
       const dotY = gsap.quickTo(dot, 'y', { duration: duration.micro / 2, ease: 'none' })
 

@@ -218,18 +218,58 @@ export const addOns: AddOn[] = [
 
 /* ---------- Brief options that feed the estimator ---------- */
 export const scopeOptions: ScopeOption[] = [
-  { id: 'single', label: 'One page', description: 'Everything on a single scrolling page', pages: 1 }, // COPY:
-  { id: 'small', label: 'Up to 5 pages', description: 'Home, about, services, work, contact', pages: 5 }, // COPY:
-  { id: 'medium', label: '6–10 pages', description: 'More services, case studies or locations', pages: 10 }, // COPY:
-  { id: 'large', label: '10+ pages', description: 'Large content, many sections or products', pages: 15 }, // COPY:
+  {
+    id: 'single',
+    label: 'One page',
+    description: 'Everything on a single scrolling page',
+    pages: 1,
+  }, // COPY:
+  {
+    id: 'small',
+    label: 'Up to 5 pages',
+    description: 'Home, about, services, work, contact',
+    pages: 5,
+  }, // COPY:
+  {
+    id: 'medium',
+    label: '6–10 pages',
+    description: 'More services, case studies or locations',
+    pages: 10,
+  }, // COPY:
+  {
+    id: 'large',
+    label: '10+ pages',
+    description: 'Large content, many sections or products',
+    pages: 15,
+  }, // COPY:
   { id: 'unsure', label: 'Not sure yet', description: 'We’ll work it out together', pages: 0 }, // COPY:
 ]
 
 export const timelineOptions: TimelineOption[] = [
-  { id: 'flexible', label: 'Flexible', description: 'No rush, 3+ months is fine', multiplier: 0.95 }, // COPY:
-  { id: 'standard', label: 'In the next 2–3 months', description: 'A normal project pace', multiplier: 1 }, // COPY:
-  { id: 'soon', label: 'Within 6 weeks', description: 'We’ll prioritise your project', multiplier: 1.15 }, // COPY:
-  { id: 'urgent', label: 'ASAP', description: 'Rush delivery with a dedicated schedule', multiplier: 1.3 }, // COPY:
+  {
+    id: 'flexible',
+    label: 'Flexible',
+    description: 'No rush, 3+ months is fine',
+    multiplier: 0.95,
+  }, // COPY:
+  {
+    id: 'standard',
+    label: 'In the next 2–3 months',
+    description: 'A normal project pace',
+    multiplier: 1,
+  }, // COPY:
+  {
+    id: 'soon',
+    label: 'Within 6 weeks',
+    description: 'We’ll prioritise your project',
+    multiplier: 1.15,
+  }, // COPY:
+  {
+    id: 'urgent',
+    label: 'ASAP',
+    description: 'Rush delivery with a dedicated schedule',
+    multiplier: 1.3,
+  }, // COPY:
 ]
 
 export const budgetRanges: BudgetRange[] = [

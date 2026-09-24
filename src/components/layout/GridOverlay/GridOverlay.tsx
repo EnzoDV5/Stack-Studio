@@ -18,5 +18,7 @@ const fadeClass: Record<GridFade, string | undefined> = {
 
 /** The subtle square grid-line motif. Line colour follows the section tone (--grid-line). */
 export function GridOverlay({ fade = 'edges', className }: GridOverlayProps) {
-  return <div aria-hidden="true" className={cn(styles.grid, 'bg-grid', fadeClass[fade], className)} />
+  return (
+    <div aria-hidden="true" className={cn(styles.grid, 'bg-grid', fadeClass[fade], className)} />
+  )
 }

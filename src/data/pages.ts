@@ -43,7 +43,8 @@ export const pageMeta = {
   },
   privacy: {
     title: 'Privacy notice', // COPY:
-    description: 'How Stack Studio collects, uses and protects your personal information under POPIA.', // COPY:
+    description:
+      'How Stack Studio collects, uses and protects your personal information under POPIA.', // COPY:
     path: '/privacy',
   },
   notFound: {
@@ -93,7 +94,8 @@ export const homeContent = {
   services: {
     eyebrow: 'Services', // COPY:
     title: 'What we build.', // COPY:
-    intro: 'Design and development under one roof, from first sketch to the site that keeps improving.', // COPY:
+    intro:
+      'Design and development under one roof, from first sketch to the site that keeps improving.', // COPY:
     fromLabel: 'From', // COPY:
     startLabel: 'Start with this', // COPY:
     detailsLabel: 'Service details', // COPY:
@@ -109,7 +111,8 @@ export const homeContent = {
   pricing: {
     eyebrow: 'Pricing', // COPY:
     title: 'Starting points, not hidden prices.', // COPY:
-    intro: 'Every project is quoted properly, but you should know roughly where you stand before we talk.', // COPY:
+    intro:
+      'Every project is quoted properly, but you should know roughly where you stand before we talk.', // COPY:
     fromLabel: 'From', // COPY:
     monthly: {
       eyebrow: 'After launch', // COPY:
@@ -134,7 +137,8 @@ export const workContent = {
   hero: {
     eyebrow: 'Work', // COPY:
     title: 'What we’ve built.', // COPY:
-    intro: 'Real projects for real businesses. Each case study shows the problem, the approach, the build and the result.', // COPY:
+    intro:
+      'Real projects for real businesses. Each case study shows the problem, the approach, the build and the result.', // COPY:
   } satisfies PageHeroContent,
   filterLabel: 'Filter projects', // COPY:
   allLabel: 'All', // COPY:
@@ -201,7 +205,8 @@ export const pricingContent = {
   hero: {
     eyebrow: 'Pricing', // COPY:
     title: 'Transparent pricing. No surprises.', // COPY:
-    intro: 'Two ways to work with us: a once-off build, and a monthly plan that keeps it running and improving.', // COPY:
+    intro:
+      'Two ways to work with us: a once-off build, and a monthly plan that keeps it running and improving.', // COPY:
   } satisfies PageHeroContent,
   models: {
     project: {
@@ -227,6 +232,8 @@ export const pricingContent = {
     title: 'Extras, when you need them.', // COPY:
     onceLabel: 'once-off', // COPY:
     monthlyLabel: '/month', // COPY:
+    nameLabel: 'Add-on', // COPY:
+    priceLabel: 'Price', // COPY:
   },
   estimator: {
     eyebrow: 'Not sure which fits?', // COPY:
@@ -246,7 +253,8 @@ export const studioContent = {
   hero: {
     eyebrow: 'Studio', // COPY:
     title: 'A small studio with big standards.', // COPY:
-    intro: 'Stack Studio was founded in Centurion to give growing businesses and NPOs a digital presence as serious as the work they do.', // COPY:
+    intro:
+      'Stack Studio was founded in Centurion to give growing businesses and NPOs a digital presence as serious as the work they do.', // COPY:
   } satisfies PageHeroContent,
   intro: {
     eyebrow: 'Who we are', // COPY:
@@ -260,6 +268,7 @@ export const studioContent = {
     eyebrow: 'Founders', // COPY:
     title: 'The people you’ll work with.', // COPY:
   } satisfies SectionIntro,
+  linkedinLabel: 'LinkedIn', // COPY:
   howWeWork: {
     eyebrow: 'How we work', // COPY:
     title: 'Small on purpose.', // COPY:
@@ -284,7 +293,8 @@ export const privacyContent = {
   hero: {
     eyebrow: 'Privacy · POPIA', // COPY:
     title: 'Your information, handled properly.', // COPY:
-    intro: 'This notice explains what we collect when you contact us or send a brief, why we collect it and what your rights are under the Protection of Personal Information Act (POPIA).', // COPY:
+    intro:
+      'This notice explains what we collect when you contact us or send a brief, why we collect it and what your rights are under the Protection of Personal Information Act (POPIA).', // COPY:
   } satisfies PageHeroContent,
   updated: 'Last updated: September 2026 · PLACEHOLDER: have this reviewed before launch', // COPY:
   sections: [

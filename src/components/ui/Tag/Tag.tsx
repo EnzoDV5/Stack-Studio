@@ -19,7 +19,13 @@ const variants = {
   accent: 'border-transparent bg-orange text-ink',
 } as const
 
-export function Tag({ children, variant = 'outline', onClick, active = false, className }: TagProps) {
+export function Tag({
+  children,
+  variant = 'outline',
+  onClick,
+  active = false,
+  className,
+}: TagProps) {
   if (onClick) {
     return (
       <button

@@ -22,12 +22,15 @@ export function Testimonial({ testimonial, eyebrow, tone = 'paper' }: Testimonia
       <figure className="container-site grid gap-10 lg:grid-cols-12">
         <div className="lg:col-span-2">
           {eyebrow && <Eyebrow label={eyebrow} />}
-          <span aria-hidden="true" className="mt-6 block font-display text-[6rem] leading-none text-accent">
+          <span
+            aria-hidden="true"
+            className="mt-6 block font-display text-[6rem] leading-none text-accent"
+          >
             “
           </span>
         </div>
         <blockquote className="lg:col-span-9">
-          <SplitReveal className="text-heading-xl font-display lg:text-[clamp(2rem,1rem+2.6vw,3.75rem)]">
+          <SplitReveal className="font-display text-heading-xl lg:text-[clamp(2rem,1rem+2.6vw,3.75rem)]">
             {testimonial.quote}
           </SplitReveal>
         </blockquote>

@@ -21,7 +21,7 @@ export function ClosingCta({ content, location, tone = 'orange', secondary }: Cl
     <Section tone={tone} grid="radial" className="overflow-hidden">
       <div className="container-site">
         {content.eyebrow && <Eyebrow label={content.eyebrow} className="mb-10" />}
-        <SplitReveal as="h2" type="words" className="max-w-[13ch] text-display-2xl font-display">
+        <SplitReveal as="h2" type="words" className="max-w-[13ch] font-display text-display-2xl">
           {content.title}
         </SplitReveal>
         <div className="mt-14 flex flex-col gap-10 border-t border-tone pt-10 md:flex-row md:items-center md:justify-between">

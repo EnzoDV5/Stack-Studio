@@ -22,7 +22,16 @@ export interface HomeHeroProps {
  * Full-viewport opener: the statement rises line by line over the showreel as the
  * preloader lifts. The magnetic Start a project button is in view from the first second.
  */
-export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, meta, scrollLabel, video }: HomeHeroProps) {
+export function HomeHero({
+  eyebrow,
+  title,
+  intro,
+  cta,
+  secondaryCta,
+  meta,
+  scrollLabel,
+  video,
+}: HomeHeroProps) {
   return (
     <Section
       tone="dark"
@@ -41,7 +50,7 @@ export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, meta, scrol
         <SplitReveal
           as="h1"
           trigger="intro"
-          className="mt-6 max-w-[11ch] text-display-2xl font-display text-paper"
+          className="mt-6 max-w-[11ch] font-display text-display-2xl text-paper"
         >
           {title}
         </SplitReveal>
@@ -71,7 +80,10 @@ export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, meta, scrol
           </dl>
         </div>
 
-        <p aria-hidden="true" className="eyebrow mt-10 hidden items-center gap-3 text-grey-400 md:flex">
+        <p
+          aria-hidden="true"
+          className="mt-10 hidden items-center gap-3 eyebrow text-grey-400 md:flex"
+        >
           <span className="block h-8 w-px bg-orange" />
           {scrollLabel}
         </p>

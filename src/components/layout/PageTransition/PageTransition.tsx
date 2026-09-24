@@ -73,7 +73,11 @@ export function PageTransition({ children, preload, label }: PageTransitionProps
 
     const tl = gsap
       .timeline()
-      .fromTo(orange, { yPercent: 100 }, { yPercent: 0, duration: pageTransition.cover, ease: ease.inOut })
+      .fromTo(
+        orange,
+        { yPercent: 100 },
+        { yPercent: 0, duration: pageTransition.cover, ease: ease.inOut },
+      )
       .fromTo(
         ink,
         { yPercent: 100 },

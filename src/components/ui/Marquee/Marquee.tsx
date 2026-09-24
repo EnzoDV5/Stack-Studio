@@ -30,7 +30,12 @@ export function Marquee({
   const style = { '--marquee-duration': `${duration}s`, '--marquee-gap': gap } as CSSProperties
   return (
     <div
-      className={cn(styles.marquee, reverse && styles.reverse, pauseOnHover && styles.pausable, className)}
+      className={cn(
+        styles.marquee,
+        reverse && styles.reverse,
+        pauseOnHover && styles.pausable,
+        className,
+      )}
       style={style}
       role={ariaLabel ? 'region' : undefined}
       aria-label={ariaLabel}

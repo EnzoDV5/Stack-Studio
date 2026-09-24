@@ -15,8 +15,8 @@ export interface EyebrowProps {
 /** Mono, uppercase, letter-spaced section label, e.g. "01 · WORK". */
 export function Eyebrow({ label, index, as: Tag = 'p', marker = true, className }: EyebrowProps) {
   return (
-    <Tag className={cn('eyebrow flex items-center gap-3 text-muted', className)}>
-      {marker && <span aria-hidden="true" className="bg-marker size-1.5 shrink-0" />}
+    <Tag className={cn('flex items-center gap-3 eyebrow text-muted', className)}>
+      {marker && <span aria-hidden="true" className="size-1.5 shrink-0 bg-marker" />}
       {index !== undefined && (
         <>
           <span className="text-accent">{pad2(index)}</span>

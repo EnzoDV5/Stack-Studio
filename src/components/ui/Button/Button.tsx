@@ -1,9 +1,4 @@
-import type {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  MouseEvent,
-  ReactNode,
-} from 'react'
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react'
 import { Link, type LinkProps } from 'react-router'
 import { trackEvent, type AnalyticsEvent, type AnalyticsProps } from '@/lib/analytics'
 import { cn } from '@/lib/cn'

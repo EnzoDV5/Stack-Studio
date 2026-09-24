@@ -68,7 +68,11 @@ export function SplitReveal({
         },
       })
     },
-    { scope: ref, dependencies: [reducedMotion, ready, trigger, type, delay], revertOnUpdate: true },
+    {
+      scope: ref,
+      dependencies: [reducedMotion, ready, trigger, type, delay],
+      revertOnUpdate: true,
+    },
   )
 
   return (

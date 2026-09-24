@@ -1,16 +1,39 @@
-import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
-import { pageMeta } from '@/data/pages'
+import { faqsFor } from '@/data/faqs'
+import { homeContent, pageMeta, servicesContent } from '@/data/pages'
+import { monthlyPlans, projectPackages } from '@/data/pricing'
+import { processSteps } from '@/data/process'
+import { services } from '@/data/services'
+import { ServiceDetails } from '@/sections/services/ServiceDetails'
+import { FaqSection } from '@/sections/shared/FaqSection'
+import { PageHero } from '@/sections/shared/PageHero'
+import { ProcessPinned } from '@/sections/shared/ProcessPinned'
+
+const lowestMonthly = Math.min(...monthlyPlans.map((p) => p.pricePerMonth))
 
 export function ServicesPage() {
+  const items = services.map((service) => ({
+    ...service,
+    fromPrice: projectPackages.find((p) => p.id === service.pricePackageId)?.fromPrice,
+    monthlyFrom: service.id === 'care' ? lowestMonthly : undefined,
+  }))
+
   return (
     <>
       <PageMeta {...pageMeta.services} />
-      <Section tone="dark" grid className="min-h-screen pt-40">
-        <div className="container-site">
-          <h1 className="text-display-xl">{pageMeta.services.title}</h1>
-        </div>
-      </Section>
+      <PageHero content={servicesContent.hero} />
+      <ServiceDetails services={items} labels={servicesContent.detailLabels} />
+      <ProcessPinned
+        tone="dark"
+        intro={{
+          eyebrow: homeContent.process.eyebrow,
+          title: homeContent.process.title,
+          intro: homeContent.process.intro,
+        }}
+        steps={processSteps}
+        stepLabel={homeContent.process.stepLabel}
+      />
+      <FaqSection intro={servicesContent.faq} faqs={faqsFor('general', 'services', 'process')} />
     </>
   )
 }

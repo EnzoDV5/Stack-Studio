@@ -39,11 +39,7 @@ export function Accordion({
 
   const toggle = (id: string) =>
     setOpen((current) =>
-      current.includes(id)
-        ? current.filter((x) => x !== id)
-        : multiple
-          ? [...current, id]
-          : [id],
+      current.includes(id) ? current.filter((x) => x !== id) : multiple ? [...current, id] : [id],
     )
 
   return (
@@ -64,7 +60,7 @@ export function Accordion({
                 onClick={() => toggle(item.id)}
               >
                 {numbered && (
-                  <span className="eyebrow w-8 shrink-0 text-accent">{pad2(i + 1)}</span>
+                  <span className="w-8 shrink-0 eyebrow text-accent">{pad2(i + 1)}</span>
                 )}
                 <span className={cn(titleClassName, 'flex-1')}>{item.title}</span>
                 {item.meta && (

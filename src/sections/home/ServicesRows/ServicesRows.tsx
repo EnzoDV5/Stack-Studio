@@ -44,7 +44,9 @@ export function ServicesRows({
           items={services.map((service) => ({
             id: service.id,
             title: service.name,
-            meta: service.fromPrice ? `${labels.from} ${formatPrice(service.fromPrice)}` : undefined,
+            meta: service.fromPrice
+              ? `${labels.from} ${formatPrice(service.fromPrice)}`
+              : undefined,
             content: (
               <div className="grid gap-10 md:grid-cols-12">
                 <div className="md:col-span-5">
@@ -52,7 +54,7 @@ export function ServicesRows({
                   <p className="mt-4 text-muted">{service.description[0]}</p>
                 </div>
                 <div className="md:col-span-4">
-                  <p className="eyebrow mb-4 text-muted">{labels.deliverables}</p>
+                  <p className="mb-4 eyebrow text-muted">{labels.deliverables}</p>
                   <ul className="space-y-2">
                     {service.deliverables.map((item) => (
                       <li key={item} className="flex gap-3">
@@ -64,7 +66,7 @@ export function ServicesRows({
                 </div>
                 <div className="flex flex-col items-start gap-6 md:col-span-3">
                   <div>
-                    <p className="eyebrow mb-2 text-muted">{labels.timeline}</p>
+                    <p className="mb-2 eyebrow text-muted">{labels.timeline}</p>
                     <p>{service.timeline}</p>
                   </div>
                   <Button

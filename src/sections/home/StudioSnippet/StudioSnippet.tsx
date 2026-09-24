@@ -19,7 +19,15 @@ export interface StudioSnippetProps {
 }
 
 /** The two founders, with portraits drifting slightly on scroll (parallax). */
-export function StudioSnippet({ index, eyebrow, title, body, founders, cta, tone = 'paper' }: StudioSnippetProps) {
+export function StudioSnippet({
+  index,
+  eyebrow,
+  title,
+  body,
+  founders,
+  cta,
+  tone = 'paper',
+}: StudioSnippetProps) {
   const headingId = useId()
   return (
     <Section tone={tone} aria-labelledby={headingId}>

@@ -22,7 +22,13 @@ export interface ProcessPinnedProps {
  * on the right and light up as they reach the middle of the viewport. On mobile it's a
  * plain stacked list.
  */
-export function ProcessPinned({ intro, steps, stepLabel, index, tone = 'paper' }: ProcessPinnedProps) {
+export function ProcessPinned({
+  intro,
+  steps,
+  stepLabel,
+  index,
+  tone = 'paper',
+}: ProcessPinnedProps) {
   const rootRef = useRef<HTMLDivElement>(null)
   const headingId = useId()
   const [active, setActive] = useState(0)
@@ -58,12 +64,18 @@ export function ProcessPinned({ intro, steps, stepLabel, index, tone = 'paper' }
             <Heading id={headingId} size="display-lg" className="max-w-[12ch]">
               {intro.title}
             </Heading>
-            {intro.intro && <p className="mt-6 max-w-[40ch] text-body-lg text-muted">{intro.intro}</p>}
+            {intro.intro && (
+              <p className="mt-6 max-w-[40ch] text-body-lg text-muted">{intro.intro}</p>
+            )}
 
             <div className="mt-16 hidden lg:block" aria-hidden="true">
               <div className="flex items-end gap-4">
-                <span className="numeric font-display text-display-xl text-accent">{pad2(active + 1)}</span>
-                <span className="numeric pb-3 font-mono text-small text-muted">/ {pad2(steps.length)}</span>
+                <span className="font-display numeric text-display-xl text-accent">
+                  {pad2(active + 1)}
+                </span>
+                <span className="pb-3 font-mono numeric text-small text-muted">
+                  / {pad2(steps.length)}
+                </span>
               </div>
               <p className="mt-3 text-heading-md">{current?.title}</p>
               <div className="mt-6 h-px w-full max-w-sm bg-(--tone-border)">

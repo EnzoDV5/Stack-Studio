@@ -62,7 +62,12 @@ export const media = {
         1600,
         1200,
       ),
-      hero: picsum('stack-gc-solar-hero', 2400, 1350, 'GC Solar homepage hero with rooftop solar installation'), // COPY: alt
+      hero: picsum(
+        'stack-gc-solar-hero',
+        2400,
+        1350,
+        'GC Solar homepage hero with rooftop solar installation',
+      ), // COPY: alt
       heroVideo: video(
         'gc-solar-hero.mp4',
         'GC Solar website walkthrough', // COPY:
@@ -86,7 +91,12 @@ export const media = {
         1600,
         1200,
       ),
-      hero: picsum('stack-mpg-hero', 2400, 1350, 'MPG Foundation homepage with community programme imagery'), // COPY: alt
+      hero: picsum(
+        'stack-mpg-hero',
+        2400,
+        1350,
+        'MPG Foundation homepage with community programme imagery',
+      ), // COPY: alt
       heroVideo: video(
         'mpg-foundation-hero.mp4',
         'MPG Foundation website walkthrough', // COPY:
@@ -125,7 +135,12 @@ export const media = {
   },
 
   studio: {
-    workspace: picsum('stack-studio-workspace', 2400, 1350, 'The Stack Studio workspace in Centurion'), // COPY: alt
+    workspace: picsum(
+      'stack-studio-workspace',
+      2400,
+      1350,
+      'The Stack Studio workspace in Centurion',
+    ), // COPY: alt
     detail: picsum('stack-studio-detail', 1200, 1500, 'Wireframes and sketches on a desk'), // COPY: alt
   },
 } as const

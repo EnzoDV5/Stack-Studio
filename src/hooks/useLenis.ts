@@ -1,10 +1,4 @@
-import {
-  getLenis,
-  lockScroll,
-  scrollToElement,
-  scrollToTop,
-  unlockScroll,
-} from '@/lib/lenis'
+import { getLenis, lockScroll, scrollToElement, scrollToTop, unlockScroll } from '@/lib/lenis'
 
 const controls = {
   /** The live instance, or null with reduced motion (native scroll). Call inside handlers, not render. */

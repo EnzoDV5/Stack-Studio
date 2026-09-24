@@ -104,7 +104,7 @@ export function MobileMenu({
     >
       <div className="relative flex min-h-full flex-col">
         <GridOverlay fade="radial" />
-        <div className="container-site relative flex h-(--spacing-header) items-center justify-between">
+        <div className="relative container-site flex h-(--spacing-header) items-center justify-between">
           <Logo title="" />
           <button
             type="button"
@@ -115,7 +115,7 @@ export function MobileMenu({
           </button>
         </div>
 
-        <nav aria-label={label} className="container-site relative mt-8 flex-1">
+        <nav aria-label={label} className="relative container-site mt-8 flex-1">
           <ul>
             {items.map((item, i) => (
               <li key={item.to} className="overflow-hidden">
@@ -133,7 +133,7 @@ export function MobileMenu({
           </ul>
         </nav>
 
-        <div className="container-site relative flex flex-col gap-8 pt-10 pb-10">
+        <div className="relative container-site flex flex-col gap-8 pt-10 pb-10">
           <div data-menu-item="">
             <Button
               to={cta.to}
@@ -146,7 +146,10 @@ export function MobileMenu({
               {cta.label}
             </Button>
           </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-3 text-small text-grey-300" data-menu-item="">
+          <div
+            className="flex flex-wrap gap-x-6 gap-y-3 text-small text-grey-300"
+            data-menu-item=""
+          >
             <TextLink href={`mailto:${email}`}>{email}</TextLink>
             {socials.map((social) => (
               <TextLink key={social.id} href={social.href} variant="quiet">

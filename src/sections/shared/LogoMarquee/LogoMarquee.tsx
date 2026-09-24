@@ -15,7 +15,7 @@ export interface LogoMarqueeProps {
 export function LogoMarquee({ label, clients, tone = 'dark' }: LogoMarqueeProps) {
   return (
     <Section tone={tone} spacing="none" className="border-y border-tone py-10" aria-label={label}>
-      <p className="eyebrow container-site mb-8 text-center text-muted">{label}</p>
+      <p className="container-site mb-8 text-center eyebrow text-muted">{label}</p>
       <Marquee gap="3.5rem">
         {clients.map((client) => (
           <div key={client.id} className="flex items-center gap-14">

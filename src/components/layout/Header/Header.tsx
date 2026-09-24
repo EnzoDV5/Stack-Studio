@@ -71,7 +71,9 @@ export function Header({ nav, cta, homeLabel, menuLabel, menuOpenLabel, menu }: 
                 <li key={item.to}>
                   <NavLink
                     to={item.to}
-                    className={({ isActive }) => cn(styles.navLink, 'text-small', isActive && styles.active)}
+                    className={({ isActive }) =>
+                      cn(styles.navLink, 'text-small', isActive && styles.active)
+                    }
                   >
                     {item.label}
                   </NavLink>

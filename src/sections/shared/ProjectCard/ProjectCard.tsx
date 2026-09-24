@@ -43,7 +43,11 @@ export function ProjectCard({
     <div className="relative size-full overflow-hidden bg-ink-700">
       <Image
         image={project.thumbnail}
-        sizes={variant === 'feature' ? '(min-width: 1024px) 60vw, 100vw' : '(min-width: 768px) 50vw, 100vw'}
+        sizes={
+          variant === 'feature'
+            ? '(min-width: 1024px) 60vw, 100vw'
+            : '(min-width: 768px) 50vw, 100vw'
+        }
         className="group-hover:scale-[1.04]"
       />
       {showPreview && project.preview && (
@@ -82,7 +86,7 @@ export function ProjectCard({
             </H>
             <p className="mt-2 max-w-[48ch] text-muted">{project.summary}</p>
           </div>
-          <span className="eyebrow numeric shrink-0 pt-2 text-muted">{project.year}</span>
+          <span className="shrink-0 pt-2 eyebrow numeric text-muted">{project.year}</span>
         </div>
 
         <div className="mt-5 flex flex-wrap items-center gap-2">

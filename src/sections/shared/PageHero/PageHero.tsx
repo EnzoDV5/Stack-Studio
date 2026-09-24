@@ -23,7 +23,7 @@ export function PageHero({ content, tone = 'dark', children }: PageHeroProps) {
     >
       <div className="container-site">
         <Eyebrow label={content.eyebrow} className="mb-8" />
-        <SplitReveal as="h1" trigger="intro" className="max-w-[14ch] text-display-xl font-display">
+        <SplitReveal as="h1" trigger="intro" className="max-w-[14ch] font-display text-display-xl">
           {content.title}
         </SplitReveal>
         <div className="mt-10 grid gap-8 lg:grid-cols-12">

@@ -12,15 +12,42 @@ interface AppRoute {
   Page: PreloadableComponent<ComponentType>
 }
 
-const HomePage = lazyPage(() => import('@/pages/Home'), (m) => m.HomePage)
-const WorkPage = lazyPage(() => import('@/pages/Work'), (m) => m.WorkPage)
-const CaseStudyPage = lazyPage(() => import('@/pages/CaseStudy'), (m) => m.CaseStudyPage)
-const ServicesPage = lazyPage(() => import('@/pages/Services'), (m) => m.ServicesPage)
-const PricingPage = lazyPage(() => import('@/pages/Pricing'), (m) => m.PricingPage)
-const StudioPage = lazyPage(() => import('@/pages/Studio'), (m) => m.StudioPage)
-const StartPage = lazyPage(() => import('@/pages/Start'), (m) => m.StartPage)
-const PrivacyPage = lazyPage(() => import('@/pages/Privacy'), (m) => m.PrivacyPage)
-const NotFoundPage = lazyPage(() => import('@/pages/NotFound'), (m) => m.NotFoundPage)
+const HomePage = lazyPage(
+  () => import('@/pages/Home'),
+  (m) => m.HomePage,
+)
+const WorkPage = lazyPage(
+  () => import('@/pages/Work'),
+  (m) => m.WorkPage,
+)
+const CaseStudyPage = lazyPage(
+  () => import('@/pages/CaseStudy'),
+  (m) => m.CaseStudyPage,
+)
+const ServicesPage = lazyPage(
+  () => import('@/pages/Services'),
+  (m) => m.ServicesPage,
+)
+const PricingPage = lazyPage(
+  () => import('@/pages/Pricing'),
+  (m) => m.PricingPage,
+)
+const StudioPage = lazyPage(
+  () => import('@/pages/Studio'),
+  (m) => m.StudioPage,
+)
+const StartPage = lazyPage(
+  () => import('@/pages/Start'),
+  (m) => m.StartPage,
+)
+const PrivacyPage = lazyPage(
+  () => import('@/pages/Privacy'),
+  (m) => m.PrivacyPage,
+)
+const NotFoundPage = lazyPage(
+  () => import('@/pages/NotFound'),
+  (m) => m.NotFoundPage,
+)
 
 export const appRoutes: AppRoute[] = [
   { path: '/', Page: HomePage },

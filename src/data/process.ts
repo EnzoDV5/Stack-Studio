@@ -5,7 +5,8 @@ export const processSteps: ProcessStep[] = [
     id: 'discover',
     title: 'Discover', // COPY:
     duration: 'Week 1', // COPY:
-    summary: 'A short call and a structured brief, so we understand the business, not just the website.', // COPY:
+    summary:
+      'A short call and a structured brief, so we understand the business, not just the website.', // COPY:
     points: ['Goals and audience', 'What exists today', 'Fixed quote and timeline'], // COPY:
   },
   {
@@ -40,7 +41,8 @@ export const processSteps: ProcessStep[] = [
     id: 'care',
     title: 'Care', // COPY:
     duration: 'Ongoing', // COPY:
-    summary: 'Hosting, updates and monthly improvements, so the site keeps working as hard as you do.', // COPY:
+    summary:
+      'Hosting, updates and monthly improvements, so the site keeps working as hard as you do.', // COPY:
     points: ['Hosting and backups', 'Monthly edits', 'Growth reporting'], // COPY:
   },
 ]

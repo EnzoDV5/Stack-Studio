@@ -69,8 +69,10 @@ export function PricingTeaser({
                 <p className="mt-2 text-small text-muted">{pkg.bestFor}</p>
               </div>
               <p className="mt-auto">
-                <span className="eyebrow block text-muted">{fromLabel}</span>
-                <span className="numeric mt-1 block text-heading-xl">{formatPrice(pkg.fromPrice)}</span>
+                <span className="block eyebrow text-muted">{fromLabel}</span>
+                <span className="mt-1 block numeric text-heading-xl">
+                  {formatPrice(pkg.fromPrice)}
+                </span>
               </p>
             </li>
           ))}
@@ -83,7 +85,7 @@ export function PricingTeaser({
             <p className="mt-3 text-muted">{monthly.body}</p>
           </div>
           <p className="lg:col-span-3 lg:col-start-10 lg:text-right">
-            <span className="eyebrow block text-muted">{monthly.fromLabel}</span>
+            <span className="block eyebrow text-muted">{monthly.fromLabel}</span>
             <span className="numeric text-display-lg">{formatPrice(monthly.fromPrice)}</span>
             <span className="text-muted">{monthly.perMonth}</span>
           </p>
