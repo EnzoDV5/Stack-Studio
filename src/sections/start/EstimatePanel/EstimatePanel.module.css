@@ -1,0 +1,24 @@
+@layer components {
+  /* The total ticks up into place whenever it changes (keyed remount). */
+  .tick {
+    display: inline-block;
+    animation: tick var(--duration-fast) var(--ease-out-expo);
+  }
+
+  @keyframes tick {
+    from {
+      opacity: 0;
+      transform: translateY(0.35em);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tick {
+      animation: none;
+    }
+  }
+}
