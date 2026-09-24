@@ -1,0 +1,53 @@
+.marquee {
+  --marquee-duration: 38s;
+  --marquee-gap: 1rem;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  gap: var(--marquee-gap);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.track {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 100%;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--marquee-gap);
+  animation: scroll var(--marquee-duration) linear infinite;
+}
+
+.reverse .track {
+  animation-direction: reverse;
+}
+
+@media (hover: hover) {
+  .pausable:hover .track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes scroll {
+  to {
+    transform: translateX(calc(-100% - var(--marquee-gap)));
+  }
+}
+
+/* Reduced motion: static, wrapped, no duplicate. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    mask-image: none;
+    flex-wrap: wrap;
+  }
+
+  .track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .track[aria-hidden='true'] {
+    display: none;
+  }
+}

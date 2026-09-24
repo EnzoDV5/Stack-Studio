@@ -1,0 +1,8 @@
+.image {
+  transition: opacity var(--duration-base) var(--ease-out-expo);
+}
+
+/* Lazy images fade in once decoded. Priority (LCP) images never start hidden. */
+.pending {
+  opacity: 0;
+}

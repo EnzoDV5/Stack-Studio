@@ -1,0 +1,75 @@
+.item {
+  border-bottom: 1px solid var(--tone-border);
+}
+
+.item:first-child {
+  border-top: 1px solid var(--tone-border);
+}
+
+.trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 1.5rem;
+  padding-block: 1.5rem;
+  text-align: left;
+}
+
+/* + becomes × when open. */
+.icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: auto;
+  border-radius: 999px;
+  border: 1px solid var(--tone-border);
+  transition:
+    transform var(--duration-fast) var(--ease-out-expo),
+    background-color var(--duration-fast) var(--ease-out-expo),
+    border-color var(--duration-fast) var(--ease-out-expo);
+}
+
+.icon::before,
+.icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 1.5px;
+  margin: -0.75px 0 0 -6px;
+  background: currentColor;
+}
+
+.icon::after {
+  transform: rotate(90deg);
+}
+
+.open .icon {
+  transform: rotate(45deg);
+  background-color: var(--color-orange);
+  border-color: var(--color-orange);
+  color: var(--color-ink);
+}
+
+@media (hover: hover) {
+  .trigger:hover .icon {
+    border-color: currentColor;
+  }
+}
+
+/* Height animation without JS: grid rows 0fr → 1fr. */
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-fast) var(--ease-out-expo);
+}
+
+.open .panel {
+  grid-template-rows: 1fr;
+}
+
+.panelInner {
+  overflow: hidden;
+}
