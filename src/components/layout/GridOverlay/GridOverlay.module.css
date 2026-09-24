@@ -1,22 +1,25 @@
-.grid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
+/* Layered so Tailwind utilities passed via className can override these rules. */
+@layer components {
+  .grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-.fadeRadial {
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 100%);
-}
+  .fadeRadial {
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 100%);
+  }
 
-.fadeTop {
-  mask-image: linear-gradient(to bottom, transparent, #000 35%);
-}
+  .fadeTop {
+    mask-image: linear-gradient(to bottom, transparent, #000 35%);
+  }
 
-.fadeBottom {
-  mask-image: linear-gradient(to bottom, #000 40%, transparent);
-}
+  .fadeBottom {
+    mask-image: linear-gradient(to bottom, #000 40%, transparent);
+  }
 
-.fadeEdges {
-  mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+  .fadeEdges {
+    mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+  }
 }

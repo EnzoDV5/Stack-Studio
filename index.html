@@ -6,6 +6,16 @@
     <meta name="theme-color" content="#0A0A0A" />
     <meta name="color-scheme" content="dark light" />
 
+    <!--
+      Cascade layer order must be declared before ANY stylesheet: code-split CSS chunks can
+      load before index.css, and the first layer mentioned wins its position otherwise.
+      Also paints the brand background before CSS arrives (no white flash).
+    -->
+    <style>
+      @layer properties, theme, base, components, utilities;
+      html { background: #0a0a0a; }
+    </style>
+
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

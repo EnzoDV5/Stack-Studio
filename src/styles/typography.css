@@ -22,6 +22,16 @@
   }
 }
 
+/*
+ * SplitText masks (SplitReveal) clip overflow. With tight display line-heights that would
+ * cut descenders (g, p, y), so give masks breathing room without changing layout.
+ */
+.split-line-mask,
+.split-word-mask {
+  padding-block: 0.08em 0.16em;
+  margin-block: -0.08em -0.16em;
+}
+
 /* Mono uppercase, letter-spaced label, e.g. "01 · WORK". */
 @utility eyebrow {
   font-family: var(--font-mono);

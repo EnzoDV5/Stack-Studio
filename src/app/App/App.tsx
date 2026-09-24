@@ -7,9 +7,11 @@ import { Header } from '@/components/layout/Header'
 import { PageTransition } from '@/components/layout/PageTransition'
 import { Preloader } from '@/components/layout/Preloader'
 import { SkipLink } from '@/components/layout/SkipLink'
+import { closingCta } from '@/data/pages'
 import { chromeCopy, footerNav, legalNav, primaryCta, primaryNav } from '@/data/navigation'
 import { site, whatsappHref } from '@/data/site'
 import { usePageviewTracking } from '@/hooks/useAnalytics'
+import { ClosingCta } from '@/sections/shared/ClosingCta'
 
 /** The app shell: global chrome around the routed page. The app layer is where data meets layout. */
 export function App() {
@@ -42,18 +44,10 @@ export function App() {
                 <AppRoutes location={location} />
               </Suspense>
             </main>
+            {!location.pathname.startsWith(primaryCta.to) && (
+              <ClosingCta content={closingCta} location={`closing-band:${location.pathname}`} />
+            )}
             <Footer
-              cta={
-                location.pathname.startsWith(primaryCta.to)
-                  ? null
-                  : {
-                      eyebrow: chromeCopy.footerEyebrow,
-                      title: chromeCopy.footerTitle,
-                      body: chromeCopy.footerBody,
-                      label: primaryCta.label,
-                      to: primaryCta.to,
-                    }
-              }
               headings={{
                 contact: chromeCopy.contactHeading,
                 social: chromeCopy.socialHeading,

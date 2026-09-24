@@ -10,6 +10,7 @@
   --tone-border: rgb(255 255 255 / 0.12);
   --tone-surface: var(--color-ink-700);
   --tone-accent-text: var(--color-orange);
+  --tone-marker: var(--color-orange);
   --grid-line: rgb(255 255 255 / 0.05);
   --focus-ring: var(--color-orange);
   background-color: var(--tone-bg);
@@ -23,6 +24,7 @@
   --tone-border: rgb(10 10 10 / 0.14);
   --tone-surface: var(--color-white);
   --tone-accent-text: var(--color-orange-deep);
+  --tone-marker: var(--color-orange);
   --grid-line: rgb(10 10 10 / 0.06);
   --focus-ring: var(--color-ink);
   background-color: var(--tone-bg);
@@ -36,6 +38,7 @@
   --tone-border: rgb(10 10 10 / 0.12);
   --tone-surface: var(--color-paper);
   --tone-accent-text: var(--color-orange-deep);
+  --tone-marker: var(--color-orange);
   --grid-line: rgb(10 10 10 / 0.05);
   --focus-ring: var(--color-ink);
   background-color: var(--tone-bg);
@@ -49,6 +52,7 @@
   --tone-border: rgb(10 10 10 / 0.2);
   --tone-surface: var(--color-ink);
   --tone-accent-text: var(--color-ink);
+  --tone-marker: var(--color-ink);
   --grid-line: rgb(10 10 10 / 0.08);
   --focus-ring: var(--color-ink);
   background-color: var(--tone-bg);
@@ -65,6 +69,10 @@
 
 @utility border-tone {
   border-color: var(--tone-border, rgb(255 255 255 / 0.12));
+}
+
+@utility bg-marker {
+  background-color: var(--tone-marker, var(--color-orange));
 }
 
 @utility bg-tone-surface {

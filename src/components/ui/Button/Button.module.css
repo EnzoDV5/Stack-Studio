@@ -1,155 +1,158 @@
-.button {
-  --btn-bg: transparent;
-  --btn-fg: var(--tone-fg, var(--color-paper));
-  --btn-fill: var(--tone-fg, var(--color-paper));
-  --btn-fill-fg: var(--tone-bg, var(--color-ink));
-  --btn-border: transparent;
+/* Layered so Tailwind utilities passed via className can override these rules. */
+@layer components {
+  .button {
+    --btn-bg: transparent;
+    --btn-fg: var(--tone-fg, var(--color-paper));
+    --btn-fill: var(--tone-fg, var(--color-paper));
+    --btn-fill-fg: var(--tone-bg, var(--color-ink));
+    --btn-border: transparent;
 
-  position: relative;
-  isolation: isolate;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75em;
-  overflow: hidden;
-  border: 1px solid var(--btn-border);
-  border-radius: var(--radius-pill);
-  background-color: var(--btn-bg);
-  color: var(--btn-fg);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  text-decoration: none;
-  transition: color var(--duration-fast) var(--ease-out-expo);
-  -webkit-tap-highlight-color: transparent;
-}
-
-.button:focus-visible {
-  outline-offset: 4px;
-  border-radius: var(--radius-pill);
-}
-
-/* Fill wipes up from below on hover. */
-.fill {
-  position: absolute;
-  inset: -1px;
-  z-index: -1;
-  border-radius: inherit;
-  background-color: var(--btn-fill);
-  transform: translateY(102%);
-  transition: transform var(--duration-fast) var(--ease-out-expo);
-}
-
-@media (hover: hover) {
-  .button:hover {
-    color: var(--btn-fill-fg);
-  }
-
-  .button:hover .fill {
-    transform: translateY(0);
-  }
-}
-
-.button:active {
-  transform: scale(0.98);
-}
-
-.label {
-  position: relative;
-  display: inline-block;
-}
-
-/* Arrow: one slides out, a copy slides in. */
-.arrow {
-  position: relative;
-  display: inline-flex;
-  width: 1em;
-  height: 1em;
-  overflow: hidden;
-}
-
-.arrow svg {
-  position: absolute;
-  inset: 0;
-  width: 1em;
-  height: 1em;
-  transition: transform var(--duration-fast) var(--ease-out-expo);
-}
-
-.arrow svg:last-child {
-  transform: translateX(-120%);
-}
-
-@media (hover: hover) {
-  .button:hover .arrow svg:first-child {
-    transform: translateX(120%);
-  }
-
-  .button:hover .arrow svg:last-child {
-    transform: translateX(0);
-  }
-}
-
-/* Variants */
-.primary {
-  --btn-bg: var(--color-orange);
-  --btn-fg: var(--color-ink);
-  --btn-fill: var(--tone-fg, var(--color-paper));
-  --btn-fill-fg: var(--tone-bg, var(--color-ink));
-}
-
-.secondary {
-  --btn-border: color-mix(in srgb, var(--btn-fg) 40%, transparent);
-}
-
-.ghost {
-  padding-inline: 0 !important;
-  border-radius: 0;
-  overflow: visible;
-}
-
-.ghost .fill {
-  display: none;
-}
-
-@media (hover: hover) {
-  .ghost:hover {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75em;
+    overflow: hidden;
+    border: 1px solid var(--btn-border);
+    border-radius: var(--radius-pill);
+    background-color: var(--btn-bg);
     color: var(--btn-fg);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out-expo);
+    -webkit-tap-highlight-color: transparent;
   }
-}
 
-.inverse {
-  --btn-bg: var(--color-ink);
-  --btn-fg: var(--color-paper);
-  --btn-fill: var(--color-paper);
-  --btn-fill-fg: var(--color-ink);
-}
+  .button:focus-visible {
+    outline-offset: 4px;
+    border-radius: var(--radius-pill);
+  }
 
-/* Sizes */
-.sm {
-  height: 2.5rem;
-  padding-inline: 1.1rem;
-  font-size: var(--text-small);
-}
+  /* Fill wipes up from below on hover. */
+  .fill {
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: var(--btn-fill);
+    transform: translateY(102%);
+    transition: transform var(--duration-fast) var(--ease-out-expo);
+  }
 
-.md {
-  height: 3.25rem;
-  padding-inline: 1.6rem;
-  font-size: var(--text-body);
-}
+  @media (hover: hover) {
+    .button:hover {
+      color: var(--btn-fill-fg);
+    }
 
-.lg {
-  height: 4.25rem;
-  padding-inline: 2.25rem;
-  font-size: var(--text-body-lg);
-}
+    .button:hover .fill {
+      transform: translateY(0);
+    }
+  }
 
-.full {
-  width: 100%;
-}
+  .button:active {
+    transform: scale(0.98);
+  }
 
-.button[aria-disabled='true'],
-.button:disabled {
-  opacity: 0.45;
-  pointer-events: none;
+  .label {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Arrow: one slides out, a copy slides in. */
+  .arrow {
+    position: relative;
+    display: inline-flex;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+  }
+
+  .arrow svg {
+    position: absolute;
+    inset: 0;
+    width: 1em;
+    height: 1em;
+    transition: transform var(--duration-fast) var(--ease-out-expo);
+  }
+
+  .arrow svg:last-child {
+    transform: translateX(-120%);
+  }
+
+  @media (hover: hover) {
+    .button:hover .arrow svg:first-child {
+      transform: translateX(120%);
+    }
+
+    .button:hover .arrow svg:last-child {
+      transform: translateX(0);
+    }
+  }
+
+  /* Variants */
+  .primary {
+    --btn-bg: var(--color-orange);
+    --btn-fg: var(--color-ink);
+    --btn-fill: var(--tone-fg, var(--color-paper));
+    --btn-fill-fg: var(--tone-bg, var(--color-ink));
+  }
+
+  .secondary {
+    --btn-border: color-mix(in srgb, var(--btn-fg) 40%, transparent);
+  }
+
+  .ghost {
+    padding-inline: 0 !important;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .ghost .fill {
+    display: none;
+  }
+
+  @media (hover: hover) {
+    .ghost:hover {
+      color: var(--btn-fg);
+    }
+  }
+
+  .inverse {
+    --btn-bg: var(--color-ink);
+    --btn-fg: var(--color-paper);
+    --btn-fill: var(--color-paper);
+    --btn-fill-fg: var(--color-ink);
+  }
+
+  /* Sizes */
+  .sm {
+    height: 2.5rem;
+    padding-inline: 1.1rem;
+    font-size: var(--text-small);
+  }
+
+  .md {
+    height: 3.25rem;
+    padding-inline: 1.6rem;
+    font-size: var(--text-body);
+  }
+
+  .lg {
+    height: 4.25rem;
+    padding-inline: 2.25rem;
+    font-size: var(--text-body-lg);
+  }
+
+  .full {
+    width: 100%;
+  }
+
+  .button[aria-disabled='true'],
+  .button:disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
 }

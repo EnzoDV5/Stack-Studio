@@ -1,8 +1,14 @@
-.image {
-  transition: opacity var(--duration-base) var(--ease-out-expo);
-}
+/* Layered so Tailwind utilities passed via className can override these rules. */
+@layer components {
+  /* Opacity for the load fade; scale for hover zooms applied by parents (group-hover:scale-*). */
+  .image {
+    transition:
+      opacity var(--duration-base) var(--ease-out-expo),
+      scale var(--duration-slow) var(--ease-out-expo);
+  }
 
-/* Lazy images fade in once decoded. Priority (LCP) images never start hidden. */
-.pending {
-  opacity: 0;
+  /* Lazy images fade in once decoded. Priority (LCP) images never start hidden. */
+  .pending {
+    opacity: 0;
+  }
 }

@@ -50,6 +50,7 @@ export function SplitReveal({
         type: type === 'lines' ? 'lines' : 'words,lines',
         mask: type,
         linesClass: 'split-line',
+        wordsClass: 'split-word',
         autoSplit: true,
         onSplit(self) {
           const targets = type === 'lines' ? self.lines : self.words

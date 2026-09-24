@@ -16,7 +16,7 @@ export interface EyebrowProps {
 export function Eyebrow({ label, index, as: Tag = 'p', marker = true, className }: EyebrowProps) {
   return (
     <Tag className={cn('eyebrow flex items-center gap-3 text-muted', className)}>
-      {marker && <span aria-hidden="true" className="size-1.5 shrink-0 bg-orange" />}
+      {marker && <span aria-hidden="true" className="bg-marker size-1.5 shrink-0" />}
       {index !== undefined && (
         <>
           <span className="text-accent">{pad2(index)}</span>

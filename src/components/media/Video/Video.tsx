@@ -16,6 +16,8 @@ export interface VideoProps {
   playing?: boolean
   /** Poster is the LCP element (hero). */
   priority?: boolean
+  /** 'none' renders no poster/gradient layer, for overlays on top of an existing image. */
+  fallback?: 'auto' | 'none'
   sizes?: string
   className?: string
 }
@@ -31,6 +33,7 @@ export function Video({
   mode = 'inView',
   playing = false,
   priority = false,
+  fallback = 'auto',
   sizes,
   className,
 }: VideoProps) {
@@ -57,11 +60,12 @@ export function Video({
 
   return (
     <div ref={rootRef} className={cn(styles.root, className)}>
-      {video.poster ? (
-        <Image image={video.poster} priority={priority} sizes={sizes} className={styles.layer} />
-      ) : (
-        <div className={cn(styles.layer, styles.gradient)} aria-hidden="true" />
-      )}
+      {fallback === 'auto' &&
+        (video.poster ? (
+          <Image image={video.poster} priority={priority} sizes={sizes} className={styles.layer} />
+        ) : (
+          <div className={cn(styles.layer, styles.gradient)} aria-hidden="true" />
+        ))}
 
       {!failed && (
         <video
