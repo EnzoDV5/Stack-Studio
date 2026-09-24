@@ -2,13 +2,13 @@ import { PageMeta } from '@/components/seo/PageMeta'
 import { pageMeta, privacyContent } from '@/data/pages'
 import { site } from '@/data/site'
 import { PrivacyNotice } from '@/sections/privacy/PrivacyNotice'
-import { PageHero } from '@/sections/shared/PageHero'
+import { PageTitle } from '@/sections/shared/PageTitle'
 
 export function PrivacyPage() {
   return (
     <>
       <PageMeta {...pageMeta.privacy} />
-      <PageHero content={privacyContent.hero} />
+      <PageTitle content={privacyContent.hero} />
       <PrivacyNotice
         updated={privacyContent.updated}
         sections={privacyContent.sections}

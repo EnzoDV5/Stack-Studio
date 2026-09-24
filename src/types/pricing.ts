@@ -1,62 +1,137 @@
 /**
- * Pricing model. Intentionally flexible: the offer isn't final. Add, remove or reshape
- * packages/plans/add-ons in src/data/pricing.ts without touching components. The estimator
- * (src/lib/estimate.ts) only depends on these types.
+ * Stack's offer model (see docs/pricing-model.md). Five stages; every offering and plan has
+ * a visibility. Client-facing prices only: no internal cost, margin or contingency data may
+ * ever live in these types or in src/data (the bundle is public).
  */
 
-export type Billing = 'once' | 'monthly'
+export type StageId = 'build' | 'takeover' | 'run' | 'grow' | 'partner'
 
-export interface ProjectPackage {
-  id: string
+/** Where an offering/plan is rendered. `hidden` = kept in data, never shown. */
+export type Visibility = 'pricing' | 'services' | 'hidden'
+
+export interface ServiceStage {
+  id: StageId
+  /** 1–5, shown as "01". */
+  index: number
   name: string
-  tagline: string
-  bestFor: string
-  /** Starting price in ZAR (excl. VAT). */
-  fromPrice: number
-  /** Pages included in fromPrice. */
-  includedPages: number
-  /** Price per page beyond includedPages. */
-  extraPagePrice: number
-  /** Typical build time. */
-  timelineWeeks: [min: number, max: number]
-  includes: string[]
-  highlighted?: boolean
+  /** One line, e.g. "We create it." */
+  line: string
+  summary: string
+  /** CTA into the quote builder with this path preselected. */
+  cta: { label: string; to: string }
 }
 
-export type MonthlyPlanCategory = 'hosting' | 'care' | 'growth'
+/** How the quote builder treats a Build offering. */
+export type BuildCategory = 'website' | 'software'
 
-export interface MonthlyPlan {
+export interface PriceTier {
+  label: string
+  fromPrice: number
+}
+
+export interface Offering {
   id: string
+  stage: StageId
   name: string
-  category: MonthlyPlanCategory
+  summary: string
+  /** Starting price in ZAR. */
+  fromPrice: number
+  /** Pages included in fromPrice (website builds). */
+  includedPages?: number
+  includes: string[]
+  examples?: string[]
+  /** Sub-prices, e.g. AI features from R20k. */
+  tiers?: PriceTier[]
+  notes?: string[]
+  /** Must start with Discovery & Scoping. */
+  requiresDiscovery?: boolean
+  /** Set = selectable as a project type in the quote builder. */
+  briefCategory?: BuildCategory
+  visibility: Visibility
+}
+
+export type PlanFamily = 'care' | 'managed' | 'partner' | 'hosting'
+
+export interface Plan {
+  id: string
+  family: PlanFamily
+  name: string
   tagline: string
   pricePerMonth: number
+  /** Show "from" before the price. */
+  priceIsFrom?: boolean
+  /** Extra text after the price, e.g. "+ infrastructure". */
+  priceSuffix?: string
+  /** Included / reserved hours per month (0.5 = 30 min). */
+  includedHours?: number
+  /** Human label for the hours, e.g. "30 min", "22 hours". */
+  hoursLabel?: string
   includes: string[]
-  minimumTermMonths?: number
+  minimumTermMonths: number
   highlighted?: boolean
+  visibility: Visibility
 }
 
+export interface PlanFamilyInfo {
+  id: Exclude<PlanFamily, 'hosting'>
+  name: string
+  description: string
+  /** e.g. "Limited to 3 partner clients at a time." */
+  note?: string
+  hoursLabel: string
+}
+
+export interface Rate {
+  id: 'feature' | 'emergency'
+  name: string
+  pricePerHour: number
+  description: string
+  examples?: string[]
+}
+
+export interface PaymentSchedule {
+  id: string
+  label: string
+  /** Projects this schedule applies to, as words ("Projects under R50,000"). */
+  appliesTo: string
+  /** Upper bound (exclusive) in ZAR; null = no upper bound. */
+  maxProjectValue: number | null
+  milestones: { label: string; percent: number }[]
+}
+
+export interface PolicyItem {
+  id: string
+  title: string
+  body: string[]
+}
+
+export interface Policies {
+  paymentSchedules: PaymentSchedule[]
+  items: PolicyItem[]
+  maintenance: {
+    title: string
+    intro: string
+    included: string[]
+    excluded: string[]
+    outro: string
+  }
+  vatNote: string
+  hostingOnRequest: string
+  minimumTermMonths: number
+}
+
+/** Website-build add-on. `count` add-ons are priced per unit through a count step. */
 export interface AddOn {
   id: string
   name: string
   description: string
   price: number
-  billing: Billing
-  /** Restrict to certain ProjectPackage ids. Omit = available for all. */
-  availableFor?: string[]
-  /** Offered as a feature choice in the brief. */
-  inBrief: boolean
+  /** "each" = per unit. */
+  perUnit: boolean
+  /** How the quote builder offers it: toggle (multi-select) or via a count step. */
+  briefMode: 'toggle' | 'count'
 }
 
-/** Brief step 2: how big is it? Pages feed the extra-page calculation. */
-export interface ScopeOption {
-  id: string
-  label: string
-  description: string
-  pages: number
-}
-
-/** Brief step 4: rush fees / flexible discounts. */
 export interface TimelineOption {
   id: string
   label: string
@@ -64,21 +139,10 @@ export interface TimelineOption {
   multiplier: number
 }
 
-/** Brief step 5. max null = open-ended ("R X+"). */
+/** max null = open-ended. min/max both null = "Not sure". */
 export interface BudgetRange {
   id: string
   label: string
-  min: number
+  min: number | null
   max: number | null
-}
-
-export interface PricingSettings {
-  currency: 'ZAR'
-  /** ± spread applied to the estimate to show a range, e.g. 0.12 = ±12%. */
-  estimateSpread: number
-  vatNote: string
-  disclaimer: string
-  /** True while prices are placeholders. Shows a visible notice in the UI. */
-  isPlaceholder: boolean
-  placeholderNotice: string
 }

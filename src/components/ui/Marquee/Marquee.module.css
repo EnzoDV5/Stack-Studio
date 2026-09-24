@@ -18,6 +18,7 @@
     justify-content: space-around;
     gap: var(--marquee-gap);
     animation: scroll var(--marquee-duration) linear infinite;
+    animation-play-state: var(--marquee-play-state, running);
   }
 
   .reverse .track {
@@ -45,6 +46,8 @@
 
     .track {
       animation: none;
+      width: 100%;
+      min-width: 0;
       flex-wrap: wrap;
       justify-content: center;
     }

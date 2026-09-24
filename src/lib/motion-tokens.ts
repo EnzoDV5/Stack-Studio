@@ -80,6 +80,8 @@ export const cursor = {
 export const marquee = {
   /** Seconds per full loop at the default width. CSS reads this as a custom property. */
   loopSeconds: 38,
+  /** Keep the dense technology strip leisurely as its catalogue grows. */
+  technologyItemSeconds: 5,
 } as const
 
 export const lenis = {

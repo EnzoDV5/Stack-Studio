@@ -75,6 +75,13 @@ grep -rn "COPY:" src/data
 When you move images from picsum to local files, remove the two `preconnect` links in
 `index.html`.
 
+The home technology strip is configured in `src/data/technologies.ts`. Edit its typed,
+categorised catalogue to add or remove tools; primary categories determine the two
+rows. SVGs are served locally from `public/logos/technologies/` with pinned sources
+and licences documented in that folder. Run `node scripts/sync-technology-logos.mjs`
+to fetch the selected assets again. The strip pauses on hover or with its keyboard /
+touch control and becomes static, wrapped rows with reduced motion enabled.
+
 ## Connecting the enquiry form
 
 1. Create a Formspree form (or similar) and copy its endpoint.

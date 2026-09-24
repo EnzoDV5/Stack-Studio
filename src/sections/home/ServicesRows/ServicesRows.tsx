@@ -2,13 +2,17 @@ import { useId } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
 import { Accordion } from '@/components/ui/Accordion'
 import { Button } from '@/components/ui/Button'
-import { formatPrice } from '@/lib/format'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
-import type { Service } from '@/types'
+import type { CtaLink } from '@/types'
 
-export interface ServiceRow extends Service {
-  /** Resolved "from" price for the row meta, if the service maps to a package. */
-  fromPrice?: number
+export interface StageRow {
+  id: string
+  name: string
+  line: string
+  summary: string
+  /** Key offerings or plans with their price labels. */
+  items: { name: string; price: string }[]
+  cta: CtaLink
 }
 
 export interface ServicesRowsProps {
@@ -16,18 +20,18 @@ export interface ServicesRowsProps {
   eyebrow: string
   title: string
   intro: string
-  services: ServiceRow[]
-  labels: { from: string; start: string; deliverables: string; timeline: string }
+  stages: StageRow[]
+  labels: { examples: string }
   tone?: Tone
 }
 
-/** Services as big numbered rows that expand to show deliverables, timing and a CTA. */
+/** The five stages as big numbered rows that expand to show key offerings, prices and a CTA. */
 export function ServicesRows({
   index,
   eyebrow,
   title,
   intro,
-  services,
+  stages,
   labels,
   tone = 'dark',
 }: ServicesRowsProps) {
@@ -39,48 +43,48 @@ export function ServicesRows({
         <Accordion
           className="mt-16 lg:mt-24"
           numbered
-          defaultOpen={services[0] ? [services[0].id] : []}
+          defaultOpen={stages[0] ? [stages[0].id] : []}
           titleClassName="text-heading-xl"
-          items={services.map((service) => ({
-            id: service.id,
-            title: service.name,
-            meta: service.fromPrice
-              ? `${labels.from} ${formatPrice(service.fromPrice)}`
-              : undefined,
+          items={stages.map((stage) => ({
+            id: stage.id,
+            title: stage.name,
+            meta: stage.line,
             content: (
               <div className="grid gap-10 md:grid-cols-12">
                 <div className="md:col-span-5">
-                  <p className="text-body-lg">{service.summary}</p>
-                  <p className="mt-4 text-muted">{service.description[0]}</p>
-                </div>
-                <div className="md:col-span-4">
-                  <p className="mb-4 eyebrow text-muted">{labels.deliverables}</p>
-                  <ul className="space-y-2">
-                    {service.deliverables.map((item) => (
-                      <li key={item} className="flex gap-3">
-                        <span aria-hidden="true" className="mt-2.5 size-1.5 shrink-0 bg-orange" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="flex flex-col items-start gap-6 md:col-span-3">
-                  <div>
-                    <p className="mb-2 eyebrow text-muted">{labels.timeline}</p>
-                    <p>{service.timeline}</p>
-                  </div>
+                  <p className="text-body-lg sm:hidden">{stage.line}</p>
+                  <p className="mt-2 text-muted sm:mt-0">{stage.summary}</p>
                   <Button
-                    to={service.briefType ? `/start?type=${service.briefType}` : '/start'}
+                    to={stage.cta.to}
                     size="sm"
                     withArrow
+                    className="mt-8"
                     analytics={{
                       event: 'Start project click',
-                      props: { location: `service-row:${service.id}` },
+                      props: { location: `home-stage:${stage.id}` },
                     }}
                   >
-                    {labels.start}
+                    {stage.cta.label}
                   </Button>
                 </div>
+                {stage.items.length > 0 && (
+                  <div className="md:col-span-6 md:col-start-7">
+                    <p className="mb-4 eyebrow text-muted">{labels.examples}</p>
+                    <ul className="divide-y divide-(--tone-border) border-y border-tone">
+                      {stage.items.map((item) => (
+                        <li
+                          key={item.name}
+                          className="flex items-baseline justify-between gap-6 py-3"
+                        >
+                          <span>{item.name}</span>
+                          <span className="shrink-0 numeric text-small text-muted">
+                            {item.price}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             ),
           }))}

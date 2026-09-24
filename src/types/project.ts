@@ -1,4 +1,5 @@
 import type { ImageAsset, MediaSlot, VideoAsset } from './media'
+import type { StageId } from './pricing'
 
 export type ProjectCategoryId = 'website' | 'npo' | 'energy' | 'brand' | 'ecommerce' | 'web-app'
 
@@ -33,6 +34,8 @@ export interface Project {
   summary: string
   categories: ProjectCategoryId[]
   services: string[]
+  /** Which of Stack's five stages this project involved (Build, Run…). */
+  stages: StageId[]
   liveUrl?: string
   /** Clearly-fake demo project. Shown with a "Sample" tag. */
   isSample?: boolean
@@ -50,6 +53,6 @@ export interface Project {
   gallery: GalleryItem[]
   metrics: ProjectMetric[]
   testimonialId?: string
-  /** ProjectPackage id used to pre-fill the brief from "Start a project like this". */
+  /** Build offering id used to pre-fill the brief from "Start a project like this". */
   briefType?: string
 }

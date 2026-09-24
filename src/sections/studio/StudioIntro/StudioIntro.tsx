@@ -22,7 +22,7 @@ export function StudioIntro({
   tone = 'paper',
 }: StudioIntroProps) {
   return (
-    <Section tone={tone}>
+    <Section tone={tone} className="pt-8">
       <div className="container-site grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-6">
           <Eyebrow label={eyebrow} className="mb-6" />

@@ -38,7 +38,7 @@ export function WorkGrid({
   const usable = categories.filter((c) => projects.some((p) => p.categories.includes(c.id)))
 
   return (
-    <Section tone={tone} spacing="sm">
+    <Section tone={tone} spacing="sm" className="pt-8">
       <div className="container-site">
         <div className="flex flex-col gap-6 border-b border-tone pb-8 md:flex-row md:items-center md:justify-between">
           <div role="group" aria-label={labels.filter} className="flex flex-wrap gap-2">

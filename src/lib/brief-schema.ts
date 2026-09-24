@@ -1,63 +1,131 @@
 /**
- * zod validation for the guided brief: one schema per step, plus a full-brief schema
- * used before submitting. Messages come from data/brief.ts.
+ * zod validation for the quote builder: a schema per step (generated from the step config)
+ * and a full-brief schema as a discriminated union on `path`. Messages: data/brief.ts.
+ * Uses zod/mini (same package, tree-shakable functional API) to keep the /start chunk small.
  */
-import { z } from 'zod'
+import * as z from 'zod/mini'
 import { briefCopy } from '@/data/brief'
-import type { BriefAnswers, BriefErrors, BriefStepId } from '@/types'
+import type { BriefAnswers, BriefErrors, BriefStepConfig } from '@/types'
 
 const e = briefCopy.errors
 
-const choice = (message: string) => z.string({ error: message }).min(1, { error: message })
+const choice = () => z.string({ error: e.choose }).check(z.minLength(1, { error: e.choose }))
+const many = (min: number) => z.array(z.string()).check(z.minLength(min, { error: e.chooseMany }))
 
-const contactSchema = z.object({
-  name: z.string().trim().min(2, { error: e.name }).max(120, { error: e.name }),
-  email: z.email({ error: e.email }),
-  phone: z
+export const contactSchema = z.object({
+  name: z
     .string()
-    .trim()
-    .regex(/^$|^[+\d][\d\s()-]{6,19}$/, { error: e.phone }),
-  company: z.string().trim().max(160),
-  message: z.string().max(2000, { error: e.message }),
+    .check(z.trim(), z.minLength(2, { error: e.name }), z.maxLength(120, { error: e.name })),
+  email: z.email({ error: e.email }),
+  phone: z.string().check(z.trim(), z.regex(/^$|^[+\d][\d\s()-]{6,19}$/, { error: e.phone })),
+  company: z.string().check(z.trim(), z.maxLength(160)),
+  message: z.string().check(z.maxLength(2000, { error: e.message })),
 })
 
-export const stepSchemas = {
-  type: z.object({ projectType: choice(e.projectType) }),
-  scope: z.object({ scope: choice(e.scope) }),
-  features: z.object({ features: z.array(z.string()), monthlyPlan: z.string().nullable() }),
-  timeline: z.object({ timeline: choice(e.timeline) }),
-  budget: z.object({ budget: choice(e.budget) }),
-  contact: z.object({
-    contact: contactSchema,
-    consent: z.literal(true, { error: e.consent }),
-  }),
-  review: z.object({}),
-} satisfies Record<BriefStepId, z.ZodType>
+const finalStep = {
+  contact: contactSchema,
+  consent: z.literal(true, { error: e.consent }),
+}
 
-export const briefSchema = z.object({
-  ...stepSchemas.type.shape,
-  ...stepSchemas.scope.shape,
-  ...stepSchemas.features.shape,
-  ...stepSchemas.timeline.shape,
-  ...stepSchemas.budget.shape,
-  ...stepSchemas.contact.shape,
+export function schemaForStep(step: BriefStepConfig): z.ZodMiniType {
+  switch (step.kind) {
+    case 'single':
+      return z.object({ [step.field]: choice() })
+    case 'multi':
+      return z.object({ [step.field]: many(step.min) })
+    case 'count':
+      return z.object({
+        [step.field]: z
+          .number({ error: e.count })
+          .check(
+            z.int({ error: e.count }),
+            z.gte(step.min, { error: e.count }),
+            z.lte(step.max, { error: e.count }),
+          ),
+      })
+    case 'text':
+      return z.object({
+        [step.field]: z
+          .string()
+          .check(z.trim(), z.minLength(step.minLength, { error: e.description })),
+      })
+    case 'contact':
+      return z.object(finalStep)
+    case 'review':
+      return z.object({})
+  }
+}
+
+const count = () => z.number().check(z.int(), z.gte(1))
+
+const buildSchema = z.object({
+  path: z.literal('build'),
+  buildType: choice(),
+  pages: count(),
+  addOns: z.array(z.string()),
+  languages: count(),
+  carePlan: z.nullable(z.string()),
+  audience: z.nullable(z.string()),
+  needs: z.array(z.string()),
+  timeline: choice(),
+  budget: choice(),
+  ...finalStep,
 })
+
+const existingSchema = z.object({
+  path: z.literal('existing'),
+  existingType: choice(),
+  access: choice(),
+  situation: many(1),
+  urgency: choice(),
+  ...finalStep,
+})
+
+const runSchema = z.object({
+  path: z.literal('run'),
+  runType: choice(),
+  builtBy: choice(),
+  changeFrequency: choice(),
+  ...finalStep,
+})
+
+const developSchema = z.object({
+  path: z.literal('develop'),
+  workKinds: many(1),
+  hours: choice(),
+  ...finalStep,
+})
+
+const unsureSchema = z.object({
+  path: z.literal('unsure'),
+  description: z.string().check(z.trim(), z.minLength(10, { error: e.description })),
+  ...finalStep,
+})
+
+/** Output keeps only the fields relevant to the chosen path. */
+export const briefSchema = z.discriminatedUnion('path', [
+  buildSchema,
+  existingSchema,
+  runSchema,
+  developSchema,
+  unsureSchema,
+])
 
 export type ValidBrief = z.infer<typeof briefSchema>
 
-function toErrors(error: z.ZodError): BriefErrors {
+function toErrors(issues: readonly { path: PropertyKey[]; message: string }[]): BriefErrors {
   const errors: BriefErrors = {}
-  for (const issue of error.issues) {
-    const key = issue.path.join('.')
+  for (const issue of issues) {
+    const key = issue.path.map(String).join('.')
     errors[key] ??= issue.message
   }
   return errors
 }
 
 /** Validates one step. Returns an empty object when valid. */
-export function validateStep(step: BriefStepId, answers: BriefAnswers): BriefErrors {
-  const result = stepSchemas[step].safeParse(answers)
-  return result.success ? {} : toErrors(result.error)
+export function validateStep(step: BriefStepConfig, answers: BriefAnswers): BriefErrors {
+  const result = schemaForStep(step).safeParse(answers)
+  return result.success ? {} : toErrors(result.error.issues)
 }
 
 export function validateBrief(
@@ -66,5 +134,5 @@ export function validateBrief(
   const result = briefSchema.safeParse(answers)
   return result.success
     ? { ok: true, data: result.data }
-    : { ok: false, errors: toErrors(result.error) }
+    : { ok: false, errors: toErrors(result.error.issues) }
 }

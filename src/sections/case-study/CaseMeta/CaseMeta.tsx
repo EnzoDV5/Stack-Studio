@@ -20,7 +20,7 @@ export function CaseMeta({
   tone = 'dark',
 }: CaseMetaProps) {
   return (
-    <Section tone={tone} spacing="sm">
+    <Section tone={tone} spacing="sm" className="pt-8">
       <dl className="container-site grid gap-8 border-y border-tone py-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <dt className="mb-3 eyebrow text-muted">{labels.client}</dt>

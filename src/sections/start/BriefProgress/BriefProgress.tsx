@@ -33,19 +33,21 @@ export function BriefProgress({ current, labels, label, stepOf }: BriefProgressP
           style={{ width: `${(value / total) * 100}%` }}
         />
       </div>
-      <ol className="mt-4 hidden gap-4 sm:flex" aria-hidden="true">
-        {labels.map((name, i) => (
-          <li
-            key={name}
-            className={cn(
-              'flex-1 truncate font-mono text-micro tracking-[0.08em] uppercase transition-colors',
-              i <= current ? 'text-(--tone-fg)' : 'text-muted opacity-60',
-            )}
-          >
-            {pad2(i + 1)} {name}
-          </li>
-        ))}
-      </ol>
+      {total <= 7 && (
+        <ol className="mt-4 hidden gap-4 sm:flex" aria-hidden="true">
+          {labels.map((name, i) => (
+            <li
+              key={name}
+              className={cn(
+                'flex-1 truncate font-mono text-micro tracking-[0.08em] uppercase transition-colors',
+                i <= current ? 'text-(--tone-fg)' : 'text-muted opacity-60',
+              )}
+            >
+              {pad2(i + 1)} {name}
+            </li>
+          ))}
+        </ol>
+      )}
     </div>
   )
 }

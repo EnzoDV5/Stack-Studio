@@ -1,14 +1,9 @@
-export const BRIEF_STEPS = [
-  'type',
-  'scope',
-  'features',
-  'timeline',
-  'budget',
-  'contact',
-  'review',
-] as const
+/**
+ * Quote-builder types. Steps are configuration (src/data/brief.ts); the flow renders
+ * whichever steps' `showIf` conditions pass for the current answers.
+ */
 
-export type BriefStepId = (typeof BRIEF_STEPS)[number]
+export type BriefPathId = 'build' | 'existing' | 'run' | 'develop' | 'unsure'
 
 export interface BriefContact {
   name: string
@@ -19,16 +14,114 @@ export interface BriefContact {
 }
 
 export interface BriefAnswers {
-  projectType: string | null
-  scope: string | null
-  features: string[]
-  /** MonthlyPlan id, or null for "no plan". */
-  monthlyPlan: string | null
+  path: BriefPathId | null
+  // A. Build
+  buildType: string | null
+  pages: number
+  addOns: string[]
+  languages: number
+  /** Plan id, or 'none'. */
+  carePlan: string | null
+  audience: string | null
+  needs: string[]
   timeline: string | null
   budget: string | null
+  // B. Existing
+  existingType: string | null
+  access: string | null
+  situation: string[]
+  urgency: string | null
+  // C. Run
+  runType: string | null
+  builtBy: string | null
+  changeFrequency: string | null
+  // D. Develop
+  workKinds: string[]
+  hours: string | null
+  // E. Unsure
+  description: string
+  // All paths
   contact: BriefContact
   consent: boolean
 }
+
+export type ChoiceField =
+  | 'path'
+  | 'buildType'
+  | 'carePlan'
+  | 'audience'
+  | 'timeline'
+  | 'budget'
+  | 'existingType'
+  | 'access'
+  | 'urgency'
+  | 'runType'
+  | 'builtBy'
+  | 'changeFrequency'
+  | 'hours'
+export type MultiField = 'addOns' | 'needs' | 'situation' | 'workKinds'
+export type CountField = 'pages' | 'languages'
+export type TextField = 'description'
+
+export interface BriefOption {
+  value: string
+  label: string
+  description?: string
+  /** Right-aligned detail (e.g. a price). Filled in when options are resolved. */
+  meta?: string
+}
+
+/** Options resolved from other data files at runtime (offerings, add-ons, plans…). */
+export type OptionSource =
+  'buildOfferings' | 'websiteAddOns' | 'carePlans' | 'timelines' | 'budgets'
+
+/** Derived values conditions can test, besides plain answer fields. */
+export type ConditionField = ChoiceField | 'buildCategory'
+
+/** A step shows when ALL of its conditions hold. */
+export interface ShowIf {
+  field: ConditionField
+  in: string[]
+}
+
+interface StepBase {
+  id: string
+  /** Short name for progress and review rows. */
+  label: string
+  title: string
+  hint: string
+  showIf?: ShowIf[]
+}
+
+export type BriefStepConfig =
+  | (StepBase & {
+      kind: 'single'
+      field: ChoiceField
+      options?: BriefOption[]
+      source?: OptionSource
+      /** Extra option appended after sourced ones (e.g. "No plan for now"). */
+      extraOption?: BriefOption
+    })
+  | (StepBase & {
+      kind: 'multi'
+      field: MultiField
+      options?: BriefOption[]
+      source?: OptionSource
+      /** Minimum selections (0 = optional). */
+      min: number
+    })
+  | (StepBase & {
+      kind: 'count'
+      field: CountField
+      min: number
+      max: number
+      unit: { one: string; other: string }
+    })
+  | (StepBase & { kind: 'text'; field: TextField; minLength: number; placeholder: string })
+  | (StepBase & { kind: 'contact' })
+  | (StepBase & { kind: 'review' })
+
+export type BriefStepKind = BriefStepConfig['kind']
 
 export type BriefStatus = 'editing' | 'submitting' | 'success' | 'error'
 
@@ -36,30 +129,25 @@ export type BriefStatus = 'editing' | 'submitting' | 'success' | 'error'
 export type BriefErrors = Partial<Record<string, string>>
 
 export interface BriefState {
-  stepIndex: number
+  stepId: string
   /** +1 forward, -1 back: drives the step transition direction. */
   direction: 1 | -1
   answers: BriefAnswers
   errors: BriefErrors
   status: BriefStatus
-  /** Furthest step reached (steps up to here can be jumped to from review). */
-  furthest: number
+  /** Steps reached so far (review can jump back to these). */
+  visited: string[]
 }
 
 export type BriefAction =
-  | {
-      type: 'select'
-      field: 'projectType' | 'scope' | 'timeline' | 'budget' | 'monthlyPlan'
-      value: string | null
-    }
-  | { type: 'toggleFeature'; id: string }
+  | { type: 'choose'; field: ChoiceField; value: string | null }
+  | { type: 'toggle'; field: MultiField; value: string }
+  | { type: 'count'; field: CountField; value: number }
+  | { type: 'text'; field: TextField; value: string }
   | { type: 'contact'; field: keyof BriefContact; value: string }
   | { type: 'consent'; value: boolean }
   | { type: 'errors'; errors: BriefErrors }
-  | { type: 'next' }
-  | { type: 'back' }
-  | { type: 'goTo'; stepIndex: number }
+  | { type: 'goTo'; stepId: string; direction: 1 | -1 }
   | { type: 'submit' }
   | { type: 'success' }
   | { type: 'failure' }
-  | { type: 'reset'; answers: BriefAnswers; stepIndex?: number }

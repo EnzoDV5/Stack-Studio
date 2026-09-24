@@ -4,16 +4,23 @@
  * persisted: it must be given fresh.
  */
 import type { BriefAnswers } from '@/types'
+import { emptyAnswers } from './brief-reducer'
 
-const KEY = 'stack:brief-draft'
+// v2: branching quote builder. Older drafts (v1 shape) are ignored.
+const KEY = 'stack:brief-draft:v2'
 
 export function loadDraft(): BriefAnswers | null {
   try {
     const raw = window.sessionStorage.getItem(KEY)
     if (!raw) return null
     const parsed = JSON.parse(raw) as Partial<BriefAnswers>
-    if (typeof parsed !== 'object' || !parsed.contact) return null
-    return { ...(parsed as BriefAnswers), consent: false }
+    if (typeof parsed !== 'object' || !('path' in parsed) || !parsed.contact) return null
+    return {
+      ...emptyAnswers,
+      ...parsed,
+      contact: { ...emptyAnswers.contact, ...parsed.contact },
+      consent: false,
+    }
   } catch {
     return null
   }

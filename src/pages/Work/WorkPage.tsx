@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router'
 import { PageMeta } from '@/components/seo/PageMeta'
 import { pageMeta, workContent } from '@/data/pages'
 import { projectCategories, projects } from '@/data/projects'
-import { PageHero } from '@/sections/shared/PageHero'
+import { PageTitle } from '@/sections/shared/PageTitle'
 import { WorkGrid } from '@/sections/work/WorkGrid'
 import type { ProjectCategoryId } from '@/types'
 
@@ -18,7 +18,7 @@ export function WorkPage() {
   return (
     <>
       <PageMeta {...pageMeta.work} />
-      <PageHero content={workContent.hero} />
+      <PageTitle content={workContent.hero} />
       <WorkGrid
         projects={projects}
         categories={projectCategories}

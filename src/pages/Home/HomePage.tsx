@@ -1,19 +1,23 @@
 import { lazy } from 'react'
 import { DeferredSection } from '@/components/layout/DeferredSection'
 import { PageMeta } from '@/components/seo/PageMeta'
-import { clients } from '@/data/clients'
-import { homeContent, pageMeta, workContent } from '@/data/pages'
-import { founders } from '@/data/studio'
 import { media } from '@/data/media'
-import { monthlyPlans, pricingSettings, projectPackages } from '@/data/pricing'
+import { homeContent, pageMeta, pricingContent, workContent } from '@/data/pages'
+import { planFamilies, plans } from '@/data/plans'
+import { policies } from '@/data/policies'
 import { processSteps } from '@/data/process'
 import { featuredProjects } from '@/data/projects'
-import { services } from '@/data/services'
+import { rates } from '@/data/rates'
+import { getOffering, offerings, serviceStages } from '@/data/services'
+import { founders } from '@/data/studio'
 import { testimonials } from '@/data/testimonials'
+import { technologyContent, technologyRows } from '@/data/technologies'
+import { familyFrom, offeringPrice, stageRows } from '@/lib/offer'
 import { FeaturedWork } from '@/sections/home/FeaturedWork'
 import { HomeHero } from '@/sections/home/HomeHero'
 import { ServicesRows } from '@/sections/home/ServicesRows'
-import { LogoMarquee } from '@/sections/shared/LogoMarquee'
+import { TechnologyMarquee } from '@/sections/shared/TechnologyMarquee'
+import type { PlanFamily, StageId } from '@/types'
 
 // Below-the-fold sections: separate chunks, mounted as they approach the viewport.
 const ProcessPinned = lazy(() =>
@@ -29,8 +33,30 @@ const Testimonial = lazy(() =>
   import('@/sections/shared/Testimonial').then((m) => ({ default: m.Testimonial })),
 )
 
-const packagePrice = (id?: string) => projectPackages.find((p) => p.id === id)?.fromPrice
-const lowestMonthly = Math.min(...monthlyPlans.map((p) => p.pricePerMonth))
+const l = pricingContent.priceLabels
+const familyName = (id: PlanFamily) => planFamilies.find((f) => f.id === id)?.name ?? id
+const familyItem = (id: PlanFamily) => ({ name: familyName(id), price: familyFrom(id, plans, l) })
+
+/** Home keeps each stage short: priced offerings, or plan families as one "from" line. */
+function stageItems(stage: StageId) {
+  switch (stage) {
+    case 'run':
+      return [familyItem('care'), familyItem('managed')]
+    case 'partner':
+      return [familyItem('partner')]
+    default:
+      return stageRows(stage, { offerings, plans, rates }, l, { pricedOnly: true }).map((row) => ({
+        name: row.name,
+        price: row.price,
+      }))
+  }
+}
+
+function teaserPrice(source: { offering: string } | { planFamily: PlanFamily }) {
+  if ('planFamily' in source) return familyFrom(source.planFamily, plans, l)
+  const offering = getOffering(source.offering)
+  return offering ? offeringPrice(offering, l) : ''
+}
 
 export function HomePage() {
   const { hero, work, process, pricing, studio } = homeContent
@@ -42,7 +68,7 @@ export function HomePage() {
 
       <HomeHero {...hero} video={media.home.showreel} />
 
-      <LogoMarquee label={homeContent.clients.label} clients={clients} />
+      <TechnologyMarquee {...technologyContent} rows={technologyRows} />
 
       <FeaturedWork
         index={1}
@@ -61,13 +87,15 @@ export function HomePage() {
         eyebrow={homeContent.services.eyebrow}
         title={homeContent.services.title}
         intro={homeContent.services.intro}
-        services={services.map((s) => ({ ...s, fromPrice: packagePrice(s.pricePackageId) }))}
-        labels={{
-          from: homeContent.services.fromLabel,
-          start: homeContent.services.startLabel,
-          deliverables: homeContent.services.deliverablesLabel,
-          timeline: homeContent.services.timelineLabel,
-        }}
+        stages={serviceStages.map((s) => ({
+          id: s.id,
+          name: s.name,
+          line: s.line,
+          summary: s.summary,
+          items: stageItems(s.id),
+          cta: s.cta,
+        }))}
+        labels={{ examples: homeContent.services.itemsLabel }}
       />
 
       <DeferredSection minHeight="160vh">
@@ -79,21 +107,20 @@ export function HomePage() {
         />
       </DeferredSection>
 
-      <DeferredSection minHeight="100vh">
+      <DeferredSection minHeight="80vh">
         <PricingTeaser
           index={4}
           eyebrow={pricing.eyebrow}
           title={pricing.title}
           intro={pricing.intro}
-          fromLabel={pricing.fromLabel}
-          packages={projectPackages}
-          monthly={{ ...pricing.monthly, fromPrice: lowestMonthly }}
+          items={pricing.items.map((item) => ({
+            label: item.label,
+            note: item.note,
+            price: teaserPrice(item.source),
+          }))}
           cta={pricing.cta}
           estimateCta={pricing.estimateCta}
-          notes={[
-            pricingSettings.vatNote,
-            ...(pricingSettings.isPlaceholder ? [pricingSettings.placeholderNotice] : []),
-          ]}
+          notes={[policies.vatNote]}
         />
       </DeferredSection>
 

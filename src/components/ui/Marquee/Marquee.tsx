@@ -9,6 +9,7 @@ export interface MarqueeProps {
   duration?: number
   reverse?: boolean
   pauseOnHover?: boolean
+  paused?: boolean
   gap?: string
   className?: string
   'aria-label'?: string
@@ -23,11 +24,17 @@ export function Marquee({
   duration = marquee.loopSeconds,
   reverse = false,
   pauseOnHover = true,
+  paused = false,
   gap = '1rem',
   className,
   'aria-label': ariaLabel,
 }: MarqueeProps) {
-  const style = { '--marquee-duration': `${duration}s`, '--marquee-gap': gap } as CSSProperties
+  const style = {
+    '--marquee-duration': `${duration}s`,
+    '--marquee-gap': gap,
+    // Leave unset while running so a parent can pause multiple rows on hover.
+    '--marquee-play-state': paused ? 'paused' : undefined,
+  } as CSSProperties
   return (
     <div
       className={cn(

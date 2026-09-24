@@ -1,24 +1,38 @@
 /**
- * Guided-brief state machine (used with useReducer in <BriefFlow>). Pure: validation
- * happens in the component before `next` is dispatched.
+ * Quote-builder state (used with useReducer in <BriefFlow>). Pure. Validation and step
+ * visibility are computed in the component (lib/brief-schema, lib/brief-steps) and the
+ * resulting target step is passed in `goTo`.
  */
-import { BRIEF_STEPS, type BriefAction, type BriefAnswers, type BriefState } from '@/types'
-
-const LAST = BRIEF_STEPS.length - 1
+import { briefDefaults } from '@/data/brief'
+import type { BriefAction, BriefAnswers, BriefState } from '@/types'
 
 export const emptyAnswers: BriefAnswers = {
-  projectType: null,
-  scope: null,
-  features: [],
-  monthlyPlan: null,
+  path: null,
+  buildType: null,
+  pages: briefDefaults.pages,
+  addOns: [],
+  languages: briefDefaults.languages,
+  carePlan: briefDefaults.carePlan,
+  audience: null,
+  needs: [],
   timeline: null,
   budget: null,
+  existingType: null,
+  access: null,
+  situation: [],
+  urgency: null,
+  runType: null,
+  builtBy: null,
+  changeFrequency: null,
+  workKinds: [],
+  hours: null,
+  description: '',
   contact: { name: '', email: '', phone: '', company: '', message: '' },
   consent: false,
 }
 
-export function initBriefState(answers: BriefAnswers, stepIndex = 0): BriefState {
-  return { stepIndex, direction: 1, answers, errors: {}, status: 'editing', furthest: stepIndex }
+export function initBriefState(answers: BriefAnswers, stepId: string): BriefState {
+  return { stepId, direction: 1, answers, errors: {}, status: 'editing', visited: [stepId] }
 }
 
 function clearError(errors: BriefState['errors'], key: string) {
@@ -27,56 +41,46 @@ function clearError(errors: BriefState['errors'], key: string) {
 }
 
 export function briefReducer(state: BriefState, action: BriefAction): BriefState {
+  const set = (patch: Partial<BriefAnswers>, errorKey: string): BriefState => ({
+    ...state,
+    answers: { ...state.answers, ...patch },
+    errors: clearError(state.errors, errorKey),
+  })
+
   switch (action.type) {
-    case 'select':
-      return {
-        ...state,
-        answers: { ...state.answers, [action.field]: action.value },
-        errors: clearError(state.errors, action.field),
-      }
-    case 'toggleFeature': {
-      const has = state.answers.features.includes(action.id)
-      const features = has
-        ? state.answers.features.filter((f) => f !== action.id)
-        : [...state.answers.features, action.id]
-      return { ...state, answers: { ...state.answers, features } }
+    case 'choose':
+      return set({ [action.field]: action.value }, action.field)
+    case 'toggle': {
+      const list = state.answers[action.field]
+      const next = list.includes(action.value)
+        ? list.filter((v) => v !== action.value)
+        : [...list, action.value]
+      return set({ [action.field]: next }, action.field)
     }
+    case 'count':
+      return set({ [action.field]: action.value }, action.field)
+    case 'text':
+      return set({ [action.field]: action.value }, action.field)
     case 'contact':
       return {
-        ...state,
-        answers: {
-          ...state.answers,
-          contact: { ...state.answers.contact, [action.field]: action.value },
-        },
-        errors: clearError(state.errors, `contact.${action.field}`),
+        ...set(
+          { contact: { ...state.answers.contact, [action.field]: action.value } },
+          `contact.${action.field}`,
+        ),
       }
     case 'consent':
-      return {
-        ...state,
-        answers: { ...state.answers, consent: action.value },
-        errors: clearError(state.errors, 'consent'),
-      }
+      return set({ consent: action.value }, 'consent')
     case 'errors':
       return { ...state, errors: action.errors }
-    case 'next': {
-      const stepIndex = Math.min(state.stepIndex + 1, LAST)
-      return {
-        ...state,
-        stepIndex,
-        direction: 1,
-        errors: {},
-        furthest: Math.max(state.furthest, stepIndex),
-      }
-    }
-    case 'back':
-      return { ...state, stepIndex: Math.max(state.stepIndex - 1, 0), direction: -1, errors: {} }
     case 'goTo':
-      if (action.stepIndex > state.furthest) return state
       return {
         ...state,
-        stepIndex: action.stepIndex,
-        direction: action.stepIndex < state.stepIndex ? -1 : 1,
+        stepId: action.stepId,
+        direction: action.direction,
         errors: {},
+        visited: state.visited.includes(action.stepId)
+          ? state.visited
+          : [...state.visited, action.stepId],
       }
     case 'submit':
       return { ...state, status: 'submitting' }
@@ -84,7 +88,5 @@ export function briefReducer(state: BriefState, action: BriefAction): BriefState
       return { ...state, status: 'success' }
     case 'failure':
       return { ...state, status: 'error' }
-    case 'reset':
-      return initBriefState(action.answers, action.stepIndex)
   }
 }

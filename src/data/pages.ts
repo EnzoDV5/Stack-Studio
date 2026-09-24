@@ -67,10 +67,10 @@ export const closingCta: CtaContent = {
 /* ---------- Home ---------- */
 export const homeContent = {
   hero: {
-    eyebrow: 'Web studio · Centurion, ZA', // COPY:
+    eyebrow: 'Digital studio · Centurion, ZA', // COPY:
     title: 'Brand-led websites that do the work.', // COPY:
     intro:
-      'We’re a two-person studio designing and building cinematic, conversion-focused websites for small businesses and NPOs.', // COPY:
+      'Starting something new or need someone to take over what you already have? Stack handles both.', // COPY:
     cta: { label: 'Start a project', to: '/start' }, // COPY:
     secondaryCta: { label: 'See the work', to: '/work' }, // COPY:
     meta: [
@@ -79,9 +79,6 @@ export const homeContent = {
       { label: 'Est.', value: '2026' }, // COPY:
     ],
     scrollLabel: 'Scroll', // COPY:
-  },
-  clients: {
-    label: 'Trusted by teams who needed more than a template', // COPY:
   },
   work: {
     eyebrow: 'Selected work', // COPY:
@@ -93,14 +90,10 @@ export const homeContent = {
   },
   services: {
     eyebrow: 'Services', // COPY:
-    title: 'What we build.', // COPY:
+    title: 'Build it. Run it. Grow it.', // COPY:
     intro:
-      'Design and development under one roof, from first sketch to the site that keeps improving.', // COPY:
-    fromLabel: 'From', // COPY:
-    startLabel: 'Start with this', // COPY:
-    detailsLabel: 'Service details', // COPY:
-    deliverablesLabel: 'You get', // COPY:
-    timelineLabel: 'Typical timeline', // COPY:
+      'We build, manage and grow the digital systems your business depends on, from the first website to the software behind it.', // COPY:
+    itemsLabel: 'Starting points', // COPY:
   },
   process: {
     eyebrow: 'Process', // COPY:
@@ -113,16 +106,22 @@ export const homeContent = {
     title: 'Starting points, not hidden prices.', // COPY:
     intro:
       'Every project is quoted properly, but you should know roughly where you stand before we talk.', // COPY:
-    fromLabel: 'From', // COPY:
-    monthly: {
-      eyebrow: 'After launch', // COPY:
-      title: 'Monthly plans keep it fast, secure and improving.', // COPY:
-      body: 'Hosting, care and growth retainers, so your site never goes stale.', // COPY:
-      fromLabel: 'From', // COPY:
-      perMonth: '/month', // COPY:
-    },
+    /** Teaser items: label + where the price comes from (resolved on the Home page). */
+    items: [
+      { label: 'Websites', source: { offering: 'business-website' }, note: 'Once-off build' }, // COPY:
+      {
+        label: 'Care',
+        source: { planFamily: 'care' as const },
+        note: 'Hosting, security and changes',
+      }, // COPY:
+      {
+        label: 'Partner',
+        source: { planFamily: 'partner' as const },
+        note: 'Reserved monthly hours',
+      }, // COPY:
+    ],
     cta: { label: 'See full pricing', to: '/pricing' }, // COPY:
-    estimateCta: { label: 'Get an estimate', to: '/start' }, // COPY:
+    estimateCta: { label: 'Build my estimate', to: '/start' }, // COPY:
   },
   studio: {
     eyebrow: 'Studio', // COPY:
@@ -183,16 +182,14 @@ export const caseStudyContent = {
 export const servicesContent = {
   hero: {
     eyebrow: 'Services', // COPY:
-    title: 'Everything your site needs to earn trust.', // COPY:
-    intro: 'Four ways we help, all designed and built in-house, with clear starting prices.', // COPY:
+    title: 'Build, take over, run, grow, partner.', // COPY:
+    intro:
+      'Starting something new or need someone to take over what you already have? Stack handles both, and stays on to keep it working and improving.', // COPY:
   } satisfies PageHeroContent,
-  detailLabels: {
-    deliverables: 'What you get', // COPY:
-    timeline: 'Typical timeline', // COPY:
-    from: 'From', // COPY:
-    monthlyFrom: 'Plans from', // COPY:
-    perMonth: '/month', // COPY:
-    start: 'Start with this', // COPY:
+  navLabel: 'Service stages', // COPY:
+  labels: {
+    includes: 'Includes', // COPY:
+    examples: 'Examples', // COPY:
   },
   faq: {
     eyebrow: 'FAQ', // COPY:
@@ -206,42 +203,56 @@ export const pricingContent = {
     eyebrow: 'Pricing', // COPY:
     title: 'Transparent pricing. No surprises.', // COPY:
     intro:
-      'Two ways to work with us: a once-off build, and a monthly plan that keeps it running and improving.', // COPY:
+      'Once-off builds, monthly plans to keep things running, and partner retainers for ongoing development. All prices in ZAR.', // COPY:
   } satisfies PageHeroContent,
-  models: {
-    project: {
-      eyebrow: 'Once-off', // COPY:
-      title: 'Project builds', // COPY:
-      intro: 'Design and development, quoted as a fixed price after a discovery call.', // COPY:
+  summary: {
+    eyebrow: 'At a glance', // COPY:
+    title: 'Where most projects start.', // COPY:
+    groups: {
+      build: 'Build', // COPY:
+      takeover: 'Take over', // COPY:
+      run: 'Run', // COPY:
+      partner: 'Partner', // COPY:
     },
-    monthly: {
-      eyebrow: 'Monthly', // COPY:
-      title: 'Monthly plans', // COPY:
-      intro: 'Hosting, care and growth retainers that keep your site healthy and improving.', // COPY:
-    },
-    fromLabel: 'From', // COPY:
-    perMonth: '/month', // COPY:
-    pagesLabel: (n: number) => `${n} page${n === 1 ? '' : 's'} included`, // COPY:
-    weeksLabel: (a: number, b: number) => `${a}–${b} weeks`, // COPY:
-    minTermLabel: (n: number) => `${n}-month minimum`, // COPY:
-    popularLabel: 'Most popular', // COPY:
+    addOnsTitle: 'Website add-ons', // COPY:
+    each: 'each', // COPY:
+    more: {
+      title: 'Need something more specific?', // COPY:
+      body: 'Every project is different. Build a quick project brief and we’ll give you a more accurate estimate.', // COPY:
+      label: 'Build my estimate', // COPY:
+      to: '/start',
+    } satisfies CtaContent,
+  },
+  plans: {
+    eyebrow: 'Monthly plans', // COPY:
+    title: 'Keep it running. Keep it improving.', // COPY:
+    tabsLabel: 'Plan types', // COPY:
+    popular: 'Most popular', // COPY:
     choose: 'Choose', // COPY:
+    minTerm: (n: number) => `${n}-month minimum, billed monthly in advance`, // COPY:
   },
-  addOns: {
-    eyebrow: 'Add-ons', // COPY:
-    title: 'Extras, when you need them.', // COPY:
-    onceLabel: 'once-off', // COPY:
-    monthlyLabel: '/month', // COPY:
-    nameLabel: 'Add-on', // COPY:
-    priceLabel: 'Price', // COPY:
+  scope: {
+    eyebrow: 'What plans cover', // COPY:
+    includedTitle: 'Included', // COPY:
+    excludedTitle: 'Not included', // COPY:
   },
-  estimator: {
-    eyebrow: 'Not sure which fits?', // COPY:
-    title: 'Get a rough estimate in two minutes.', // COPY:
-    body: 'Answer a few questions and see a live estimate before you send anything.', // COPY:
-    label: 'Start the estimate', // COPY:
-    to: '/start',
-  } satisfies CtaContent,
+  rates: {
+    eyebrow: 'Outside a plan', // COPY:
+    title: 'Hourly work.', // COPY:
+  },
+  policies: {
+    eyebrow: 'How we bill', // COPY:
+    title: 'Payment terms and policies.', // COPY:
+    scheduleLabel: 'Payment schedule', // COPY:
+    termsLink: { label: 'Read the full terms', to: '/terms' }, // COPY:
+  },
+  priceLabels: {
+    from: 'From', // COPY:
+    perMonth: '/month', // COPY:
+    perHour: '/hour', // COPY:
+    quoted: 'Quoted per project', // COPY:
+    hours: (label: string) => `${label} included each month`, // COPY:
+  },
   faq: {
     eyebrow: 'Pricing FAQ', // COPY:
     title: 'The money questions.', // COPY:

@@ -1,0 +1,124 @@
+import { useId, useRef, useState, type KeyboardEvent } from 'react'
+import { Section, type Tone } from '@/components/layout/Section'
+import { cn } from '@/lib/cn'
+import { PlanCard, type PlanCardProps } from '@/sections/pricing/PlanCard'
+import { SectionHeader } from '@/sections/shared/SectionHeader'
+
+export interface PlanTab {
+  id: string
+  name: string
+  description: string
+  /** e.g. "Limited to 3 partner clients at a time." */
+  note?: string
+  plans: (Omit<PlanCardProps, 'popularLabel'> & { id: string })[]
+}
+
+export interface PlanTabsProps {
+  eyebrow: string
+  title: string
+  tabsLabel: string
+  tabs: PlanTab[]
+  popularLabel: string
+  /** Under the panels, e.g. minimum term and "Hosting-only available on request". */
+  footnotes: string[]
+  tone?: Tone
+}
+
+/** Care / Managed / Partner plan families as accessible tabs (arrow keys move between tabs). */
+export function PlanTabs({
+  eyebrow,
+  title,
+  tabsLabel,
+  tabs,
+  popularLabel,
+  footnotes,
+  tone = 'paper',
+}: PlanTabsProps) {
+  const baseId = useId()
+  const [active, setActive] = useState(tabs[0]?.id ?? '')
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
+
+  const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    const i = tabs.findIndex((t) => t.id === active)
+    const move = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0
+    const jump = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : null
+    if (!move && jump === null) return
+    event.preventDefault()
+    const next = jump ?? (i + move + tabs.length) % tabs.length
+    const tab = tabs[next]
+    if (!tab) return
+    setActive(tab.id)
+    tabRefs.current[next]?.focus()
+  }
+
+  return (
+    <Section tone={tone}>
+      <div className="container-site">
+        <SectionHeader eyebrow={eyebrow} title={title} />
+        <div
+          role="tablist"
+          aria-label={tabsLabel}
+          className="mt-12 no-scrollbar flex gap-2 overflow-x-auto"
+        >
+          {tabs.map((tab, i) => {
+            const selected = tab.id === active
+            return (
+              <button
+                key={tab.id}
+                ref={(el) => {
+                  tabRefs.current[i] = el
+                }}
+                type="button"
+                role="tab"
+                id={`${baseId}-tab-${tab.id}`}
+                aria-selected={selected}
+                aria-controls={`${baseId}-panel-${tab.id}`}
+                tabIndex={selected ? 0 : -1}
+                onClick={() => setActive(tab.id)}
+                onKeyDown={onKeyDown}
+                className={cn(
+                  'h-11 shrink-0 rounded-pill border px-5 text-small font-semibold transition-colors',
+                  selected
+                    ? 'border-transparent bg-(--tone-fg) text-(--tone-bg)'
+                    : 'border-tone text-muted hover:text-(--tone-fg)',
+                )}
+              >
+                {tab.name}
+              </button>
+            )
+          })}
+        </div>
+
+        {tabs.map((tab) => (
+          <div
+            key={tab.id}
+            role="tabpanel"
+            id={`${baseId}-panel-${tab.id}`}
+            aria-labelledby={`${baseId}-tab-${tab.id}`}
+            hidden={tab.id !== active}
+            className="mt-10"
+          >
+            <p className="max-w-[56ch] text-body-lg text-muted">{tab.description}</p>
+            <ul
+              className={cn(
+                'mt-8 grid gap-4 md:grid-cols-2',
+                tab.plans.length > 2 && 'lg:grid-cols-3',
+              )}
+            >
+              {tab.plans.map(({ id, ...plan }) => (
+                <PlanCard key={id} {...plan} popularLabel={popularLabel} />
+              ))}
+            </ul>
+            {tab.note && <p className="mt-6 text-small font-semibold text-accent">{tab.note}</p>}
+          </div>
+        ))}
+
+        <div className="mt-8 space-y-1 text-small text-muted">
+          {footnotes.map((note) => (
+            <p key={note}>{note}</p>
+          ))}
+        </div>
+      </div>
+    </Section>
+  )
+}

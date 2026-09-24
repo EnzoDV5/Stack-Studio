@@ -10,15 +10,21 @@
  *   Either way: turn on spam protection (honeypot or reCAPTCHA) and email notifications
  *   in the provider dashboard.
  */
-import { config } from './config'
-import type { Estimate } from './estimate'
+import type { BriefPathId } from '@/types'
 import type { ValidBrief } from './brief-schema'
+import { config } from './config'
+import type { EstimateKind } from './estimate'
 
 export interface BriefPayload {
+  path: BriefPathId
   brief: ValidBrief
-  /** Human-readable answers, so the email is useful without a lookup table. */
+  /** Human-readable answers, keyed by step label, so the email reads well on its own. */
   summary: Record<string, string>
-  estimate: Pick<Estimate, 'onceLow' | 'onceHigh' | 'monthlyTotal' | 'weeks' | 'budgetFit'>
+  result: {
+    kind: EstimateKind
+    /** Plain-language recommendation, e.g. "R 23 000 – R 31 000" or "Care Business". */
+    recommendation: string
+  }
   meta: { submittedAt: string; page: string; userAgent: string }
 }
 
@@ -35,7 +41,10 @@ export async function submitBrief(payload: BriefPayload): Promise<void> {
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     body: JSON.stringify({
       ...payload.summary,
-      _subject: `New brief: ${payload.brief.contact.name}`,
+      Path: payload.path,
+      Result: payload.result.kind,
+      Recommendation: payload.result.recommendation,
+      _subject: `New brief (${payload.path}): ${payload.brief.contact.name}`,
       _replyto: payload.brief.contact.email,
       payload,
     }),

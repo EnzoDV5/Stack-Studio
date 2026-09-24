@@ -1,0 +1,30 @@
+@layer components {
+  .rows {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .logo {
+    display: block;
+    flex: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: currentColor;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+  }
+
+  @media (hover: hover) {
+    .rows:hover {
+      --marquee-play-state: paused;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rows {
+      padding-inline: var(--spacing-gutter);
+      gap: 2rem;
+    }
+  }
+}

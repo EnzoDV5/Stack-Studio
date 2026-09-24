@@ -8,7 +8,9 @@ import { config } from './config'
 
 export type AnalyticsEvent =
   | 'Start project click'
+  | 'Brief path selected'
   | 'Brief step complete'
+  | 'Brief result shown'
   | 'Brief submitted'
   | 'Brief submit error'
   | 'WhatsApp click'

@@ -1,16 +1,17 @@
 import { useParams } from 'react-router'
 import { PageMeta } from '@/components/seo/PageMeta'
+import { Tag } from '@/components/ui/Tag'
 import { caseStudyContent } from '@/data/pages'
 import { getNextProject, getProject } from '@/data/projects'
 import { getTestimonial } from '@/data/testimonials'
 import { NotFoundPage } from '@/pages/NotFound'
 import { CaseGallery } from '@/sections/case-study/CaseGallery'
-import { CaseHero } from '@/sections/case-study/CaseHero'
 import { CaseMeta } from '@/sections/case-study/CaseMeta'
 import { CaseMetrics } from '@/sections/case-study/CaseMetrics'
 import { CaseNarrative } from '@/sections/case-study/CaseNarrative'
 import { CaseOutro } from '@/sections/case-study/CaseOutro'
 import { Testimonial } from '@/sections/shared/Testimonial'
+import { PageTitle } from '@/sections/shared/PageTitle'
 
 /** One reusable template for every /work/:slug, driven entirely by data/projects.ts. */
 export function CaseStudyPage() {
@@ -33,13 +34,20 @@ export function CaseStudyPage() {
         noindex={project.isSample}
       />
 
-      <CaseHero
-        eyebrow={`${caseStudyContent.eyebrow} · ${project.year}`}
-        title={project.name}
-        summary={project.summary}
-        media={project.hero}
-        sampleNotice={project.isSample ? caseStudyContent.sampleNotice : undefined}
-      />
+      <PageTitle
+        tone="dark"
+        content={{
+          eyebrow: `${caseStudyContent.eyebrow} · ${project.year}`,
+          title: project.name,
+          intro: project.summary,
+        }}
+      >
+        {project.isSample && (
+          <Tag variant="accent" className="h-auto! max-w-full py-2 whitespace-normal!">
+            {caseStudyContent.sampleNotice}
+          </Tag>
+        )}
+      </PageTitle>
 
       <CaseMeta
         labels={caseStudyContent.meta}

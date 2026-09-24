@@ -3,7 +3,7 @@ import { media } from '@/data/media'
 import { pageMeta, studioContent } from '@/data/pages'
 import { founders, principles, values } from '@/data/studio'
 import { testimonials } from '@/data/testimonials'
-import { PageHero } from '@/sections/shared/PageHero'
+import { PageTitle } from '@/sections/shared/PageTitle'
 import { Testimonial } from '@/sections/shared/Testimonial'
 import { FounderProfiles } from '@/sections/studio/FounderProfiles'
 import { StudioIntro } from '@/sections/studio/StudioIntro'
@@ -14,7 +14,7 @@ export function StudioPage() {
   return (
     <>
       <PageMeta {...pageMeta.studio} />
-      <PageHero content={studioContent.hero} />
+      <PageTitle content={studioContent.hero} />
       <StudioIntro
         eyebrow={studioContent.intro.eyebrow}
         title={studioContent.intro.title}

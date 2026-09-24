@@ -63,22 +63,27 @@ token value:
 Fluid scale (from 375px to 1600px). Each token also carries line-height, tracking and
 weight:
 
-| Utility            | Size (min → max)    | Line height / tracking | Use                     |
-| ------------------ | ------------------- | ---------------------- | ----------------------- |
-| `text-display-2xl` | 52px → 200px        | 0.86 / −0.055em, 800   | Home hero, closing CTA  |
-| `text-display-xl`  | 44px → 128px        | 0.9 / −0.05em, 800     | Page titles (h1)        |
-| `text-display-lg`  | 36px → 80px         | 0.95 / −0.045em, 750   | Section headlines       |
-| `text-heading-xl`  | 28px → 48px         | 1.02 / −0.035em, 700   | Card titles, prices     |
-| `text-heading-lg`  | 22px → 32px         | 1.1 / −0.025em, 650    | Sub-headings            |
-| `text-heading-md`  | 18px → 22px         | 1.25 / −0.015em, 600   | Small headings          |
-| `text-body-lg`     | 17px → 21px         | 1.55                   | Intros, lead paragraphs |
-| `text-body`        | 16px                | 1.6                    | Body                    |
-| `text-small`       | 14px                | 1.5                    | Meta, captions          |
-| `eyebrow`          | 12px mono uppercase | 0.16em tracking        | `01 · WORK` labels      |
-| `text-micro`       | 11px                | 0.12em                 | Disclaimers, keycaps    |
+| Utility            | Size (min → max)    | Line height / tracking | Use                              |
+| ------------------ | ------------------- | ---------------------- | -------------------------------- |
+| `text-display-2xl` | 52px → 200px        | 0.86 / −0.055em, 800   | Home hero, closing CTA           |
+| `text-display-xl`  | 44px → 128px        | 0.9 / −0.05em, 800     | Large display text               |
+| `text-display-lg`  | 36px → 80px         | 0.95 / −0.045em, 750   | Section headlines                |
+| `text-heading-xl`  | 28px → 48px         | 1.02 / −0.035em, 700   | Inner-page titles, cards, prices |
+| `text-heading-lg`  | 22px → 32px         | 1.1 / −0.025em, 650    | Sub-headings                     |
+| `text-heading-md`  | 18px → 22px         | 1.25 / −0.015em, 600   | Small headings                   |
+| `text-body-lg`     | 17px → 21px         | 1.55                   | Intros, lead paragraphs          |
+| `text-body`        | 16px                | 1.6                    | Body                             |
+| `text-small`       | 14px                | 1.5                    | Meta, captions                   |
+| `eyebrow`          | 12px mono uppercase | 0.16em tracking        | `01 · WORK` labels               |
+| `text-micro`       | 11px                | 0.12em                 | Disclaimers, keycaps             |
 
 Heading level (`as`) and visual size (`size`) are independent in `<Heading>`. Keep one h1
 per page. Use the `numeric` utility for prices and counters (tabular figures).
+
+Only Home has a hero. Other routes use `PageTitle`: a compact, static h1 and intro,
+with no grid, title reveal or hero media. Match its tone to the first content section
+so cream backgrounds use ink titles and dark backgrounds use paper titles. A dark
+header-height inset keeps the fixed navigation readable above either background.
 
 **Eyebrows:** `<Eyebrow index={1} label="Selected work" />` renders an orange square marker,
 then `01 · SELECTED WORK`.
@@ -137,19 +142,19 @@ a long settle.
 
 Signature ideas in use:
 
-| Where                | Idea                                                     | Component          |
-| -------------------- | -------------------------------------------------------- | ------------------ |
-| First visit          | Mark and counter preloader, under 1.5s, once per session | `Preloader`        |
-| Route change         | Orange then ink panel wipe, scroll reset                 | `PageTransition`   |
-| Hero and page titles | Masked line-by-line rise                                 | `SplitReveal`      |
-| Work media           | Clip-path mask opens while the image settles             | `MediaReveal`      |
-| Work cards           | Hover video preview (desktop)                            | `ProjectCard`      |
-| Services             | Expanding rows                                           | `Accordion`        |
-| Process              | Sticky column with active step and progress              | `ProcessPinned`    |
-| Cards and lists      | Staggered rise                                           | `StaggerGroup`     |
-| Founders             | Gentle scroll parallax                                   | `Parallax`         |
-| Clients              | CSS marquee                                              | `Marquee`          |
-| Chrome               | Header hides on scroll, custom cursor, magnetic CTAs     | `Header`, `Cursor` |
+| Where           | Idea                                                     | Component                      |
+| --------------- | -------------------------------------------------------- | ------------------------------ |
+| First visit     | Mark and counter preloader, under 1.5s, once per session | `Preloader`                    |
+| Route change    | Orange then ink panel wipe, scroll reset                 | `PageTransition`               |
+| Home hero       | Masked line-by-line rise                                 | `SplitReveal`                  |
+| Work media      | Clip-path mask opens while the image settles             | `MediaReveal`                  |
+| Work cards      | Hover video preview (desktop)                            | `ProjectCard`                  |
+| Services        | Expanding rows                                           | `Accordion`                    |
+| Process         | Sticky column with active step and progress              | `ProcessPinned`                |
+| Cards and lists | Staggered rise                                           | `StaggerGroup`                 |
+| Founders        | Gentle scroll parallax                                   | `Parallax`                     |
+| Technologies    | Opposing CSS marquee rows, hover pause and pause control | `TechnologyMarquee`, `Marquee` |
+| Chrome          | Header hides on scroll, custom cursor, magnetic CTAs     | `Header`, `Cursor`             |
 
 **Reduced motion** (`prefers-reduced-motion: reduce`): Lenis is not created (native
 scroll), there's no preloader, no page wipe (instant swap plus scroll reset), no text

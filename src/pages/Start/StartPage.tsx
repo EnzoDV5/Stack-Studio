@@ -1,58 +1,53 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { Section } from '@/components/layout/Section'
-import { Eyebrow } from '@/components/ui/Eyebrow'
 import { PageMeta } from '@/components/seo/PageMeta'
-import { briefCopy } from '@/data/brief'
-import { pageMeta } from '@/data/pages'
-import { pricingData } from '@/data/pricing'
+import { briefCopy, briefSteps } from '@/data/brief'
+import { pageMeta, pricingContent } from '@/data/pages'
+import { planFamilies } from '@/data/plans'
 import { site, whatsappHref } from '@/data/site'
 import { loadDraft } from '@/lib/brief-draft'
+import { prefillFromParams } from '@/lib/brief-prefill'
 import { emptyAnswers } from '@/lib/brief-reducer'
+import { firstOpenStepId } from '@/lib/brief-steps'
+import { defaultEstimateData } from '@/lib/estimate'
 import { BriefFlow } from '@/sections/start/BriefFlow'
+import { PageTitle } from '@/sections/shared/PageTitle'
 import type { BriefAnswers } from '@/types'
 
+const partnerNote = planFamilies.find((f) => f.id === 'partner')?.note
+
 /**
- * /start: the guided brief. Pre-fills from ?type=<package id> (skips step 1) and
- * ?plan=<monthly plan id>, on top of any draft saved in this tab.
+ * /start: the quote builder. Deep links pre-fill it (?path=, ?type=<offering>, ?plan=<plan>)
+ * on top of any draft saved in this tab, then it resumes at the first open step.
  */
 export function StartPage() {
   const [params] = useSearchParams()
   const [initial] = useState(() => {
-    const type = params.get('type')
-    const plan = params.get('plan')
-    const pkg = pricingData.packages.find((p) => p.id === type)
-    const monthly = pricingData.monthlyPlans.find((p) => p.id === plan)
-    const answers: BriefAnswers = { ...(loadDraft() ?? emptyAnswers) }
-    if (pkg) answers.projectType = pkg.id
-    if (monthly) answers.monthlyPlan = monthly.id
-    return { answers, step: pkg ? 1 : 0, prefillName: pkg?.name }
+    const prefill = prefillFromParams(params, defaultEstimateData)
+    const base = loadDraft() ?? emptyAnswers
+    // A deep link to a different path starts that path fresh.
+    const answers: BriefAnswers =
+      prefill.answers.path && prefill.answers.path !== base.path
+        ? { ...emptyAnswers, contact: base.contact, ...prefill.answers }
+        : { ...base, ...prefill.answers }
+    const stepId = firstOpenStepId(briefSteps, answers, defaultEstimateData)
+    return { answers, stepId, prefillName: prefill.name }
   })
 
   return (
     <>
       <PageMeta {...pageMeta.start} />
-      <Section
-        tone="dark"
-        grid="top"
-        spacing="none"
-        className="pt-[calc(var(--spacing-header)+clamp(2.5rem,6vw,5rem))]"
-      >
-        <header className="container-site mb-14 grid gap-6 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
-            <Eyebrow label={briefCopy.intro.eyebrow} className="mb-6" />
-            <h1 className="max-w-[14ch] text-display-xl">{briefCopy.intro.title}</h1>
-          </div>
-          <p className="max-w-[44ch] text-muted lg:col-span-4 lg:col-start-9">
-            {briefCopy.intro.intro}
-          </p>
-        </header>
-
+      <PageTitle content={briefCopy.intro} tone="dark" />
+      <Section tone="dark" spacing="none" className="pt-4">
         <BriefFlow
           copy={briefCopy}
-          pricing={pricingData}
+          steps={briefSteps}
+          data={defaultEstimateData}
+          priceLabels={pricingContent.priceLabels}
+          partnerNote={partnerNote}
           initialAnswers={initial.answers}
-          initialStep={initial.step}
+          initialStepId={initial.stepId}
           prefillName={initial.prefillName}
           privacyHref="/privacy"
           whatsapp={{

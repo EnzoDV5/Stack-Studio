@@ -24,6 +24,7 @@ export const projects: Project[] = [
       'A proof-first website that turns rooftop installs into quote requests for a Gauteng solar installer.', // COPY:
     categories: ['website', 'energy'],
     services: ['UX strategy', 'Web design', 'Development', 'SEO & analytics'], // COPY:
+    stages: ['build', 'run'], // COPY: confirm
     liveUrl: 'https://example.com/gc-solar', // COPY: replace with the live GC Solar URL
     featured: true,
     thumbnail: media.projects.gcSolar.thumbnail,
@@ -70,7 +71,7 @@ export const projects: Project[] = [
       { value: '2×', label: 'Quote requests vs. before' }, // COPY: PLACEHOLDER METRIC
     ],
     testimonialId: 'gc-solar',
-    briefType: 'business',
+    briefType: 'business-website',
   },
   {
     slug: 'mpg-foundation',
@@ -81,6 +82,7 @@ export const projects: Project[] = [
       'A warm, trustworthy home for a community foundation, built to explain its impact and make giving simple.', // COPY:
     categories: ['website', 'npo'],
     services: ['Content strategy', 'Web design', 'Development', 'Hosting & care'], // COPY:
+    stages: ['build', 'run'], // COPY: confirm
     liveUrl: 'https://example.com/mpg-foundation', // COPY: replace with the live MPG Foundation URL
     featured: true,
     thumbnail: media.projects.mpgFoundation.thumbnail,
@@ -130,7 +132,7 @@ export const projects: Project[] = [
       { value: '< 2s', label: 'Load time on mobile' }, // COPY: PLACEHOLDER METRIC
     ],
     testimonialId: 'mpg-foundation',
-    briefType: 'business',
+    briefType: 'business-website',
   },
   {
     slug: 'sample-project',
@@ -141,6 +143,7 @@ export const projects: Project[] = [
       'A placeholder case study that shows how the template handles a brand and web-app project.', // COPY:
     categories: ['brand', 'web-app'],
     services: ['Brand refresh', 'Product design', 'Web app'], // COPY:
+    stages: ['build'],
     isSample: true,
     thumbnail: media.projects.sample.thumbnail,
     preview: media.projects.sample.preview,
@@ -174,7 +177,7 @@ export const projects: Project[] = [
       { value: '00', label: 'Sample metric' }, // COPY:
       { value: '00%', label: 'Sample metric' }, // COPY:
     ],
-    briefType: 'product',
+    briefType: 'web-app',
   },
 ]
 

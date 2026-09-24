@@ -23,28 +23,28 @@ Instagram, LinkedIn, privacy link).
 
 ## Home `/`
 
-| #   | Section        | Tone   | Purpose                                                        |
-| --- | -------------- | ------ | -------------------------------------------------------------- |
-| —   | Hero           | dark   | Big statement over the showreel; magnetic **Start a project**  |
-| —   | Client marquee | dark   | Real names straight away (Find, then first Trust)              |
-| 01  | Selected work  | paper  | Two featured case studies, large media, hover video previews   |
-| 02  | Services       | dark   | Expanding rows: what we do, each with a "from" price and a CTA |
-| 03  | Process        | paper  | Pinned sticky-scroll: how a project runs, week by week         |
-| 04  | Pricing teaser | dark   | Project "from" prices, plus the monthly plan hook              |
-| 05  | Studio snippet | paper  | The two founders, one line each                                |
-| —   | Testimonial    | paper  | A real client voice                                            |
-| —   | Closing CTA    | orange | Giant **Start a project**                                      |
+| #   | Section          | Tone   | Purpose                                                        |
+| --- | ---------------- | ------ | -------------------------------------------------------------- |
+| —   | Hero             | dark   | Big statement over the showreel; magnetic **Start a project**  |
+| —   | Technology strip | dark   | Tools across design, development, infrastructure and AI        |
+| 01  | Selected work    | paper  | Two featured case studies, large media, hover video previews   |
+| 02  | Services         | dark   | Expanding rows: what we do, each with a "from" price and a CTA |
+| 03  | Process          | paper  | Pinned sticky-scroll: how a project runs, week by week         |
+| 04  | Pricing teaser   | dark   | Project "from" prices, plus the monthly plan hook              |
+| 05  | Studio snippet   | paper  | The two founders, one line each                                |
+| —   | Testimonial      | paper  | A real client voice                                            |
+| —   | Closing CTA      | orange | Giant **Start a project**                                      |
 
 ## Work `/work`
 
-Page hero, then a filter bar (All plus categories, stored in `?filter=` so it can be linked),
+Compact page title, then a filter bar (All plus categories, stored in `?filter=` so it can be linked),
 then the project grid (hover video preview on desktop), then the closing CTA.
 
 ## Case study `/work/:slug`
 
 One template, driven entirely by `src/data/projects.ts`:
 
-1. Hero: title, one-line summary, full-bleed media
+1. Compact page title and summary (project imagery remains in the gallery)
 2. Meta: client, year, services, live link
 3. Narrative: 01 Problem, 02 Approach, 03 Build, 04 Result
 4. Gallery
@@ -57,20 +57,20 @@ Seeded with GC Solar, MPG Foundation and one clearly labelled sample project.
 
 ## Services `/services`
 
-Page hero, service details (what it is, deliverables, typical timeline, "from" price, a
+Compact page title, service details (what it is, deliverables, typical timeline, "from" price, a
 **Start with this** link that pre-fills the brief), the pinned process section, an FAQ
 accordion, then the closing CTA.
 
 ## Pricing `/pricing`
 
-Page hero, then two models side by side: **Project builds** (once-off) and **Monthly plans**
+Compact page title, then two models side by side: **Project builds** (once-off) and **Monthly plans**
 (hosting, care, growth). Then the add-ons table, an estimator nudge ("Get an estimate in
 two minutes"), the pricing FAQ and the closing CTA. Everything comes from
 `src/data/pricing.ts`.
 
 ## Studio `/studio`
 
-Page hero, who we are, the two founders, how we work (principles), values, closing CTA.
+Compact page title, who we are, the two founders, how we work (principles), values, closing CTA.
 
 ## Start `/start`
 

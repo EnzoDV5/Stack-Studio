@@ -1,20 +1,5 @@
 import type { ImageAsset } from './media'
 
-export interface Service {
-  id: string
-  name: string
-  /** One line for the home rows. */
-  summary: string
-  /** Longer copy for the Services page. */
-  description: string[]
-  deliverables: string[]
-  timeline: string
-  /** ProjectPackage id whose "from" price is shown next to this service. */
-  pricePackageId?: string
-  /** ProjectPackage id used to pre-fill the brief. */
-  briefType?: string
-}
-
 export interface ProcessStep {
   id: string
   title: string

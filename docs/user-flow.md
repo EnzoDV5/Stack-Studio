@@ -8,7 +8,7 @@ FIND ─────────► TRUST ─────────► UNDERST
 "Who are you?"   "Can you do it?"  "What do I get,       "How do I start?"
                                     what does it cost?"
 Home hero        Featured work      Services rows         Guided brief (/start)
-Client marquee   Case studies       Pricing teaser        WhatsApp (fallback)
+Technology strip Case studies       Pricing teaser        WhatsApp (fallback)
 Studio snippet   Metrics, quotes    /services, /pricing   Email (footer)
 ```
 
@@ -16,7 +16,7 @@ Studio snippet   Metrics, quotes    /services, /pricing   Email (footer)
 
 1. **Land on Home.** A short preloader (once per session) opens onto a big statement over
    the showreel. The CTA is visible within 1 second. _Doubt removed: Find._
-2. **Scroll.** Client names in a marquee, then two featured case studies with large media.
+2. **Scroll.** A technology capability strip, then two featured case studies with large media.
    Hovering previews the work in motion. _Doubt removed: Trust._
 3. **Keep scrolling.** Services as expanding rows, then a pinned process section showing
    exactly how a project runs. _Doubt removed: Understand (what)._

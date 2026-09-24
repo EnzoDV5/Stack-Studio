@@ -20,7 +20,7 @@ export function PrivacyNotice({
   tone = 'paper',
 }: PrivacyNoticeProps) {
   return (
-    <Section tone={tone}>
+    <Section tone={tone} className="pt-8">
       <div className="container-site grid gap-12 lg:grid-cols-12">
         <p className="eyebrow text-muted lg:col-span-3">{updated}</p>
         <div className="prose-stack lg:col-span-8 lg:col-start-5">
