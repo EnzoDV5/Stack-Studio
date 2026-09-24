@@ -1,1 +1,6 @@
+/* Stylesheet entry. Order matters: Tailwind → tokens → base → typography → utilities. */
 @import 'tailwindcss';
+@import './tokens.css';
+@import './base.css';
+@import './typography.css';
+@import './utilities.css';

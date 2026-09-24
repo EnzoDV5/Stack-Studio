@@ -1,0 +1,83 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: var(--z-header);
+  height: var(--spacing-header);
+  color: var(--color-paper);
+  transition:
+    transform var(--duration-base) var(--ease-out-expo),
+    background-color var(--duration-fast) var(--ease-out-expo),
+    border-color var(--duration-fast) var(--ease-out-expo);
+  border-bottom: 1px solid transparent;
+}
+
+.scrolled {
+  background-color: rgb(10 10 10 / 0.78);
+  border-bottom-color: rgb(255 255 255 / 0.08);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+
+.hidden {
+  transform: translateY(-100%);
+}
+
+/* Keep the header reachable for keyboard users. */
+.header:focus-within {
+  transform: none;
+}
+
+.navLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.5rem;
+  color: var(--color-grey-300);
+  transition: color var(--duration-micro) ease;
+}
+
+.navLink::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-orange);
+  transform: scale(0);
+  transition: transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.navLink:hover,
+.active {
+  color: var(--color-paper);
+}
+
+.active::before {
+  transform: scale(1);
+}
+
+.menuIcon {
+  position: relative;
+  width: 22px;
+  height: 10px;
+}
+
+.menuIcon::before,
+.menuIcon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.menuIcon::before {
+  top: 0;
+}
+
+.menuIcon::after {
+  bottom: 0;
+  left: 6px;
+}

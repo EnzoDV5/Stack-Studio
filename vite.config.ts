@@ -14,5 +14,7 @@ export default defineConfig({
     target: 'es2022',
     cssCodeSplit: true,
     sourcemap: false,
+    // Never inline fonts as base64: unicode-range lets browsers skip unused subsets.
+    assetsInlineLimit: (file) => (/\.(woff2?|ttf|otf)$/.test(file) ? false : undefined),
   },
 })

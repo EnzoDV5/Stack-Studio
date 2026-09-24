@@ -1,0 +1,109 @@
+/*
+ * Project utilities. Tones set a small set of CSS variables so components inside a section
+ * adapt automatically (text-muted, border-tone, text-accent, bg-grid).
+ */
+
+@utility tone-dark {
+  --tone-bg: var(--color-ink);
+  --tone-fg: var(--color-paper);
+  --tone-muted: var(--color-grey-400);
+  --tone-border: rgb(255 255 255 / 0.12);
+  --tone-surface: var(--color-ink-700);
+  --tone-accent-text: var(--color-orange);
+  --grid-line: rgb(255 255 255 / 0.05);
+  --focus-ring: var(--color-orange);
+  background-color: var(--tone-bg);
+  color: var(--tone-fg);
+}
+
+@utility tone-paper {
+  --tone-bg: var(--color-paper);
+  --tone-fg: var(--color-ink);
+  --tone-muted: var(--color-grey-600);
+  --tone-border: rgb(10 10 10 / 0.14);
+  --tone-surface: var(--color-white);
+  --tone-accent-text: var(--color-orange-deep);
+  --grid-line: rgb(10 10 10 / 0.06);
+  --focus-ring: var(--color-ink);
+  background-color: var(--tone-bg);
+  color: var(--tone-fg);
+}
+
+@utility tone-white {
+  --tone-bg: var(--color-white);
+  --tone-fg: var(--color-ink);
+  --tone-muted: var(--color-grey-600);
+  --tone-border: rgb(10 10 10 / 0.12);
+  --tone-surface: var(--color-paper);
+  --tone-accent-text: var(--color-orange-deep);
+  --grid-line: rgb(10 10 10 / 0.05);
+  --focus-ring: var(--color-ink);
+  background-color: var(--tone-bg);
+  color: var(--tone-fg);
+}
+
+@utility tone-orange {
+  --tone-bg: var(--color-orange);
+  --tone-fg: var(--color-ink);
+  --tone-muted: rgb(10 10 10 / 0.78);
+  --tone-border: rgb(10 10 10 / 0.2);
+  --tone-surface: var(--color-ink);
+  --tone-accent-text: var(--color-ink);
+  --grid-line: rgb(10 10 10 / 0.08);
+  --focus-ring: var(--color-ink);
+  background-color: var(--tone-bg);
+  color: var(--tone-fg);
+}
+
+@utility text-muted {
+  color: var(--tone-muted, var(--color-grey-400));
+}
+
+@utility text-accent {
+  color: var(--tone-accent-text, var(--color-orange));
+}
+
+@utility border-tone {
+  border-color: var(--tone-border, rgb(255 255 255 / 0.12));
+}
+
+@utility bg-tone-surface {
+  background-color: var(--tone-surface, var(--color-ink-700));
+}
+
+/* Square grid-line motif. */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  background-position: -1px -1px;
+}
+
+/* Page gutter + max width. */
+@utility container-site {
+  width: 100%;
+  max-width: var(--container-site);
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+/* Visually hidden but available to assistive tech. */
+@utility visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

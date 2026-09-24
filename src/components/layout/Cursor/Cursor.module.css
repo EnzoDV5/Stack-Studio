@@ -1,0 +1,92 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-micro) ease;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 999px;
+  background: var(--color-orange);
+}
+
+.ring {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.5);
+  mix-blend-mode: difference;
+  transition:
+    width var(--duration-fast) var(--ease-out-expo),
+    height var(--duration-fast) var(--ease-out-expo),
+    margin var(--duration-fast) var(--ease-out-expo),
+    background-color var(--duration-fast) var(--ease-out-expo),
+    border-color var(--duration-fast) var(--ease-out-expo);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--text-micro--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  opacity: 0;
+  transition: opacity var(--duration-micro) ease;
+}
+
+/* Hovering a link or button. */
+.hover .ring {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border-color: rgb(255 255 255 / 0.9);
+}
+
+/* Hovering something with data-cursor-label (e.g. a work card). */
+.labelled .ring {
+  width: 96px;
+  height: 96px;
+  margin: -48px 0 0 -48px;
+  background: var(--color-orange);
+  border-color: var(--color-orange);
+  mix-blend-mode: normal;
+}
+
+.labelled .label {
+  opacity: 1;
+}
+
+.labelled .dot,
+.hover .dot {
+  opacity: 0;
+}
+
+/* Magnetic buttons carry their own motion; keep the ring subtle. */
+.magnetic .ring {
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-color: transparent;
+  background: var(--color-white);
+}
+
+/* `scale`, not `transform`: GSAP owns the ring's transform for positioning. */
+.pressed .ring {
+  scale: 0.85;
+}

@@ -1,0 +1,44 @@
+import type { SiteConfig } from '@/types'
+import { media } from './media'
+
+export const site: SiteConfig = {
+  name: 'Stack Studio',
+  shortName: 'Stack',
+  tagline: 'Brand-led websites, built to convert.', // COPY:
+  description:
+    'Stack Studio is a two-person web studio in Centurion, South Africa, building brand-led, cinematic websites and digital products for small businesses and NPOs.', // COPY:
+  url: 'https://stackstudio.co.za', // COPY: confirm production domain
+  locale: 'en-ZA',
+  email: 'hello@stackstudio.co.za', // COPY: placeholder email
+  whatsapp: {
+    number: '27000000000', // COPY: placeholder, digits only (27 + number without leading 0)
+    display: '+27 00 000 0000', // COPY: placeholder
+    message: "Hi Stack Studio, I'd like to chat about a website project.", // COPY:
+  },
+  location: { city: 'Centurion', region: 'Gauteng', country: 'South Africa' },
+  foundedYear: 2026,
+  socials: [
+    {
+      id: 'instagram',
+      label: 'Instagram',
+      handle: '@stackstudio.za',
+      href: 'https://www.instagram.com/stackstudio.za/',
+    },
+    {
+      id: 'linkedin',
+      label: 'LinkedIn',
+      handle: 'Stack Studio',
+      href: 'https://www.linkedin.com/company/stack-studio-za/', // COPY: confirm LinkedIn URL
+    },
+  ],
+  ogImage: media.brand.ogImage,
+  legal: {
+    copyright: 'Stack Studio. All rights reserved.', // COPY:
+    privacyLabel: 'Privacy (POPIA)', // COPY:
+  },
+  responsePromise: 'We reply within one business day.', // COPY:
+}
+
+export function whatsappHref(message = site.whatsapp.message): string {
+  return `https://wa.me/${site.whatsapp.number}?text=${encodeURIComponent(message)}`
+}
