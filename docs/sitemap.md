@@ -5,17 +5,17 @@ Section numbers are the eyebrow labels shown on the page (`01 · WORK`). Tone is
 background used for rhythm: `dark` (ink #0A0A0A), `paper` (#F4F0EA) or `orange` (the one
 closing CTA band per page).
 
-| Route         | Page       | Main doubt it removes                | Secondary actions                        |
-| ------------- | ---------- | ------------------------------------ | ---------------------------------------- |
-| `/`           | Home       | Find: who are you?                   | See the work, see pricing                |
-| `/work`       | Work       | Trust: can you actually do this?     | Filter projects, open a case study       |
-| `/work/:slug` | Case study | Trust: proof, in detail              | Visit the live site, next project        |
-| `/services`   | Services   | Understand: what do I get?           | Read the FAQ, see pricing                |
-| `/pricing`    | Pricing    | Understand: what does it cost?       | Compare build and monthly plans, add-ons |
-| `/studio`     | Studio     | Find and Trust: who is behind it?    | Meet the founders                        |
-| `/start`      | Start      | Contact: how do I start?             | WhatsApp, email                          |
-| `/privacy`    | Privacy    | POPIA: what happens to my data?      | Back to the brief                        |
-| `*`           | 404        | Recovery                             | Home, Start a project                    |
+| Route         | Page       | Main doubt it removes             | Secondary actions                        |
+| ------------- | ---------- | --------------------------------- | ---------------------------------------- |
+| `/`           | Home       | Find: who are you?                | See the work, see pricing                |
+| `/work`       | Work       | Trust: can you actually do this?  | Filter projects, open a case study       |
+| `/work/:slug` | Case study | Trust: proof, in detail           | Visit the live site, next project        |
+| `/services`   | Services   | Understand: what do I get?        | Read the FAQ, see pricing                |
+| `/pricing`    | Pricing    | Understand: what does it cost?    | Compare build and monthly plans, add-ons |
+| `/studio`     | Studio     | Find and Trust: who is behind it? | Meet the founders                        |
+| `/start`      | Start      | Contact: how do I start?          | WhatsApp, email                          |
+| `/privacy`    | Privacy    | POPIA: what happens to my data?   | Back to the brief                        |
+| `*`           | 404        | Recovery                          | Home, Start a project                    |
 
 Global chrome on every route: skip link, header (logo, Work, Services, Pricing, Studio,
 **Start a project** button), full-screen mobile menu, footer (big CTA, email, WhatsApp,
@@ -23,17 +23,17 @@ Instagram, LinkedIn, privacy link).
 
 ## Home `/`
 
-| #   | Section         | Tone   | Purpose                                                                  |
-| --- | --------------- | ------ | ------------------------------------------------------------------------ |
-| —   | Hero            | dark   | Big statement over the showreel; magnetic **Start a project**            |
-| —   | Client marquee  | dark   | Real names straight away (Find, then first Trust)                         |
-| 01  | Selected work   | paper  | Two featured case studies, large media, hover video previews             |
-| 02  | Services        | dark   | Expanding rows: what we do, each with a "from" price and a CTA           |
-| 03  | Process         | paper  | Pinned sticky-scroll: how a project runs, week by week                   |
-| 04  | Pricing teaser  | dark   | Project "from" prices, plus the monthly plan hook                        |
-| 05  | Studio snippet  | paper  | The two founders, one line each                                          |
-| —   | Testimonial     | paper  | A real client voice                                                      |
-| —   | Closing CTA     | orange | Giant **Start a project**                                                |
+| #   | Section        | Tone   | Purpose                                                        |
+| --- | -------------- | ------ | -------------------------------------------------------------- |
+| —   | Hero           | dark   | Big statement over the showreel; magnetic **Start a project**  |
+| —   | Client marquee | dark   | Real names straight away (Find, then first Trust)              |
+| 01  | Selected work  | paper  | Two featured case studies, large media, hover video previews   |
+| 02  | Services       | dark   | Expanding rows: what we do, each with a "from" price and a CTA |
+| 03  | Process        | paper  | Pinned sticky-scroll: how a project runs, week by week         |
+| 04  | Pricing teaser | dark   | Project "from" prices, plus the monthly plan hook              |
+| 05  | Studio snippet | paper  | The two founders, one line each                                |
+| —   | Testimonial    | paper  | A real client voice                                            |
+| —   | Closing CTA    | orange | Giant **Start a project**                                      |
 
 ## Work `/work`
 

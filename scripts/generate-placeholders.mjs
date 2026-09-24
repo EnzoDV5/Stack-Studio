@@ -10,8 +10,19 @@ const GRID = [26, 26, 26]
 
 // The Stack "A" chevron mark in a 100×100 box (same paths as src/components/ui/Logo).
 const MARK = [
-  [[50, 2], [99, 98], [78, 98], [50, 42], [22, 98], [1, 98]],
-  [[50, 64], [62, 98], [38, 98]],
+  [
+    [50, 2],
+    [99, 98],
+    [78, 98],
+    [50, 42],
+    [22, 98],
+    [1, 98],
+  ],
+  [
+    [50, 64],
+    [62, 98],
+    [38, 98],
+  ],
 ]
 
 function inPolygon(x, y, poly) {

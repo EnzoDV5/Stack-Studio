@@ -13,7 +13,9 @@
     -->
     <style>
       @layer properties, theme, base, components, utilities;
-      html { background: #0a0a0a; }
+      html {
+        background: #0a0a0a;
+      }
     </style>
 
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -30,11 +32,23 @@
       COPY: keep in sync with src/data/site.ts and src/data/pages.ts (home).
     -->
     <title data-static-meta>Stack Studio — Brand-led websites, built to convert</title>
-    <meta data-static-meta name="description" content="Stack Studio is a two-person web studio in Centurion, South Africa, building brand-led, cinematic websites and digital products for small businesses and NPOs." />
+    <meta
+      data-static-meta
+      name="description"
+      content="Stack Studio is a two-person web studio in Centurion, South Africa, building brand-led, cinematic websites and digital products for small businesses and NPOs."
+    />
     <meta data-static-meta property="og:type" content="website" />
     <meta data-static-meta property="og:site_name" content="Stack Studio" />
-    <meta data-static-meta property="og:title" content="Stack Studio — Brand-led websites, built to convert" />
-    <meta data-static-meta property="og:description" content="Brand-led, cinematic websites and digital products for small businesses and NPOs. Centurion, South Africa." />
+    <meta
+      data-static-meta
+      property="og:title"
+      content="Stack Studio — Brand-led websites, built to convert"
+    />
+    <meta
+      data-static-meta
+      property="og:description"
+      content="Brand-led, cinematic websites and digital products for small businesses and NPOs. Centurion, South Africa."
+    />
     <meta data-static-meta property="og:image" content="https://stackstudio.co.za/og-image.png" />
     <meta data-static-meta property="og:url" content="https://stackstudio.co.za/" />
     <meta data-static-meta name="twitter:card" content="summary_large_image" />
@@ -42,12 +56,25 @@
   <body>
     <!-- Static shell: paints the brand instantly (fast FCP); React replaces it on first render. -->
     <div id="root">
-      <div style="position: fixed; inset: 0; display: grid; place-items: center; background: #0a0a0a" aria-hidden="true">
-        <svg viewBox="0 0 100 100" width="56" height="56"><path d="M50 2 99 98H78L50 42 22 98H1Z" fill="#ff5a14" /><path d="M50 64 62 98H38Z" fill="#ff5a14" /></svg>
+      <div
+        style="position: fixed; inset: 0; display: grid; place-items: center; background: #0a0a0a"
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 100 100" width="56" height="56">
+          <path d="M50 2 99 98H78L50 42 22 98H1Z" fill="#ff5a14" />
+          <path d="M50 64 62 98H38Z" fill="#ff5a14" />
+        </svg>
       </div>
     </div>
     <noscript>
-      <div style="padding: 2rem; font-family: system-ui, sans-serif; background: #0a0a0a; color: #f4f0ea">
+      <div
+        style="
+          padding: 2rem;
+          font-family: system-ui, sans-serif;
+          background: #0a0a0a;
+          color: #f4f0ea;
+        "
+      >
         Stack Studio needs JavaScript for this site. Email us at hello@stackstudio.co.za.
       </div>
     </noscript>

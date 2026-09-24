@@ -37,15 +37,17 @@ src/
   pages/        one folder per route: Home, Work, CaseStudy, Services, Pricing, Studio, Start, Privacy, NotFound
   sections/     grouped per page (home/, work/, case-study/, services/, pricing/, studio/, start/) + shared/
   components/
-    ui/         Button, MagneticButton, Eyebrow, Heading, Container, Tag, Accordion, Marquee, TextLink, Divider, Logo
+    ui/         Button, MagneticButton, Eyebrow, Heading, Container, Tag, Accordion, Marquee, TextLink, Divider,
+                Logo, WhatsAppButton
     layout/     Header, Footer, MobileMenu, PageTransition, Preloader, Cursor, GridOverlay, GrainOverlay,
-                Section, SkipLink, DeferredSection, WhatsAppButton
+                Section, SkipLink, DeferredSection
     media/      Image, Video, MediaReveal
     motion/     SplitReveal, FadeUp, Parallax, StaggerGroup
     seo/        PageMeta
   hooks/        useLenis, useReducedMotion, useIsTouch, useMediaQuery, useInView, useAnalytics
   lib/          gsap.ts (plugins registered ONCE), lenis.ts, estimate.ts, cn.ts, motion-tokens.ts,
-                config.ts (env), analytics.ts, format.ts, lazy-page.ts, submit-brief.ts, brief-schema.ts
+                config.ts (env), analytics.ts, format.ts, lazy-page.ts, brief-schema.ts (zod),
+                brief-reducer.ts, brief-draft.ts, submit-brief.ts
   data/         ALL copy + content (typed): site, navigation, projects, services, process, pricing,
                 faqs, testimonials, clients, media, studio, pages, brief
   types/        shared content types (one file per domain, re-exported from types/index.ts)
@@ -61,15 +63,25 @@ src/
 - **Tailwind utilities** for layout, spacing, colour and type. **CSS Modules** only for things
   that get messy in Tailwind: keyframes, complex effects, pseudo-elements, `clip-path`, masks.
   In CSS Modules use theme variables (`var(--color-orange)`), never raw hex.
+- **Wrap every CSS Module in `@layer components { … }`** so Tailwind utilities passed via
+  `className` can override it. The layer order is declared in an inline `<style>` in
+  `index.html`: split CSS chunks can load before `index.css`, and otherwise the first
+  layer mentioned would claim its position. Don't remove it.
 - Merge classes with `cn()` from `@/lib/cn`.
 - Import with the `@/` alias (maps to `src/`). No deep relative imports across folders.
 
 ### Sections
 
 - Every section is **standalone and reusable**: it takes props (content, `tone`, `index`
-  for the eyebrow number) and has **no hardcoded copy**. Pages read `src/data/*` and pass
-  data down. Sections never import from `src/data` directly, except `sections/shared`
-  wrappers documented in their file.
+  for the eyebrow number) and has **no hardcoded copy**. Pages (and the `app/` shell) read
+  `src/data/*` and pass data down. Sections and components never import `src/data`.
+  The only exceptions are `components/seo/PageMeta` (site-wide defaults from
+  `data/site`) and type-only imports.
+- The orange **ClosingCta band is rendered by the app shell** (`App.tsx`) at the end of
+  every page except `/start`. Pages must not add their own. Use `CtaBanner` for a
+  mid-page CTA and `CaseOutro` at the end of a case study.
+- Pre-fill the brief from CTAs with `/start?type=<ProjectPackage id>` or
+  `/start?plan=<MonthlyPlan id>`.
 - Sections render inside `<Section tone="dark|paper|white|orange">`. Alternate dark and paper
   for rhythm, and use orange only for the single closing CTA band per page.
 - Eyebrows follow `NN · LABEL` (mono, uppercase, letter-spaced) via `<Eyebrow index label />`.
@@ -117,11 +129,30 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
   down and shows on scroll up.
 - Anything that changes layout after mount (lazy sections, images without dimensions)
   must call `ScrollTrigger.refresh()` (`DeferredSection` does this for you).
+- **Never put Tailwind `translate-*`, `scale-*` or `rotate-*` utilities on an element
+  GSAP animates.** In v4 they use the separate `translate`/`scale`/`rotate` CSS
+  properties, which stack with GSAP's `transform`. Park elements with `gsap.set` in a
+  layout effect. If you must use an inline `transform`, include `y: 0`/`x: 0` in the
+  `from` vars: GSAP parses `translateY(100%)` as pixels and adds `yPercent` on top.
+- Don't hide an element you're about to focus with `autoAlpha` (`visibility: hidden`
+  blocks focus). Animate `opacity` instead.
+- `SplitReveal` children must be static text. Routes remount per pathname
+  (`AppRoutes` keys by it), so navigating between two case studies is safe; inside a
+  page, give it a `key` if its text changes. It only puts `aria-label` on headings;
+  other tags get a visually hidden copy.
+- React Compiler lint rules are on: no ref access during render, and no `contextSafe`
+  closures created in render and called from effects. Put imperative animation inside
+  effects or `useEffectEvent`.
 
 ## Performance and accessibility
 
-- Routes are lazy (`lib/lazy-page.ts`, preloaded during the page wipe). Heavy below-fold
-  home sections use `DeferredSection` with `React.lazy`.
+- Routes are lazy (`lib/lazy-page.ts`, preloaded during the page wipe), **except Home**,
+  which ships in the main bundle because it's the LCP-critical landing page. Heavy
+  below-the-fold home sections use `DeferredSection` with `React.lazy`. `index.html`
+  contains an inline brand shell in `#root` for instant first paint.
+- Last measured Lighthouse scores (mobile, local preview): Home 91, Studio 91, Start 90,
+  Pricing/Services 88, Work 82, case study 76; accessibility, best practices and SEO 100
+  everywhere. The Work and case study pages are limited by the remote picsum LCP images.
 - `<Image>`: explicit width and height, `loading="lazy"` + `decoding="async"` by default,
   `priority` for hero media only. `<Video>`: muted, playsInline, loop, `preload="none"`,
   poster, plays only while in view, and falls back to the poster or a brand gradient on error.

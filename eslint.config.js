@@ -25,16 +25,25 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
       // GSAP plugins must be registered once, in src/lib/gsap.ts. Import from '@/lib/gsap' everywhere else.
       'no-restricted-imports': [
         'error',
         {
           paths: [
-            { name: 'gsap', message: "Import { gsap } from '@/lib/gsap' so plugins are registered once." },
+            {
+              name: 'gsap',
+              message: "Import { gsap } from '@/lib/gsap' so plugins are registered once.",
+            },
             { name: '@gsap/react', message: "Import { useGSAP } from '@/lib/gsap'." },
-            { name: 'framer-motion', message: 'Framer Motion is not used in this project. Use GSAP.' },
+            {
+              name: 'framer-motion',
+              message: 'Framer Motion is not used in this project. Use GSAP.',
+            },
             { name: 'motion', message: 'Framer Motion is not used in this project. Use GSAP.' },
           ],
           patterns: [{ group: ['gsap/*'], message: "Import GSAP plugins from '@/lib/gsap'." }],

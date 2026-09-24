@@ -42,8 +42,8 @@
 
   /* ---------- Type families (swap here + the @fontsource import in main.tsx) ---------- */
   --font-sans: 'Inter Tight Variable', 'Inter Tight Fallback', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Inter Tight Variable', 'Inter Tight Fallback', ui-sans-serif, system-ui,
-    sans-serif;
+  --font-display:
+    'Inter Tight Variable', 'Inter Tight Fallback', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
   /* ---------- Type scale (fluid; min @ 375px → max @ 1600px) ---------- */
@@ -124,9 +124,7 @@
   --duration-fast: 600ms;
   --duration-base: 900ms;
   --duration-slow: 1200ms;
-
 }
-
 
 /* Runtime-only variables (not utilities). */
 :root {
