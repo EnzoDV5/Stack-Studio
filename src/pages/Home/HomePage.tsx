@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 import { DeferredSection } from '@/components/layout/DeferredSection'
 import { PageMeta } from '@/components/seo/PageMeta'
-import { media } from '@/data/media'
+import { media, serviceMedia } from '@/data/media'
 import { homeContent, pageMeta, pricingContent, workContent } from '@/data/pages'
 import { planFamilies, plans } from '@/data/plans'
 import { policies } from '@/data/policies'
@@ -15,7 +15,7 @@ import { technologyContent, technologyRows } from '@/data/technologies'
 import { familyFrom, offeringPrice, stageRows } from '@/lib/offer'
 import { FeaturedWork } from '@/sections/home/FeaturedWork'
 import { HomeHero } from '@/sections/home/HomeHero'
-import { ServicesRows } from '@/sections/home/ServicesRows'
+import { ServiceShowcase } from '@/sections/home/ServiceShowcase'
 import { TechnologyMarquee } from '@/sections/shared/TechnologyMarquee'
 import type { PlanFamily, StageId } from '@/types'
 
@@ -45,7 +45,9 @@ function stageItems(stage: StageId) {
     case 'partner':
       return [familyItem('partner')]
     default:
-      return stageRows(stage, { offerings, plans, rates }, l, { pricedOnly: true }).map((row) => ({
+      return stageRows(stage, { offerings, plans, rates }, l, {
+        pricedOnly: stage !== 'takeover',
+      }).map((row) => ({
         name: row.name,
         price: row.price,
       }))
@@ -82,20 +84,25 @@ export function HomePage() {
         sampleLabel={workContent.sampleLabel}
       />
 
-      <ServicesRows
+      <ServiceShowcase
         index={2}
         eyebrow={homeContent.services.eyebrow}
         title={homeContent.services.title}
         intro={homeContent.services.intro}
-        stages={serviceStages.map((s) => ({
+        services={serviceStages.map((s) => ({
           id: s.id,
           name: s.name,
           line: s.line,
           summary: s.summary,
           items: stageItems(s.id),
           cta: s.cta,
+          capabilities: homeContent.services.capabilities[s.id],
+          media: serviceMedia[s.id],
         }))}
-        labels={{ examples: homeContent.services.itemsLabel }}
+        labels={{
+          examples: homeContent.services.itemsLabel,
+          ...homeContent.services.showcase,
+        }}
       />
 
       <DeferredSection minHeight="160vh">

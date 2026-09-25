@@ -94,6 +94,39 @@ export const homeContent = {
     intro:
       'We build, manage and grow the digital systems your business depends on, from the first website to the software behind it.', // COPY:
     itemsLabel: 'Starting points', // COPY:
+    showcase: {
+      select: 'Show', // COPY:
+      pause: 'Pause video', // COPY:
+      play: 'Play video', // COPY:
+    },
+    capabilities: {
+      build: [],
+      takeover: [
+        'System audits',
+        'Website & app takeovers',
+        'Hosting migrations',
+        'Legacy cleanup',
+      ],
+      run: [
+        'Hosting & domains/DNS',
+        'Monitoring & backups',
+        'Maintenance & security updates',
+        'Managed software',
+      ],
+      grow: [
+        'New features',
+        'UX improvements',
+        'API integrations',
+        'AI & automation',
+        'Performance work',
+      ],
+      partner: [
+        'Retainers',
+        'Managed software',
+        'Embedded development',
+        'External development support',
+      ],
+    },
   },
   process: {
     eyebrow: 'Process', // COPY:

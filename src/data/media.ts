@@ -7,6 +7,8 @@
  * Placeholder images use picsum.photos with FIXED seeds so they don't change between loads.
  */
 import type { ImageAsset, VideoAsset } from '@/types'
+import type { StageId } from '@/types'
+import type { ServiceMediaItem } from '@/types/service-media'
 
 /** picsum placeholder with a responsive srcSet (webp). */
 function picsum(seed: string, width: number, height: number, alt: string): ImageAsset {
@@ -30,6 +32,60 @@ function video(
   height = 1080,
 ): VideoAsset {
   return { src: `/media/${file}`, type: 'video/mp4', label, poster, width, height }
+}
+
+/** Locally hosted stock media; sources and processing notes are in public/media/services/README.md. */
+function servicePhoto(id: string, alt: string): ServiceMediaItem {
+  return {
+    id,
+    image: {
+      src: `/media/services/${id}.webp`,
+      srcSet: `/media/services/${id}-small.webp 480w, /media/services/${id}.webp 1200w`,
+      width: 1200,
+      height: 800,
+      alt,
+    },
+  }
+}
+
+function serviceClip(id: string, alt: string): ServiceMediaItem {
+  const image: ImageAsset = {
+    src: `/media/services/${id}-poster.webp`,
+    srcSet: `/media/services/${id}-poster-small.webp 480w, /media/services/${id}-poster.webp 960w`,
+    width: 960,
+    height: 540,
+    alt,
+  }
+  return {
+    id,
+    image,
+    video: {
+      src: `/media/services/${id}.mp4`,
+      type: 'video/mp4',
+      width: 960,
+      height: 540,
+      label: alt,
+      poster: image,
+    },
+  }
+}
+
+/** One image per service stage, chosen to show what that stage actually involves. */
+export const serviceMedia: Record<StageId, ServiceMediaItem> = {
+  build: servicePhoto(
+    'wireframes',
+    'Interface wireframes for a new website sketched in a notebook beside a phone',
+  ),
+  takeover: servicePhoto(
+    'code-review',
+    'An existing website’s source code open on a monitor for review',
+  ),
+  run: serviceClip('run', 'Network cables and status lights on live server equipment'),
+  grow: servicePhoto(
+    'analytics',
+    'A website analytics dashboard showing rising traffic on a desktop display',
+  ),
+  partner: serviceClip('partner', 'Four collaborators reviewing work together around a laptop'),
 }
 
 export const media = {
