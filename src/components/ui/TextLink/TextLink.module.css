@@ -34,6 +34,16 @@
     }
   }
 
+  .arrow {
+    transition: transform var(--duration-fast) var(--ease-out-expo);
+  }
+
+  @media (hover: hover) {
+    .link:hover .arrow {
+      transform: translateX(0.25em);
+    }
+  }
+
   .external {
     width: 0.7em;
     height: 0.7em;

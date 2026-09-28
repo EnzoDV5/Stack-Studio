@@ -32,6 +32,7 @@ npm run dev                  # http://localhost:5173
 | `npm run lint` / `lint:fix`              | ESLint (flat config)                                    |
 | `npm run format` / `format:check`        | Prettier (sorts Tailwind classes)                       |
 | `npm run typecheck`                      | TypeScript only                                         |
+| `npm test`                               | Unit tests (node:test, no extra dependencies)           |
 | `node scripts/generate-placeholders.mjs` | Regenerate placeholder favicon, icons and OG image      |
 
 ## Environment
@@ -125,11 +126,16 @@ src/
   pages/      One folder per route
   sections/   Page sections grouped by page, plus shared/
   components/ ui, layout, media, motion, seo
-  hooks/      useLenis, useReducedMotion, useIsTouch, useMediaQuery, useInView, useAnalytics
-  lib/        gsap, lenis, estimate, brief schema/reducer/submit, config, analytics, motion tokens
+  hooks/      useLenis, useReducedMotion, useIsTouch, useMediaQuery, useInView, useAnalytics,
+              useScrollRefresh
+  lib/        gsap, lenis, estimate, brief schema/reducer/submit, config, analytics, motion tokens,
+              scroll refresh, pure motion maths (tone, count-up, reel, path layout)
   data/       All content (typed)
   types/      Content types
   styles/     tokens, base, typography, utilities
+tests/        node:test unit tests (npm test)
 ```
+
+Motion per section and the page-flow rules: [docs/motion-map.md](docs/motion-map.md).
 
 See `CLAUDE.md` for the full conventions.

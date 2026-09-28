@@ -8,7 +8,7 @@ export const pageMeta = {
   home: {
     title: 'Stack Studio — Brand-led websites, built to convert', // COPY:
     description:
-      'A two-person web studio in Centurion, South Africa. We design and build brand-led, cinematic websites and digital products for small businesses and NPOs.', // COPY:
+      'A two-person web studio in Centurion, South Africa. We design and build brand-led, cinematic websites and digital products for businesses of every kind.', // COPY:
     path: '/',
   },
   work: {
@@ -65,6 +65,10 @@ export const closingCta: CtaContent = {
 }
 
 /* ---------- Home ---------- */
+/**
+ * Home is a fast summary of everything, work first. Every section ends with a "go deeper"
+ * link to its full page, so visitors choose what to explore.
+ */
 export const homeContent = {
   hero: {
     eyebrow: 'Digital studio · Centurion, ZA', // COPY:
@@ -73,73 +77,60 @@ export const homeContent = {
       'Starting something new or need someone to take over what you already have? Stack handles both.', // COPY:
     cta: { label: 'Start a project', to: '/start' }, // COPY:
     secondaryCta: { label: 'See the work', to: '/work' }, // COPY:
-    meta: [
-      { label: 'Based in', value: 'Centurion, Gauteng' }, // COPY:
-      { label: 'Focus', value: 'SMEs & NPOs' }, // COPY:
-      { label: 'Est.', value: '2026' }, // COPY:
-    ],
-    scrollLabel: 'Scroll', // COPY:
+    indexLabel: 'Selected work', // COPY:
+    cursorLabel: 'View', // COPY:
   },
   work: {
     eyebrow: 'Selected work', // COPY:
     title: 'Proof, not promises.', // COPY:
-    intro: 'Two real projects, start to finish: the problem, the thinking and the result.', // COPY:
-    cta: { label: 'All work', to: '/work' }, // COPY:
     cardCta: 'View case study', // COPY:
     cursorLabel: 'View', // COPY:
+    sectorLabel: 'Sector', // COPY:
+    stagesLabel: 'Stages', // COPY:
+    more: { label: 'All work', to: '/work' }, // COPY:
+    outro: {
+      title: 'Every project, start to finish.', // COPY:
+      allWork: { label: 'All work', to: '/work' }, // COPY:
+      start: { label: 'Start a project like this', to: '/start' }, // COPY:
+    },
   },
-  services: {
+  paths: {
     eyebrow: 'Services', // COPY:
-    title: 'Build it. Run it. Grow it.', // COPY:
+    title: 'Where are you at?', // COPY:
     intro:
-      'We build, manage and grow the digital systems your business depends on, from the first website to the software behind it.', // COPY:
+      'New build, rescue job or a team on call: choose the one that sounds like you and see where it starts.', // COPY:
+    /** The self-select line for each stage, in the visitor's words. */
+    prompts: {
+      build: 'I need something new.', // COPY:
+      takeover: 'I have something that needs fixing or a new home.', // COPY:
+      run: 'Keep my site or app running.', // COPY:
+      grow: 'Improve what I have.', // COPY:
+      partner: 'I need a development team every month.', // COPY:
+    },
     itemsLabel: 'Starting points', // COPY:
-    showcase: {
-      select: 'Show', // COPY:
-      pause: 'Pause video', // COPY:
-      play: 'Play video', // COPY:
-    },
-    capabilities: {
-      build: [],
-      takeover: [
-        'System audits',
-        'Website & app takeovers',
-        'Hosting migrations',
-        'Legacy cleanup',
-      ],
-      run: [
-        'Hosting & domains/DNS',
-        'Monitoring & backups',
-        'Maintenance & security updates',
-        'Managed software',
-      ],
-      grow: [
-        'New features',
-        'UX improvements',
-        'API integrations',
-        'AI & automation',
-        'Performance work',
-      ],
-      partner: [
-        'Retainers',
-        'Managed software',
-        'Embedded development',
-        'External development support',
-      ],
-    },
+    details: 'See details', // COPY:
+    estimate: 'Get an estimate', // COPY:
+    more: { label: 'All services', to: '/services' }, // COPY:
   },
   process: {
     eyebrow: 'Process', // COPY:
     title: 'How a project runs.', // COPY:
-    intro: 'Six clear steps, a staging link from week one and no surprises.', // COPY:
     stepLabel: 'Step', // COPY:
+    more: { label: 'The full process', to: '/services#process' }, // COPY:
+  },
+  clients: {
+    eyebrow: 'Clients', // COPY:
+    title: 'What clients say.', // COPY:
+    /** Link under each quote to that client's case study. */
+    caseLink: (company: string) => `See the ${company} project`, // COPY:
+    more: { label: 'See all the work', to: '/work' }, // COPY:
   },
   pricing: {
     eyebrow: 'Pricing', // COPY:
     title: 'Starting points, not hidden prices.', // COPY:
     intro:
       'Every project is quoted properly, but you should know roughly where you stand before we talk.', // COPY:
-    /** Teaser items: label + where the price comes from (resolved on the Home page). */
+    /** Snapshot figures: label + where the number comes from (resolved on the Home page). */
     items: [
       { label: 'Websites', source: { offering: 'business-website' }, note: 'Once-off build' }, // COPY:
       {
@@ -153,14 +144,14 @@ export const homeContent = {
         note: 'Reserved monthly hours',
       }, // COPY:
     ],
-    cta: { label: 'See full pricing', to: '/pricing' }, // COPY:
+    more: { label: 'See all pricing', to: '/pricing' }, // COPY:
     estimateCta: { label: 'Build my estimate', to: '/start' }, // COPY:
   },
   studio: {
     eyebrow: 'Studio', // COPY:
     title: 'Two founders. No middlemen.', // COPY:
-    body: 'Stack Studio is Enzo De Vittorio and Armand Naudé. We keep the studio small on purpose, so the people you meet are the people who design, build and look after your site.', // COPY:
-    cta: { label: 'Meet the studio', to: '/studio' }, // COPY:
+    intro: 'The people you meet are the people who design, build and look after your site.', // COPY:
+    more: { label: 'Meet the studio', to: '/studio' }, // COPY:
   },
 }
 
@@ -220,6 +211,12 @@ export const servicesContent = {
       'Starting something new or need someone to take over what you already have? Stack handles both, and stays on to keep it working and improving.', // COPY:
   } satisfies PageHeroContent,
   navLabel: 'Service stages', // COPY:
+  process: {
+    eyebrow: 'Process', // COPY:
+    title: 'How a project runs.', // COPY:
+    intro: 'Six clear steps, a staging link from week one and no surprises.', // COPY:
+    stepLabel: 'Step', // COPY:
+  },
   labels: {
     includes: 'Includes', // COPY:
     examples: 'Examples', // COPY:
@@ -234,25 +231,41 @@ export const servicesContent = {
 export const pricingContent = {
   hero: {
     eyebrow: 'Pricing', // COPY:
-    title: 'Transparent pricing. No surprises.', // COPY:
+    title: 'Your quote, built around your project.', // COPY:
     intro:
-      'Once-off builds, monthly plans to keep things running, and partner retainers for ongoing development. All prices in ZAR.', // COPY:
+      'No fixed price list: every project is different. Build an estimate in two minutes, or start from one of our ready-made quotes and adjust it. All prices in ZAR.', // COPY:
   } satisfies PageHeroContent,
-  summary: {
-    eyebrow: 'At a glance', // COPY:
-    title: 'Where most projects start.', // COPY:
-    groups: {
-      build: 'Build', // COPY:
-      takeover: 'Take over', // COPY:
-      run: 'Run', // COPY:
-      partner: 'Partner', // COPY:
-    },
-    addOnsTitle: 'Website add-ons', // COPY:
-    each: 'each', // COPY:
-    more: {
-      title: 'Need something more specific?', // COPY:
-      body: 'Every project is different. Build a quick project brief and we’ll give you a more accurate estimate.', // COPY:
-      label: 'Build my estimate', // COPY:
+  approach: {
+    eyebrow: 'How pricing works', // COPY:
+    title: 'Three steps to a fixed quote.', // COPY:
+    steps: [
+      {
+        title: 'Build an estimate', // COPY:
+        body: 'Answer a few questions about what you need and see an indicative range straight away.', // COPY:
+      },
+      {
+        title: 'Talk it through', // COPY:
+        body: 'A short call to understand the business, not just the website, and what matters most.', // COPY:
+      },
+      {
+        title: 'Get a fixed quote', // COPY:
+        body: 'A written quote with scope, timeline and payment milestones. No surprises later.', // COPY:
+      },
+    ],
+    cta: { label: 'Build my estimate', to: '/start' }, // COPY:
+  },
+  quotes: {
+    eyebrow: 'Starting quotes', // COPY:
+    title: 'Start from a quote that fits.', // COPY:
+    intro:
+      'Pick the closest one and adjust it in the estimate builder. Ranges are indicative; your fixed quote follows a short call.', // COPY:
+    rangeLabel: 'Typically', // COPY:
+    monthly: (price: string) => `plus ${price} for hosting and care`, // COPY:
+    start: 'Start from this quote', // COPY:
+    custom: {
+      title: 'Something else?', // COPY:
+      body: 'Web apps, taking over an existing site or ongoing development: answer a few questions and get an estimate in two minutes.', // COPY:
+      label: 'Build your own estimate', // COPY:
       to: '/start',
     } satisfies CtaContent,
   },
@@ -268,10 +281,6 @@ export const pricingContent = {
     eyebrow: 'What plans cover', // COPY:
     includedTitle: 'Included', // COPY:
     excludedTitle: 'Not included', // COPY:
-  },
-  rates: {
-    eyebrow: 'Outside a plan', // COPY:
-    title: 'Hourly work.', // COPY:
   },
   policies: {
     eyebrow: 'How we bill', // COPY:
@@ -296,15 +305,15 @@ export const pricingContent = {
 export const studioContent = {
   hero: {
     eyebrow: 'Studio', // COPY:
-    title: 'A small studio with big standards.', // COPY:
+    title: 'A growing studio with big standards.', // COPY:
     intro:
-      'Stack Studio was founded in Centurion to give growing businesses and NPOs a digital presence as serious as the work they do.', // COPY:
+      'Stack Studio was founded in Centurion to give businesses of every kind a digital presence as serious as the work they do.', // COPY:
   } satisfies PageHeroContent,
   intro: {
     eyebrow: 'Who we are', // COPY:
     title: 'Design, motion and development in one team.', // COPY:
     paragraphs: [
-      'Most small businesses end up choosing between a designer who can’t build and a developer who can’t design. We started Stack to close that gap: one small team that handles strategy, UX, visual design, motion and front-end, and then deploys it for real.', // COPY:
+      'Most businesses end up choosing between a designer who can’t build and a developer who can’t design. We started Stack to close that gap: one team that handles strategy, UX, visual design, motion and front-end, and then deploys it for real.', // COPY:
       'The result is websites that look the part and actually work: fast, accessible, easy to update and designed to turn visitors into enquiries.', // COPY:
     ],
   },
@@ -315,7 +324,7 @@ export const studioContent = {
   linkedinLabel: 'LinkedIn', // COPY:
   howWeWork: {
     eyebrow: 'How we work', // COPY:
-    title: 'Small on purpose.', // COPY:
+    title: 'Built to grow.', // COPY:
   } satisfies SectionIntro,
   values: {
     eyebrow: 'Values', // COPY:

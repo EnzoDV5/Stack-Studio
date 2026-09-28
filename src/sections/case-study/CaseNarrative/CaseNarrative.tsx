@@ -1,5 +1,4 @@
 import { Section, type Tone } from '@/components/layout/Section'
-import { FadeUp } from '@/components/motion/FadeUp'
 import { pad2 } from '@/lib/format'
 import type { NarrativeBlock } from '@/types'
 
@@ -9,7 +8,7 @@ export interface CaseNarrativeProps {
   tone?: Tone
 }
 
-/** Editorial chapters: a sticky number and label on the left, the statement and body on the right. */
+/** Editorial chapters: a sticky number and label on the left, the statement and body on the right. Static text. */
 export function CaseNarrative({ chapters, tone = 'paper' }: CaseNarrativeProps) {
   return (
     <Section tone={tone}>
@@ -27,7 +26,7 @@ export function CaseNarrative({ chapters, tone = 'paper' }: CaseNarrativeProps) 
                 {chapter.label}
               </p>
             </div>
-            <FadeUp className="lg:col-span-8 lg:col-start-5">
+            <div className="lg:col-span-8 lg:col-start-5">
               <h2 id={`chapter-${chapter.id}`} className="max-w-[20ch] text-display-lg">
                 {chapter.block.heading}
               </h2>
@@ -36,7 +35,7 @@ export function CaseNarrative({ chapters, tone = 'paper' }: CaseNarrativeProps) 
                   <p key={p}>{p}</p>
                 ))}
               </div>
-            </FadeUp>
+            </div>
           </article>
         ))}
       </div>

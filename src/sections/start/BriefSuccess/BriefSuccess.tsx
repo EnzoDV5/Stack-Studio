@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { SplitReveal } from '@/components/motion/SplitReveal'
 import { Button } from '@/components/ui/Button'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
@@ -38,9 +37,7 @@ export function BriefSuccess({
     <div role="status" aria-live="polite">
       <div ref={headingRef} tabIndex={-1} className="outline-none">
         <Eyebrow label={eyebrow} className="mb-6" />
-        <SplitReveal as="h2" className="max-w-[14ch] font-display text-display-lg">
-          {title}
-        </SplitReveal>
+        <h2 className="max-w-[14ch] font-display text-display-lg">{title}</h2>
       </div>
       <p className="mt-8 text-body-lg text-muted">{body}</p>
       <ol className="mt-8 space-y-4">

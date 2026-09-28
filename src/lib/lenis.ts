@@ -18,7 +18,8 @@ export function startLenis(): () => void {
     smoothWheel: true,
     syncTouch: false,
     autoRaf: false,
-    anchors: { offset: -80 },
+    // Anchor clicks land under the fixed header via html scroll-padding-top (see scrollToElement).
+    anchors: true,
   })
 
   const onTick = (time: number) => lenis.raf(time * 1000)
@@ -43,13 +44,34 @@ export function scrollToTop(immediate = true): void {
   else window.scrollTo({ top: 0, behavior: immediate ? 'instant' : 'smooth' })
 }
 
-export function scrollToElement(target: HTMLElement | string, offset = -80): void {
+/**
+ * Scroll an element to the top of the viewport. The gap for the fixed header comes from CSS:
+ * html scroll-padding-top (header + 1rem) plus the target's own scroll-margin-top. Lenis and
+ * native scrollIntoView both honour them, so don't pass the header height as `offset`;
+ * `offset` only adds to it (with Lenis).
+ */
+export function scrollToElement(target: HTMLElement | string, offset = 0, immediate = false): void {
   if (instance) {
-    instance.scrollTo(target, { offset })
+    instance.scrollTo(target, { offset, immediate, force: immediate })
     return
   }
   const el = typeof target === 'string' ? document.querySelector<HTMLElement>(target) : target
-  el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  el?.scrollIntoView({ behavior: immediate ? 'instant' : 'smooth', block: 'start' })
+}
+
+/** Scroll to an absolute page position (used to bring a pinned gallery panel into view). */
+export function scrollToY(y: number, immediate = false): void {
+  if (instance) instance.scrollTo(y, { immediate, force: immediate })
+  else window.scrollTo({ top: y, behavior: immediate ? 'instant' : 'smooth' })
+}
+
+/** Scroll to the element a URL hash names ("#stage-build"), under the fixed header. */
+export function scrollToHash(hash: string, immediate = false): boolean {
+  if (hash.length < 2) return false
+  const el = document.getElementById(decodeURIComponent(hash.slice(1)))
+  if (!el) return false
+  scrollToElement(el, 0, immediate)
+  return true
 }
 
 export function lockScroll(): void {

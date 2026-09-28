@@ -6,6 +6,7 @@ export const founders: Founder[] = [
     id: 'enzo',
     name: 'Enzo De Vittorio',
     role: 'Co-founder · Design and front-end', // COPY: confirm title
+    line: 'Designs it, animates it and builds the front-end you click through.', // COPY:
     bio: 'Enzo leads UX, visual design and motion, and builds the front-end that brings it to life. He cares about sites that are visually strong and actually work.', // COPY:
     focus: ['UX / UI', 'Motion', 'Front-end'], // COPY:
     portrait: media.founders.enzo,
@@ -15,6 +16,7 @@ export const founders: Founder[] = [
     id: 'armand',
     name: 'Armand Naudé',
     role: 'Co-founder · Development and delivery', // COPY: confirm title
+    line: 'Builds what runs underneath, ships it on time and keeps it running.', // COPY:
     bio: 'Armand leads development, hosting and client delivery, making sure every project ships on time and keeps running smoothly long after launch.', // COPY:
     focus: ['Development', 'Hosting', 'Client delivery'], // COPY:
     portrait: media.founders.armand,
@@ -52,9 +54,9 @@ export const principles: ValueItem[] = [
     body: 'Two founders, no middlemen. The people on the call are the people doing the work.', // COPY:
   },
   {
-    id: 'small',
-    title: 'Small on purpose', // COPY:
-    body: 'We take on a few projects at a time so each gets our full attention.', // COPY:
+    id: 'growing',
+    title: 'Growing with our clients', // COPY:
+    body: 'We’re building a studio that grows with the businesses we work for: more people and more capability, with the same attention on every project.', // COPY:
   },
   {
     id: 'real',

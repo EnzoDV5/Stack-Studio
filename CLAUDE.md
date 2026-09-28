@@ -3,8 +3,9 @@
 Production marketing site for **Stack Studio**, a two-person web studio in Centurion, South
 Africa (founders Enzo De Vittorio and Armand Naudé). The site removes four doubts in order
 (**Find → Trust → Understand → Contact**) and every page pushes toward one action:
-**Start a project** (`/start`). Read `docs/user-flow.md`, `docs/sitemap.md` and
-`docs/design-system.md` before changing structure, flow or visuals.
+**Start a project** (`/start`). Read `docs/user-flow.md`, `docs/sitemap.md`,
+`docs/design-system.md` and `docs/motion-map.md` before changing structure, flow, visuals or
+motion.
 
 ## Stack (do not add dependencies without a clear, written reason)
 
@@ -24,6 +25,8 @@ SVG instead). Pins: ESLint stays on 9 (jsx-a11y does not support 10 yet) and Typ
 npm run dev          # dev server
 npm run build        # tsc -b && vite build — must pass with zero errors
 npm run lint         # eslint — must pass with zero errors
+npm run typecheck    # tsc -b (app, node and test projects)
+npm test             # node:test on tests/*.test.ts (pure lib helpers and data rules)
 npm run format       # prettier --write (sorts Tailwind classes)
 npm run preview      # serve dist/
 node scripts/generate-placeholders.mjs   # regenerate placeholder favicon/OG PNGs
@@ -40,18 +43,22 @@ src/
     ui/         Button, MagneticButton, Eyebrow, Heading, Container, Tag, Accordion, Marquee, TextLink, Divider,
                 Logo, WhatsAppButton
     layout/     Header, Footer, MobileMenu, PageTransition, Preloader, Cursor, GridOverlay, GrainOverlay,
-                Section, SkipLink, DeferredSection
+                Section, SkipLink, DeferredSection, ToneController
     media/      Image, Video, MediaReveal
-    motion/     SplitReveal, FadeUp, Parallax, StaggerGroup
+    motion/     SplitReveal, Parallax, CountUp, DrawLine, StaggerGroup
     seo/        PageMeta
-  hooks/        useLenis, useReducedMotion, useIsTouch, useMediaQuery, useInView, useAnalytics
+  hooks/        useLenis, useReducedMotion, useIsTouch, useMediaQuery, useInView, useAnalytics,
+                useScrollRefresh
   lib/          gsap.ts (plugins registered ONCE), lenis.ts, estimate.ts, cn.ts, motion-tokens.ts,
                 config.ts (env), analytics.ts, format.ts, lazy-page.ts, brief-schema.ts (zod),
-                brief-reducer.ts, brief-draft.ts, submit-brief.ts
+                brief-reducer.ts, brief-draft.ts, submit-brief.ts, scroll-refresh.ts (debounced
+                ScrollTrigger.refresh), tone.ts, count-up.ts, reel.ts, path-layout.ts (pure motion maths)
   data/         ALL copy + content (typed): site, navigation, projects, services, process, pricing,
                 faqs, testimonials, clients, media, studio, pages, brief
   types/        shared content types (one file per domain, re-exported from types/index.ts)
   styles/       index.css (entry) → tokens.css, base.css, typography.css, utilities.css
+tests/          node:test files for pure helpers (run with Node's TypeScript stripping and the
+                @/ alias hook in scripts/test-hooks.mjs; no test framework dependency)
 ```
 
 ### Component rules
@@ -85,7 +92,10 @@ src/
 - Sections render inside `<Section tone="dark|paper|white|orange">`. Alternate dark and paper
   for rhythm, and use orange only for the single closing CTA band per page.
 - Eyebrows follow `NN · LABEL` (mono, uppercase, letter-spaced) via `<Eyebrow index label />`.
-- **At most one signature motion idea per section.**
+- Open sections with `SectionHeader` and pick a `variant` (`stacked`, `split`, `minimal`,
+  `inline`) that differs from both neighbours.
+- **At most one signature motion idea per section**, and neighbours never share a trigger
+  type. See "Page flow" below and `docs/motion-map.md`.
 
 ### Content and copy
 
@@ -120,6 +130,8 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
   sync.
 - Set hidden start states with `gsap.from`/`fromTo` inside `useGSAP`, never in CSS, so
   content stays visible if JS or motion is off.
+- Start enter animations with the element well on screen (`trigger.start`, `top 75%`, or
+  `trigger.startLate` for things that should play mid-screen) so people see them in full.
 - `prefers-reduced-motion`: Lenis is not created (native scroll), SplitText is skipped,
   Parallax is static, the preloader and page-wipe are skipped, the marquee stops. Content is
   always visible. Check `useReducedMotion()` in every motion component.
@@ -127,8 +139,14 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
 - The preloader runs once per session (`sessionStorage`) and takes under 1.5s. The page
   transition is an orange/black panel wipe with a scroll reset. The header hides on scroll
   down and shows on scroll up.
-- Anything that changes layout after mount (lazy sections, images without dimensions)
-  must call `ScrollTrigger.refresh()` (`DeferredSection` does this for you).
+- Anything that changes layout after mount calls `requestRefresh()` from
+  `@/lib/scroll-refresh` (debounced; skipped when the page height is unchanged unless
+  forced). `DeferredSection`, font loading, media loads and any page-height change
+  (ResizeObserver) already do this. Focus inside a pinned section survives a refresh.
+- Anchors: the fixed-header gap comes from CSS (`html` scroll-padding-top plus the target's
+  scroll-margin-top), which Lenis and native scrolling both honour. Don't pass the header
+  height as a `scrollTo` offset. `PageTransition` scrolls to `#hash` targets after a route
+  change and on same-page hash links.
 - **Never put Tailwind `translate-*`, `scale-*` or `rotate-*` utilities on an element
   GSAP animates.** In v4 they use the separate `translate`/`scale`/`rotate` CSS
   properties, which stack with GSAP's `transform`. Park elements with `gsap.set` in a
@@ -144,15 +162,51 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
   closures created in render and called from effects. Put imperative animation inside
   effects or `useEffectEvent`.
 
+### Page flow (keep `docs/motion-map.md` current)
+
+1. **One signature motion per section.** Two neighbouring sections never share a trigger
+   type (load, enter, scrub, pin, hover): no scrub after scrub, no pin after pin. The
+   shell's ClosingCta (a scrub) is every page's last section.
+2. **SplitReveal line-reveals are limited.** Home: the hero and the closing CTA only. Other
+   pages may reveal their page title (`<PageTitle reveal>`) and nothing else. Every other
+   heading is static; the content carries the motion.
+3. **Staggered rises are only for groups of cards or list items**, never headers or whole
+   sections. `StaggerGroup` is used only for the client quote cards and the starting quote
+   cards (FadeUp was removed).
+4. **At most one pinned section per page.** Home: WorkReel. Services: ProcessPinned.
+5. **Scroll budget:** Home stays about 11 viewports on desktop, footer included (11.05 at
+   1440×900). The WorkReel pin is `reel.shrinkScroll` + `reel.panelScroll` × (panels − 1)
+   viewports.
+6. **Only animate transform, opacity and clip-path** (no width, flex, letter-spacing or
+   stroke offsets). Toggle will-change on while moving and off after. Videos play only when
+   visible and needed.
+7. **Vary the openers**: neighbouring sections never use the same `SectionHeader` variant.
+8. **Every Home section ends with a "go deeper" link** (`<TextLink arrow>`) to its page or
+   anchor.
+
+- **Tone flow:** `ToneController` (app shell) makes `[data-tone]` sections transparent
+  (`html.tone-flow`) and blends `--page-*` colours from when a section's top enters the
+  viewport until it is 20% from the top, with a short bounded glide. Per frame it writes
+  only to on-screen sections and `body`'s background (a variable on `<html>` restyles the
+  whole page, so `<html>` is only updated on re-measure). Keep it that way. Pass `solid` to a Section whose own media or inset must keep painting
+  (the hero, `PageTitle`). The footer is chrome, not a Section. Any new tone-dependent
+  colour variable must be added to both `ToneController` and the flow rule in
+  `utilities.css`. The header's light/dark style follows the colour under it.
+- **Reduced motion:** no pins, scrubs, Flip or tone flow. Everything renders in its final
+  state; WorkReel becomes a grid.
+
 ## Performance and accessibility
 
 - Routes are lazy (`lib/lazy-page.ts`, preloaded during the page wipe), **except Home**,
   which ships in the main bundle because it's the LCP-critical landing page. Heavy
   below-the-fold home sections use `DeferredSection` with `React.lazy`. `index.html`
   contains an inline brand shell in `#root` for instant first paint.
-- Last measured Lighthouse scores (mobile, local preview): Home 91, Studio 91, Start 90,
-  Pricing/Services 88, Work 82, case study 76; accessibility, best practices and SEO 100
-  everywhere. The Work and case study pages are limited by the remote picsum LCP images.
+- Last measured Lighthouse scores (mobile, local preview, after the Sept 2026 Home
+  restructure): Home 83–85, Work 88, Studio 87, Start 86, case study 84, Pricing 81–83,
+  Services 82, Privacy 82; accessibility, best practices and SEO 100 everywhere. On the same
+  machine the previous build scored Home 74–77 (it scored 91 on the faster machine used
+  before). Home's LCP is the hero intro while the preloader holds the h1; the rest is
+  vendor script evaluation. Remote picsum images still limit Work and the case study.
 - `<Image>`: explicit width and height, `loading="lazy"` + `decoding="async"` by default,
   `priority` for hero media only. `<Video>`: muted, playsInline, loop, `preload="none"`,
   poster, plays only while in view, and falls back to the poster or a brand gradient on error.

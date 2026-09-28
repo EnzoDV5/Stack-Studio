@@ -38,6 +38,8 @@ export interface Founder {
   id: string
   name: string
   role: string
+  /** One line for the Home studio snippet. */
+  line: string
   bio: string
   focus: string[]
   portrait: ImageAsset

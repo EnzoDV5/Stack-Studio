@@ -1,5 +1,4 @@
 import { Section, type Tone } from '@/components/layout/Section'
-import { SplitReveal } from '@/components/motion/SplitReveal'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import type { Testimonial as TestimonialData } from '@/types'
 
@@ -9,7 +8,7 @@ export interface TestimonialProps {
   tone?: Tone
 }
 
-/** One big client quote with a line reveal. */
+/** One big client quote. Static: on inner pages only the page title may reveal. */
 export function Testimonial({ testimonial, eyebrow, tone = 'paper' }: TestimonialProps) {
   const initials = testimonial.company
     .split(/\s+/)
@@ -30,9 +29,9 @@ export function Testimonial({ testimonial, eyebrow, tone = 'paper' }: Testimonia
           </span>
         </div>
         <blockquote className="lg:col-span-9">
-          <SplitReveal className="font-display text-heading-xl lg:text-[clamp(2rem,1rem+2.6vw,3.75rem)]">
+          <p className="font-display text-heading-xl lg:text-[clamp(2rem,1rem+2.6vw,3.75rem)]">
             {testimonial.quote}
-          </SplitReveal>
+          </p>
         </blockquote>
         <figcaption className="flex items-center gap-4 lg:col-span-9 lg:col-start-3">
           <span

@@ -1,19 +1,17 @@
 import { useSearchParams } from 'react-router'
 import { PageMeta } from '@/components/seo/PageMeta'
 import { pageMeta, workContent } from '@/data/pages'
-import { projectCategories, projects } from '@/data/projects'
+import { projects } from '@/data/projects'
 import { PageTitle } from '@/sections/shared/PageTitle'
 import { WorkGrid } from '@/sections/work/WorkGrid'
-import type { ProjectCategoryId } from '@/types'
 
-function isCategory(value: string | null): value is ProjectCategoryId {
-  return projectCategories.some((c) => c.id === value)
-}
+/** One filter per project, so every piece of work can be picked out on its own. */
+const filters = projects.map((project) => ({ id: project.slug, label: project.name }))
 
 export function WorkPage() {
   const [params, setParams] = useSearchParams()
   const raw = params.get('filter')
-  const filter = isCategory(raw) ? raw : null
+  const filter = filters.some((f) => f.id === raw) ? raw : null
 
   return (
     <>
@@ -21,7 +19,7 @@ export function WorkPage() {
       <PageTitle content={workContent.hero} />
       <WorkGrid
         projects={projects}
-        categories={projectCategories}
+        filters={filters}
         activeFilter={filter}
         onFilterChange={(next) =>
           setParams(next ? { filter: next } : {}, { replace: true, preventScrollReset: true })

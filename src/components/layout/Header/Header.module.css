@@ -8,6 +8,7 @@
     color: var(--color-paper);
     transition:
       transform var(--duration-base) var(--ease-out-expo),
+      color var(--duration-fast) var(--ease-out-expo),
       background-color var(--duration-fast) var(--ease-out-expo),
       border-color var(--duration-fast) var(--ease-out-expo);
     border-bottom: 1px solid transparent;
@@ -22,6 +23,29 @@
 
   .hidden {
     transform: translateY(-100%);
+  }
+
+  /* ToneController sets html[data-header-tone] from the section under the header. */
+  :global(html[data-header-tone='light']) .header {
+    color: var(--color-ink);
+  }
+
+  :global(html[data-header-tone='light']) .scrolled {
+    background-color: color-mix(in srgb, var(--color-paper) 82%, transparent);
+    border-bottom-color: color-mix(in srgb, var(--color-ink) 10%, transparent);
+  }
+
+  :global(html[data-header-tone='light']) .navLink {
+    color: var(--color-grey-700);
+  }
+
+  :global(html[data-header-tone='light']) .navLink:hover,
+  :global(html[data-header-tone='light']) .active {
+    color: var(--color-ink);
+  }
+
+  :global(html[data-header-tone='light']) .header :focus-visible {
+    outline-color: var(--color-ink);
   }
 
   /* Keep the header reachable for keyboard users. */

@@ -12,7 +12,7 @@ import { useIntro } from '@/app/providers/IntroProvider'
 import { Logo } from '@/components/ui/Logo'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
-import { scrollToTop } from '@/lib/lenis'
+import { scrollToHash, scrollToTop } from '@/lib/lenis'
 import { ease, pageTransition } from '@/lib/motion-tokens'
 
 export interface PageTransitionProps {
@@ -55,6 +55,9 @@ export function PageTransition({ children, preload, label }: PageTransitionProps
   const latest = useRef(location)
   const busy = useRef(false)
   const shownPath = useRef(location.pathname)
+  // Last location whose #hash we've handled. Starts empty so a direct load of
+  // /services#stage-build also lands on its anchor.
+  const handledKey = useRef<string | null>(null)
   const rootRef = useRef<HTMLDivElement>(null)
 
   const samePage = location.pathname === displayLocation.pathname
@@ -120,24 +123,36 @@ export function PageTransition({ children, preload, label }: PageTransitionProps
     cover(location.pathname)
   }, [location.pathname, samePage, reducedMotion])
 
-  // New page is on screen (still covered): reset scroll, re-measure triggers, reveal.
+  // New page is on screen (still covered): reset scroll (or jump to #hash under the
+  // header), re-measure triggers, reveal.
   useLayoutEffect(() => {
     const path = displayLocation.pathname
     if (reducedMotion || shownPath.current === path) return
     shownPath.current = path
+    handledKey.current = displayLocation.key
     scrollToTop()
     ScrollTrigger.refresh()
+    scrollToHash(displayLocation.hash, true)
     focusMain()
     reveal(path)
-  }, [displayLocation.pathname, reducedMotion])
+  }, [displayLocation.pathname, displayLocation.hash, displayLocation.key, reducedMotion])
 
   // Reduced motion: no wipe; the swap is immediate, so just reset scroll and focus.
   useLayoutEffect(() => {
     if (!reducedMotion || shownPath.current === location.pathname) return
     shownPath.current = location.pathname
+    handledKey.current = location.key
     scrollToTop()
+    scrollToHash(location.hash, true)
     focusMain()
-  }, [reducedMotion, location.pathname])
+  }, [reducedMotion, location.pathname, location.hash, location.key])
+
+  // Same page, new #hash (e.g. /services → /services#stage-run): glide there.
+  useEffect(() => {
+    if (!samePage || handledKey.current === location.key) return
+    handledKey.current = location.key
+    if (location.hash) scrollToHash(location.hash)
+  }, [samePage, location.key, location.hash])
 
   // GSAP would otherwise parse the inline translateY(100%) as a px y and stack yPercent on it.
   useLayoutEffect(() => {

@@ -3,16 +3,8 @@
  * Media comes from data/media.ts. METRICS ARE PLACEHOLDERS: replace them with real,
  * client-approved figures before launch.
  */
-import type { Project, ProjectCategory } from '@/types'
+import type { Project } from '@/types'
 import { media } from './media'
-
-export const projectCategories: ProjectCategory[] = [
-  { id: 'website', label: 'Websites' }, // COPY:
-  { id: 'npo', label: 'NPO' }, // COPY:
-  { id: 'energy', label: 'Energy' }, // COPY:
-  { id: 'brand', label: 'Brand' }, // COPY:
-  { id: 'web-app', label: 'Web apps' }, // COPY:
-]
 
 export const projects: Project[] = [
   {
@@ -22,7 +14,7 @@ export const projects: Project[] = [
     year: 2026, // COPY: confirm
     summary:
       'A proof-first website that turns rooftop installs into quote requests for a Gauteng solar installer.', // COPY:
-    categories: ['website', 'energy'],
+    sector: 'Renewable energy', // COPY:
     services: ['UX strategy', 'Web design', 'Development', 'SEO & analytics'], // COPY:
     stages: ['build', 'run'], // COPY: confirm
     liveUrl: 'https://example.com/gc-solar', // COPY: replace with the live GC Solar URL
@@ -80,7 +72,7 @@ export const projects: Project[] = [
     year: 2026, // COPY: confirm
     summary:
       'A warm, trustworthy home for a community foundation, built to explain its impact and make giving simple.', // COPY:
-    categories: ['website', 'npo'],
+    sector: 'Non-profit', // COPY:
     services: ['Content strategy', 'Web design', 'Development', 'Hosting & care'], // COPY:
     stages: ['build', 'run'], // COPY: confirm
     liveUrl: 'https://example.com/mpg-foundation', // COPY: replace with the live MPG Foundation URL
@@ -135,49 +127,44 @@ export const projects: Project[] = [
     briefType: 'business-website',
   },
   {
-    slug: 'sample-project',
-    name: 'Kestrel & Oak (sample)', // COPY: FAKE SAMPLE PROJECT. Replace or remove before launch.
-    client: 'Sample client — not a real project', // COPY:
-    year: 2026,
-    summary:
-      'A placeholder case study that shows how the template handles a brand and web-app project.', // COPY:
-    categories: ['brand', 'web-app'],
-    services: ['Brand refresh', 'Product design', 'Web app'], // COPY:
-    stages: ['build'],
-    isSample: true,
-    thumbnail: media.projects.sample.thumbnail,
-    preview: media.projects.sample.preview,
-    hero: { image: media.projects.sample.hero },
+    slug: 'salon-friend',
+    name: 'Salon Friend', // COPY:
+    client: 'Salon Friend', // COPY: confirm the client's full name
+    year: 2026, // COPY: confirm
+    summary: 'A website for Salon Friend, designed and built by Stack.', // COPY: PLACEHOLDER. One line on what we built and why.
+    sector: 'Salons & beauty', // COPY: confirm
+    services: ['Web design', 'Development'], // COPY: confirm
+    stages: ['build'], // COPY: confirm
+    thumbnail: media.projects.salonFriend.thumbnail,
+    preview: media.projects.salonFriend.preview,
+    hero: { image: media.projects.salonFriend.hero },
     narrative: {
       problem: {
-        heading: 'This is sample content.', // COPY:
+        heading: 'Case study coming soon.', // COPY: PLACEHOLDER
         paragraphs: [
-          'Use this entry as a reference for how a third case study will look. Every field here is placeholder copy.', // COPY:
+          'We’re writing up the Salon Friend story: what they needed, how we approached it, what we built and how it’s going.', // COPY: PLACEHOLDER
         ],
       },
       approach: {
-        heading: 'Replace with a real approach.', // COPY:
-        paragraphs: ['Describe how you framed the problem and made the key decisions.'], // COPY:
+        heading: 'How we approached it.', // COPY: PLACEHOLDER
+        paragraphs: ['PLACEHOLDER: the key decisions and why.'], // COPY:
       },
       build: {
-        heading: 'Replace with the real build.', // COPY:
-        paragraphs: ['Explain what was built, the stack and anything clever under the hood.'], // COPY:
+        heading: 'What we built.', // COPY: PLACEHOLDER
+        paragraphs: ['PLACEHOLDER: the pages, features and stack.'], // COPY:
       },
       result: {
-        heading: 'Replace with real results.', // COPY:
-        paragraphs: ['Share the outcome in the client’s words or with measurable results.'], // COPY:
+        heading: 'The result.', // COPY: PLACEHOLDER
+        paragraphs: ['PLACEHOLDER: the outcome, ideally in the client’s words.'], // COPY:
       },
     },
     gallery: [
-      { ...media.projects.sample.gallery[0], span: 'full' },
-      { ...media.projects.sample.gallery[1], span: 'half' },
-      { ...media.projects.sample.gallery[2], span: 'half' },
+      { ...media.projects.salonFriend.gallery[0], span: 'full' },
+      { ...media.projects.salonFriend.gallery[1], span: 'half' },
+      { ...media.projects.salonFriend.gallery[2], span: 'half' },
     ],
-    metrics: [
-      { value: '00', label: 'Sample metric' }, // COPY:
-      { value: '00%', label: 'Sample metric' }, // COPY:
-    ],
-    briefType: 'web-app',
+    metrics: [], // COPY: add real, client-approved results when there are some
+    briefType: 'business-website', // COPY: confirm
   },
 ]
 

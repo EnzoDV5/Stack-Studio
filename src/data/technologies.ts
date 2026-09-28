@@ -1,4 +1,4 @@
-import type { Technology, TechnologyCategory } from '@/types/technology'
+import type { Technology } from '@/types/technology'
 
 export const technologyContent = {
   heading: 'The stack behind the work',
@@ -282,21 +282,3 @@ export const technologies: readonly Technology[] = [
     logo: '/logos/technologies/zod.svg',
   },
 ]
-
-const interfaceCategories: readonly TechnologyCategory[] = [
-  'Design',
-  'Languages',
-  'Frontend',
-  'Mobile',
-  'Desktop',
-]
-
-// Partition by primary category so adding a technology never duplicates it across rows.
-export const technologyRows = [
-  technologies.filter((technology) =>
-    interfaceCategories.some((category) => category === technology.categories[0]),
-  ),
-  technologies.filter(
-    (technology) => !interfaceCategories.some((category) => category === technology.categories[0]),
-  ),
-] as const

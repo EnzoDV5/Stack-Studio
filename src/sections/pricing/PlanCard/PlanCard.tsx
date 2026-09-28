@@ -12,6 +12,8 @@ export interface PlanCardProps {
   highlighted?: boolean
   popularLabel: string
   cta: { label: string; to: string; location: string }
+  /** Slot id so PlanTabs can Flip a card into the one it replaces. */
+  flipId?: string
 }
 
 /** One monthly plan: name, price, hours, what's included and a pre-filled CTA. */
@@ -24,9 +26,11 @@ export function PlanCard({
   highlighted,
   popularLabel,
   cta,
+  flipId,
 }: PlanCardProps) {
   return (
     <li
+      data-flip-id={flipId}
       className={cn(
         'relative flex flex-col rounded-lg border p-7 md:p-8',
         highlighted ? 'border-orange bg-tone-surface' : 'border-tone',

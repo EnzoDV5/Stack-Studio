@@ -14,7 +14,8 @@ export interface StaggerGroupProps {
 }
 
 /**
- * Staggered rise-in for a group (cards, list rows, logos). Direct children by default, or
+ * Staggered rise-in for a group of cards or list items only (never headers or whole sections;
+ * docs/motion-map.md rule 3). Direct children by default, or
  * mark specific items with data-stagger and pass selector="[data-stagger]".
  */
 export function StaggerGroup({
@@ -36,7 +37,8 @@ export function StaggerGroup({
       if (!items.length) return
       gsap.from(items, {
         y: distance.rise,
-        autoAlpha: 0,
+        // opacity, not autoAlpha: items often hold links, and visibility: hidden blocks focus.
+        opacity: 0,
         duration: duration.base,
         ease: ease.out,
         stagger,

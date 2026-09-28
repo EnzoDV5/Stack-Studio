@@ -15,15 +15,21 @@ Studio snippet   Metrics, quotes    /services, /pricing   Email (footer)
 ## Primary path (the flow the home page is built around)
 
 1. **Land on Home.** A short preloader (once per session) opens onto a big statement over
-   the showreel. The CTA is visible within 1 second. _Doubt removed: Find._
-2. **Scroll.** A technology capability strip, then two featured case studies with large media.
-   Hovering previews the work in motion. _Doubt removed: Trust._
-3. **Keep scrolling.** Services as expanding rows, then a pinned process section showing
-   exactly how a project runs. _Doubt removed: Understand (what)._
-4. **Pricing teaser.** "From" prices for project builds, plus the monthly plan hook.
-   _Doubt removed: Understand (cost)._
-5. **The founders and a testimonial.** Real people who are accountable.
+   the showreel, with the project index beside it: work is on the first screen, and the
+   CTA is visible within 1 second. _Doubt removed: Find._
+2. **Scroll.** The showreel gives way to the work reel: every project, large, sliding past,
+   then what those clients say about it. Hovering previews the work in motion. _Doubt
+   removed: Trust._
+3. **Choose a path.** "Where are you at?" lets visitors pick their stage (build, take over,
+   run, grow, partner) and jump to its details or an estimate. The process line shows how
+   a project runs and what it's built with. _Doubt removed: Understand (what)._
+4. **Pricing**: three "from" figures and the estimator; the Pricing page offers ready-made
+   starting quotes that open the estimator pre-filled. _Doubt removed: Understand (cost)._
+5. **The founders.** Real people who are accountable.
 6. **Giant closing CTA** leads to `/start`. _Doubt removed: Contact._
+
+Every Home section ends with a "go deeper" link, so Home works as a summary and visitors
+choose where to go next.
 
 ## Deeper paths
 
@@ -45,6 +51,8 @@ Studio snippet   Metrics, quotes    /services, /pricing   Email (footer)
 
 - One question per screen, a progress bar, Back and Next, and keyboard support: Enter moves
   on, number keys pick an option, and arrow keys move within a group.
+- Deep links pre-fill it: `?path=`, `?type=<offering>`, `?plan=<plan>` and
+  `?quote=<starting quote>` (from the Pricing page).
 - The live estimate panel updates with every answer and is always labelled indicative.
 - Validation runs per step with zod. Errors are announced and focus moves to them.
 - The contact step requires POPIA consent and links to `/privacy`.

@@ -167,20 +167,20 @@ export const media = {
         picsum('stack-mpg-g4', 2400, 1350, 'MPG Foundation volunteer sign-up page'), // COPY: alt
       ],
     },
-    sample: {
-      thumbnail: picsum('stack-sample-thumb', 1600, 1200, 'Sample project placeholder image'), // COPY: alt
+    salonFriend: {
+      thumbnail: picsum('stack-salon-friend-thumb', 1600, 1200, 'The Salon Friend website'), // COPY: alt, replace with a real screenshot
       preview: video(
-        'sample-preview.mp4',
-        'Sample project preview', // COPY:
-        picsum('stack-sample-thumb', 1600, 1200, ''),
+        'salon-friend-preview.mp4',
+        'Scrolling through the Salon Friend website', // COPY:
+        picsum('stack-salon-friend-thumb', 1600, 1200, ''),
         1600,
         1200,
       ),
-      hero: picsum('stack-sample-hero', 2400, 1350, 'Sample project hero placeholder'), // COPY: alt
+      hero: picsum('stack-salon-friend-hero', 2400, 1350, 'The Salon Friend homepage'), // COPY: alt
       gallery: [
-        picsum('stack-sample-g1', 2400, 1350, 'Sample project page placeholder'), // COPY: alt
-        picsum('stack-sample-g2', 1200, 1500, 'Sample project mobile placeholder'), // COPY: alt
-        picsum('stack-sample-g3', 1200, 1500, 'Sample project mobile placeholder'), // COPY: alt
+        picsum('stack-salon-friend-g1', 2400, 1350, 'Salon Friend page on desktop'), // COPY: alt
+        picsum('stack-salon-friend-g2', 1200, 1500, 'Salon Friend on mobile'), // COPY: alt
+        picsum('stack-salon-friend-g3', 1200, 1500, 'Salon Friend on mobile'), // COPY: alt
       ],
     },
   },
@@ -197,6 +197,9 @@ export const media = {
       1350,
       'The Stack Studio workspace in Centurion',
     ), // COPY: alt
-    detail: picsum('stack-studio-detail', 1200, 1500, 'Wireframes and sketches on a desk'), // COPY: alt
+    // COPY: alt. Licensed stock already in /public/media/services (see its README). Swap
+    // for a real studio photo when there is one.
+    detail: servicePhoto('collaboration', 'Two people reviewing software together on a laptop')
+      .image,
   },
 } as const

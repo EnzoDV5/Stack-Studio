@@ -151,3 +151,18 @@ export type BriefAction =
   | { type: 'submit' }
   | { type: 'success' }
   | { type: 'failure' }
+
+/**
+ * A ready-made starting quote: a set of brief answers with a name. The Pricing page shows
+ * its indicative range (computed by lib/estimate, never typed in), and /start?quote=<id>
+ * pre-fills the quote builder with it so the visitor can adjust from there.
+ */
+export interface QuotePreset {
+  id: string
+  name: string
+  /** Who it suits, in one line. */
+  for: string
+  /** What the quote covers, in plain words. */
+  includes: string[]
+  answers: Partial<BriefAnswers>
+}

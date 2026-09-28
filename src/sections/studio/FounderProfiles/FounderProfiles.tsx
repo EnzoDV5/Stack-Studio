@@ -27,6 +27,7 @@ export function FounderProfiles({
       <div className="container-site">
         <SectionHeader
           id={headingId}
+          variant="split"
           eyebrow={intro.eyebrow}
           title={intro.title}
           intro={intro.intro}
@@ -34,8 +35,8 @@ export function FounderProfiles({
         <ul className="mt-16 grid gap-16 md:grid-cols-2 md:gap-10">
           {founders.map((founder) => (
             <li key={founder.id}>
-              <div className="aspect-4/5 overflow-hidden rounded-sm bg-ink-700">
-                <Parallax amount={12} className="h-[112%] -translate-y-[6%]">
+              <div className="relative aspect-4/5 overflow-hidden rounded-sm bg-ink-700">
+                <Parallax amount={12} className="absolute inset-x-0 top-[-7%] h-[114%]">
                   <Image image={founder.portrait} sizes="(min-width: 768px) 50vw, 100vw" />
                 </Parallax>
               </div>

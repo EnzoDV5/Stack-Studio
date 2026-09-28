@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useRef, type ReactNode } from 'react'
 import { useInView } from '@/hooks/useInView'
-import { ScrollTrigger } from '@/lib/gsap'
+import { requestRefresh } from '@/lib/scroll-refresh'
 
 export interface DeferredSectionProps {
   children: ReactNode
@@ -12,15 +12,14 @@ export interface DeferredSectionProps {
 
 function RefreshOnMount() {
   useEffect(() => {
-    const id = requestAnimationFrame(() => ScrollTrigger.refresh())
-    return () => cancelAnimationFrame(id)
+    requestRefresh({ force: true })
   }, [])
   return null
 }
 
 /**
  * Mounts heavy below-the-fold sections (usually React.lazy chunks) only as they approach
- * the viewport, then refreshes ScrollTrigger so later pins and reveals measure correctly.
+ * the viewport, then queues a (debounced) ScrollTrigger refresh so later pins and scrubs measure correctly.
  */
 export function DeferredSection({
   children,

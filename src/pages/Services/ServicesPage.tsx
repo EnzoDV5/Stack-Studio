@@ -1,17 +1,28 @@
 import { PageMeta } from '@/components/seo/PageMeta'
 import { faqsFor } from '@/data/faqs'
-import { homeContent, pageMeta, pricingContent, servicesContent } from '@/data/pages'
+import { serviceMedia } from '@/data/media'
+import { pageMeta, pricingContent, servicesContent } from '@/data/pages'
 import { planFamilies, plans } from '@/data/plans'
 import { policies } from '@/data/policies'
 import { processSteps } from '@/data/process'
 import { rates } from '@/data/rates'
 import { offerings, serviceStages } from '@/data/services'
 import { stageRows } from '@/lib/offer'
+import type { StageLayout } from '@/sections/services/StageBlock'
 import { StageExplorer } from '@/sections/services/StageExplorer'
 import { FaqSection } from '@/sections/shared/FaqSection'
 import { PageTitle } from '@/sections/shared/PageTitle'
 import { ProcessPinned } from '@/sections/shared/ProcessPinned'
 import type { StageId } from '@/types'
+
+/** Each stage laid out for what it sells; no two stages share a layout. */
+const stageLayouts: Record<StageId, StageLayout> = {
+  build: 'feature',
+  takeover: 'cards',
+  run: 'split',
+  grow: 'figures',
+  partner: 'tiers',
+}
 
 const stageNotes: Partial<Record<StageId, string[]>> = {
   run: [policies.hostingOnRequest],
@@ -29,26 +40,29 @@ export function ServicesPage() {
     rows: stageRows(stage.id, data, pricingContent.priceLabels),
     notes: stageNotes[stage.id],
     cta: stage.cta,
+    media: serviceMedia[stage.id],
+    layout: stageLayouts[stage.id],
   }))
 
   return (
     <>
       <PageMeta {...pageMeta.services} />
-      <PageTitle content={servicesContent.hero} />
+      <PageTitle content={servicesContent.hero} reveal />
       <StageExplorer
         stages={stages}
         navLabel={servicesContent.navLabel}
         labels={servicesContent.labels}
       />
       <ProcessPinned
+        id="process"
         tone="dark"
         intro={{
-          eyebrow: homeContent.process.eyebrow,
-          title: homeContent.process.title,
-          intro: homeContent.process.intro,
+          eyebrow: servicesContent.process.eyebrow,
+          title: servicesContent.process.title,
+          intro: servicesContent.process.intro,
         }}
         steps={processSteps}
-        stepLabel={homeContent.process.stepLabel}
+        stepLabel={servicesContent.process.stepLabel}
       />
       <FaqSection intro={servicesContent.faq} faqs={faqsFor('general', 'services', 'process')} />
     </>

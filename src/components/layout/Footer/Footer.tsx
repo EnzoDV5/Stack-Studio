@@ -1,5 +1,4 @@
 import { Link } from 'react-router'
-import { Section } from '@/components/layout/Section'
 import { TextLink } from '@/components/ui/TextLink'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { trackEvent } from '@/lib/analytics'
@@ -42,7 +41,9 @@ export function Footer({
   const year = new Date().getFullYear()
 
   return (
-    <Section as="div" tone="dark" spacing="none" className="overflow-hidden border-t border-tone">
+    // Not a <Section>: the footer is chrome, so it keeps its own ink and stays out of the
+    // page tone flow (the closing band above it stays orange to the end).
+    <div className="relative isolate overflow-hidden border-t border-tone tone-dark">
       <footer className="container-site">
         <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-5">
@@ -120,6 +121,6 @@ export function Footer({
           <span>.</span>
         </p>
       </div>
-    </Section>
+    </div>
   )
 }

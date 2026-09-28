@@ -1,54 +1,52 @@
+import { DeferredSection } from '@/components/layout/DeferredSection'
 import { PageMeta } from '@/components/seo/PageMeta'
-import { addOns } from '@/data/addons'
 import { faqsFor } from '@/data/faqs'
 import { pageMeta, pricingContent } from '@/data/pages'
 import { planFamilies, plans } from '@/data/plans'
 import { policies } from '@/data/policies'
-import { rates } from '@/data/rates'
-import { getOffering, offerings } from '@/data/services'
-import { formatPrice } from '@/lib/format'
-import { familyFrom, isVisible, offeringPrice, planPrice, ratePrice } from '@/lib/offer'
+import { quotePresets } from '@/data/quotes'
+import { estimate } from '@/lib/estimate'
+import { formatPrice, formatPriceRange } from '@/lib/format'
+import { isVisible, planPrice } from '@/lib/offer'
 import { IncludedVsExcluded } from '@/sections/pricing/IncludedVsExcluded'
 import { PlanTabs } from '@/sections/pricing/PlanTabs'
 import { PoliciesList } from '@/sections/pricing/PoliciesList'
-import { PricingSummary } from '@/sections/pricing/PricingSummary'
-import { RatesStrip } from '@/sections/pricing/RatesStrip'
+import { PricingSteps } from '@/sections/pricing/PricingSteps'
+import { QuoteStarters, type QuoteStarter } from '@/sections/pricing/QuoteStarters'
 import { FaqSection } from '@/sections/shared/FaqSection'
 import { PageTitle } from '@/sections/shared/PageTitle'
 
-export function PricingPage() {
-  const c = pricingContent
-  const l = c.priceLabels
-  const pricedBuild = offerings.filter((o) => o.stage === 'build' && o.visibility === 'pricing')
-  const audit = getOffering('website-audit')
-  const familyName = (id: string) => planFamilies.find((f) => f.id === id)?.name ?? id
+const c = pricingContent
+const l = c.priceLabels
 
-  const groups = [
+/**
+ * Starting quotes with the range the quote builder itself computes for them, so the
+ * Pricing page and /start can never disagree. Presets the estimator can't range are skipped.
+ */
+const starters: QuoteStarter[] = quotePresets.flatMap((preset) => {
+  const result = estimate(preset.answers)
+  if (result.kind !== 'range') return []
+  return [
     {
-      id: 'build',
-      title: c.summary.groups.build,
-      items: pricedBuild.map((o) => ({ name: o.name, price: offeringPrice(o, l) })),
-    },
-    {
-      id: 'takeover',
-      title: c.summary.groups.takeover,
-      items: audit ? [{ name: audit.name, price: offeringPrice(audit, l) }] : [],
-    },
-    {
-      id: 'run',
-      title: c.summary.groups.run,
-      items: (['care', 'managed'] as const).map((f) => ({
-        name: familyName(f),
-        price: familyFrom(f, plans, l),
-      })),
-    },
-    {
-      id: 'partner',
-      title: c.summary.groups.partner,
-      items: [{ name: familyName('partner'), price: familyFrom('partner', plans, l) }],
+      id: preset.id,
+      name: preset.name,
+      for: preset.for,
+      includes: preset.includes,
+      // Rounded like the estimate panel on /start, so both show the same range.
+      range: formatPriceRange(result.low, result.high, 1_000),
+      monthly: result.carePlan
+        ? c.quotes.monthly(`${formatPrice(result.carePlan.pricePerMonth)}${l.perMonth}`)
+        : undefined,
+      cta: { label: c.quotes.start, to: `/start?quote=${preset.id}` },
     },
   ]
+})
 
+/**
+ * No fixed price list: how a quote is reached, ready-made starting quotes that open the
+ * quote builder pre-filled, then the monthly plans and the terms.
+ */
+export function PricingPage() {
   const tabs = planFamilies.map((family) => ({
     id: family.id,
     name: family.name,
@@ -75,64 +73,57 @@ export function PricingPage() {
   return (
     <>
       <PageMeta {...pageMeta.pricing} />
-      <PageTitle content={c.hero} />
-      <PricingSummary
+      <PageTitle content={c.hero} reveal />
+      <PricingSteps
         tone="paper"
-        eyebrow={c.summary.eyebrow}
-        title={c.summary.title}
-        groups={groups}
-        addOns={{
-          title: c.summary.addOnsTitle,
-          items: addOns.map((a) => ({
-            name: a.name,
-            price: `${formatPrice(a.price)}${a.perUnit ? ` ${c.summary.each}` : ''}`,
-          })),
-        }}
-        more={c.summary.more}
+        eyebrow={c.approach.eyebrow}
+        title={c.approach.title}
+        steps={c.approach.steps}
+        cta={c.approach.cta}
+      />
+      <QuoteStarters
+        tone="dark"
+        eyebrow={c.quotes.eyebrow}
+        title={c.quotes.title}
+        intro={c.quotes.intro}
+        quotes={starters}
+        rangeLabel={c.quotes.rangeLabel}
+        custom={c.quotes.custom}
         notes={[policies.vatNote]}
       />
-      <PlanTabs
-        tone="dark"
-        eyebrow={c.plans.eyebrow}
-        title={c.plans.title}
-        tabsLabel={c.plans.tabsLabel}
-        tabs={tabs}
-        popularLabel={c.plans.popular}
-        footnotes={[c.plans.minTerm(policies.minimumTermMonths), policies.hostingOnRequest]}
-      />
-      <IncludedVsExcluded
-        tone="paper"
-        eyebrow={c.scope.eyebrow}
-        title={policies.maintenance.title}
-        intro={policies.maintenance.intro}
-        included={policies.maintenance.included}
-        excluded={policies.maintenance.excluded}
-        outro={policies.maintenance.outro}
-        labels={{ included: c.scope.includedTitle, excluded: c.scope.excludedTitle }}
-      />
-      <RatesStrip
-        tone="dark"
-        eyebrow={c.rates.eyebrow}
-        title={c.rates.title}
-        rates={rates.map((r) => ({
-          id: r.id,
-          name: r.name,
-          price: ratePrice(r, l),
-          description: r.description,
-          examples: r.examples ?? [],
-        }))}
-      />
-      <PoliciesList
-        tone="paper"
-        eyebrow={c.policies.eyebrow}
-        title={c.policies.title}
-        scheduleLabel={c.policies.scheduleLabel}
-        schedules={policies.paymentSchedules}
-        items={policies.items}
-        vatNote={policies.vatNote}
-        termsLink={c.policies.termsLink}
-      />
-      <FaqSection tone="dark" intro={c.faq} faqs={faqsFor('pricing')} />
+      {/* Below the fold: mounted as it approaches, so the first render stays light. */}
+      <DeferredSection minHeight="120vh">
+        <PlanTabs
+          tone="paper"
+          eyebrow={c.plans.eyebrow}
+          title={c.plans.title}
+          tabsLabel={c.plans.tabsLabel}
+          tabs={tabs}
+          popularLabel={c.plans.popular}
+          footnotes={[c.plans.minTerm(policies.minimumTermMonths), policies.hostingOnRequest]}
+        />
+        <IncludedVsExcluded
+          tone="dark"
+          eyebrow={c.scope.eyebrow}
+          title={policies.maintenance.title}
+          intro={policies.maintenance.intro}
+          included={policies.maintenance.included}
+          excluded={policies.maintenance.excluded}
+          outro={policies.maintenance.outro}
+          labels={{ included: c.scope.includedTitle, excluded: c.scope.excludedTitle }}
+        />
+        <PoliciesList
+          tone="paper"
+          eyebrow={c.policies.eyebrow}
+          title={c.policies.title}
+          scheduleLabel={c.policies.scheduleLabel}
+          schedules={policies.paymentSchedules}
+          items={policies.items}
+          vatNote={policies.vatNote}
+          termsLink={c.policies.termsLink}
+        />
+        <FaqSection tone="dark" intro={c.faq} faqs={faqsFor('pricing')} />
+      </DeferredSection>
     </>
   )
 }

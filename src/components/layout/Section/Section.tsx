@@ -10,6 +10,11 @@ export interface SectionProps {
   grid?: boolean | GridFade
   spacing?: 'default' | 'sm' | 'none'
   as?: 'section' | 'div' | 'header' | 'aside'
+  /**
+   * Keep painting its own background while the page tone flows (ToneController). Use it
+   * when the section's own media covers it edge to edge.
+   */
+  solid?: boolean
   id?: string
   className?: string
   children: ReactNode
@@ -30,12 +35,16 @@ const spacingClass = {
   none: '',
 } as const
 
-/** Every section renders inside this: sets tone variables, vertical rhythm and the grid motif. */
+/**
+ * Every section renders inside this: sets tone variables, vertical rhythm and the grid
+ * motif. `data-tone` is what ToneController reads to morph the page between sections.
+ */
 export function Section({
   tone = 'dark',
   grid = false,
   spacing = 'default',
   as: Tag = 'section',
+  solid = false,
   id,
   className,
   children,
@@ -45,6 +54,7 @@ export function Section({
     <Tag
       id={id}
       data-tone={tone}
+      data-tone-solid={solid || undefined}
       className={cn('relative isolate', toneClass[tone], spacingClass[spacing], className)}
       {...aria}
     >

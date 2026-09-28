@@ -1,6 +1,10 @@
 import { useId, useRef, useState, type KeyboardEvent } from 'react'
+import { flushSync } from 'react-dom'
 import { Section, type Tone } from '@/components/layout/Section'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
+import { Flip, gsap, useGSAP } from '@/lib/gsap'
+import { duration, ease, stagger } from '@/lib/motion-tokens'
 import { PlanCard, type PlanCardProps } from '@/sections/pricing/PlanCard'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
 
@@ -24,7 +28,11 @@ export interface PlanTabsProps {
   tone?: Tone
 }
 
-/** Care / Managed / Partner plan families as accessible tabs (arrow keys move between tabs). */
+/**
+ * Care / Managed / Partner plan families as accessible tabs (arrow keys move between tabs).
+ * Signature motion: switching tabs Flips each card from the slot it replaces, then its
+ * content fades in. No scroll animation. Instant with reduced motion.
+ */
 export function PlanTabs({
   eyebrow,
   title,
@@ -37,6 +45,39 @@ export function PlanTabs({
   const baseId = useId()
   const [active, setActive] = useState(tabs[0]?.id ?? '')
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const rootRef = useRef<HTMLDivElement>(null)
+  const reducedMotion = useReducedMotion()
+  const { contextSafe } = useGSAP({ scope: rootRef })
+
+  const select = (id: string) => {
+    const root = rootRef.current
+    if (id === active || !root) return
+    const state = reducedMotion ? null : Flip.getState(root.querySelectorAll('[data-flip-id]'))
+    flushSync(() => setActive(id))
+    if (!state) return
+    contextSafe(() => {
+      const cards = root.querySelectorAll<HTMLElement>(`[data-plan-panel="${id}"] [data-flip-id]`)
+      Flip.from(state, {
+        targets: cards,
+        duration: duration.fast,
+        ease: ease.out,
+        scale: true,
+        onEnter: (entering) =>
+          gsap.fromTo(entering, { opacity: 0 }, { opacity: 1, duration: duration.fast }),
+      })
+      gsap.fromTo(
+        Array.from(cards, (card) => Array.from(card.children)).flat(),
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: duration.fast,
+          delay: duration.fast * 0.5,
+          stagger: stagger.tight,
+          ease: ease.out,
+        },
+      )
+    })()
+  }
 
   const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     const i = tabs.findIndex((t) => t.id === active)
@@ -47,14 +88,14 @@ export function PlanTabs({
     const next = jump ?? (i + move + tabs.length) % tabs.length
     const tab = tabs[next]
     if (!tab) return
-    setActive(tab.id)
+    select(tab.id)
     tabRefs.current[next]?.focus()
   }
 
   return (
     <Section tone={tone}>
-      <div className="container-site">
-        <SectionHeader eyebrow={eyebrow} title={title} />
+      <div ref={rootRef} className="container-site">
+        <SectionHeader variant="inline" eyebrow={eyebrow} title={title} />
         <div
           role="tablist"
           aria-label={tabsLabel}
@@ -74,7 +115,7 @@ export function PlanTabs({
                 aria-selected={selected}
                 aria-controls={`${baseId}-panel-${tab.id}`}
                 tabIndex={selected ? 0 : -1}
-                onClick={() => setActive(tab.id)}
+                onClick={() => select(tab.id)}
                 onKeyDown={onKeyDown}
                 className={cn(
                   'h-11 shrink-0 rounded-pill border px-5 text-small font-semibold transition-colors',
@@ -96,6 +137,7 @@ export function PlanTabs({
             id={`${baseId}-panel-${tab.id}`}
             aria-labelledby={`${baseId}-tab-${tab.id}`}
             hidden={tab.id !== active}
+            data-plan-panel={tab.id}
             className="mt-10"
           >
             <p className="max-w-[56ch] text-body-lg text-muted">{tab.description}</p>
@@ -105,8 +147,8 @@ export function PlanTabs({
                 tab.plans.length > 2 && 'lg:grid-cols-3',
               )}
             >
-              {tab.plans.map(({ id, ...plan }) => (
-                <PlanCard key={id} {...plan} popularLabel={popularLabel} />
+              {tab.plans.map(({ id, ...plan }, i) => (
+                <PlanCard key={id} {...plan} popularLabel={popularLabel} flipId={`slot-${i}`} />
               ))}
             </ul>
             {tab.note && <p className="mt-6 text-small font-semibold text-accent">{tab.note}</p>}

@@ -1,8 +1,9 @@
 /**
- * Deep links into the quote builder, e.g. /start?path=build&type=ecommerce or
- * /start?plan=care-business. Pure: turns URL params into answers.
+ * Deep links into the quote builder, e.g. /start?path=build&type=ecommerce,
+ * /start?plan=care-business or /start?quote=launch (a ready-made starting quote). Pure: turns
+ * URL params into answers.
  */
-import type { BriefAnswers, BriefPathId, Offering, Plan } from '@/types'
+import type { BriefAnswers, BriefPathId, Offering, Plan, QuotePreset } from '@/types'
 
 const PATHS: BriefPathId[] = ['build', 'existing', 'run', 'develop', 'unsure']
 
@@ -26,8 +27,11 @@ export interface Prefill {
 
 export function prefillFromParams(
   params: URLSearchParams,
-  data: { offerings: Offering[]; plans: Plan[] },
+  data: { offerings: Offering[]; plans: Plan[]; quotes?: QuotePreset[] },
 ): Prefill {
+  const quote = data.quotes?.find((q) => q.id === params.get('quote'))
+  if (quote) return { answers: quote.answers, name: quote.name }
+
   const type = params.get('type')
   const offering = data.offerings.find(
     (o) => o.id === type && o.briefCategory && o.visibility !== 'hidden',

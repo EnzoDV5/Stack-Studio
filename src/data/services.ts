@@ -15,6 +15,7 @@ export const serviceStages: ServiceStage[] = [
     summary:
       'Websites, web apps, custom software and AI features, designed and developed in-house from first sketch to deployment.', // COPY:
     cta: { label: 'Start a build', to: '/start?path=build' }, // COPY:
+    briefPath: 'build',
   },
   {
     id: 'takeover',
@@ -24,6 +25,7 @@ export const serviceStages: ServiceStage[] = [
     summary:
       'Developer gone, site slow or nobody has the passwords? We audit what you have, move it somewhere safe and take responsibility for it.', // COPY:
     cta: { label: 'Hand it over', to: '/start?path=existing' }, // COPY:
+    briefPath: 'existing',
   },
   {
     id: 'run',
@@ -33,6 +35,7 @@ export const serviceStages: ServiceStage[] = [
     summary:
       'Monthly Care for websites and Managed plans for applications: hosting, monitoring, backups, updates and fixes, handled.', // COPY:
     cta: { label: 'Find my plan', to: '/start?path=run' }, // COPY:
+    briefPath: 'run',
   },
   {
     id: 'grow',
@@ -42,6 +45,7 @@ export const serviceStages: ServiceStage[] = [
     summary:
       'New features, integrations and improvements as your business changes, quoted as fixed projects or billed by the hour.', // COPY:
     cta: { label: 'Plan an improvement', to: '/start?path=develop' }, // COPY:
+    briefPath: 'develop',
   },
   {
     id: 'partner',
@@ -51,6 +55,7 @@ export const serviceStages: ServiceStage[] = [
     summary:
       'Reserved monthly hours with a team that knows your systems: design, development, integrations and planning.', // COPY:
     cta: { label: 'Talk about partnering', to: '/start?path=develop' }, // COPY:
+    briefPath: 'develop',
   },
 ]
 

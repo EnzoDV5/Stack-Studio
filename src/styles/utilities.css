@@ -59,6 +59,33 @@
   color: var(--tone-fg);
 }
 
+/*
+ * Page tone flow. <ToneController> adds html.tone-flow (motion on) and interpolates the
+ * --page-* colours as sections cross the middle of the viewport. Sections then paint
+ * nothing themselves, so the page morphs dark ↔ paper instead of cutting at each edge.
+ * Cells that fill with --tone-bg follow the page colour too. A Section marked `solid`
+ * (its own media covers it) keeps its background.
+ */
+@layer utilities {
+  html.tone-flow body {
+    background-color: var(--page-bg, var(--color-ink));
+  }
+
+  html.tone-flow [data-tone]:not([data-tone-solid]) {
+    --tone-bg: var(--page-bg);
+    --tone-fg: var(--page-fg);
+    --tone-muted: var(--page-muted);
+    --tone-border: var(--page-border);
+    --tone-accent-text: var(--page-accent);
+    --grid-line: var(--page-grid);
+    --tone-surface: var(--page-surface);
+    --tone-marker: var(--page-marker);
+    --focus-ring: var(--page-focus);
+    background-color: transparent;
+    color: var(--tone-fg);
+  }
+}
+
 @utility text-muted {
   color: var(--tone-muted, var(--color-grey-400));
 }

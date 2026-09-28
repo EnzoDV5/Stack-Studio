@@ -80,10 +80,13 @@ weight:
 Heading level (`as`) and visual size (`size`) are independent in `<Heading>`. Keep one h1
 per page. Use the `numeric` utility for prices and counters (tabular figures).
 
-Only Home has a hero. Other routes use `PageTitle`: a compact, static h1 and intro,
-with no grid, title reveal or hero media. Match its tone to the first content section
-so cream backgrounds use ink titles and dark backgrounds use paper titles. A dark
-header-height inset keeps the fixed navigation readable above either background.
+Only Home has a hero. Other routes use `PageTitle`: a compact h1 and intro with no grid
+or hero media. Its h1 is static unless the page opts into `reveal` (Services and Pricing
+do; see `docs/motion-map.md`). Case studies add their hero media as a separate band
+under the meta. Match its tone to the first content section so cream backgrounds use ink
+titles and dark backgrounds use paper titles. A dark header-height inset keeps the fixed
+navigation readable above either background, and the title section is `solid` so it
+keeps its tone over that inset while the rest of the page tone flows.
 
 **Eyebrows:** `<Eyebrow index={1} label="Selected work" />` renders an orange square marker,
 then `01 · SELECTED WORK`.
@@ -140,25 +143,35 @@ a long settle.
 | `stagger.tight/base/loose` | 0.04 / 0.08 / 0.14 |                      |
 | `trigger.start`            | `top 85%`          |                      |
 
-Signature ideas in use:
+Neighbouring sections never share a trigger type, and every section's motion is listed in
+`docs/motion-map.md` (with the page-flow rules). Signature ideas in use:
 
-| Where           | Idea                                                     | Component                      |
-| --------------- | -------------------------------------------------------- | ------------------------------ |
-| First visit     | Mark and counter preloader, under 1.5s, once per session | `Preloader`                    |
-| Route change    | Orange then ink panel wipe, scroll reset                 | `PageTransition`               |
-| Home hero       | Masked line-by-line rise                                 | `SplitReveal`                  |
-| Work media      | Clip-path mask opens while the image settles             | `MediaReveal`                  |
-| Work cards      | Hover video preview (desktop)                            | `ProjectCard`                  |
-| Services        | Expanding rows                                           | `Accordion`                    |
-| Process         | Sticky column with active step and progress              | `ProcessPinned`                |
-| Cards and lists | Staggered rise                                           | `StaggerGroup`                 |
-| Founders        | Gentle scroll parallax                                   | `Parallax`                     |
-| Technologies    | Opposing CSS marquee rows, hover pause and pause control | `TechnologyMarquee`, `Marquee` |
-| Chrome          | Header hides on scroll, custom cursor, magnetic CTAs     | `Header`, `Cursor`             |
+| Where             | Idea                                                                        | Component                       |
+| ----------------- | --------------------------------------------------------------------------- | ------------------------------- |
+| First visit       | Mark and counter preloader, under 1.5s, once per session                    | `Preloader`                     |
+| Route change      | Orange then ink panel wipe, scroll reset (or jump to `#hash`)               | `PageTransition`                |
+| Whole page        | Background and text colours morph between section tones on scroll           | `ToneController`                |
+| Home hero         | Masked line rise; project index crossfades the background                   | `HomeHero`, `SplitReveal`       |
+| Home work         | Full-bleed media shrinks into a card, then a pinned sideways reel           | `WorkReel`                      |
+| Home services     | Horizontal accordion (transform + clip-path)                                | `PathChooser`                   |
+| Home process      | A line draws through the steps with scroll and lights them                  | `ProcessLine`, `DrawLine`       |
+| Client quotes     | Quote cards rise in one after the other (no images)                         | `ClientVoices`, `StaggerGroup`  |
+| Starting quotes   | Quote cards rise in; each opens the estimator pre-filled                    | `QuoteStarters`, `StaggerGroup` |
+| Prices, metrics   | Numbers count up once on enter                                              | `CountUp`                       |
+| Closing band      | Giant type scales in and tightens with scroll                               | `ClosingCta`                    |
+| Work media        | Clip-path mask opens while the image settles; Flip on filter                | `MediaReveal`, `WorkGrid`       |
+| Work cards        | Hover video preview (desktop)                                               | `ProjectMedia`                  |
+| Services, FAQs    | Expanding rows; each service stage has its own layout                       | `Accordion`, `StageBlock`       |
+| Services process  | Sticky column with active step and progress                                 | `ProcessPinned`                 |
+| Plan tabs         | Cards Flip into the slot they replace                                       | `PlanTabs`                      |
+| Portraits, images | Gentle parallax (scroll, or pointer on Home)                                | `Parallax`                      |
+| Technologies      | CSS marquee, hover pause and pause control                                  | `TechnologyMarquee`, `Marquee`  |
+| Chrome            | Header hides on scroll and matches the tone under it; cursor; magnetic CTAs | `Header`, `Cursor`              |
 
 **Reduced motion** (`prefers-reduced-motion: reduce`): Lenis is not created (native
 scroll), there's no preloader, no page wipe (instant swap plus scroll reset), no text
-splitting, no parallax, no cursor or magnetic effects, a static marquee and no video
+splitting, no parallax, pins, scrubs, Flip or tone flow (sections keep solid backgrounds
+and the work reel is a grid), no cursor or magnetic effects, a static marquee and no video
 autoplay. All content stays visible.
 
 ## Grain and texture

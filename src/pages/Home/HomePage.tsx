@@ -6,38 +6,46 @@ import { homeContent, pageMeta, pricingContent, workContent } from '@/data/pages
 import { planFamilies, plans } from '@/data/plans'
 import { policies } from '@/data/policies'
 import { processSteps } from '@/data/process'
-import { featuredProjects } from '@/data/projects'
+import { getProject, projects } from '@/data/projects'
 import { rates } from '@/data/rates'
 import { getOffering, offerings, serviceStages } from '@/data/services'
 import { founders } from '@/data/studio'
 import { testimonials } from '@/data/testimonials'
-import { technologyContent, technologyRows } from '@/data/technologies'
-import { familyFrom, offeringPrice, stageRows } from '@/lib/offer'
-import { FeaturedWork } from '@/sections/home/FeaturedWork'
+import { technologies, technologyContent } from '@/data/technologies'
+import { formatPrice } from '@/lib/format'
+import { familyFrom, familyMin, stageRows } from '@/lib/offer'
 import { HomeHero } from '@/sections/home/HomeHero'
-import { ServiceShowcase } from '@/sections/home/ServiceShowcase'
-import { TechnologyMarquee } from '@/sections/shared/TechnologyMarquee'
+import { WorkReel } from '@/sections/home/WorkReel'
 import type { PlanFamily, StageId } from '@/types'
 
-// Below-the-fold sections: separate chunks, mounted as they approach the viewport.
-const ProcessPinned = lazy(() =>
-  import('@/sections/shared/ProcessPinned').then((m) => ({ default: m.ProcessPinned })),
+// Home tells one story: the work, what clients say about it, what we do, how, what it
+// costs and who we are, then the closing band. Everything below the work reel is a separate
+// chunk, mounted as it approaches the viewport.
+const PathChooser = lazy(() =>
+  import('@/sections/home/PathChooser').then((m) => ({ default: m.PathChooser })),
 )
-const PricingTeaser = lazy(() =>
-  import('@/sections/home/PricingTeaser').then((m) => ({ default: m.PricingTeaser })),
+const ProcessLine = lazy(() =>
+  import('@/sections/home/ProcessLine').then((m) => ({ default: m.ProcessLine })),
+)
+const ClientVoices = lazy(() =>
+  import('@/sections/home/ClientVoices').then((m) => ({ default: m.ClientVoices })),
+)
+const PricingSnapshot = lazy(() =>
+  import('@/sections/home/PricingSnapshot').then((m) => ({ default: m.PricingSnapshot })),
 )
 const StudioSnippet = lazy(() =>
   import('@/sections/home/StudioSnippet').then((m) => ({ default: m.StudioSnippet })),
-)
-const Testimonial = lazy(() =>
-  import('@/sections/shared/Testimonial').then((m) => ({ default: m.Testimonial })),
 )
 
 const l = pricingContent.priceLabels
 const familyName = (id: PlanFamily) => planFamilies.find((f) => f.id === id)?.name ?? id
 const familyItem = (id: PlanFamily) => ({ name: familyName(id), price: familyFrom(id, plans, l) })
+const stageNames = Object.fromEntries(serviceStages.map((s) => [s.id, s.name])) as Record<
+  StageId,
+  string
+>
 
-/** Home keeps each stage short: priced offerings, or plan families as one "from" line. */
+/** Home keeps each stage short: 2–3 priced offerings, or plan families as "from" lines. */
 function stageItems(stage: StageId) {
   switch (stage) {
     case 'run':
@@ -47,93 +55,132 @@ function stageItems(stage: StageId) {
     default:
       return stageRows(stage, { offerings, plans, rates }, l, {
         pricedOnly: stage !== 'takeover',
-      }).map((row) => ({
-        name: row.name,
-        price: row.price,
-      }))
+      })
+        .slice(0, 3)
+        .map((row) => ({ name: row.name, price: row.price }))
   }
 }
 
-function teaserPrice(source: { offering: string } | { planFamily: PlanFamily }) {
-  if ('planFamily' in source) return familyFrom(source.planFamily, plans, l)
+/** A snapshot figure's amount: an offering's from-price or a plan family's cheapest plan. */
+function snapshotAmount(source: { offering: string } | { planFamily: PlanFamily }) {
+  if ('planFamily' in source) {
+    const min = familyMin(source.planFamily, plans)
+    return { value: min === null ? '' : formatPrice(min), unit: l.perMonth }
+  }
   const offering = getOffering(source.offering)
-  return offering ? offeringPrice(offering, l) : ''
+  return { value: offering ? formatPrice(offering.fromPrice) : '', unit: undefined }
 }
 
 export function HomePage() {
-  const { hero, work, process, pricing, studio } = homeContent
-  const testimonial = testimonials[0]
+  const { hero, work, clients, paths, process, pricing, studio } = homeContent
 
   return (
     <>
       <PageMeta {...pageMeta.home} />
 
-      <HomeHero {...hero} video={media.home.showreel} />
+      <HomeHero {...hero} video={media.home.showreel} projects={projects} />
 
-      <TechnologyMarquee {...technologyContent} rows={technologyRows} />
-
-      <FeaturedWork
+      <WorkReel
         index={1}
         eyebrow={work.eyebrow}
         title={work.title}
-        intro={work.intro}
-        cta={work.cta}
-        projects={featuredProjects}
-        cardCta={work.cardCta}
-        cursorLabel={work.cursorLabel}
-        sampleLabel={workContent.sampleLabel}
-      />
-
-      <ServiceShowcase
-        index={2}
-        eyebrow={homeContent.services.eyebrow}
-        title={homeContent.services.title}
-        intro={homeContent.services.intro}
-        services={serviceStages.map((s) => ({
-          id: s.id,
-          name: s.name,
-          line: s.line,
-          summary: s.summary,
-          items: stageItems(s.id),
-          cta: s.cta,
-          capabilities: homeContent.services.capabilities[s.id],
-          media: serviceMedia[s.id],
-        }))}
+        projects={projects}
+        stageNames={stageNames}
         labels={{
-          examples: homeContent.services.itemsLabel,
-          ...homeContent.services.showcase,
+          cta: work.cardCta,
+          cursor: work.cursorLabel,
+          sample: workContent.sampleLabel,
+          sector: work.sectorLabel,
+          stages: work.stagesLabel,
         }}
+        more={work.more}
+        outro={work.outro}
       />
 
-      <DeferredSection minHeight="160vh">
-        <ProcessPinned
-          index={3}
-          intro={{ eyebrow: process.eyebrow, title: process.title, intro: process.intro }}
-          steps={processSteps}
-          stepLabel={process.stepLabel}
+      <DeferredSection minHeight="90vh">
+        <ClientVoices
+          index={2}
+          eyebrow={clients.eyebrow}
+          title={clients.title}
+          more={clients.more}
+          voices={testimonials.map((t) => {
+            const project = getProject(t.projectSlug)
+            return {
+              id: t.id,
+              quote: t.quote,
+              name: t.name,
+              role: t.role,
+              company: t.company,
+              link: project
+                ? { label: clients.caseLink(t.company), to: `/work/${project.slug}` }
+                : undefined,
+            }
+          })}
         />
       </DeferredSection>
 
-      <DeferredSection minHeight="80vh">
-        <PricingTeaser
+      <DeferredSection minHeight="110vh">
+        <PathChooser
+          index={3}
+          tone="paper"
+          eyebrow={paths.eyebrow}
+          title={paths.title}
+          intro={paths.intro}
+          labels={{ items: paths.itemsLabel }}
+          more={paths.more}
+          stages={serviceStages.map((stage) => ({
+            id: stage.id,
+            index: stage.index,
+            name: stage.name,
+            prompt: paths.prompts[stage.id],
+            line: stage.line,
+            items: stageItems(stage.id),
+            details: { label: paths.details, to: `/services#stage-${stage.id}` },
+            estimate: { label: paths.estimate, to: `/start?path=${stage.briefPath}` },
+            media: serviceMedia[stage.id],
+          }))}
+        />
+      </DeferredSection>
+
+      <DeferredSection minHeight="100vh">
+        <ProcessLine
           index={4}
+          eyebrow={process.eyebrow}
+          title={process.title}
+          steps={processSteps}
+          stepLabel={process.stepLabel}
+          more={process.more}
+          technologies={{ ...technologyContent, rows: [technologies] }}
+        />
+      </DeferredSection>
+
+      <DeferredSection minHeight="85vh">
+        <PricingSnapshot
+          index={5}
           eyebrow={pricing.eyebrow}
           title={pricing.title}
           intro={pricing.intro}
-          items={pricing.items.map((item) => ({
+          figures={pricing.items.map((item) => ({
             label: item.label,
+            prefix: l.from,
             note: item.note,
-            price: teaserPrice(item.source),
+            ...snapshotAmount(item.source),
           }))}
-          cta={pricing.cta}
-          estimateCta={pricing.estimateCta}
           notes={[policies.vatNote]}
+          estimateCta={pricing.estimateCta}
+          more={pricing.more}
         />
       </DeferredSection>
 
-      <DeferredSection minHeight="90vh">
-        <StudioSnippet index={5} {...studio} founders={founders} />
-        {testimonial && <Testimonial testimonial={testimonial} />}
+      <DeferredSection minHeight="95vh">
+        <StudioSnippet
+          index={6}
+          eyebrow={studio.eyebrow}
+          title={studio.title}
+          intro={studio.intro}
+          founders={founders}
+          more={studio.more}
+        />
       </DeferredSection>
     </>
   )

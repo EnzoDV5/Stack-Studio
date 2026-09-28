@@ -1,19 +1,35 @@
 import { useId } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
-import { StaggerGroup } from '@/components/motion/StaggerGroup'
+import { Image } from '@/components/media/Image'
+import { MediaReveal } from '@/components/media/MediaReveal'
+import { cn } from '@/lib/cn'
 import { pad2 } from '@/lib/format'
-import { SectionHeader } from '@/sections/shared/SectionHeader'
-import type { SectionIntro, ValueItem } from '@/types'
+import { SectionHeader, type SectionHeaderVariant } from '@/sections/shared/SectionHeader'
+import type { ImageAsset, SectionIntro, ValueItem } from '@/types'
 
 export interface ValuesGridProps {
   intro: SectionIntro
   items: ValueItem[]
   index?: number
+  /** Opener style; neighbouring sections must differ. */
+  headerVariant?: SectionHeaderVariant
+  /** Optional wide image between the heading and the list (its mask opens on enter). */
+  image?: ImageAsset
   tone?: Tone
 }
 
-/** Numbered principles/values grid (used for "How we work" and "Values"). */
-export function ValuesGrid({ intro, items, index, tone = 'paper' }: ValuesGridProps) {
+/**
+ * Numbered principles/values grid (used for "How we work" and "Values"). The list is static;
+ * an optional image opens with a clip reveal as it enters.
+ */
+export function ValuesGrid({
+  intro,
+  items,
+  index,
+  headerVariant = 'stacked',
+  image,
+  tone = 'paper',
+}: ValuesGridProps) {
   const headingId = useId()
   const cols = items.length % 3 === 0 ? 'lg:grid-cols-3' : 'lg:grid-cols-4'
   return (
@@ -21,15 +37,18 @@ export function ValuesGrid({ intro, items, index, tone = 'paper' }: ValuesGridPr
       <div className="container-site">
         <SectionHeader
           id={headingId}
+          variant={headerVariant}
           index={index}
           eyebrow={intro.eyebrow}
           title={intro.title}
           intro={intro.intro}
         />
-        <StaggerGroup
-          as="ol"
-          className={`mt-16 grid gap-px border-y border-tone md:grid-cols-2 ${cols}`}
-        >
+        {image && (
+          <MediaReveal className="mt-14 aspect-video rounded-lg bg-tone-surface lg:aspect-[21/9]">
+            <Image image={image} sizes="(min-width: 1600px) 1600px, 100vw" />
+          </MediaReveal>
+        )}
+        <ol className={cn('mt-16 grid gap-px border-y border-tone md:grid-cols-2', cols)}>
           {items.map((item, i) => (
             <li
               key={item.id}
@@ -40,7 +59,7 @@ export function ValuesGrid({ intro, items, index, tone = 'paper' }: ValuesGridPr
               <p className="mt-3 text-muted">{item.body}</p>
             </li>
           ))}
-        </StaggerGroup>
+        </ol>
       </div>
     </Section>
   )

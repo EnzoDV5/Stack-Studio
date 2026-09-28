@@ -48,7 +48,7 @@ export function StageNav({ items, label, idPrefix }: StageNavProps) {
     const el = document.getElementById(`${idPrefix}${id}`)
     if (!el) return
     event.preventDefault()
-    scrollToElement(el, -110)
+    scrollToElement(el)
     setActive(id)
   }
 

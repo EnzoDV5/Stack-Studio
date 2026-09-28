@@ -43,8 +43,10 @@ export const distance = {
 
 /** ScrollTrigger start positions. */
 export const trigger = {
-  start: 'top 85%',
-  startLate: 'top 70%',
+  /** Enter animations wait until the element is well on screen, so they play in full. */
+  start: 'top 75%',
+  /** For things that should play in the middle of the screen (count-ups, the process line). */
+  startLate: 'top 62%',
 } as const
 
 export const preloader = {
@@ -85,8 +87,52 @@ export const marquee = {
 } as const
 
 export const lenis = {
-  lerp: 0.1,
+  lerp: 0.09,
   wheelMultiplier: 1,
+} as const
+
+/** ScrollTrigger housekeeping. */
+export const scroll = {
+  /** Debounce before ScrollTrigger.refresh() once fonts, media or lazy sections settle (ms). */
+  refreshDebounceMs: 150,
+} as const
+
+/** ToneController: the page colours morph between section tones around the viewport middle. */
+export const tone = {
+  /**
+   * A section's tone starts fading in when its top enters the bottom of the viewport and is
+   * complete once the top has travelled this fraction of the viewport (so, 20% from the top).
+   */
+  band: 0.8,
+  /** Seconds the page colours take to catch up with the scroll (bounded ease-out glide). */
+  lag: 0.35,
+} as const
+
+/** WorkReel: full-bleed media shrinks into a card, then a pinned horizontal gallery (desktop). */
+export const reel = {
+  /** Pinned scroll for the full-bleed → card shrink, in viewport heights. */
+  shrinkScroll: 0.5,
+  /** Pinned scroll per panel after the first, in viewport heights. */
+  panelScroll: 0.45,
+  /** Corner radius the full-bleed media settles into (px, matches --radius-lg). */
+  radius: 16,
+} as const
+
+/** ProcessLine: steps wait at this opacity until the drawn line reaches them. */
+export const drawLine = {
+  dim: 0.35,
+} as const
+
+/** ClosingCta: the giant type scales in and its tracking tightens as the band scrolls in. */
+export const closingType = {
+  scaleFrom: 0.8,
+  /** Extra letter spacing at the start, in em, removed by the end of the scrub. */
+  trackingFrom: 0.06,
+} as const
+
+/** Case study hero media settles from this scale to 1 as it scrolls through. */
+export const heroScale = {
+  from: 1.1,
 } as const
 
 export const parallax = {

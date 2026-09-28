@@ -23,35 +23,39 @@ Instagram, LinkedIn, privacy link).
 
 ## Home `/`
 
-| #   | Section          | Tone   | Purpose                                                        |
-| --- | ---------------- | ------ | -------------------------------------------------------------- |
-| —   | Hero             | dark   | Big statement over the showreel; magnetic **Start a project**  |
-| —   | Technology strip | dark   | Tools across design, development, infrastructure and AI        |
-| 01  | Selected work    | paper  | Two featured case studies, large media, hover video previews   |
-| 02  | Services         | dark   | Expanding rows: what we do, each with a "from" price and a CTA |
-| 03  | Process          | paper  | Pinned sticky-scroll: how a project runs, week by week         |
-| 04  | Pricing teaser   | dark   | Project "from" prices, plus the monthly plan hook              |
-| 05  | Studio snippet   | paper  | The two founders, one line each                                |
-| —   | Testimonial      | paper  | A real client voice                                            |
-| —   | Closing CTA      | orange | Giant **Start a project**                                      |
+Home is a fast summary of everything, told in order: the work, what clients say, what we
+do, how, what it costs and who we are. Each section ends with a "go deeper" link so
+visitors choose where to go. About 11 viewports on desktop.
+
+| #   | Section           | Tone   | Purpose                                                                               |
+| --- | ----------------- | ------ | ------------------------------------------------------------------------------------- |
+| —   | Hero              | dark   | Statement over the showreel, a project index (chips on mobile), **Start a project**   |
+| 01  | Selected work     | paper  | Pinned sideways reel of every project, then All work / Start a project like this      |
+| 02  | Clients           | dark   | What clients say, each quote linked to its project → /work                            |
+| 03  | Where are you at? | paper  | The five stages as a self-select router: key prices, See details, Get an estimate     |
+| 04  | Process           | dark   | The six steps along one line, then the technologies strip → /services#process         |
+| 05  | Pricing           | paper  | Three "from" figures (website, care, partner), VAT note, Build my estimate → /pricing |
+| 06  | Studio            | dark   | The two founders, one line each → /studio                                             |
+| —   | Closing CTA       | orange | Giant **Start a project**                                                             |
 
 ## Work `/work`
 
-Compact page title, then a filter bar (All plus categories, stored in `?filter=` so it can be linked),
+Compact page title, then a filter bar (All plus one filter per project, stored in `?filter=` so it can be linked),
 then the project grid (hover video preview on desktop), then the closing CTA.
 
 ## Case study `/work/:slug`
 
 One template, driven entirely by `src/data/projects.ts`:
 
-1. Compact page title and summary (project imagery remains in the gallery)
+1. Compact page title and summary
 2. Meta: client, year, services, live link
-3. Narrative: 01 Problem, 02 Approach, 03 Build, 04 Result
-4. Gallery
-5. Result metrics
-6. Client testimonial, if one exists
-7. **Start a project like this** (pre-fills the brief's project type)
-8. Next project link (loops back to the first)
+3. Hero media (`project.hero`), settling from a slight zoom as it scrolls
+4. Narrative: 01 Problem, 02 Approach, 03 Build, 04 Result
+5. Gallery
+6. Result metrics
+7. Client testimonial, if one exists
+8. **Start a project like this** (pre-fills the brief's project type)
+9. Next project link (loops back to the first)
 
 Seeded with GC Solar, MPG Foundation and one clearly labelled sample project.
 
@@ -63,10 +67,13 @@ accordion, then the closing CTA.
 
 ## Pricing `/pricing`
 
-Compact page title, then two models side by side: **Project builds** (once-off) and **Monthly plans**
-(hosting, care, growth). Then the add-ons table, an estimator nudge ("Get an estimate in
-two minutes"), the pricing FAQ and the closing CTA. Everything comes from
-`src/data/pricing.ts`.
+No fixed price list: quotes are built on `/start`. Compact page title, then how pricing works
+(estimate → call → fixed quote), then **starting quotes**: ready-made quotes (launch,
+bookings, content and leads, online store, brand experience) showing the range the
+estimator computes, each opening `/start?quote=<id>` pre-filled, plus "Something else?"
+for everything else. Then the monthly plans, what plans cover, payment terms, the pricing
+FAQ and the closing CTA. Starting quotes live in `src/data/quotes.ts`; prices in
+`src/data/services.ts`, `plans.ts` and `addons.ts`.
 
 ## Studio `/studio`
 

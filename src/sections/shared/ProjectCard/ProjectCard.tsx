@@ -1,11 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
-import { Image } from '@/components/media/Image'
 import { MediaReveal } from '@/components/media/MediaReveal'
-import { Video } from '@/components/media/Video'
 import { Tag } from '@/components/ui/Tag'
-import { useIsTouch } from '@/hooks/useIsTouch'
 import { cn } from '@/lib/cn'
+import { ProjectMedia } from '@/sections/shared/ProjectMedia'
 import type { Project } from '@/types'
 
 export interface ProjectCardProps {
@@ -39,31 +37,17 @@ export function ProjectCard({
   className,
 }: ProjectCardProps) {
   const [hovering, setHovering] = useState(false)
-  const isTouch = useIsTouch()
-  const showPreview = Boolean(project.preview) && !isTouch
 
   const media = (
-    <div className="relative size-full overflow-hidden bg-ink-700">
-      <Image
-        image={project.thumbnail}
-        priority={priority}
-        sizes={
-          variant === 'feature'
-            ? '(min-width: 1024px) 60vw, 100vw'
-            : '(min-width: 768px) 50vw, 100vw'
-        }
-        className="group-hover:scale-[1.04]"
-      />
-      {showPreview && project.preview && (
-        <Video
-          video={project.preview}
-          mode="controlled"
-          playing={hovering}
-          fallback="none"
-          className="pointer-events-none absolute inset-0 bg-transparent!"
-        />
-      )}
-    </div>
+    <ProjectMedia
+      project={project}
+      playing={hovering}
+      priority={priority}
+      sizes={
+        variant === 'feature' ? '(min-width: 1024px) 60vw, 100vw' : '(min-width: 768px) 50vw, 100vw'
+      }
+      imageClassName="group-hover:scale-[1.04]"
+    />
   )
 
   return (

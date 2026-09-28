@@ -2,60 +2,70 @@ import { useId } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
 import { Image } from '@/components/media/Image'
 import { Parallax } from '@/components/motion/Parallax'
-import { Button } from '@/components/ui/Button'
-import { Eyebrow } from '@/components/ui/Eyebrow'
-import { Heading } from '@/components/ui/Heading'
-import { cn } from '@/lib/cn'
+import { TextLink } from '@/components/ui/TextLink'
+import { SectionHeader } from '@/sections/shared/SectionHeader'
 import type { CtaLink, Founder } from '@/types'
 
 export interface StudioSnippetProps {
   index?: number
   eyebrow: string
   title: string
-  body: string
-  founders: Founder[]
-  cta: CtaLink
+  intro: string
+  founders: Pick<Founder, 'id' | 'name' | 'role' | 'line' | 'portrait'>[]
+  /** "Go deeper" link to the studio page. */
+  more: CtaLink
   tone?: Tone
 }
 
-/** The two founders, with portraits drifting slightly on scroll (parallax). */
+/**
+ * The two founders, one line each, in about one viewport. Signature motion: the
+ * portraits drift gently inside their frames toward the pointer (hover parallax). Pointer,
+ * not scroll: the closing band right after this section already scrubs.
+ */
 export function StudioSnippet({
   index,
   eyebrow,
   title,
-  body,
+  intro,
   founders,
-  cta,
-  tone = 'paper',
+  more,
+  tone = 'dark',
 }: StudioSnippetProps) {
   const headingId = useId()
   return (
-    <Section tone={tone} aria-labelledby={headingId}>
-      <div className="container-site grid gap-14 lg:grid-cols-12 lg:items-center">
-        <div className="lg:col-span-5">
-          <Eyebrow label={eyebrow} index={index} className="mb-6" />
-          <Heading id={headingId} size="display-lg" className="max-w-[12ch]">
-            {title}
-          </Heading>
-          <p className="mt-8 max-w-[46ch] text-body-lg text-muted">{body}</p>
-          <Button to={cta.to} variant="secondary" withArrow className="mt-10">
-            {cta.label}
-          </Button>
-        </div>
+    <Section tone={tone} spacing="sm" aria-labelledby={headingId}>
+      <div className="container-site">
+        <SectionHeader
+          id={headingId}
+          variant="split"
+          index={index}
+          eyebrow={eyebrow}
+          title={title}
+          intro={intro}
+        />
 
-        <ul className="grid grid-cols-2 gap-4 md:gap-6 lg:col-span-6 lg:col-start-7">
-          {founders.map((founder, i) => (
-            <li key={founder.id} className={cn(i % 2 === 1 && 'mt-16 md:mt-28')}>
-              <div className="aspect-4/5 overflow-hidden rounded-sm bg-paper-200">
-                <Parallax amount={14} className="h-[115%] -translate-y-[7%]">
-                  <Image image={founder.portrait} sizes="(min-width: 1024px) 25vw, 50vw" />
+        <ul data-parallax-area="" className="mt-14 grid gap-10 md:grid-cols-2 lg:mt-16">
+          {founders.map((founder) => (
+            <li key={founder.id} className="grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-6">
+              <div className="relative aspect-4/5 overflow-hidden rounded-sm bg-tone-surface">
+                <Parallax trigger="pointer" amount={8} className="absolute -inset-[6%]">
+                  <Image image={founder.portrait} sizes="(min-width: 768px) 20vw, 40vw" />
                 </Parallax>
               </div>
-              <p className="mt-4 font-semibold">{founder.name}</p>
-              <p className="text-small text-muted">{founder.role}</p>
+              <div className="flex flex-col justify-end">
+                <p className="text-heading-lg">{founder.name}</p>
+                <p className="mt-2 eyebrow text-accent">{founder.role}</p>
+                <p className="mt-4 max-w-[36ch] text-muted">{founder.line}</p>
+              </div>
             </li>
           ))}
         </ul>
+
+        <div className="mt-12">
+          <TextLink to={more.to} arrow>
+            {more.label}
+          </TextLink>
+        </div>
       </div>
     </Section>
   )

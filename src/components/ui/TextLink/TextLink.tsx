@@ -11,6 +11,8 @@ export interface TextLinkProps {
   children: ReactNode
   /** 'underline' = underline shown and animates out on hover; 'quiet' = draws in on hover. */
   variant?: 'underline' | 'quiet'
+  /** Trailing arrow for "go deeper" links. Decorative: screen readers hear the label only. */
+  arrow?: boolean
   className?: string
   onClick?: MouseEventHandler<HTMLAnchorElement>
   'aria-label'?: string
@@ -21,6 +23,7 @@ export function TextLink({
   href,
   children,
   variant = 'underline',
+  arrow = false,
   className,
   onClick,
   'aria-label': ariaLabel,
@@ -31,6 +34,11 @@ export function TextLink({
     return (
       <Link to={to} className={classes} onClick={onClick} aria-label={ariaLabel}>
         {children}
+        {arrow && (
+          <span aria-hidden="true" className={styles.arrow}>
+            →
+          </span>
+        )}
       </Link>
     )
   }

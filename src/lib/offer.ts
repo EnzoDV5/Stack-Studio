@@ -115,10 +115,16 @@ export function stageRows(
   }
 }
 
-/** "From R 1 250/month" for a plan family: its cheapest visible plan. */
-export function familyFrom(family: PlanFamily, plans: Plan[], l: PriceLabels): string {
+/** The cheapest visible monthly price in a plan family, or null when it has no plans. */
+export function familyMin(family: PlanFamily, plans: Plan[]): number | null {
   const prices = plans
     .filter((p) => p.family === family && isVisible(p))
     .map((p) => p.pricePerMonth)
-  return prices.length ? `${l.from} ${formatPrice(Math.min(...prices))}${l.perMonth}` : ''
+  return prices.length ? Math.min(...prices) : null
+}
+
+/** "From R 1 250/month" for a plan family: its cheapest visible plan. */
+export function familyFrom(family: PlanFamily, plans: Plan[], l: PriceLabels): string {
+  const min = familyMin(family, plans)
+  return min === null ? '' : `${l.from} ${formatPrice(min)}${l.perMonth}`
 }

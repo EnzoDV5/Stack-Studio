@@ -1,0 +1,232 @@
+# Motion map
+
+Every section on every page, its one signature motion and how that motion is triggered.
+Keep this file current: any change to a section's motion updates its row here, and the
+rules at the bottom must hold for every page.
+
+Trigger types:
+
+| Type      | Meaning                                                                         |
+| --------- | ------------------------------------------------------------------------------- |
+| `load`    | Plays once when the page is revealed (after the preloader or page wipe)         |
+| `enter`   | Plays once when the section scrolls into view                                   |
+| `scrub`   | Tied to scroll position, reverses on scroll up                                  |
+| `pin`     | The section holds still (GSAP pin or CSS sticky column) while the scroll plays  |
+| `hover`   | Pointer or focus interaction only; nothing moves on scroll                      |
+| `ambient` | A continuous loop (marquee, video) that doesn't depend on scroll or interaction |
+| `none`    | Static                                                                          |
+
+## 1. Audit before the restructure (commit 9ac926b)
+
+### Home
+
+| #   | Section           | Tone   | Opener                   | Motion                                           | Trigger       |
+| --- | ----------------- | ------ | ------------------------ | ------------------------------------------------ | ------------- |
+| 1   | HomeHero          | dark   | own                      | SplitReveal lines on the h1, showreel video      | load          |
+| 2   | TechnologyMarquee | dark   | eyebrow                  | Two opposing CSS marquee rows                    | ambient       |
+| 3   | FeaturedWork      | paper  | SectionHeader (stacked)  | MediaReveal clip on 2 cards, hover video preview | enter + hover |
+| 4   | ServiceShowcase   | dark   | SectionHeader (stacked)  | Flip stage/rail swap on click                    | hover (click) |
+| 5   | ProcessPinned     | paper  | stacked (custom, sticky) | Sticky column, active step, 160vh+               | pin           |
+| 6   | PricingTeaser     | dark   | SectionHeader (stacked)  | StaggerGroup rise on 3 cards                     | enter         |
+| 7   | StudioSnippet     | paper  | stacked (custom)         | Parallax portraits                               | scrub         |
+| 8   | Testimonial       | paper  | eyebrow                  | SplitReveal lines on the quote                   | enter         |
+| 9   | ClosingCta        | orange | eyebrow                  | SplitReveal words on the title                   | enter         |
+
+Clashes and repeats:
+
+- The same stacked SectionHeader opens sections 3, 4, 5 and 6 (3→4 and 5→6 adjacent in look).
+- SplitReveal runs three times: hero (1), Testimonial (8), ClosingCta (9). 8→9 are adjacent
+  and both `enter` line reveals.
+- StudioSnippet (7) and Testimonial (8) are both paper: no tone change between them.
+- The work sits third, below the marquee, so the first screen shows no work.
+- ProcessPinned takes about 1.6 viewports in the middle of the page.
+- FeaturedWork (3) and PricingTeaser (6) both fade/rise content on `enter`.
+
+### Work
+
+| #   | Section    | Tone   | Motion                                                        | Trigger       |
+| --- | ---------- | ------ | ------------------------------------------------------------- | ------------- |
+| 1   | PageTitle  | paper  | Static                                                        | none          |
+| 2   | WorkGrid   | paper  | StaggerGroup rise, re-run on every filter change; hover video | enter + hover |
+| 3   | ClosingCta | orange | SplitReveal words                                             | enter         |
+
+Clashes: 2→3 both `enter`. The filter change re-runs the rise instead of moving the grid.
+
+### Case study
+
+| #   | Section       | Tone   | Motion                                    | Trigger |
+| --- | ------------- | ------ | ----------------------------------------- | ------- |
+| 1   | PageTitle     | dark   | Static                                    | none    |
+| 2   | CaseMeta      | dark   | Static                                    | none    |
+| 3   | CaseNarrative | paper  | FadeUp per chapter, sticky chapter labels | enter   |
+| 4   | CaseGallery   | dark   | MediaReveal clip per image                | enter   |
+| 5   | CaseMetrics   | dark   | StaggerGroup rise on the numbers          | enter   |
+| 6   | Testimonial   | paper  | SplitReveal lines                         | enter   |
+| 7   | CaseOutro     | dark   | Magnetic CTA, hover zoom on next project  | hover   |
+| 8   | ClosingCta    | orange | SplitReveal words                         | enter   |
+
+Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whole text blocks.
+
+### Services
+
+| #   | Section       | Tone   | Motion                                        | Trigger |
+| --- | ------------- | ------ | --------------------------------------------- | ------- |
+| 1   | PageTitle     | paper  | Static                                        | none    |
+| 2   | StageExplorer | paper  | Sticky stage nav (scroll-spy), accordion rows | hover   |
+| 3   | ProcessPinned | dark   | Sticky column, active step                    | pin     |
+| 4   | FaqSection    | paper  | Accordion, sticky heading                     | hover   |
+| 5   | ClosingCta    | orange | SplitReveal words                             | enter   |
+
+No adjacent clashes.
+
+### Pricing
+
+| #   | Section            | Tone   | Opener                  | Motion            | Trigger |
+| --- | ------------------ | ------ | ----------------------- | ----------------- | ------- |
+| 1   | PageTitle          | paper  | own                     | Static            | none    |
+| 2   | PricingSummary     | paper  | SectionHeader (stacked) | Static            | none    |
+| 3   | PlanTabs           | dark   | SectionHeader (stacked) | Instant tab swap  | hover   |
+| 4   | IncludedVsExcluded | paper  | left column             | Static            | none    |
+| 5   | RatesStrip         | dark   | eyebrow + title         | Static            | none    |
+| 6   | PoliciesList       | paper  | SectionHeader (stacked) | Static            | none    |
+| 7   | FaqSection         | dark   | sticky left column      | Accordion         | hover   |
+| 8   | ClosingCta         | orange | eyebrow                 | SplitReveal words | enter   |
+
+Clashes: 2→3 use the same stacked opener.
+
+### Studio
+
+| #   | Section             | Tone   | Opener                  | Motion             | Trigger |
+| --- | ------------------- | ------ | ----------------------- | ------------------ | ------- |
+| 1   | PageTitle           | paper  | own                     | Static             | none    |
+| 2   | StudioIntro         | paper  | eyebrow + title         | MediaReveal clip   | enter   |
+| 3   | FounderProfiles     | dark   | SectionHeader (stacked) | Parallax portraits | scrub   |
+| 4   | ValuesGrid (how)    | paper  | SectionHeader (stacked) | StaggerGroup rise  | enter   |
+| 5   | ValuesGrid (values) | dark   | SectionHeader (stacked) | StaggerGroup rise  | enter   |
+| 6   | Testimonial         | paper  | eyebrow                 | SplitReveal lines  | enter   |
+| 7   | ClosingCta          | orange | eyebrow                 | SplitReveal words  | enter   |
+
+Clashes: 4→5→6→7 are four `enter` reveals in a row; 3→4→5 share the stacked opener.
+
+### Start
+
+| #   | Section   | Tone | Motion                                                 | Trigger                     |
+| --- | --------- | ---- | ------------------------------------------------------ | --------------------------- |
+| 1   | PageTitle | dark | Static                                                 | none                        |
+| 2   | BriefFlow | dark | Step panel fade between questions; success SplitReveal | hover (interaction) + enter |
+
+Clash: the success heading uses SplitReveal on a page whose title does not.
+
+## 2. The map now
+
+### Home
+
+Order, as a story: the work, what clients say about it, what we do, how, what it costs, who
+we are, then the closing band. Measured on the preview build: 11.05 viewports tall at
+1440×900 (footer included), 10.79 at 390×844. Heights below are in viewports.
+
+| #   | Section                | Tone   | Opener                | Signature motion                                                                                | Trigger      | Height |
+| --- | ---------------------- | ------ | --------------------- | ----------------------------------------------------------------------------------------------- | ------------ | ------ |
+| 1   | HomeHero               | dark   | own                   | Statement line-reveal (1 of Home's 2 type moments); the project index crossfades the background | load + hover | 1.00   |
+| 2   | WorkReel               | paper  | SectionHeader inline  | Arrives full-bleed; pins (the page's only pin), shrinks into a card, then travels sideways      | scrub + pin  | 2.85   |
+| 3   | ClientVoices           | dark   | SectionHeader stacked | The quote cards rise in one after the other (no images)                                         | enter        | ~1.0   |
+| 4   | PathChooser            | paper  | SectionHeader split   | Horizontal accordion (transform + clip-path, GSAP); rows on mobile. No scroll motion            | hover        | 1.22   |
+| 5   | ProcessLine            | dark   | SectionHeader minimal | The line draws with scroll and lights each step; the technology strip runs underneath           | scrub        | ~1.1   |
+| 6   | PricingSnapshot        | paper  | SectionHeader stacked | Three figures count up once, mid-screen                                                         | enter        | 1.05   |
+| 7   | StudioSnippet          | dark   | SectionHeader split   | Portraits drift toward the pointer (hover parallax)                                             | hover        | 0.92   |
+| 8   | ClosingCta (app shell) | orange | eyebrow               | Giant type scales 0.8 → 1 while its tracking tightens (per-character transforms): type moment 2 | scrub        | 1.10   |
+| —   | Footer (chrome)        | ink    | —                     | None. Not part of the tone flow, so the band above stays orange                                 | none         | 0.76   |
+
+Trigger sequence: load · scrub/pin · enter · hover · scrub · enter · hover · scrub. No two
+neighbours share a type. Openers go inline · stacked · split · minimal · stacked · split.
+Every section ends with a "go deeper" link: All work (header row and last panel), See all
+the work, All services, The full process, See all pricing, Meet the studio.
+
+**Continuous flow.** `ToneController` makes every `[data-tone]` section transparent and
+blends the page colours (`--page-bg`, `--page-fg`, muted, border, accent, grid, surface,
+marker, focus). A section's tone starts fading in when its top enters the bottom of the
+viewport and is complete when that top is 20% from the top (`tone.band` 0.8), eased at both
+ends, and overlapping boundaries fold together so a short section never snaps. The live
+colours then glide to that target over `tone.lag` (0.35s), so a flick of the wheel can't
+jump them; a re-measure while the page is still (a lazy route arriving) lands instantly
+instead. Only the sections on screen and `body`'s own background are written each frame,
+because a colour variable on `<html>` would restyle the whole page; `<html>` gets them
+only on re-measure. Measured: the biggest single-frame colour change while wheel-scrolling
+all of Home is 18/255, and Services scrolls at a 6ms median frame even at 4× CPU. Sections
+marked `solid` (the hero, page titles) keep their own background. The header switches
+between its dark and light styles from the colour under it. This is ambient scroll-linked
+colour, not a section's signature motion, so it doesn't count toward rule 1.
+
+**Timing.** Enter animations start with the element well on screen (`trigger.start`, top
+at 75%; count-ups and the process line at `trigger.startLate`, 62%), so they play in full.
+The WorkReel shrink happens inside its pin rather than while the section slides in, so the
+full-bleed image is seen whole first.
+
+**One deliberate deviation from the brief.** StudioSnippet's parallax is pointer-driven, not
+scroll-driven, because ClosingCta right after it scrubs, and ClosingCta has to stay a scrub
+(on /work it follows an `enter` grid). `Parallax trigger="scroll"` is still the default
+elsewhere. (ProcessLine is scrubbed again: since the reorder, neither neighbour scrubs.)
+
+### Other pages
+
+**Work:** PageTitle (none) · WorkGrid (enter: MediaReveal clip per card, Flip on filter
+change) · ClosingCta (scrub). One filter per project (`?filter=<slug>`); a filter change
+Flips the cards that stay into place instead of re-running a rise.
+
+**Case study:** PageTitle (none) · CaseMeta (none) · CaseHeroMedia (scrub: scale 1.1 → 1) ·
+CaseNarrative (none) · CaseGallery (scrub: parallax) · CaseMetrics (enter: CountUp) ·
+Testimonial (none) · CaseOutro (hover) · ClosingCta (scrub). The hero media band is back
+under the meta; the narrative is static; the gallery uses Parallax instead of MediaReveal.
+
+**Services:** PageTitle (load: title reveal) · StageExplorer (none, sticky nav) ·
+ProcessPinned (pin, `#process`) · FaqSection (hover) · ClosingCta (scrub). Each stage has
+its own layout, picked for what it sells (`StageBlock layout`): Build `feature` (text
+beside a tall image, expandable offerings), Take over `cards`, Run `split` (image column
+beside a priced list), Grow `figures` (rates as large figures) and Partner `tiers`. Stage
+loops only play while on screen.
+
+**Pricing:** PageTitle (load: title reveal) · PricingSteps (none) · QuoteStarters (enter:
+cards rise) · PlanTabs (hover: Flip card swap) · IncludedVsExcluded (none) · PoliciesList
+(none) · FaqSection (hover) · ClosingCta (scrub). No fixed price list: ready-made starting
+quotes show the range the estimator computes and open /start pre-filled. Openers: minimal ·
+split · inline · own · split · own. Everything from the plans down mounts as it approaches.
+
+**Studio:** PageTitle (none) · StudioIntro (enter: MediaReveal) · FounderProfiles (scrub:
+parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · ValuesGrid
+"Values" (none) · Testimonial (none) · ClosingCta (scrub).
+Openers: split · stacked · inline.
+
+**Start:** PageTitle (none) · BriefFlow (interaction: step transitions, unchanged). The
+success heading no longer line-reveals.
+
+**Privacy, 404:** static.
+
+`none` next to `none` is not a clash: the rule is about motion. Sticky navigation aids
+(StageNav, the FAQ heading, case study chapter labels) are layout, not pins.
+
+## 3. Rules
+
+These are also in CLAUDE.md. Check every change against them and update the tables above.
+
+1. **One signature motion per section.** Two neighbouring sections never share a trigger
+   type (no scrub after scrub, pin after pin or enter after enter). The app-shell
+   ClosingCta counts as every page's last section.
+2. **SplitReveal line-reveals are limited.** On Home only the hero and the closing CTA are
+   type moments. Other pages may reveal their page title (`PageTitle reveal`) and nothing
+   else. Every other heading is static; the content carries the motion.
+3. **Staggered rises are only for groups of cards or list items**, never headers and never
+   whole sections. `StaggerGroup` is used only for the client quote cards and the starting quote cards; FadeUp was removed.
+4. **At most one pinned section per page.** Home: WorkReel. Services: ProcessPinned.
+5. **Scroll budget:** Home is about 11 viewports tall on desktop, footer included (it was
+   9–10 before the reel's shrink moved inside its pin and the client quotes got their own
+   section). The WorkReel pin
+   is `reel.shrinkScroll` + `reel.panelScroll` × (panels − 1) viewports.
+6. **Only animate transform, opacity and clip-path.** Turn will-change on while something
+   moves and off afterwards. Videos play only while visible and needed: the hero's active
+   layer, hovered previews and the open service panel.
+7. **Vary the openers.** `SectionHeader` has `stacked`, `split`, `minimal` and `inline`
+   variants; neighbouring sections never use the same one.
+8. **Every Home section ends with a "go deeper" link** (`<TextLink arrow>`) to its full
+   page or anchor.
+9. **Reduced motion:** no pins, scrubs, Flip or tone flow. Everything renders in its final
+   state, and WorkReel becomes a grid.

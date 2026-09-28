@@ -6,6 +6,7 @@ import { getNextProject, getProject } from '@/data/projects'
 import { getTestimonial } from '@/data/testimonials'
 import { NotFoundPage } from '@/pages/NotFound'
 import { CaseGallery } from '@/sections/case-study/CaseGallery'
+import { CaseHeroMedia } from '@/sections/case-study/CaseHeroMedia'
 import { CaseMeta } from '@/sections/case-study/CaseMeta'
 import { CaseMetrics } from '@/sections/case-study/CaseMetrics'
 import { CaseNarrative } from '@/sections/case-study/CaseNarrative'
@@ -56,6 +57,8 @@ export function CaseStudyPage() {
         services={project.services}
         liveUrl={project.liveUrl}
       />
+
+      <CaseHeroMedia media={project.hero} />
 
       <CaseNarrative
         chapters={[

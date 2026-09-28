@@ -1,13 +1,6 @@
 import type { ImageAsset, MediaSlot, VideoAsset } from './media'
 import type { StageId } from './pricing'
 
-export type ProjectCategoryId = 'website' | 'npo' | 'energy' | 'brand' | 'ecommerce' | 'web-app'
-
-export interface ProjectCategory {
-  id: ProjectCategoryId
-  label: string
-}
-
 export interface ProjectMetric {
   value: string
   label: string
@@ -32,7 +25,8 @@ export interface Project {
   year: number
   /** One line for cards and the case study hero. */
   summary: string
-  categories: ProjectCategoryId[]
+  /** The client's field, shown on the Home work reel (e.g. "Renewable energy"). */
+  sector: string
   services: string[]
   /** Which of Stack's five stages this project involved (Build, Run…). */
   stages: StageId[]

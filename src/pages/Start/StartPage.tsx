@@ -5,6 +5,7 @@ import { PageMeta } from '@/components/seo/PageMeta'
 import { briefCopy, briefSteps } from '@/data/brief'
 import { pageMeta, pricingContent } from '@/data/pages'
 import { planFamilies } from '@/data/plans'
+import { quotePresets } from '@/data/quotes'
 import { site, whatsappHref } from '@/data/site'
 import { loadDraft } from '@/lib/brief-draft'
 import { prefillFromParams } from '@/lib/brief-prefill'
@@ -18,13 +19,14 @@ import type { BriefAnswers } from '@/types'
 const partnerNote = planFamilies.find((f) => f.id === 'partner')?.note
 
 /**
- * /start: the quote builder. Deep links pre-fill it (?path=, ?type=<offering>, ?plan=<plan>)
+ * /start: the quote builder. Deep links pre-fill it (?path=, ?type=<offering>, ?plan=<plan>,
+ * ?quote=<starting quote>)
  * on top of any draft saved in this tab, then it resumes at the first open step.
  */
 export function StartPage() {
   const [params] = useSearchParams()
   const [initial] = useState(() => {
-    const prefill = prefillFromParams(params, defaultEstimateData)
+    const prefill = prefillFromParams(params, { ...defaultEstimateData, quotes: quotePresets })
     const base = loadDraft() ?? emptyAnswers
     // A deep link to a different path starts that path fresh.
     const answers: BriefAnswers =

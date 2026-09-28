@@ -7,15 +7,18 @@ import { Header } from '@/components/layout/Header'
 import { PageTransition } from '@/components/layout/PageTransition'
 import { Preloader } from '@/components/layout/Preloader'
 import { SkipLink } from '@/components/layout/SkipLink'
+import { ToneController } from '@/components/layout/ToneController'
 import { closingCta } from '@/data/pages'
 import { chromeCopy, footerNav, legalNav, primaryCta, primaryNav } from '@/data/navigation'
 import { site, whatsappHref } from '@/data/site'
 import { usePageviewTracking } from '@/hooks/useAnalytics'
+import { useScrollRefresh } from '@/hooks/useScrollRefresh'
 import { ClosingCta } from '@/sections/shared/ClosingCta'
 
 /** The app shell: global chrome around the routed page. The app layer is where data meets layout. */
 export function App() {
   usePageviewTracking()
+  useScrollRefresh()
 
   return (
     <>
@@ -47,6 +50,7 @@ export function App() {
             {!location.pathname.startsWith(primaryCta.to) && (
               <ClosingCta content={closingCta} location={`closing-band:${location.pathname}`} />
             )}
+            <ToneController pathname={location.pathname} />
             <Footer
               headings={{
                 contact: chromeCopy.contactHeading,

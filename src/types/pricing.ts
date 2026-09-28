@@ -4,6 +4,8 @@
  * ever live in these types or in src/data (the bundle is public).
  */
 
+import type { BriefPathId } from './brief'
+
 export type StageId = 'build' | 'takeover' | 'run' | 'grow' | 'partner'
 
 /** Where an offering/plan is rendered. `hidden` = kept in data, never shown. */
@@ -19,6 +21,8 @@ export interface ServiceStage {
   summary: string
   /** CTA into the quote builder with this path preselected. */
   cta: { label: string; to: string }
+  /** The quote builder path this stage maps to (/start?path=…). */
+  briefPath: BriefPathId
 }
 
 /** How the quote builder treats a Build offering. */

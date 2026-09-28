@@ -33,7 +33,13 @@ export function PoliciesList({
   return (
     <Section tone={tone} aria-labelledby={headingId}>
       <div className="container-site">
-        <SectionHeader id={headingId} eyebrow={eyebrow} title={title} size="heading-xl" />
+        <SectionHeader
+          id={headingId}
+          variant="split"
+          eyebrow={eyebrow}
+          title={title}
+          size="heading-xl"
+        />
 
         <div className="mt-12 grid gap-10 lg:grid-cols-2">
           {schedules.map((schedule) => (

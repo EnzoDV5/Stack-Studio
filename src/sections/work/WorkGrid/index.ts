@@ -1,2 +1,2 @@
 export { WorkGrid } from './WorkGrid'
-export type { WorkGridProps } from './WorkGrid'
+export type { WorkFilter, WorkGridProps } from './WorkGrid'

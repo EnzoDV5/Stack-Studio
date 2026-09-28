@@ -26,8 +26,19 @@ export function StudioPage() {
         founders={founders}
         linkedinLabel={studioContent.linkedinLabel}
       />
-      <ValuesGrid intro={studioContent.howWeWork} items={principles} index={1} />
-      <ValuesGrid intro={studioContent.values} items={values} index={2} tone="dark" />
+      <ValuesGrid
+        intro={studioContent.howWeWork}
+        items={principles}
+        index={1}
+        image={media.studio.detail}
+      />
+      <ValuesGrid
+        intro={studioContent.values}
+        items={values}
+        index={2}
+        headerVariant="inline"
+        tone="dark"
+      />
       {testimonial && <Testimonial testimonial={testimonial} />}
     </>
   )

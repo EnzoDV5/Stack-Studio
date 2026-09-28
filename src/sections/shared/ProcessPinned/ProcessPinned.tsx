@@ -13,6 +13,8 @@ export interface ProcessPinnedProps {
   steps: ProcessStep[]
   stepLabel: string
   index?: number
+  /** Anchor id, e.g. "process" for /services#process. */
+  id?: string
   tone?: Tone
 }
 
@@ -27,6 +29,7 @@ export function ProcessPinned({
   steps,
   stepLabel,
   index,
+  id,
   tone = 'paper',
 }: ProcessPinnedProps) {
   const rootRef = useRef<HTMLDivElement>(null)
@@ -56,7 +59,7 @@ export function ProcessPinned({
   const progress = ((active + 1) / steps.length) * 100
 
   return (
-    <Section tone={tone} grid aria-labelledby={headingId}>
+    <Section id={id} tone={tone} grid aria-labelledby={headingId}>
       <div ref={rootRef} className="container-site grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-[calc(var(--spacing-header)+3rem)]">
