@@ -6,7 +6,7 @@ import { getNextProject, getProject } from '@/data/projects'
 import { getTestimonial } from '@/data/testimonials'
 import { NotFoundPage } from '@/pages/NotFound'
 import { CaseGallery } from '@/sections/case-study/CaseGallery'
-import { CaseHeroMedia } from '@/sections/case-study/CaseHeroMedia'
+import { CaseDevice } from '@/sections/case-study/CaseDevice'
 import { CaseMeta } from '@/sections/case-study/CaseMeta'
 import { CaseMetrics } from '@/sections/case-study/CaseMetrics'
 import { CaseNarrative } from '@/sections/case-study/CaseNarrative'
@@ -58,7 +58,11 @@ export function CaseStudyPage() {
         liveUrl={project.liveUrl}
       />
 
-      <CaseHeroMedia media={project.hero} />
+      <CaseDevice
+        eyebrow={caseStudyContent.device.eyebrow}
+        title={caseStudyContent.device.title(project.name)}
+        screen={project.screen ?? project.hero.image}
+      />
 
       <CaseNarrative
         chapters={[
@@ -69,10 +73,11 @@ export function CaseStudyPage() {
         ]}
       />
 
-      <CaseGallery label={caseStudyContent.galleryLabel} items={project.gallery} />
+      <CaseGallery tone="paper" label={caseStudyContent.galleryLabel} items={project.gallery} />
 
       {project.metrics.length > 0 && (
         <CaseMetrics
+          tone="paper"
           label={caseStudyContent.metricsLabel}
           metrics={project.metrics}
           note={caseStudyContent.metricsNote}

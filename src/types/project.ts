@@ -38,6 +38,11 @@ export interface Project {
   /** Short muted loop for hover previews on desktop. */
   preview?: VideoAsset
   hero: MediaSlot
+  /**
+   * A full-page desktop screenshot of the live site (captured 1440 wide, as tall as the page),
+   * scrolled top to bottom on the laptop screen in the case study. Falls back to the hero image.
+   */
+  screen?: ImageAsset
   narrative: {
     problem: NarrativeBlock
     approach: NarrativeBlock

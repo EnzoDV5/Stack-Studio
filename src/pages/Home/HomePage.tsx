@@ -1,6 +1,7 @@
 import { lazy } from 'react'
 import { DeferredSection } from '@/components/layout/DeferredSection'
 import { PageMeta } from '@/components/seo/PageMeta'
+import { clients as clientList } from '@/data/clients'
 import { media, serviceMedia } from '@/data/media'
 import { homeContent, pageMeta, pricingContent, workContent } from '@/data/pages'
 import { planFamilies, plans } from '@/data/plans'
@@ -18,9 +19,9 @@ import { HomeHero } from '@/sections/home/HomeHero'
 import { WorkReel } from '@/sections/home/WorkReel'
 import type { PlanFamily, StageId } from '@/types'
 
-// Home tells one story: the work, what clients say about it, what we do, how, what it
-// costs and who we are, then the closing band. Everything below the work reel is a separate
-// chunk, mounted as it approaches the viewport.
+// Home leads with the visitor's needs: where they are, how Stack works and indicative
+// pricing. Proof, client voices and the founders follow as reassurance before the closing band.
+// Heavy sections mount only as they approach the viewport.
 const PathChooser = lazy(() =>
   import('@/sections/home/PathChooser').then((m) => ({ default: m.PathChooser })),
 )
@@ -80,49 +81,10 @@ export function HomePage() {
 
       <HomeHero {...hero} video={media.home.showreel} projects={projects} />
 
-      <WorkReel
-        index={1}
-        eyebrow={work.eyebrow}
-        title={work.title}
-        projects={projects}
-        stageNames={stageNames}
-        labels={{
-          cta: work.cardCta,
-          cursor: work.cursorLabel,
-          sample: workContent.sampleLabel,
-          sector: work.sectorLabel,
-          stages: work.stagesLabel,
-        }}
-        more={work.more}
-        outro={work.outro}
-      />
-
-      <DeferredSection minHeight="90vh">
-        <ClientVoices
-          index={2}
-          eyebrow={clients.eyebrow}
-          title={clients.title}
-          more={clients.more}
-          voices={testimonials.map((t) => {
-            const project = getProject(t.projectSlug)
-            return {
-              id: t.id,
-              quote: t.quote,
-              name: t.name,
-              role: t.role,
-              company: t.company,
-              link: project
-                ? { label: clients.caseLink(t.company), to: `/work/${project.slug}` }
-                : undefined,
-            }
-          })}
-        />
-      </DeferredSection>
-
       <DeferredSection minHeight="110vh">
         <PathChooser
-          index={3}
-          tone="paper"
+          index={1}
+          tone="dark"
           eyebrow={paths.eyebrow}
           title={paths.title}
           intro={paths.intro}
@@ -144,11 +106,13 @@ export function HomePage() {
 
       <DeferredSection minHeight="100vh">
         <ProcessLine
-          index={4}
+          index={2}
           eyebrow={process.eyebrow}
           title={process.title}
           steps={processSteps}
           stepLabel={process.stepLabel}
+          nowLabel={process.nowLabel}
+          columns={process.columns}
           more={process.more}
           technologies={{ ...technologyContent, rows: [technologies] }}
         />
@@ -156,7 +120,7 @@ export function HomePage() {
 
       <DeferredSection minHeight="85vh">
         <PricingSnapshot
-          index={5}
+          index={3}
           eyebrow={pricing.eyebrow}
           title={pricing.title}
           intro={pricing.intro}
@@ -172,9 +136,51 @@ export function HomePage() {
         />
       </DeferredSection>
 
+      <WorkReel
+        index={4}
+        eyebrow={work.eyebrow}
+        title={work.title}
+        projects={projects}
+        clients={clientList}
+        stageNames={stageNames}
+        labels={{
+          cta: work.cardCta,
+          cursor: work.cursorLabel,
+          sample: workContent.sampleLabel,
+          sector: work.sectorLabel,
+          stages: work.stagesLabel,
+        }}
+        more={work.more}
+        outro={work.outro}
+      />
+
+      <DeferredSection minHeight="90vh">
+        <ClientVoices
+          index={5}
+          tone="paper"
+          eyebrow={clients.eyebrow}
+          title={clients.title}
+          more={clients.more}
+          voices={testimonials.map((t) => {
+            const project = getProject(t.projectSlug)
+            return {
+              id: t.id,
+              quote: t.quote,
+              name: t.name,
+              role: t.role,
+              company: t.company,
+              link: project
+                ? { label: clients.caseLink(t.company), to: `/work/${project.slug}` }
+                : undefined,
+            }
+          })}
+        />
+      </DeferredSection>
+
       <DeferredSection minHeight="95vh">
         <StudioSnippet
           index={6}
+          tone="paper"
           eyebrow={studio.eyebrow}
           title={studio.title}
           intro={studio.intro}

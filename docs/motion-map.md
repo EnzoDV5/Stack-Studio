@@ -121,40 +121,46 @@ Clash: the success heading uses SplitReveal on a page whose title does not.
 
 ### Home
 
-Order, as a story: the work, what clients say about it, what we do, how, what it costs, who
-we are, then the closing band. Measured on the preview build: 11.05 viewports tall at
+Order, as a story: what the visitor needs, how Stack works, indicative pricing, proof,
+client voices and the founders, then the closing band. Measured on the preview build: 11.05 viewports tall at
 1440×900 (footer included), 10.79 at 390×844. Heights below are in viewports.
 
 | #   | Section                | Tone   | Opener                | Signature motion                                                                                | Trigger      | Height |
 | --- | ---------------------- | ------ | --------------------- | ----------------------------------------------------------------------------------------------- | ------------ | ------ |
 | 1   | HomeHero               | dark   | own                   | Statement line-reveal (1 of Home's 2 type moments); the project index crossfades the background | load + hover | 1.00   |
-| 2   | WorkReel               | paper  | SectionHeader inline  | Arrives full-bleed; pins (the page's only pin), shrinks into a card, then travels sideways      | scrub + pin  | 2.85   |
-| 3   | ClientVoices           | dark   | SectionHeader stacked | The quote cards rise in one after the other (no images)                                         | enter        | ~1.0   |
-| 4   | PathChooser            | paper  | SectionHeader split   | Horizontal accordion (transform + clip-path, GSAP); rows on mobile. No scroll motion            | hover        | 1.22   |
-| 5   | ProcessLine            | dark   | SectionHeader minimal | The line draws with scroll and lights each step; the technology strip runs underneath           | scrub        | ~1.1   |
-| 6   | PricingSnapshot        | paper  | SectionHeader stacked | Three figures count up once, mid-screen                                                         | enter        | 1.05   |
-| 7   | StudioSnippet          | dark   | SectionHeader split   | Portraits drift toward the pointer (hover parallax)                                             | hover        | 0.92   |
-| 8   | ClosingCta (app shell) | orange | eyebrow               | Giant type scales 0.8 → 1 while its tracking tightens (per-character transforms): type moment 2 | scrub        | 1.10   |
+| 2   | PathChooser            | dark   | SectionHeader split   | Horizontal accordion (transform + clip-path, GSAP); rows on mobile. No scroll motion            | hover        | 1.22   |
+| 3   | ProcessLine            | dark   | SectionHeader minimal | The line draws with scroll and lights each step; the technology strip runs underneath           | scrub        | ~1.1   |
+| 4   | PricingSnapshot        | paper  | SectionHeader stacked | Three figures count up once, mid-screen                                                         | enter        | 1.05   |
+| 5   | WorkReel               | paper  | SectionHeader inline  | Arrives full-bleed; pins (the page's only pin), shrinks into a card, then travels sideways      | scrub + pin  | 2.85   |
+| 6   | ClientVoices           | paper  | SectionHeader stacked | The quote cards rise in one after the other                                                     | enter        | ~1.0   |
+| 7   | StudioSnippet          | paper  | SectionHeader split   | Portraits drift toward the pointer (hover parallax)                                             | hover        | 0.92   |
+| 8   | ClosingCta (app shell) | orange | eyebrow               | Same-size code characters slowly compile into the readable ink title                            | scrub        | ~0.9   |
 | —   | Footer (chrome)        | ink    | —                     | None. Not part of the tone flow, so the band above stays orange                                 | none         | 0.76   |
 
-Trigger sequence: load · scrub/pin · enter · hover · scrub · enter · hover · scrub. No two
+Trigger sequence: load · scrub/pin · ambient · enter · hover · scrub · enter · hover · scrub. No two
 neighbours share a type. Openers go inline · stacked · split · minimal · stacked · split.
 Every section ends with a "go deeper" link: All work (header row and last panel), See all
 the work, All services, The full process, See all pricing, Meet the studio.
 
+**Tone chapters.** Neighbouring sections share a tone, so the page colour changes rarely:
+Home dark → paper (work, clients) → dark (paths, process) → paper (pricing, studio), then
+the solid orange band (3 changes, was 7). Case study: dark → paper → dark (2). Services:
+paper → dark (1). Pricing: paper → dark (plans, scope) → paper (2). Studio: paper → dark →
+paper (2). Sections shorter than `tone.minSection` (0.9 viewport) never take over the page
+colour, and `solid` sections (the orange band) paint themselves.
+
 **Continuous flow.** `ToneController` makes every `[data-tone]` section transparent and
-blends the page colours (`--page-bg`, `--page-fg`, muted, border, accent, grid, surface,
-marker, focus). A section's tone starts fading in when its top enters the bottom of the
-viewport and is complete when that top is 20% from the top (`tone.band` 0.8), eased at both
-ends, and overlapping boundaries fold together so a short section never snaps. The live
-colours then glide to that target over `tone.lag` (0.35s), so a flick of the wheel can't
-jump them; a re-measure while the page is still (a lazy route arriving) lands instantly
-instead. Only the sections on screen and `body`'s own background are written each frame,
-because a colour variable on `<html>` would restyle the whole page; `<html>` gets them
-only on re-measure. Measured: the biggest single-frame colour change while wheel-scrolling
-all of Home is 18/255, and Services scrolls at a 6ms median frame even at 4× CPU. Sections
-marked `solid` (the hero, page titles) keep their own background. The header switches
-between its dark and light styles from the colour under it. This is ambient scroll-linked
+switches the page colours (`--page-bg`, `--page-fg`, muted, border, accent, grid, surface,
+marker, focus) when a section's top crosses the middle of the viewport (`tone.line`): one
+short ease-out fade (`tone.switch`, 0.45s) straight from the old tone to the new one. The
+colour never follows the scroll position, so there are no lingering in-between colours and
+never a mix of three tones. Measured on Home: seven switches of about 0.4s each. A re-measure
+while the page is still (a lazy route arriving) lands instantly. Only the sections on screen
+and `body`'s own background are written each frame, because a colour variable on `<html>`
+would restyle the whole page; `<html>` gets them only on re-measure. Sections
+marked `solid` (the hero, page titles) keep their own background. The header follows
+the page tone, so it switches exactly when the page colour does (never at section edges, the
+orange band or the footer). This is ambient scroll-linked
 colour, not a section's signature motion, so it doesn't count toward rule 1.
 
 **Timing.** Enter animations start with the element well on screen (`trigger.start`, top
@@ -173,10 +179,15 @@ elsewhere. (ProcessLine is scrubbed again: since the reorder, neither neighbour 
 change) · ClosingCta (scrub). One filter per project (`?filter=<slug>`); a filter change
 Flips the cards that stay into place instead of re-running a rise.
 
-**Case study:** PageTitle (none) · CaseMeta (none) · CaseHeroMedia (scrub: scale 1.1 → 1) ·
-CaseNarrative (none) · CaseGallery (scrub: parallax) · CaseMetrics (enter: CountUp) ·
-Testimonial (none) · CaseOutro (hover) · ClosingCta (scrub). The hero media band is back
-under the meta; the narrative is static; the gallery uses Parallax instead of MediaReveal.
+**Case study:** PageTitle (none) · CaseMeta (none) · CaseDevice (scrub + pin: the page's
+one pin) · CaseNarrative (none) · CaseGallery (scrub: parallax) · CaseMetrics (enter:
+CountUp) · Testimonial (none) · CaseOutro (hover) · ClosingCta (scrub). CaseDevice shows the
+project's live site on a laptop (`MacbookScroll`, a GSAP port of the Aceternity "MacBook
+scroll"). The lid and keyboard deck are two planes hinged on one edge under a shared
+perspective (no preserve-3d scene), so they stay joined: the laptop starts open, seen from
+above; the deck folds away as the lid comes upright and the laptop grows until the screen
+fills the view; then a full-page capture of the real site scrolls inside the screen, top to
+bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is static; the gallery uses Parallax.
 
 **Services:** PageTitle (load: title reveal) · StageExplorer (none, sticky nav) ·
 ProcessPinned (pin, `#process`) · FaqSection (hover) · ClosingCta (scrub). Each stage has
@@ -211,12 +222,14 @@ These are also in CLAUDE.md. Check every change against them and update the tabl
 1. **One signature motion per section.** Two neighbouring sections never share a trigger
    type (no scrub after scrub, pin after pin or enter after enter). The app-shell
    ClosingCta counts as every page's last section.
-2. **SplitReveal line-reveals are limited.** On Home only the hero and the closing CTA are
-   type moments. Other pages may reveal their page title (`PageTitle reveal`) and nothing
-   else. Every other heading is static; the content carries the motion.
+2. **Section titles share one code-to-title language.** Every `SectionHeader` and the
+   `ClosingCta` begins as same-size code characters with the title's exact line length, then
+   resolves left-to-right into readable type. The Home hero and opted-in `PageTitle` headings
+   keep their line reveal.
 3. **Staggered rises are only for groups of cards or list items**, never headers and never
    whole sections. `StaggerGroup` is used only for the client quote cards and the starting quote cards; FadeUp was removed.
-4. **At most one pinned section per page.** Home: WorkReel. Services: ProcessPinned.
+4. **At most one pinned section per page.** Home: WorkReel. Services: ProcessPinned. Case
+   study: CaseDevice.
 5. **Scroll budget:** Home is about 11 viewports tall on desktop, footer included (it was
    9–10 before the reel's shrink moved inside its pin and the client quotes got their own
    section). The WorkReel pin

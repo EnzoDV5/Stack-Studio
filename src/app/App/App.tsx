@@ -8,7 +8,7 @@ import { PageTransition } from '@/components/layout/PageTransition'
 import { Preloader } from '@/components/layout/Preloader'
 import { SkipLink } from '@/components/layout/SkipLink'
 import { ToneController } from '@/components/layout/ToneController'
-import { closingCta } from '@/data/pages'
+import { closingCta, closingCtaCode } from '@/data/pages'
 import { chromeCopy, footerNav, legalNav, primaryCta, primaryNav } from '@/data/navigation'
 import { site, whatsappHref } from '@/data/site'
 import { usePageviewTracking } from '@/hooks/useAnalytics'
@@ -48,7 +48,11 @@ export function App() {
               </Suspense>
             </main>
             {!location.pathname.startsWith(primaryCta.to) && (
-              <ClosingCta content={closingCta} location={`closing-band:${location.pathname}`} />
+              <ClosingCta
+                content={closingCta}
+                codeLines={closingCtaCode}
+                location={`closing-band:${location.pathname}`}
+              />
             )}
             <ToneController pathname={location.pathname} />
             <Footer
@@ -66,7 +70,6 @@ export function App() {
               copyright={site.legal.copyright}
               location={`${site.location.city}, ${site.location.country}`}
               backToTopLabel={chromeCopy.backToTop}
-              wordmark={site.shortName}
             />
           </>
         )}

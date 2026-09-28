@@ -1,0 +1,55 @@
+@layer components {
+  .root {
+    position: relative;
+    padding-block: 0.08em 0.2em;
+    margin-block: -0.08em -0.2em;
+    text-wrap: balance;
+  }
+
+  .visual {
+    display: block;
+  }
+
+  .word {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .word:not(:last-child)::after {
+    content: ' ';
+    white-space: pre;
+  }
+
+  .character {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Reserve every final glyph's width so the heading never changes length. */
+  .sizer {
+    visibility: hidden;
+  }
+
+  .codeCharacter,
+  .resolvedCharacter {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    overflow: hidden;
+    color: var(--tone-fg);
+  }
+
+  .codeCharacter {
+    font-family: var(--font-mono);
+    font-size: 1em;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .resolvedCharacter {
+    opacity: 0;
+    font: inherit;
+  }
+}

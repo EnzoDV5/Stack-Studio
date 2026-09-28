@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { MaskedHeading } from '@/components/motion/MaskedHeading'
 import { cn } from '@/lib/cn'
 
 export type HeadingSize =
@@ -9,6 +10,8 @@ export interface HeadingProps {
   size?: HeadingSize
   id?: string
   className?: string
+  /** When supplied for a text heading, reveal moving code before resolving the title. */
+  codeLines?: string[]
   children: ReactNode
 }
 
@@ -30,10 +33,19 @@ export function Heading({
   size = 'display-lg',
   id,
   className,
+  codeLines,
   children,
 }: HeadingProps) {
+  const classes = cn(sizeClass[size], 'font-display', className)
+
+  if (codeLines && typeof children === 'string') {
+    return (
+      <MaskedHeading as={Tag} id={id} text={children} codeLines={codeLines} className={classes} />
+    )
+  }
+
   return (
-    <Tag id={id} className={cn(sizeClass[size], 'font-display', className)}>
+    <Tag id={id} className={classes}>
       {children}
     </Tag>
   )

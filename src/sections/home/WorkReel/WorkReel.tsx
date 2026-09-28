@@ -12,7 +12,7 @@ import { ease, reel } from '@/lib/motion-tokens'
 import { coverFrom, insetPath, pinDistance, scrollForOffset } from '@/lib/reel'
 import { ProjectMedia } from '@/sections/shared/ProjectMedia'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
-import type { CtaLink, Project, StageId } from '@/types'
+import type { Client, CtaLink, Project, StageId } from '@/types'
 
 export interface WorkReelLabels {
   /** Visual "View case study" cue on each panel. */
@@ -28,6 +28,7 @@ export interface WorkReelProps {
   eyebrow: string
   title: string
   projects: Project[]
+  clients: Client[]
   stageNames: Record<StageId, string>
   labels: WorkReelLabels
   /** "Go deeper" link in the header row. */
@@ -68,7 +69,7 @@ const panelClass: Record<Mode, { project: string; outro: string }> = {
 
 /**
  * Selected work. Signature motion (desktop): the first project's media arrives full-bleed
- * as the hero scrolls away; the section pins (the page's only pin), the media shrinks into
+ * as the section enters; the section pins (the page's only pin), the media shrinks into
  * a framed card (scrubbed clip-path, radius and scale) and the panels travel sideways.
  * Pin length is proportional to the panel count. Mobile gets a scroll-snap carousel with
  * a progress bar; reduced motion gets a plain grid. Panels preview their video on hover.
@@ -78,6 +79,7 @@ export function WorkReel({
   eyebrow,
   title,
   projects,
+  clients,
   stageNames,
   labels,
   more,
@@ -251,6 +253,7 @@ export function WorkReel({
           >
             {projects.map((project, i) => {
               const isCover = mode === 'pin' && i === 0
+              const client = clients.find((item) => item.id === project.slug)
               return (
                 <li
                   key={project.slug}
@@ -286,8 +289,23 @@ export function WorkReel({
                       className="mt-5 flex flex-wrap items-end justify-between gap-x-10 gap-y-4"
                     >
                       <div className="min-w-0">
-                        <h3 className="text-heading-xl">{project.name}</h3>
-                        <dl className="mt-3 flex flex-wrap gap-x-8 gap-y-2 text-small">
+                        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                          <h3 className="text-heading-xl">{project.name}</h3>
+                          {client?.logo && (
+                            <span
+                              role="img"
+                              aria-label={`${client.name} logo`}
+                              className="block h-14 w-40 shrink-0 bg-grey-700 sm:h-16 sm:w-48"
+                              style={{
+                                maskImage: `url(${client.logo})`,
+                                maskRepeat: 'no-repeat',
+                                maskPosition: 'center',
+                                maskSize: 'contain',
+                              }}
+                            />
+                          )}
+                        </div>
+                        <dl className="mt-4 flex flex-wrap gap-x-8 gap-y-2 text-small">
                           <div>
                             <dt className="eyebrow text-muted">{labels.sector}</dt>
                             <dd className="mt-1">{project.sector}</dd>

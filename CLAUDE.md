@@ -16,7 +16,8 @@ Vite + React 19 + TypeScript (strict, `noUncheckedIndexedAccess`) · Tailwind CS
 variable, JetBrains Mono) · ESLint 9 flat config · Prettier with the Tailwind plugin.
 
 **Not allowed:** UI kits, 3D libraries, Framer Motion / `motion`, CSS-in-JS, icon packs (inline
-SVG instead). Pins: ESLint stays on 9 (jsx-a11y does not support 10 yet) and TypeScript on 6.0
+SVG instead). Components from registries like shadcn/Aceternity are ported to GSAP and
+Tailwind by hand (e.g. `MacbookScroll`), not installed with their CLI. Pins: ESLint stays on 9 (jsx-a11y does not support 10 yet) and TypeScript on 6.0
 (typescript-eslint supports `<6.1`).
 
 ## Commands
@@ -44,8 +45,8 @@ src/
                 Logo, WhatsAppButton
     layout/     Header, Footer, MobileMenu, PageTransition, Preloader, Cursor, GridOverlay, GrainOverlay,
                 Section, SkipLink, DeferredSection, ToneController
-    media/      Image, Video, MediaReveal
-    motion/     SplitReveal, Parallax, CountUp, DrawLine, StaggerGroup
+    media/      Image, Video, MediaReveal, ServiceMedia, MacbookScroll
+    motion/     SplitReveal, Parallax, CountUp, DrawLine, StaggerGroup, MaskedHeading
     seo/        PageMeta
   hooks/        useLenis, useReducedMotion, useIsTouch, useMediaQuery, useInView, useAnalytics,
                 useScrollRefresh
@@ -89,8 +90,13 @@ tests/          node:test files for pure helpers (run with Node's TypeScript str
   mid-page CTA and `CaseOutro` at the end of a case study.
 - Pre-fill the brief from CTAs with `/start?type=<ProjectPackage id>` or
   `/start?plan=<MonthlyPlan id>`.
-- Sections render inside `<Section tone="dark|paper|white|orange">`. Alternate dark and paper
-  for rhythm, and use orange only for the single closing CTA band per page.
+- Sections render inside `<Section tone="dark|paper|white|orange">`. **Group neighbouring
+  sections into tone chapters** (e.g. dark → paper → dark → paper on Home) rather than
+  alternating every section: the page colour flows between tones, and a change every
+  section reads as flashing. Aim for a change no more than every ~2 viewports; sections
+  shorter than `tone.minSection` (0.9 viewport) never take over the page colour anyway.
+  Use orange only for the single closing CTA band per page (it is `solid`, so it paints
+  itself rather than turning the page orange).
 - Eyebrows follow `NN · LABEL` (mono, uppercase, letter-spaced) via `<Eyebrow index label />`.
 - Open sections with `SectionHeader` and pick a `variant` (`stacked`, `split`, `minimal`,
   `inline`) that differs from both neighbours.
@@ -173,7 +179,8 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
 3. **Staggered rises are only for groups of cards or list items**, never headers or whole
    sections. `StaggerGroup` is used only for the client quote cards and the starting quote
    cards (FadeUp was removed).
-4. **At most one pinned section per page.** Home: WorkReel. Services: ProcessPinned.
+4. **At most one pinned section per page.** Home: WorkReel. Services: ProcessPinned. Case
+   study: CaseDevice (the MacBook scroll).
 5. **Scroll budget:** Home stays about 11 viewports on desktop, footer included (11.05 at
    1440×900). The WorkReel pin is `reel.shrinkScroll` + `reel.panelScroll` × (panels − 1)
    viewports.
@@ -185,13 +192,16 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
    anchor.
 
 - **Tone flow:** `ToneController` (app shell) makes `[data-tone]` sections transparent
-  (`html.tone-flow`) and blends `--page-*` colours from when a section's top enters the
-  viewport until it is 20% from the top, with a short bounded glide. Per frame it writes
+  (`html.tone-flow`) and switches `--page-*` colours in one short fade (`tone.switch`)
+  when a section's top crosses the middle of the viewport. Don't tie the colour to scroll
+  position: blending while scrolling reads as a muddy rainbow. Per frame it writes
   only to on-screen sections and `body`'s background (a variable on `<html>` restyles the
   whole page, so `<html>` is only updated on re-measure). Keep it that way. Pass `solid` to a Section whose own media or inset must keep painting
   (the hero, `PageTitle`). The footer is chrome, not a Section. Any new tone-dependent
   colour variable must be added to both `ToneController` and the flow rule in
-  `utilities.css`. The header's light/dark style follows the colour under it.
+  `utilities.css`. The header's light/dark style follows the page tone (not each section
+  under it), so it changes only when the page colour does; at the very top, before its
+  backdrop appears, it takes the surface under it.
 - **Reduced motion:** no pins, scrubs, Flip or tone flow. Everything renders in its final
   state; WorkReel becomes a grid.
 

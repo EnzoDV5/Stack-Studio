@@ -23,20 +23,20 @@ Instagram, LinkedIn, privacy link).
 
 ## Home `/`
 
-Home is a fast summary of everything, told in order: the work, what clients say, what we
-do, how, what it costs and who we are. Each section ends with a "go deeper" link so
+Home is a fast summary of everything, told in order: what visitors need, how Stack works,
+what it costs, proof, client feedback and who we are. Each section ends with a "go deeper" link so
 visitors choose where to go. About 11 viewports on desktop.
 
 | #   | Section           | Tone   | Purpose                                                                               |
 | --- | ----------------- | ------ | ------------------------------------------------------------------------------------- |
 | —   | Hero              | dark   | Statement over the showreel, a project index (chips on mobile), **Start a project**   |
-| 01  | Selected work     | paper  | Pinned sideways reel of every project, then All work / Start a project like this      |
-| 02  | Clients           | dark   | What clients say, each quote linked to its project → /work                            |
-| 03  | Where are you at? | paper  | The five stages as a self-select router: key prices, See details, Get an estimate     |
-| 04  | Process           | dark   | The six steps along one line, then the technologies strip → /services#process         |
-| 05  | Pricing           | paper  | Three "from" figures (website, care, partner), VAT note, Build my estimate → /pricing |
-| 06  | Studio            | dark   | The two founders, one line each → /studio                                             |
-| —   | Closing CTA       | orange | Giant **Start a project**                                                             |
+| 01  | Where are you at? | dark   | The five stages as a self-select router: key prices, See details, Get an estimate     |
+| 02  | Process           | dark   | The six steps along one line, then the technologies strip → /services#process         |
+| 03  | Pricing           | paper  | Three "from" figures (website, care, partner), VAT note, Build my estimate → /pricing |
+| 04  | Selected work     | paper  | Pinned sideways reel with each client logo beside its project name                    |
+| 05  | Clients           | paper  | Quotes linked to each project → /work                                                 |
+| 06  | Studio            | paper  | The two founders, one line each → /studio                                             |
+| —   | Closing CTA       | orange | Headline with moving code inside its letterforms, **Start a project**                 |
 
 ## Work `/work`
 
@@ -49,7 +49,9 @@ One template, driven entirely by `src/data/projects.ts`:
 
 1. Compact page title and summary
 2. Meta: client, year, services, live link
-3. Hero media (`project.hero`), settling from a slight zoom as it scrolls
+3. The site on a laptop (`project.screen`, a full-page desktop screenshot; falls back to the
+   hero image): the screen swings up and grows toward you, then the whole site scrolls
+   inside it
 4. Narrative: 01 Problem, 02 Approach, 03 Build, 04 Result
 5. Gallery
 6. Result metrics

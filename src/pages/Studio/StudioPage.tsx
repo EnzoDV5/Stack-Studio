@@ -31,13 +31,14 @@ export function StudioPage() {
         items={principles}
         index={1}
         image={media.studio.detail}
+        tone="dark"
       />
       <ValuesGrid
         intro={studioContent.values}
         items={values}
         index={2}
         headerVariant="inline"
-        tone="dark"
+        tone="paper"
       />
       {testimonial && <Testimonial testimonial={testimonial} />}
     </>

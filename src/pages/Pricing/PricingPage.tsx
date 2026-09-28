@@ -82,7 +82,7 @@ export function PricingPage() {
         cta={c.approach.cta}
       />
       <QuoteStarters
-        tone="dark"
+        tone="paper"
         eyebrow={c.quotes.eyebrow}
         title={c.quotes.title}
         intro={c.quotes.intro}
@@ -94,7 +94,7 @@ export function PricingPage() {
       {/* Below the fold: mounted as it approaches, so the first render stays light. */}
       <DeferredSection minHeight="120vh">
         <PlanTabs
-          tone="paper"
+          tone="dark"
           eyebrow={c.plans.eyebrow}
           title={c.plans.title}
           tabsLabel={c.plans.tabsLabel}
@@ -122,7 +122,7 @@ export function PricingPage() {
           vatNote={policies.vatNote}
           termsLink={c.policies.termsLink}
         />
-        <FaqSection tone="dark" intro={c.faq} faqs={faqsFor('pricing')} />
+        <FaqSection tone="paper" intro={c.faq} faqs={faqsFor('pricing')} />
       </DeferredSection>
     </>
   )

@@ -4,6 +4,7 @@ import { MobileMenu, type MobileMenuProps } from '@/components/layout/MobileMenu
 import { Button } from '@/components/ui/Button'
 import { Logo } from '@/components/ui/Logo'
 import { cn } from '@/lib/cn'
+import { HEADER_BACKDROP_AT } from '@/lib/tone'
 import type { CtaLink, NavItem } from '@/types'
 import styles from './Header.module.css'
 
@@ -37,7 +38,7 @@ export function Header({ nav, cta, homeLabel, menuLabel, menuOpenLabel, menu }: 
           setHidden(diff > 0 && y > SHOW_AT_TOP)
           lastY.current = y
         }
-        setScrolled(y > 12)
+        setScrolled(y > HEADER_BACKDROP_AT)
       })
     }
     onScroll()

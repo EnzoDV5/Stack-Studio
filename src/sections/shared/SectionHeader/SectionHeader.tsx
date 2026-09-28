@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Heading, type HeadingSize } from '@/components/ui/Heading'
+import { closingCtaCode } from '@/data/pages'
 import { cn } from '@/lib/cn'
 
 /**
@@ -30,8 +31,8 @@ export interface SectionHeaderProps {
 }
 
 /**
- * The section opener. Headings are static: the section's content carries its motion
- * (only the Home hero, the closing CTA and inner page titles line-reveal).
+ * The section opener. Every title begins as moving code clipped to its letterforms, then
+ * resolves into readable type as the heading enters the viewport.
  */
 export function SectionHeader({
   eyebrow,
@@ -50,6 +51,7 @@ export function SectionHeader({
       as={titleAs}
       id={id}
       size={size ?? (variant === 'minimal' ? 'heading-xl' : 'display-lg')}
+      codeLines={closingCtaCode}
       className={maxWidth}
     >
       {title}

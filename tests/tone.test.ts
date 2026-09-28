@@ -1,15 +1,12 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import {
-  dominantTone,
+  activeTone,
   isLightTone,
   mixColor,
   parseColor,
   surfaceAt,
   toCss,
-  toneAt,
-  toneWeights,
-  weightedColor,
   type ToneStop,
 } from '@/lib/tone'
 
@@ -50,62 +47,33 @@ const stops: ToneStop[] = [
   { tone: 'paper', top: 1000, bottom: 2000 },
   { tone: 'orange', top: 2000, bottom: 2600 },
 ]
-const band = 800
-const weight = (weights: { tone: string; weight: number }[], tone: string) =>
-  weights.find((w) => w.tone === tone)?.weight ?? 0
-
-describe('toneWeights', () => {
-  it('holds a section’s tone until the next one reaches the viewport edge', () => {
-    assert.deepEqual(toneWeights(stops, 1000, band), [{ tone: 'dark', weight: 1 }])
+describe('activeTone', () => {
+  it('is the first section before any boundary is crossed', () => {
+    assert.equal(activeTone(stops, -500), 'dark')
+    assert.equal(activeTone(stops, 999), 'dark')
   })
 
-  it('is exactly halfway at the middle of the band, and eases at both ends', () => {
-    assert.equal(weight(toneWeights(stops, 1400, band), 'paper'), 0.5)
-    // A quarter of the way through the band the eased weight is below a quarter.
-    assert.ok(weight(toneWeights(stops, 1200, band), 'paper') < 0.25)
+  it('switches exactly when a section’s top crosses the line', () => {
+    assert.equal(activeTone(stops, 1000), 'paper')
+    assert.equal(activeTone(stops, 1999), 'paper')
+    assert.equal(activeTone(stops, 2000), 'orange')
   })
 
-  it('finishes the morph once the top has crossed the band', () => {
-    assert.deepEqual(toneWeights(stops, 1800, band), [{ tone: 'paper', weight: 1 }])
-  })
-
-  it('stays continuous when a short section’s neighbour arrives mid-morph', () => {
-    const short: ToneStop[] = [
+  it('ignores sections too short to own the page colour, and solid ones', () => {
+    const withShort: ToneStop[] = [
       { tone: 'dark', top: 0, bottom: 1000 },
-      { tone: 'paper', top: 1000, bottom: 1500 },
-      { tone: 'dark', top: 1500, bottom: 2500 },
+      { tone: 'paper', top: 1000, bottom: 1300 }, // 300px: too short at minLength 800
+      { tone: 'dark', top: 1300, bottom: 2600 },
+      { tone: 'orange', top: 2600, bottom: 3600, solid: true },
     ]
-    const before = toneWeights(short, 1500, band)
-    const after = toneWeights(short, 1501, band)
-    assert.ok(Math.abs(weight(before, 'paper') - weight(after, 'paper')) < 0.01)
-    assert.ok(Math.abs(weight(before, 'dark') - weight(after, 'dark')) < 0.01)
+    assert.equal(activeTone(withShort, 1200, 800), 'dark')
+    assert.equal(activeTone(withShort, 1200), 'paper')
+    assert.equal(activeTone(withShort, 3000, 800), 'dark')
   })
 
-  it('always sums to 1 and falls back to dark with no sections', () => {
-    for (const from of [0, 1100, 1450, 2300, 2600, 5000]) {
-      const total = toneWeights(stops, from, band).reduce((sum, w) => sum + w.weight, 0)
-      assert.ok(Math.abs(total - 1) < 1e-9, String(from))
-    }
-    assert.deepEqual(toneWeights([], 0, band), [{ tone: 'dark', weight: 1 }])
-  })
-})
-
-describe('dominantTone / weightedColor', () => {
-  it('picks the heaviest tone and averages colours by weight', () => {
-    assert.equal(
-      dominantTone([
-        { tone: 'dark', weight: 0.4 },
-        { tone: 'paper', weight: 0.6 },
-      ]),
-      'paper',
-    )
-    assert.deepEqual(
-      weightedColor([
-        { color: [0, 0, 0, 1], weight: 0.25 },
-        { color: [200, 100, 40, 1], weight: 0.75 },
-      ]),
-      [150, 75, 30, 1],
-    )
+  it('is one tone at a time, never a mix, and dark with no sections', () => {
+    assert.equal(activeTone(stops, 5000), 'orange')
+    assert.equal(activeTone([], 0), 'dark')
   })
 })
 
@@ -130,13 +98,7 @@ describe('surfaceAt', () => {
   })
 })
 
-describe('toneAt / isLightTone', () => {
-  it('finds the section under a point, or null in a gap', () => {
-    assert.equal(toneAt(stops, 36), 'dark')
-    assert.equal(toneAt(stops, 1500), 'paper')
-    assert.equal(toneAt(stops, 3000), null)
-  })
-
+describe('isLightTone', () => {
   it('treats every tone except dark as light', () => {
     assert.equal(isLightTone('dark'), false)
     assert.equal(isLightTone('paper'), true)

@@ -4,7 +4,6 @@ import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { trackEvent } from '@/lib/analytics'
 import { scrollToTop } from '@/lib/lenis'
 import type { NavItem, SocialLink } from '@/types'
-import styles from './Footer.module.css'
 
 export interface FooterProps {
   headings: { contact: string; social: string; nav: string }
@@ -17,13 +16,12 @@ export interface FooterProps {
   copyright: string
   location: string
   backToTopLabel: string
-  wordmark: string
 }
 
 /**
- * Global footer: contact (email + WhatsApp), socials, sitemap, legal and a giant outlined
- * wordmark. The big "Start a project" moment is the orange ClosingCta band the app shell
- * renders directly above this on every page except /start.
+ * Global footer: contact (email + WhatsApp), socials, sitemap and legal links. The big
+ * "Start a project" moment is the orange ClosingCta band the app shell renders directly
+ * above this on every page except /start.
  */
 export function Footer({
   headings,
@@ -36,7 +34,6 @@ export function Footer({
   copyright,
   location,
   backToTopLabel,
-  wordmark,
 }: FooterProps) {
   const year = new Date().getFullYear()
 
@@ -114,13 +111,6 @@ export function Footer({
           </div>
         </div>
       </footer>
-
-      <div aria-hidden="true" className="container-site -mt-4">
-        <p className={styles.wordmark}>
-          {wordmark}
-          <span>.</span>
-        </p>
-      </div>
     </div>
   )
 }

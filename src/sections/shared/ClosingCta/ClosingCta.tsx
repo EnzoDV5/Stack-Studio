@@ -1,14 +1,14 @@
-import { useRef, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
+import { MaskedHeading } from '@/components/motion/MaskedHeading'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { MagneticButton } from '@/components/ui/MagneticButton'
-import { useReducedMotion } from '@/hooks/useReducedMotion'
-import { gsap, SplitText, useGSAP } from '@/lib/gsap'
-import { closingType, ease } from '@/lib/motion-tokens'
 import type { CtaContent } from '@/types'
 
 export interface ClosingCtaProps {
   content: CtaContent
+  /** Decorative code used to scramble the headline before it resolves. */
+  codeLines: string[]
   /** Analytics location for the CTA click, e.g. 'home-closing'. */
   location: string
   tone?: Tone
@@ -17,76 +17,42 @@ export interface ClosingCtaProps {
 }
 
 /**
- * The giant closing CTA band. Orange by default: the one big orange moment per page.
- * Signature motion (scrubbed): as the band scrolls in, the giant type scales from 0.8 to 1
- * and its tracking tightens. Tracking is moved with per-character transforms rather than
- * letter-spacing, so nothing reflows mid-scroll. Static with reduced motion.
+ * The closing CTA band. Orange by default: the one big orange moment per page. The heading
+ * begins as same-size code characters, then resolves into the readable title as the band
+ * scrolls in. The final glyph widths keep the line length stable throughout.
  */
-export function ClosingCta({ content, location, tone = 'orange', secondary }: ClosingCtaProps) {
+export function ClosingCta({
+  content,
+  codeLines,
+  location,
+  tone = 'orange',
+  secondary,
+}: ClosingCtaProps) {
   const buttonVariant = tone === 'orange' ? 'inverse' : 'primary'
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const reducedMotion = useReducedMotion()
-
-  useGSAP(
-    () => {
-      const title = titleRef.current
-      if (reducedMotion || !title) return
-      SplitText.create(title, {
-        type: 'lines,chars',
-        aria: 'auto',
-        autoSplit: true,
-        linesClass: 'split-line',
-        onSplit(self) {
-          const spread = parseFloat(getComputedStyle(title).fontSize) * closingType.trackingFrom
-          const timeline = gsap.timeline({
-            defaults: { ease: ease.none },
-            scrollTrigger: {
-              trigger: title,
-              start: 'top bottom',
-              end: 'bottom 70%',
-              scrub: true,
-              onToggle: ({ isActive }) =>
-                gsap.set(title, { willChange: isActive ? 'transform' : 'auto' }),
-            },
-          })
-          timeline.fromTo(
-            title,
-            { scale: closingType.scaleFrom, transformOrigin: '0% 100%' },
-            { scale: 1 },
-            0,
-          )
-          for (const line of self.lines) {
-            const chars = self.chars.filter((char) => line.contains(char))
-            timeline.fromTo(chars, { x: (i: number) => i * spread }, { x: 0 }, 0)
-          }
-          return timeline
-        },
-      })
-    },
-    { scope: titleRef, dependencies: [reducedMotion], revertOnUpdate: true },
-  )
 
   return (
-    <Section tone={tone} grid="radial" className="overflow-hidden">
-      <div className="container-site">
-        {content.eyebrow && <Eyebrow label={content.eyebrow} className="mb-10" />}
-        <h2 ref={titleRef} className="max-w-[13ch] font-display text-display-2xl">
-          {content.title}
-        </h2>
-        <div className="relative z-10 mt-14 flex flex-col gap-10 border-t border-tone pt-10 md:flex-row md:items-center md:justify-between">
-          {content.body && <p className="max-w-[40ch] text-body-lg text-muted">{content.body}</p>}
-          <div className="flex flex-wrap items-center gap-4">
-            <MagneticButton
-              to={content.to}
-              variant={buttonVariant}
-              size="lg"
-              withArrow
-              analytics={{ event: 'Start project click', props: { location } }}
-            >
-              {content.label}
-            </MagneticButton>
-            {secondary}
-          </div>
+    <Section id="start-project" tone={tone} solid grid="radial" className="overflow-hidden">
+      <div className="container-site flex flex-col items-center text-center">
+        {content.eyebrow && <Eyebrow label={content.eyebrow} className="mb-8 justify-center" />}
+        <MaskedHeading
+          text={content.title}
+          codeLines={codeLines}
+          className="max-w-[16ch] font-display text-[clamp(2.75rem,1.55rem+5.4vw,7.5rem)] leading-[0.9] font-extrabold tracking-[-0.05em]"
+        />
+        {content.body && (
+          <p className="mt-10 max-w-[40ch] text-body-lg text-muted">{content.body}</p>
+        )}
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <MagneticButton
+            to={content.to}
+            variant={buttonVariant}
+            size="lg"
+            withArrow
+            analytics={{ event: 'Start project click', props: { location } }}
+          >
+            {content.label}
+          </MagneticButton>
+          {secondary}
         </div>
       </div>
     </Section>

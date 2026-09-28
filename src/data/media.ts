@@ -10,6 +10,20 @@ import type { ImageAsset, VideoAsset } from '@/types'
 import type { StageId } from '@/types'
 import type { ServiceMediaItem } from '@/types/service-media'
 
+/**
+ * Full-page desktop capture of a live client site (1440 wide) in /public/media/projects,
+ * scrolled on the laptop in the case study. How to recapture: public/media/README.md.
+ */
+function siteCapture(id: string, height: number, alt: string): ImageAsset {
+  return {
+    src: `/media/projects/${id}-screen.webp`,
+    srcSet: `/media/projects/${id}-screen-small.webp 720w, /media/projects/${id}-screen.webp 1440w`,
+    width: 1440,
+    height,
+    alt,
+  }
+}
+
 /** picsum placeholder with a responsive srcSet (webp). */
 function picsum(seed: string, width: number, height: number, alt: string): ImageAsset {
   const url = (w: number) =>
@@ -110,6 +124,12 @@ export const media = {
 
   projects: {
     gcSolar: {
+      // Full-page capture of gcsolar-redesign-demo.netlify.app (28 Sep 2026), scrolled on the case study laptop.
+      screen: siteCapture(
+        'gc-solar',
+        5991,
+        'The GC Solar website, from the homepage down to the footer', // COPY: alt
+      ),
       thumbnail: picsum('stack-gc-solar-thumb', 1600, 1200, 'GC Solar website shown on a laptop'), // COPY: alt
       preview: video(
         'gc-solar-preview.mp4',
@@ -139,6 +159,12 @@ export const media = {
       ],
     },
     mpgFoundation: {
+      // Full-page capture of mpgf.org.za (28 Sep 2026), scrolled on the case study laptop.
+      screen: siteCapture(
+        'mpg-foundation',
+        9605,
+        'The MPG Foundation website, from the homepage down to the footer', // COPY: alt
+      ),
       thumbnail: picsum('stack-mpg-thumb', 1600, 1200, 'MPG Foundation website on a tablet'), // COPY: alt
       preview: video(
         'mpg-foundation-preview.mp4',
@@ -168,6 +194,12 @@ export const media = {
       ],
     },
     salonFriend: {
+      // Full-page capture of salon-friends.web.app (28 Sep 2026), scrolled on the case study laptop.
+      screen: siteCapture(
+        'salon-friend',
+        7142,
+        'The Salon Friend website, from the homepage down to the footer', // COPY: alt
+      ),
       thumbnail: picsum('stack-salon-friend-thumb', 1600, 1200, 'The Salon Friend website'), // COPY: alt, replace with a real screenshot
       preview: video(
         'salon-friend-preview.mp4',

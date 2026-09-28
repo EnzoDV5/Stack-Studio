@@ -99,13 +99,15 @@ export const scroll = {
 
 /** ToneController: the page colours morph between section tones around the viewport middle. */
 export const tone = {
+  /** A section takes over the page colour when its top crosses this line (0 = top, 1 = bottom). */
+  line: 0.5,
+  /** Seconds for the colour switch: one short fade, straight from the old tone to the new. */
+  switch: 0.45,
   /**
-   * A section's tone starts fading in when its top enters the bottom of the viewport and is
-   * complete once the top has travelled this fraction of the viewport (so, 20% from the top).
+   * Sections shorter than this (viewport heights) never take over the page colour, so a
+   * short section can't flicker it. Group neighbouring sections into one tone instead.
    */
-  band: 0.8,
-  /** Seconds the page colours take to catch up with the scroll (bounded ease-out glide). */
-  lag: 0.35,
+  minSection: 0.9,
 } as const
 
 /** WorkReel: full-bleed media shrinks into a card, then a pinned horizontal gallery (desktop). */
@@ -118,21 +120,44 @@ export const reel = {
   radius: 16,
 } as const
 
-/** ProcessLine: steps wait at this opacity until the drawn line reaches them. */
-export const drawLine = {
-  dim: 0.35,
+/**
+ * ProcessLine (Home): a playhead sweeps the week columns with scroll (scrubbed, no pin) and
+ * each step's bar draws under it. The range runs from the board entering to it passing the
+ * middle, so the whole plan has played by the time it's centred.
+ */
+export const processTimeline = {
+  start: 'top 72%',
+  end: 'bottom 50%',
+  /** Smooths the scroll-linked playhead (seconds of catch-up). */
+  scrub: 0.6,
 } as const
 
-/** ClosingCta: the giant type scales in and its tracking tightens as the band scrolls in. */
-export const closingType = {
-  scaleFrom: 0.8,
-  /** Extra letter spacing at the start, in em, removed by the end of the scrub. */
-  trackingFrom: 0.06,
+/** MaskedHeading: same-size code characters slowly compile into the title. */
+export const maskedHeading = {
+  /** Number of deterministic code-character changes over the full reveal. */
+  scrambleSteps: 18,
+  /** Portion of progress used to crossfade each code character into its title character. */
+  characterReveal: 0.22,
+  /** Smooths the scroll-linked progress so the compile never snaps. */
+  scrub: 0.8,
 } as const
 
-/** Case study hero media settles from this scale to 1 as it scrolls through. */
-export const heroScale = {
-  from: 1.1,
+/**
+ * MacbookScroll (case studies): the laptop starts open, seen from above; then (pinned,
+ * scrubbed) the deck folds away, the lid comes upright and it grows; then the site scrolls
+ * inside the screen.
+ */
+export const macbook = {
+  /** Pinned scroll for the laptop to come forward, in viewport heights. */
+  open: 1,
+  /** Then, pinned scroll per screenful of the site scrolling inside the screen. */
+  perScreen: 0.5,
+  /** Starting angle of the keyboard deck from the lid's plane (90 = folded flat away). */
+  deckFrom: 58,
+  /** Starting lean of the lid toward the viewer (negative = top comes forward), degrees. */
+  leanFrom: -14,
+  /** Largest the laptop grows (capped so the screen always fits the viewport). */
+  scaleTo: 1.8,
 } as const
 
 export const parallax = {

@@ -1,9 +1,21 @@
 import type { ImageAsset } from './media'
 
+/** A column on the Home process timeline: a week, or the time after launch. */
+export interface TimelineColumn {
+  label: string
+  /** Shown on phones, where the columns are narrow. */
+  short: string
+}
+
 export interface ProcessStep {
   id: string
   title: string
   duration: string
+  /**
+   * Where the step sits on the Home timeline: 1-based, inclusive column indexes into
+   * `homeContent.process.columns` in data/pages.ts (weeks, then "after launch").
+   */
+  span: { from: number; to: number }
   summary: string
   points: string[]
 }
@@ -30,7 +42,7 @@ export interface Client {
   id: string
   name: string
   sector: string
-  /** Path to an SVG in /public. When absent, a text tile is rendered. */
+  /** Path to a transparent logo asset in /public. When absent, a text tile is rendered. */
   logo?: string
 }
 

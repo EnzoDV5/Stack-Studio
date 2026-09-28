@@ -3,16 +3,14 @@ import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { tone as toneTokens } from '@/lib/motion-tokens'
 import {
-  dominantTone,
+  activeTone,
+  HEADER_BACKDROP_AT,
   isLightTone,
   isToneName,
   mixColor,
   parseColor,
   surfaceAt,
   toCss,
-  toneAt,
-  toneWeights,
-  weightedColor,
   type Rgba,
   type ToneName,
   type ToneStop,
@@ -89,11 +87,11 @@ function headerHeight(): number {
 
 /**
  * One continuous page instead of hard cuts. Sections become transparent (html.tone-flow)
- * and read page-level colours. A section's tone fades in (eased) from when its top enters
- * the bottom of the viewport until it is 20% from the top, and the live colours glide
- * toward that target over a few frames, so nothing jumps. It also tells
- * the header whether it sits on a light or dark page (html[data-header-tone]): the blended
- * colour in flow, or the section under it with reduced motion.
+ * and read page-level colours. When a section's top crosses the middle of the viewport the
+ * page switches to its tone in one short fade (tone.switch), so there are no in-between
+ * colours while you scroll. It also tells
+ * the header whether it sits on a light or dark page (html[data-header-tone]): the page
+ * tone once scrolled (so it only changes when the page does), or the section under it with reduced motion.
  * With reduced motion there is no morph: sections keep their own solid backgrounds.
  */
 export function ToneController({ pathname }: ToneControllerProps) {
@@ -105,7 +103,8 @@ export function ToneController({ pathname }: ToneControllerProps) {
     const probeY = headerHeight() / 2
     let sections: MeasuredSection[] = []
     let stops: ToneStop[] = []
-    // Where each colour should be for this scroll position, and where it is now.
+    // The tone the page is switching to (or showing), its colours, and where they are now.
+    let active: ToneName | null = null
     let target: Rgba[] = []
     let current: Rgba[] = []
     // What each element was last given, so unchanged values are never re-set.
@@ -144,11 +143,10 @@ export function ToneController({ pathname }: ToneControllerProps) {
       }
     }
 
-    // A short, bounded glide (ease-out over tone.lag seconds) toward the latest target, so a
-    // fast scroll or a flick never snaps colours. Every write restyles the whole page, so it
-    // must end quickly rather than creep toward the target.
+    // One short ease-out fade (tone.switch seconds) from the old tone to the new one. It only
+    // starts when the tone changes, so scrolling within a section never moves the colours.
     const glide = (time: number) => {
-      const p = Math.min(1, (time - startedAt) / toneTokens.lag)
+      const p = Math.min(1, (time - startedAt) / toneTokens.switch)
       const eased = 1 - (1 - p) ** 3
       current = from.map((colour, i) => mixColor(colour, target[i] ?? colour, eased))
       write()
@@ -160,42 +158,47 @@ export function ToneController({ pathname }: ToneControllerProps) {
 
     const apply = (immediate = false) => {
       const y = window.scrollY
-      if (!palette) {
-        const under = toneAt(stops, y + probeY) ?? 'dark'
-        root.dataset.headerTone = isLightTone(under) ? 'light' : 'dark'
-        return
-      }
 
-      // A section's tone fades in from when its top enters the bottom of the viewport.
-      const weights = toneWeights(
+      // The section whose top has crossed the line owns the page colour.
+      const tone = activeTone(
         stops,
-        y + window.innerHeight,
-        window.innerHeight * toneTokens.band,
+        y + window.innerHeight * toneTokens.line,
+        window.innerHeight * toneTokens.minSection,
       )
-      // The header sits over the page colour, unless a solid section or a gap (ink inset,
-      // footer) is under it.
-      const under = surfaceAt(stops, y + probeY, dominantTone(weights)) ?? 'dark'
-      root.dataset.headerTone = isLightTone(under) ? 'light' : 'dark'
 
-      target = CHANNELS.map((_, i) =>
-        weightedColor(
-          weights.map(({ tone, weight }) => ({ color: palette[tone][i] ?? [0, 0, 0, 0], weight })),
-        ),
-      )
+      // The header follows the page colour, so it changes only when (and exactly when) the
+      // page does, not at every section edge, the orange band or the footer. Its scrolled
+      // backdrop keeps it readable over anything. Right at the top it has no backdrop yet
+      // and sits on the hero or the dark inset above page titles, so it takes that surface.
+      const header = y <= HEADER_BACKDROP_AT ? (surfaceAt(stops, y + probeY, tone) ?? 'dark') : tone
+      const headerTone = isLightTone(header) ? 'light' : 'dark'
+      if (root.dataset.headerTone !== headerTone) root.dataset.headerTone = headerTone
+
+      if (!palette) return
+
       if (immediate || current.length === 0) {
         gsap.ticker.remove(glide)
         gliding = false
+        active = tone
+        target = palette[tone]
         current = target
         write(true)
         return
       }
-      // Retarget from wherever the colours are now.
-      from = current
-      startedAt = gsap.ticker.time
-      if (!gliding) {
-        gliding = true
-        gsap.ticker.add(glide)
+      if (tone !== active) {
+        // Fade from wherever the colours are now (even mid-fade) to the new tone.
+        active = tone
+        target = palette[tone]
+        from = current
+        startedAt = gsap.ticker.time
+        if (!gliding) {
+          gliding = true
+          gsap.ticker.add(glide)
+        }
+        return
       }
+      // Same tone: just give sections that scrolled into view the current colours.
+      if (!gliding) write()
     }
 
     // A re-measure while the page is still (a lazy route rendering after the first measure)
@@ -204,7 +207,7 @@ export function ToneController({ pathname }: ToneControllerProps) {
     const measure = () => {
       sections = measureSections()
       stops = sections.map((section) => section.stop)
-      apply(gsap.ticker.time - scrolledAt > toneTokens.lag * 2)
+      apply(gsap.ticker.time - scrolledAt > toneTokens.switch * 2)
       write(true)
     }
 

@@ -64,6 +64,16 @@ export const closingCta: CtaContent = {
   to: '/start',
 }
 
+/** Decorative source characters used by code-to-title heading reveals. */
+export const closingCtaCode = [
+  'const idea = await discover();', // COPY:
+  'strategy.align({ brand, goals });', // COPY:
+  'design.systems.stack();', // COPY:
+  'build({ fast: true, accessible: true });', // COPY:
+  'launch(); measure(); improve();', // COPY:
+  'return work.thatBringsInWork();', // COPY:
+]
+
 /* ---------- Home ---------- */
 /**
  * Home is a fast summary of everything, work first. Every section ends with a "go deeper"
@@ -116,11 +126,23 @@ export const homeContent = {
     eyebrow: 'Process', // COPY:
     title: 'How a project runs.', // COPY:
     stepLabel: 'Step', // COPY:
+    nowLabel: 'Where we are', // COPY:
+    /** Timeline columns. Step spans in data/process.ts index into this list. */
+    columns: [
+      { label: 'Week 1', short: 'W1' }, // COPY:
+      { label: 'Week 2', short: 'W2' }, // COPY:
+      { label: 'Week 3', short: 'W3' }, // COPY:
+      { label: 'Week 4', short: 'W4' }, // COPY:
+      { label: 'Week 5', short: 'W5' }, // COPY:
+      { label: 'Week 6', short: 'W6' }, // COPY:
+      { label: 'After launch', short: '+' }, // COPY:
+    ],
     more: { label: 'The full process', to: '/services#process' }, // COPY:
   },
   clients: {
     eyebrow: 'Clients', // COPY:
     title: 'What clients say.', // COPY:
+    logosLabel: 'Websites built for', // COPY:
     /** Link under each quote to that client's case study. */
     caseLink: (company: string) => `See the ${company} project`, // COPY:
     more: { label: 'See all the work', to: '/work' }, // COPY:
@@ -175,6 +197,10 @@ export const workContent = {
 /* ---------- Case study template labels ---------- */
 export const caseStudyContent = {
   eyebrow: 'Case study', // COPY:
+  device: {
+    eyebrow: 'The website', // COPY:
+    title: (name: string) => `${name}, live.`, // COPY:
+  },
   meta: {
     client: 'Client', // COPY:
     year: 'Year', // COPY:

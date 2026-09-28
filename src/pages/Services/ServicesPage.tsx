@@ -64,7 +64,11 @@ export function ServicesPage() {
         steps={processSteps}
         stepLabel={servicesContent.process.stepLabel}
       />
-      <FaqSection intro={servicesContent.faq} faqs={faqsFor('general', 'services', 'process')} />
+      <FaqSection
+        tone="dark"
+        intro={servicesContent.faq}
+        faqs={faqsFor('general', 'services', 'process')}
+      />
     </>
   )
 }

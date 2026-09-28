@@ -1,6 +1,6 @@
 /**
  * Pure helpers behind <ToneController>: parse the tone colours, mix them, and work out which
- * tones the page is between for a given scroll position. No DOM access here.
+ * section's tone the page shows for a given scroll position. No DOM access here.
  */
 
 export type ToneName = 'dark' | 'paper' | 'white' | 'orange'
@@ -17,10 +17,8 @@ export interface ToneStop {
   solid?: boolean
 }
 
-export interface ToneWeight {
-  tone: ToneName
-  weight: number
-}
+/** The header gains its backdrop once the page has scrolled past this (px). */
+export const HEADER_BACKDROP_AT = 12
 
 const clamp01 = (n: number) => Math.min(1, Math.max(0, n))
 
@@ -65,66 +63,33 @@ export function toCss([r, g, b, a]: Rgba): string {
   return `rgb(${round(r)} ${round(g)} ${round(b)} / ${Math.round(a * 1000) / 1000})`
 }
 
-/** Eases a morph in and out, so it never starts or lands abruptly. */
-const smoothstep = (t: number) => t * t * (3 - 2 * t)
-
 /**
- * How much of each tone the page shows. Each section's tone fades in while its top travels
- * from `from` (px, a page position) up through a band of `band` px. Boundaries fold into
- * each other continuously, so even a short section whose neighbour arrives early never
- * snaps. Weights sum to 1.
+ * The tone the page shows: the last section whose top has crossed `line` (a page position,
+ * usually the middle of the viewport). One tone at a time: the page switches when a section
+ * crosses the line instead of blending neighbours while you scroll. Sections shorter than
+ * `minLength` px, and solid sections (which paint themselves), never take over the page
+ * colour, so a short section can't make the page flicker.
  */
-export function toneWeights(stops: readonly ToneStop[], from: number, band: number): ToneWeight[] {
-  const [first, ...rest] = stops
-  if (!first) return [{ tone: 'dark', weight: 1 }]
-  const weights = new Map<ToneName, number>([[first.tone, 1]])
-  for (const stop of rest) {
-    const progress = band > 0 ? clamp01((from - stop.top) / band) : stop.top <= from ? 1 : 0
-    if (progress <= 0) break // stops are sorted by top, so none after this has started
-    const p = smoothstep(progress)
-    for (const [name, weight] of weights) weights.set(name, weight * (1 - p))
-    weights.set(stop.tone, (weights.get(stop.tone) ?? 0) + p)
+export function activeTone(stops: readonly ToneStop[], line: number, minLength = 0): ToneName {
+  let tone: ToneName = stops[0]?.tone ?? 'dark'
+  for (const stop of stops) {
+    if (stop.top > line) break // sorted by top
+    if (stop.solid && stop !== stops[0]) continue
+    if (stop.bottom - stop.top < minLength && stop !== stops[0]) continue
+    tone = stop.tone
   }
-  return [...weights]
-    .map(([name, weight]) => ({ tone: name, weight }))
-    .filter((w) => w.weight > 1e-4)
-}
-
-/** The tone with the most weight: what the page reads as right now. */
-export function dominantTone(weights: readonly ToneWeight[]): ToneName {
-  return weights.reduce((best, w) => (w.weight > best.weight ? w : best), {
-    tone: 'dark' as ToneName,
-    weight: -1,
-  }).tone
-}
-
-/** A weighted average of colours (the weights sum to 1). */
-export function weightedColor(items: readonly { color: Rgba; weight: number }[]): Rgba {
-  const out: Rgba = [0, 0, 0, 0]
-  for (const { color, weight } of items) {
-    for (const i of [0, 1, 2, 3] as const) out[i] += color[i] * weight
-  }
-  return out
-}
-
-/** The tone of the section under a page position, or null in a gap between sections. */
-export function toneAt(stops: readonly ToneStop[], y: number): ToneName | null {
-  return stops.find((stop) => y >= stop.top && y < stop.bottom)?.tone ?? null
+  return tone
 }
 
 /**
  * What the page looks like at `y` while the tone flows: a solid section shows its own tone,
- * a flowing one shows the blended page colour, and a gap between sections (the dark header
+ * a flowing one shows the page's current tone, and a gap between sections (the dark header
  * inset above page titles, the footer) is null.
  */
-export function surfaceAt(
-  stops: readonly ToneStop[],
-  y: number,
-  blended: ToneName,
-): ToneName | null {
+export function surfaceAt(stops: readonly ToneStop[], y: number, page: ToneName): ToneName | null {
   const stop = stops.find((s) => y >= s.top && y < s.bottom)
   if (!stop) return null
-  return stop.solid ? stop.tone : blended
+  return stop.solid ? stop.tone : page
 }
 
 /** Paper, white and orange carry dark text, so the header switches to its light style. */
