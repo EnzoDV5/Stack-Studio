@@ -43,7 +43,7 @@ export const serviceStages: ServiceStage[] = [
     name: 'Grow', // COPY:
     line: 'We keep improving it.', // COPY:
     summary:
-      'New features, integrations and improvements as your business changes, quoted as fixed projects or billed by the hour.', // COPY:
+      'New features, integrations and improvements as your business changes, priced as a project or billed by the hour.', // COPY:
     cta: { label: 'Plan an improvement', to: '/start?path=develop' }, // COPY:
     briefPath: 'develop',
   },

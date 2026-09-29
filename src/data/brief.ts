@@ -159,7 +159,7 @@ export const briefSteps: BriefStepConfig[] = [
     source: 'budgets',
     label: 'Budget', // COPY:
     title: 'What budget are you working with?', // COPY:
-    hint: 'This helps us suggest the right scope. We never quote to the top of your range.', // COPY:
+    hint: 'This helps us suggest the right scope. We won’t simply aim for the top of your range.', // COPY:
     showIf: BUILD,
   },
 
@@ -513,7 +513,7 @@ export const briefCopy = {
     steps: [
       'We read your brief and reply within one business day.', // COPY:
       'A short call to fill in the gaps.', // COPY:
-      'A fixed quote or a recommended plan, with no surprises.', // COPY:
+      'A written quote or a recommended plan for you to look over.', // COPY:
     ],
     urgent: 'Something urgent? Message us on WhatsApp.', // COPY:
     home: { label: 'Back to home', to: '/' }, // COPY:

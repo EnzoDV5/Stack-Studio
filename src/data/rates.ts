@@ -9,7 +9,7 @@ export const rates: Rate[] = [
     id: 'feature',
     name: 'Feature development', // COPY:
     pricePerHour: 1_200,
-    description: 'Without a retainer, billed hourly or quoted as a fixed project.', // COPY:
+    description: 'Without a retainer: by the hour, or at a set price for a defined piece of work.', // COPY:
     examples: [
       'New dashboards', // COPY:
       'Payment methods', // COPY:

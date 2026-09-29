@@ -38,7 +38,7 @@ export const values: ValueItem[] = [
   {
     id: 'clarity',
     title: 'Clarity at every step', // COPY:
-    body: 'Plain language, fixed quotes and a staging link from day one. No black boxes.', // COPY:
+    body: 'Plain language, honest timelines and a staging link from day one. No black boxes.', // COPY:
   },
   {
     id: 'partnership',

@@ -26,7 +26,7 @@ export const pageMeta = {
   pricing: {
     title: 'Pricing', // COPY:
     description:
-      'Transparent starting prices for once-off website builds and monthly hosting, care and growth plans. No hidden pricing.', // COPY:
+      'Starting prices for once-off website builds and monthly hosting, care and growth plans, so you know roughly where you stand before we talk.', // COPY:
     path: '/pricing',
   },
   studio: {
@@ -157,9 +157,9 @@ export const homeContent = {
   },
   pricing: {
     eyebrow: 'Pricing', // COPY:
-    title: 'Starting points, not hidden prices.', // COPY:
+    title: 'Know where you stand before we talk.', // COPY:
     intro:
-      'Every project is quoted properly, but you should know roughly where you stand before we talk.', // COPY:
+      'Every project is different, so treat these as starting points rather than a price list.', // COPY:
     /** Snapshot figures: label + where the number comes from (resolved on the Home page). */
     items: [
       { label: 'Websites', source: { offering: 'business-website' }, note: 'Once-off build' }, // COPY:
@@ -248,7 +248,7 @@ export const servicesContent = {
   process: {
     eyebrow: 'Process', // COPY:
     title: 'How a project runs.', // COPY:
-    intro: 'Six clear steps, a staging link from week one and no surprises.', // COPY:
+    intro: 'Six clear steps, with a staging link from week one so you see progress as it happens.', // COPY:
     stepLabel: 'Step', // COPY:
   },
   labels: {
@@ -265,13 +265,13 @@ export const servicesContent = {
 export const pricingContent = {
   hero: {
     eyebrow: 'Pricing', // COPY:
-    title: 'Your quote, built around your project.', // COPY:
+    title: 'Priced around your project.', // COPY:
     intro:
-      'No fixed price list: every project is different. Build an estimate in two minutes, or start from one of our ready-made quotes and adjust it. All prices in ZAR.', // COPY:
+      'There’s no one-size price list, because no two projects are alike. Build an estimate in two minutes, or start from one of the examples below and adjust it. All prices in ZAR.', // COPY:
   } satisfies PageHeroContent,
   approach: {
     eyebrow: 'How pricing works', // COPY:
-    title: 'Three steps to a fixed quote.', // COPY:
+    title: 'From rough idea to a final price.', // COPY:
     steps: [
       {
         title: 'Build an estimate', // COPY:
@@ -283,19 +283,19 @@ export const pricingContent = {
       },
       {
         title: 'Get a fixed quote', // COPY:
-        body: 'A written quote with scope, timeline and payment milestones. No surprises later.', // COPY:
+        body: 'Scope, timeline and payment milestones in writing, agreed before any work starts.', // COPY:
       },
     ],
     cta: { label: 'Build my estimate', to: '/start' }, // COPY:
   },
   quotes: {
-    eyebrow: 'Starting quotes', // COPY:
-    title: 'Start from a quote that fits.', // COPY:
+    eyebrow: 'Starting points', // COPY:
+    title: 'Start from a project like yours.', // COPY:
     intro:
-      'Pick the closest one and adjust it in the estimate builder. Ranges are indicative; your fixed quote follows a short call.', // COPY:
+      'Pick the closest one and adjust it in the estimate builder. Ranges are a guide until we’ve talked it through.', // COPY:
     rangeLabel: 'Typically', // COPY:
     monthly: (price: string) => `plus ${price} for hosting and care`, // COPY:
-    start: 'Start from this quote', // COPY:
+    start: 'Start from this one', // COPY:
     custom: {
       title: 'Something else?', // COPY:
       body: 'Web apps, taking over an existing site or ongoing development: answer a few questions and get an estimate in two minutes.', // COPY:

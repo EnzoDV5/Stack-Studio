@@ -8,7 +8,7 @@ export const processSteps: ProcessStep[] = [
     span: { from: 1, to: 1 },
     summary:
       'A short call and a structured brief, so we understand the business, not just the website.', // COPY:
-    points: ['Goals and audience', 'What exists today', 'Fixed quote and timeline'], // COPY:
+    points: ['Goals and audience', 'What exists today', 'Price and timeline agreed'], // COPY:
   },
   {
     id: 'define',
