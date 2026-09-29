@@ -3,7 +3,8 @@
  * (keep width/height accurate when swapping a file):
  *   - Projects: device mockups rendered from the live client sites (scripts/mockups).
  *   - Services: stage videos and posters (scripts/services-media).
- *   - Studio: licensed stock photos; founders: avatar placeholders until real portraits exist.
+ *   - Studio: licensed stock photos; founders: real portraits (scripts/founders), or an
+ *     avatar placeholder until one exists.
  *   - Videos not yet made (showreel, project previews) fall back to their poster or an
  *     animated brand-gradient placeholder.
  */
@@ -75,6 +76,22 @@ function founderPlaceholder(id: string, name: string): ImageAsset {
     width: 900,
     height: 1125,
     alt: `Placeholder portrait for ${name}`,
+  }
+}
+
+/**
+ * A founder's portrait: /public/media/founders/{id}-{w}.webp at each width (largest first),
+ * cropped to 4:5 like the portrait frames.
+ */
+function founderPhoto(id: string, widths: number[], alt: string): ImageAsset {
+  const url = (w: number) => `/media/founders/${id}-${w}.webp`
+  const largest = widths[0] ?? 1200
+  return {
+    src: url(widths[1] ?? largest),
+    srcSet: widths.map((w) => `${url(w)} ${w}w`).join(', '),
+    width: largest,
+    height: Math.round((largest * 5) / 4),
+    alt,
   }
 }
 
@@ -320,13 +337,16 @@ export const media = {
     },
   },
 
-  // COPY: PLACEHOLDER avatars until the real portraits exist. To swap one in, save a 4:5
-  // photo (e.g. 900×1125 WebP) to /public/media/founders/{id}.webp and replace the
-  // founderPlaceholder(...) call with { src: '/media/founders/{id}.webp', width: 900,
-  // height: 1125, alt: 'Portrait of …' }.
+  // Real portraits, cropped to 4:5 and encoded to WebP at 1200, 800 and 480 wide
+  // (public/media/founders/README.md). COPY: PLACEHOLDER avatar for Enzo until his portrait
+  // exists: add it the same way and swap in founderPhoto('enzo', …).
   founders: {
     enzo: founderPlaceholder('enzo', 'Enzo De Vittorio'),
-    armand: founderPlaceholder('armand', 'Armand Naudé'),
+    armand: founderPhoto(
+      'armand',
+      [1200, 800, 480],
+      'Armand Naudé, co-founder of Stack Studio, smiling with his arms folded',
+    ), // COPY: alt
   },
 
   // Pexels License stock (free for commercial use, no attribution), chosen for what each
