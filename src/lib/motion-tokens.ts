@@ -195,6 +195,8 @@ export const phoneTurn = {
   end: 'center 50%',
   /** Seconds the frame takes to catch up with the scroll, so the turn glides. */
   scrub: 1,
+  /** Eases in and out, so the spin starts gently and settles as it faces the viewer. */
+  ease: 'sine.inOut',
 } as const
 
 /**

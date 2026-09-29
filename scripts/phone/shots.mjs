@@ -1,7 +1,8 @@
 /**
- * The phone turn on the Services page ("Apps and software"). The phone starts from behind
- * (camera plateau), turns through its side and settles facing the viewer at a slight angle
- * with an app on screen.
+ * The phone turn on the Services page ("Apps and software"): a clean product spin. The phone
+ * turns only around its upright axis, from behind (camera plateau), through its side, to face
+ * the viewer almost straight on with an app on screen. Frames are evenly spaced (the same
+ * small step each); the slow start and settle come from the scroll easing (phoneTurn).
  *
  * `screen` is an HTML page in screens/ (`*.html`) or a mobile capture in .mockups/raw
  * (without .png). Angles are in degrees: `turn`
@@ -13,16 +14,18 @@ export const look = {
   finish: '#e8692a',
   exposure: 1,
   glass: 0.05,
-  fov: 22,
+  /** A long lens: flatter, like a product shot, with little perspective skew. */
+  fov: 14,
   /** Space around the phone's height in the frame. */
   margin: 1.12,
-  quality: 0.78,
+  quality: 0.74,
 }
 
 export const turn = {
-  frames: 60,
-  from: { turn: -158, tilt: 14, roll: -9 },
-  to: { turn: -16, tilt: 5, roll: 3 },
+  frames: 80,
+  from: { turn: -165, tilt: 0, roll: 0 },
+  /** A hint of the right-hand edge, so it still reads as a solid object. */
+  to: { turn: -10, tilt: 0, roll: 0 },
   /** Output is width ÷ height; rendered afresh at each width. */
   aspect: 3 / 4,
   widths: [480, 800],

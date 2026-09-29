@@ -3,7 +3,7 @@ import { useInView } from '@/hooks/useInView'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
 import { gsap, useGSAP } from '@/lib/gsap'
-import { ease, phoneTurn } from '@/lib/motion-tokens'
+import { phoneTurn } from '@/lib/motion-tokens'
 import type { ImageSequenceAsset } from '@/types'
 
 export interface ImageSequenceProps {
@@ -67,6 +67,7 @@ export function ImageSequence({
       const images: HTMLImageElement[] = []
       const state = { frame: 0 }
       let shown = -1
+      let revealed = false
       let alive = true
 
       /** The nearest loaded frame at or before `index`, else after it. */
@@ -104,7 +105,11 @@ export function ImageSequence({
           context.drawImage(image, 0, 0, canvas.width, canvas.height)
         }
         shown = position
-        setReady(true)
+        // Once only: calling setState on every frame would re-render React mid-scroll.
+        if (!revealed) {
+          revealed = true
+          setReady(true)
+        }
       }
 
       // Coarse to fine: every 8th frame first (a rough turn is ready almost at once), then
@@ -132,7 +137,8 @@ export function ImageSequence({
 
       gsap.to(state, {
         frame: count - 1,
-        ease: ease.none,
+        // The frames are evenly spaced; the easing gives the turn its slow start and settle.
+        ease: phoneTurn.ease,
         onUpdate: draw,
         scrollTrigger: { trigger: root, start, end, scrub: phoneTurn.scrub },
       })

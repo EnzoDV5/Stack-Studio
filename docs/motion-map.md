@@ -199,9 +199,9 @@ bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is st
 **Services:** PageTitle (load: compile) · StageExplorer (none, sticky nav) · AppShowcase
 (scrub: phone turn) · ProcessPinned (pin, `#process`) · FaqSection (hover) · ClosingCta
 (enter). AppShowcase ("Apps and software") is where apps get their own moment, since most
-client work is websites: an orange iPhone 17 Pro turns from its back, through its side, to
+client work is websites: an orange iPhone 17 Pro spins on its upright axis from its back, through its side, to
 face the visitor with an illustrative bookings app on screen, scrubbed as it scrolls up
-through the view (`phoneTurn`: phone top at 92% to its centre at 50%, 60 frames cross-faded). It isn't pinned
+through the view (`phoneTurn`: phone top at 92% to its centre at 50%, 80 evenly spaced frames, cross-faded, eased by `phoneTurn.ease`). It isn't pinned
 (ProcessPinned is the page's one pin). The frames are pre-rendered from a 3D model
 (scripts/phone) and drawn on a canvas by `ImageSequence`; no 3D library ships. Reduced
 motion: the finished pose as a still image. Each stage has
