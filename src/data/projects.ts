@@ -1,7 +1,7 @@
 /**
  * Case studies. Each entry drives a card on /work and a full page at /work/:slug.
- * Media comes from data/media.ts. METRICS ARE PLACEHOLDERS: replace them with real,
- * client-approved figures before launch.
+ * Media comes from data/media.ts. Metrics are real, client-approved figures only: leave the list
+ * empty until there are some (the metrics section is skipped when it's empty).
  */
 import type { Project } from '@/types'
 import { media } from './media'
@@ -13,10 +13,10 @@ export const projects: Project[] = [
     client: 'GC Solar — Smart Energy Solutions', // COPY:
     year: 2026, // COPY: confirm
     summary:
-      'A proof-first website that turns rooftop installs into quote requests for a Gauteng solar installer.', // COPY:
+      'An immersive redesign of a Gauteng solar installer’s website, and the start of ongoing work together.', // COPY:
     sector: 'Renewable energy', // COPY:
-    services: ['UX strategy', 'Web design', 'Development', 'SEO & analytics'], // COPY:
-    stages: ['build', 'run'], // COPY: confirm
+    services: ['Redesign', 'Immersive web design', 'Development', 'Ongoing projects'], // COPY:
+    stages: ['build', 'grow'],
     liveUrl: 'https://gcsolar-redesign-demo.netlify.app/',
     featured: true,
     thumbnail: media.projects.gcSolar.card,
@@ -27,30 +27,27 @@ export const projects: Project[] = [
     hero: { image: media.projects.gcSolar.showcase, video: media.projects.gcSolar.heroVideo },
     narrative: {
       problem: {
-        heading: 'Great installs, no way to show them.', // COPY:
+        heading: 'Good work, an ordinary website.', // COPY:
         paragraphs: [
-          'GC Solar’s work was strong, but prospective customers only ever saw a phone number and a few photos on social media. Every lead started with the same questions: what do you install, what does it cost, and can I trust you?', // COPY:
-          'Quotes were handled over scattered email threads, which made follow-up slow and hard to track.', // COPY:
+          'GC Solar already had a website, but it didn’t match the quality of their installs. They came to us for a redesign, and asked for something immersive: a site that feels as considered as the systems they put on people’s roofs.', // COPY:
         ],
       },
       approach: {
-        heading: 'Lead with proof, then make quoting effortless.', // COPY:
+        heading: 'Keep what works, make it memorable.', // COPY:
         paragraphs: [
-          'We mapped the questions homeowners and businesses ask before they commit, and structured the site around answering them in order: what we do, the proof, the process, then a clear path to a quote.', // COPY:
-          'The visual direction keeps GC Solar’s green identity but gives it an editorial, confident feel, with real install photography and plain-language explanations.', // COPY:
+          'We kept GC Solar’s identity and the content their customers rely on, then rebuilt the experience around it: a cinematic first impression, motion that guides the eye, and a clear path from “what do you install?” to asking for a quote.', // COPY:
         ],
       },
       build: {
-        heading: 'Fast, responsive and easy to update.', // COPY:
+        heading: 'Immersive, but still quick and clear.', // COPY:
         paragraphs: [
-          'A responsive build with a guided quote request that captures system size, property type and timing up front, so the first call is useful.', // COPY:
-          'Pages are optimised for speed on mobile networks, with on-page SEO for local solar searches and analytics that track quote requests end to end.', // COPY:
+          'A fully responsive rebuild with scroll-led motion and real install photography, kept fast on mobile networks, with a guided quote request so enquiries arrive with the details the team needs.', // COPY:
         ],
       },
       result: {
-        heading: 'A site that sells before the first call.', // COPY:
+        heading: 'A redesign, then an ongoing partnership.', // COPY:
         paragraphs: [
-          'GC Solar now sends one link instead of a stack of attachments. Enquiries arrive with the details the team needs to quote quickly.', // COPY:
+          'The redesign gave GC Solar a site they’re proud to send customers to, and it didn’t stop at launch: we keep working with them on new projects as the business grows.', // COPY:
         ],
       },
     },
@@ -60,24 +57,19 @@ export const projects: Project[] = [
       { ...media.projects.gcSolar.gallery[2], span: 'half', caption: 'Completed projects' }, // COPY:
       { ...media.projects.gcSolar.gallery[3], span: 'full', caption: 'Company and quote pages' }, // COPY:
     ],
-    metrics: [
-      { value: '6 wks', label: 'Brief to launch' }, // COPY: PLACEHOLDER METRIC
-      { value: '98', label: 'Lighthouse performance' }, // COPY: PLACEHOLDER METRIC
-      { value: '2×', label: 'Quote requests vs. before' }, // COPY: PLACEHOLDER METRIC
-    ],
+    metrics: [], // COPY: add real, client-approved results when there are some
     testimonialId: 'gc-solar',
-    briefType: 'business-website',
+    briefType: 'immersive-website',
   },
   {
     slug: 'mpg-foundation',
     name: 'MPG Foundation', // COPY:
     client: 'MPG Foundation', // COPY:
     year: 2026, // COPY: confirm
-    summary:
-      'A warm, trustworthy home for a community foundation, built to explain its impact and make giving simple.', // COPY:
+    summary: 'A foundation’s first website, built as charity work and grown with them ever since.', // COPY:
     sector: 'Non-profit', // COPY:
-    services: ['Content strategy', 'Web design', 'Development', 'Hosting & care'], // COPY:
-    stages: ['build', 'run'], // COPY: confirm
+    services: ['Charity project', 'Web design', 'Development', 'Ongoing updates', 'Hosting & care'], // COPY:
+    stages: ['build', 'grow', 'run'],
     liveUrl: 'https://mpgf.org.za/',
     featured: true,
     thumbnail: media.projects.mpgFoundation.card,
@@ -91,30 +83,27 @@ export const projects: Project[] = [
     },
     narrative: {
       problem: {
-        heading: 'Real impact, hard to see from outside.', // COPY:
+        heading: 'Starting from nothing.', // COPY:
         paragraphs: [
-          'MPG Foundation runs meaningful programmes, but donors, partners and volunteers had no single place to understand what the foundation does or how to get involved.', // COPY:
-          'Without clear proof of impact, every partnership conversation started from zero.', // COPY:
+          'MPG Foundation does meaningful work in its community, but had no website at all: nowhere to explain what it does, show its projects or tell people how to give. We took it on as charity work.', // COPY:
         ],
       },
       approach: {
-        heading: 'Tell the story through people and outcomes.', // COPY:
+        heading: 'Tell the story, make giving simple.', // COPY:
         paragraphs: [
-          'We built the information architecture around three audiences (donors, partners and volunteers), each with a clear next step.', // COPY:
-          'The design pairs MPG’s green and orange identity with generous whitespace and honest photography, so the work speaks for itself.', // COPY:
+          'We shaped the foundation’s story with them from scratch, built around its projects and the people behind them, with a clear way to donate or get involved on every page.', // COPY:
         ],
       },
       build: {
-        heading: 'Simple to run for a small team.', // COPY:
+        heading: 'Built to grow with them.', // COPY:
         paragraphs: [
-          'An accessible, responsive build with editable programme pages and impact stories, plus simple donate and volunteer flows.', // COPY:
-          'Hosted and cared for by Stack, so the team can focus on the programmes rather than the website.', // COPY:
+          'The first version gave MPG a credible home online. Since then we’ve kept updating and improving it, adding projects, giving options and content as the foundation’s work has grown.', // COPY:
         ],
       },
       result: {
-        heading: 'One link that earns trust.', // COPY:
+        heading: 'Reaching more people.', // COPY:
         paragraphs: [
-          'The foundation now shares a single, credible link in funding applications and partner conversations.', // COPY:
+          'The website now helps MPG reach more people and get a better response to its projects and appeals. We host it and look after it, so the team can focus on the work itself.', // COPY:
         ],
       },
     },
@@ -132,11 +121,7 @@ export const projects: Project[] = [
         caption: 'The waterfront project and giving',
       }, // COPY:
     ],
-    metrics: [
-      { value: '3', label: 'Audiences, one clear path each' }, // COPY: PLACEHOLDER METRIC
-      { value: '100', label: 'Lighthouse accessibility' }, // COPY: PLACEHOLDER METRIC
-      { value: '< 2s', label: 'Load time on mobile' }, // COPY: PLACEHOLDER METRIC
-    ],
+    metrics: [], // COPY: add real, client-approved results when there are some
     testimonialId: 'mpg-foundation',
     briefType: 'business-website',
   },
@@ -145,10 +130,11 @@ export const projects: Project[] = [
     name: 'Salon Friend', // COPY:
     client: 'Salon Friend', // COPY: confirm the client's full name
     year: 2026, // COPY: confirm
-    summary: 'A website for Salon Friend, designed and built by Stack.', // COPY: PLACEHOLDER. One line on what we built and why.
+    summary:
+      'From selling on Facebook and WhatsApp to an online store with its own admin dashboard.', // COPY:
     sector: 'Salons & beauty', // COPY: confirm
-    services: ['Web design', 'Development'], // COPY: confirm
-    stages: ['build'], // COPY: confirm
+    services: ['E-commerce', 'Admin dashboard', 'Web design', 'Development', 'Hosting & care'], // COPY:
+    stages: ['build', 'run', 'grow'],
     liveUrl: 'https://salon-friends.web.app/',
     thumbnail: media.projects.salonFriend.card,
     showcase: media.projects.salonFriend.showcase,
@@ -158,22 +144,28 @@ export const projects: Project[] = [
     hero: { image: media.projects.salonFriend.showcase },
     narrative: {
       problem: {
-        heading: 'Case study coming soon.', // COPY: PLACEHOLDER
+        heading: 'Orders in the inbox.', // COPY:
         paragraphs: [
-          'We’re writing up the Salon Friend story: what they needed, how we approached it, what we built and how it’s going.', // COPY: PLACEHOLDER
+          'Salon Friend sold its products only through Facebook and WhatsApp. Every order meant messages back and forth, and keeping track of stock, payments and deliveries by hand.', // COPY:
         ],
       },
       approach: {
-        heading: 'How we approached it.', // COPY: PLACEHOLDER
-        paragraphs: ['PLACEHOLDER: the key decisions and why.'], // COPY:
+        heading: 'A shop for customers, a dashboard for the team.', // COPY:
+        paragraphs: [
+          'We planned two sides together: a store where customers can browse the catalogue and order themselves, and an admin dashboard where the team manages orders, products and everything behind them in one place.', // COPY:
+        ],
       },
       build: {
-        heading: 'What we built.', // COPY: PLACEHOLDER
-        paragraphs: ['PLACEHOLDER: the pages, features and stack.'], // COPY:
+        heading: 'An e-commerce site and an admin dashboard.', // COPY:
+        paragraphs: [
+          'A responsive online store with the full catalogue, product pages and checkout, plus a custom admin dashboard for orders, products and stock.', // COPY:
+        ],
       },
       result: {
-        heading: 'The result.', // COPY: PLACEHOLDER
-        paragraphs: ['PLACEHOLDER: the outcome, ideally in the client’s words.'], // COPY:
+        heading: 'A real online business, still growing.', // COPY:
+        paragraphs: [
+          'Salon Friend now takes orders online instead of through chat threads. It’s an ongoing project: we host and look after the store and keep building on it with them.', // COPY:
+        ],
       },
     },
     gallery: [
@@ -187,7 +179,7 @@ export const projects: Project[] = [
       }, // COPY:
     ],
     metrics: [], // COPY: add real, client-approved results when there are some
-    briefType: 'business-website', // COPY: confirm
+    briefType: 'ecommerce',
   },
 ]
 
