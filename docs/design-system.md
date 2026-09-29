@@ -157,7 +157,7 @@ Neighbouring sections never share a trigger type, and every section's motion is 
 | Home hero         | Masked line rise over the showreel; a huge Stack mark fills the right side  | `HomeHero`, `SplitReveal`        |
 | Home work         | Full-bleed media shrinks into a card, then a pinned sideways reel           | `WorkReel`                       |
 | Home services     | Horizontal accordion (transform + clip-path)                                | `PathChooser`                    |
-| Home process      | A line draws through the steps with scroll and lights them                  | `ProcessLine`, `DrawLine`        |
+| Home process      | A playhead sweeps the plan on entry; hover or click a week to glide there   | `ProcessLine`                    |
 | Client quotes     | Quote cards rise in one after the other (no images)                         | `ClientVoices`, `StaggerGroup`   |
 | Starting quotes   | Quote cards rise in; each opens the estimator pre-filled                    | `QuoteStarters`, `StaggerGroup`  |
 | Case study site   | The site on a laptop: the screen swings up and grows, then the site scrolls | `CaseDevice`, `MacbookScroll`    |

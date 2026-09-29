@@ -121,15 +121,21 @@ export const reel = {
 } as const
 
 /**
- * ProcessLine (Home): a playhead sweeps the week columns with scroll (scrubbed, no pin) and
- * each step's bar draws under it. The range runs from the board entering to it passing the
- * middle, so the whole plan has played by the time it's centred.
+ * ProcessLine (Home): when the plan enters, the steps slide in and a playhead sweeps the
+ * weeks once on its own, drawing each bar under it; then it glides to whichever week is
+ * hovered or picked, drawing or retracting the bars as it goes.
  */
 export const processTimeline = {
-  start: 'top 72%',
-  end: 'bottom 50%',
-  /** Smooths the scroll-linked playhead (seconds of catch-up). */
-  scrub: 0.6,
+  /** The entrance starts with the plan well on screen. */
+  start: 'top 70%',
+  /** Seconds for the entrance sweep from the first week to the last. */
+  sweep: 3.2,
+  /** Delay before the sweep, so the step names have started sliding in. */
+  sweepDelay: 0.35,
+  /** An even, deliberate sweep (it reads as time passing), easing in and out at the ends. */
+  sweepEase: 'sine.inOut',
+  /** Seconds for the playhead to glide to a hovered or picked week. */
+  glide: 0.7,
 } as const
 
 /**

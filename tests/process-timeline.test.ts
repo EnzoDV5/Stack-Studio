@@ -2,7 +2,15 @@ import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { processSteps } from '@/data/process'
 import { homeContent } from '@/data/pages'
-import { barTiming, columnAt, stepState, stepsAt } from '@/lib/process-timeline'
+import {
+  barReveal,
+  barTiming,
+  columnAt,
+  columnCentre,
+  columnFromX,
+  stepState,
+  stepsAt,
+} from '@/lib/process-timeline'
 
 const count = homeContent.process.columns.length
 const spans = processSteps.map((step) => step.span)
@@ -44,5 +52,39 @@ describe('process timeline', () => {
     assert.equal(stepState(span, 1), 'active')
     assert.equal(stepState(span, 3), 'active')
     assert.equal(stepState(span, 4), 'done')
+  })
+})
+
+describe('process timeline interaction', () => {
+  it('puts the playhead in the middle of a column, clamped', () => {
+    assert.equal(columnCentre(0, 4), 0.125)
+    assert.equal(columnCentre(3, 4), 0.875)
+    assert.equal(columnCentre(9, 4), 0.875)
+    assert.equal(columnAt(columnCentre(2, count), count), 2)
+  })
+
+  it('draws a bar exactly up to the playhead', () => {
+    const span = { from: 2, to: 3 } // columns 2–3 of 4: 0.25 → 0.75
+    assert.equal(barReveal(span, 4, 0.1), 0)
+    assert.equal(barReveal(span, 4, 0.25), 0)
+    assert.equal(barReveal(span, 4, 0.5), 0.5)
+    assert.equal(barReveal(span, 4, 0.75), 1)
+    assert.equal(barReveal(span, 4, 1), 1)
+  })
+
+  it('every bar is fully drawn by the end and hidden at the start', () => {
+    for (const span of spans) {
+      assert.equal(barReveal(span, count, 0), 0)
+      assert.equal(barReveal(span, count, 1), 1)
+    }
+  })
+
+  it('maps a pointer to the column under it', () => {
+    assert.equal(columnFromX(0, 700, 7), 0)
+    assert.equal(columnFromX(99, 700, 7), 0)
+    assert.equal(columnFromX(100, 700, 7), 1)
+    assert.equal(columnFromX(699, 700, 7), 6)
+    assert.equal(columnFromX(800, 700, 7), 6)
+    assert.equal(columnFromX(-5, 700, 7), 0)
   })
 })

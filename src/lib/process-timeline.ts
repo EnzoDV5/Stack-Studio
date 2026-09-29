@@ -1,7 +1,7 @@
 /**
- * Pure maths for the Home process timeline (ProcessLine): a playhead sweeps across the
- * week columns with scroll, each bar draws as the playhead crosses it, and the readout shows
- * the steps running in the current column.
+ * Pure maths for the Home process timeline (ProcessLine): a playhead moves across the
+ * week columns (a sweep on entry, then to whichever week is hovered or picked), each bar
+ * draws or retracts under it, and the readout shows the steps running in the current column.
  */
 
 export interface Span {
@@ -37,4 +37,28 @@ export function stepState(span: Span, column: number): 'upcoming' | 'active' | '
   const at = column + 1
   if (at < span.from) return 'upcoming'
   return at > span.to ? 'done' : 'active'
+}
+
+/** The playhead position (0–1) at the middle of the 0-based `column`. */
+export function columnCentre(column: number, count: number): number {
+  if (count <= 0) return 0
+  const c = Math.min(count - 1, Math.max(0, column))
+  return (c + 0.5) / count
+}
+
+/**
+ * How much of a bar (0–1) is drawn with the playhead at `position` (0–1): nothing before its
+ * first column, all of it past its last, and exactly up to the playhead in between, so a bar
+ * draws or retracts under the playhead wherever it moves.
+ */
+export function barReveal(span: Span, count: number, position: number): number {
+  const { position: start, duration } = barTiming(span, count)
+  if (duration <= 0) return 0
+  return Math.min(1, Math.max(0, (position - start) / duration))
+}
+
+/** The 0-based column under a pointer `x` pixels from the left of a track `width` wide. */
+export function columnFromX(x: number, width: number, count: number): number {
+  if (width <= 0) return 0
+  return columnAt(x / width, count)
 }

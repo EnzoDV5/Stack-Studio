@@ -125,19 +125,19 @@ Order, as a story: what the visitor needs, how Stack works, indicative pricing, 
 client voices and the founders, then the closing band. Measured on the preview build: 11.05 viewports tall at
 1440×900 (footer included), 10.79 at 390×844. Heights below are in viewports.
 
-| #   | Section                | Tone   | Opener                | Signature motion                                                                                                  | Trigger      | Height |
-| --- | ---------------------- | ------ | --------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------ | ------ |
-| 1   | HomeHero               | dark   | own                   | Statement line-reveal (1 of Home's 2 type moments); the Stack mark sinks with the scroll, behind the next section | load + scrub | 1.00   |
-| 2   | PathChooser            | dark   | SectionHeader split   | Horizontal accordion (transform + clip-path, GSAP); rows on mobile. No scroll motion                              | hover        | 1.22   |
-| 3   | ProcessLine            | dark   | SectionHeader minimal | The line draws with scroll and lights each step; the technology strip runs underneath                             | scrub        | ~1.1   |
-| 4   | PricingSnapshot        | paper  | SectionHeader stacked | Three figures count up once, mid-screen                                                                           | enter        | 1.05   |
-| 5   | WorkReel               | paper  | SectionHeader inline  | Arrives full-bleed; pins (the page's only pin), shrinks into a card, then travels sideways                        | scrub + pin  | 2.85   |
-| 6   | ClientVoices           | paper  | SectionHeader stacked | The quote cards rise in one after the other                                                                       | enter        | ~1.0   |
-| 7   | StudioSnippet          | paper  | SectionHeader split   | Portraits drift toward the pointer (hover parallax)                                                               | hover        | 0.92   |
-| 8   | ClosingCta (app shell) | orange | eyebrow               | Code characters compile into the readable ink title, once, on a timer when the band enters                        | enter        | ~0.9   |
-| —   | Footer (chrome)        | ink    | —                     | None. Not part of the tone flow, so the band above stays orange                                                   | none         | 0.76   |
+| #   | Section                | Tone   | Opener                | Signature motion                                                                                                                    | Trigger       | Height |
+| --- | ---------------------- | ------ | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------ |
+| 1   | HomeHero               | dark   | own                   | Statement line-reveal (1 of Home's 2 type moments); the Stack mark sinks with the scroll, behind the next section                   | load + scrub  | 1.00   |
+| 2   | PathChooser            | dark   | SectionHeader split   | Horizontal accordion (transform + clip-path, GSAP); rows on mobile. No scroll motion                                                | hover         | 1.22   |
+| 3   | ProcessLine            | dark   | SectionHeader minimal | On entry the steps slide in and a playhead sweeps the plan once, drawing the bars; then hovering or clicking a week glides it there | enter + hover | ~1.1   |
+| 4   | PricingSnapshot        | paper  | SectionHeader stacked | Three figures count up once, mid-screen                                                                                             | enter         | 1.05   |
+| 5   | WorkReel               | paper  | SectionHeader inline  | Arrives full-bleed; pins (the page's only pin), shrinks into a card, then travels sideways                                          | scrub + pin   | 2.85   |
+| 6   | ClientVoices           | paper  | SectionHeader stacked | The quote cards rise in one after the other                                                                                         | enter         | ~1.0   |
+| 7   | StudioSnippet          | paper  | SectionHeader split   | Portraits drift toward the pointer (hover parallax)                                                                                 | hover         | 0.92   |
+| 8   | ClosingCta (app shell) | orange | eyebrow               | Code characters compile into the readable ink title, once, on a timer when the band enters                                          | enter         | ~0.9   |
+| —   | Footer (chrome)        | ink    | —                     | None. Not part of the tone flow, so the band above stays orange                                                                     | none          | 0.76   |
 
-Trigger sequence: load + scrub · hover · scrub · enter · scrub + pin · enter · hover · enter. No
+Trigger sequence: load + scrub · hover · enter + hover · enter · scrub + pin · enter · hover · enter. No
 two neighbours share a type. Openers go inline · stacked · split · minimal · stacked · split.
 Every section ends with a "go deeper" link: All work (header row and last panel), See all
 the work, All services, The full process, See all pricing, Meet the studio.
@@ -164,14 +164,16 @@ orange band or the footer). This is ambient scroll-linked
 colour, not a section's signature motion, so it doesn't count toward rule 1.
 
 **Timing.** Enter animations start with the element well on screen (`trigger.start`, top
-at 75%; count-ups and the process line at `trigger.startLate`, 62%), so they play in full.
+at 75%; count-ups at `trigger.startLate`, 62%; the process plan at 70%), so they play in full.
 The WorkReel shrink happens inside its pin rather than while the section slides in, so the
 full-bleed image is seen whole first.
 
 **Deliberate deviations.** StudioSnippet's parallax is pointer-driven, not scroll-driven,
 so Home's last two sections read hover · enter. `Parallax trigger="scroll"` is still the
-default elsewhere. (ProcessLine is scrubbed again: since the reorder, neither neighbour
-scrubs.) On /work the closing band's compile follows the WorkGrid's `enter` reveals. The
+default elsewhere. ProcessLine plays on entry and is then driven by hover and clicks (people
+couldn't read a week while it followed the scroll), so it shares a trigger with both
+neighbours (PathChooser's hover, PricingSnapshot's count-up); the plan's own sweep and the
+count-up are far enough apart on the page not to read as a repeat. On /work the closing band's compile follows the WorkGrid's `enter` reveals. The
 titles used to scrub with the scroll, which felt jittery, and a card grid and one title
 are different enough not to read as a repeat.
 
