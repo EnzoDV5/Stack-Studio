@@ -8,7 +8,7 @@ export const pageMeta = {
   home: {
     title: 'Stack Studio — Brand-led websites, built to convert', // COPY:
     description:
-      'A two-person web studio in Centurion, South Africa. We design and build brand-led, cinematic websites and digital products for businesses of every kind.', // COPY:
+      'A founder-led web studio in Centurion, South Africa. We design and build brand-led, cinematic websites and digital products for businesses of every kind.', // COPY:
     path: '/',
   },
   work: {
@@ -32,7 +32,7 @@ export const pageMeta = {
   studio: {
     title: 'Studio', // COPY:
     description:
-      'Meet Stack Studio: Enzo De Vittorio and Armand Naudé, a two-person studio in Centurion building websites that work as hard as the businesses behind them.', // COPY:
+      'Meet Stack Studio, the founder-led web studio in Centurion started by Enzo De Vittorio and Armand Naudé, building websites that work as hard as the businesses behind them.', // COPY:
     path: '/studio',
   },
   start: {
@@ -179,8 +179,9 @@ export const homeContent = {
   },
   studio: {
     eyebrow: 'Studio', // COPY:
-    title: 'Two founders. No middlemen.', // COPY:
-    intro: 'The people you meet are the people who design, build and look after your site.', // COPY:
+    title: 'Founder-led and hands-on.', // COPY:
+    intro:
+      'Enzo and Armand started Stack, and they stay involved in every project, from the first call to long after launch.', // COPY:
     more: { label: 'Meet the studio', to: '/studio' }, // COPY:
   },
 }
@@ -352,7 +353,7 @@ export const studioContent = {
   },
   founders: {
     eyebrow: 'Founders', // COPY:
-    title: 'The people you’ll work with.', // COPY:
+    title: 'The people behind Stack.', // COPY:
   } satisfies SectionIntro,
   linkedinLabel: 'LinkedIn', // COPY:
   howWeWork: {

@@ -4,7 +4,7 @@ export const primaryNav: NavItem[] = [
   { label: 'Work', to: '/work', description: 'Case studies and proof' }, // COPY:
   { label: 'Services', to: '/services', description: 'What we build, and how' }, // COPY:
   { label: 'Pricing', to: '/pricing', description: 'Starting points, no surprises' }, // COPY:
-  { label: 'Studio', to: '/studio', description: 'The two people behind Stack' }, // COPY:
+  { label: 'Studio', to: '/studio', description: 'The founders and how we work' }, // COPY:
 ]
 
 export const primaryCta: CtaLink = { label: 'Start a project', to: '/start' } // COPY:

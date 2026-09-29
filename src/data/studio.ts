@@ -50,8 +50,8 @@ export const values: ValueItem[] = [
 export const principles: ValueItem[] = [
   {
     id: 'direct',
-    title: 'You talk to the makers', // COPY:
-    body: 'Two founders, no middlemen. The people on the call are the people doing the work.', // COPY:
+    title: 'Founders on every project', // COPY:
+    body: 'Enzo and Armand stay involved from the first call to launch, so the thinking behind your project carries all the way through.', // COPY:
   },
   {
     id: 'growing',

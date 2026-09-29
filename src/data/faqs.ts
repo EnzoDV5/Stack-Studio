@@ -6,7 +6,7 @@ export const faqs: Faq[] = [
     category: 'general',
     question: 'Who will I actually be working with?', // COPY:
     answer:
-      'Us: Enzo and Armand. There are no account managers or handoffs. The people you speak to are the people designing, building and looking after your systems.', // COPY:
+      'A small, founder-led team. Enzo and Armand are involved in every project, from the first call to launch and beyond, so you always know who is looking after your work.', // COPY:
   },
   {
     id: 'where',
