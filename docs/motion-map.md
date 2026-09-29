@@ -215,7 +215,7 @@ success heading no longer line-reveals.
 **Privacy, 404:** static.
 
 `none` next to `none` is not a clash: the rule is about motion. Sticky navigation aids
-(StageNav, the FAQ heading, case study chapter labels) are layout, not pins.
+(StageNav, the FAQ heading) are layout, not pins.
 
 ## 3. Rules
 

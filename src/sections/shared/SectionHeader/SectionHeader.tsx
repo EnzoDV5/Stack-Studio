@@ -7,7 +7,7 @@ import { cn } from '@/lib/cn'
  * - `stacked`: eyebrow and big title on the left, intro and aside bottom-aligned on the right.
  * - `split`: title on the left, intro top-aligned in the right-hand column.
  * - `minimal`: a small eyebrow and a one-line title (no intro).
- * - `inline`: eyebrow, title and aside on one row above a hairline.
+ * - `inline`: eyebrow above, then the title and aside on one row, over a hairline.
  *
  * Neighbouring sections never use the same variant (docs/motion-map.md).
  */
@@ -92,15 +92,12 @@ export function SectionHeader({
 
     case 'inline':
       return (
-        <div
-          className={cn(
-            'flex flex-col gap-4 border-b border-tone pb-6 lg:flex-row lg:items-end lg:gap-10',
-            className,
-          )}
-        >
-          <Eyebrow label={eyebrow} index={index} className="shrink-0 lg:w-48 lg:pb-3" />
-          <div className="min-w-0 flex-1">{heading('max-w-[20ch]')}</div>
-          {aside && <div className="shrink-0 lg:pb-3">{aside}</div>}
+        <div className={cn('border-b border-tone pb-6', className)}>
+          <Eyebrow label={eyebrow} index={index} className="mb-5" />
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+            <div className="min-w-0 flex-1">{heading('max-w-[20ch]')}</div>
+            {aside && <div className="shrink-0 lg:pb-3">{aside}</div>}
+          </div>
         </div>
       )
 

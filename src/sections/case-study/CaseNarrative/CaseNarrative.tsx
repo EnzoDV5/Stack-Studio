@@ -9,7 +9,7 @@ export interface CaseNarrativeProps {
   tone?: Tone
 }
 
-/** Editorial chapters: a sticky number and label on the left, the statement and body on the right. Static text. */
+/** Editorial chapters: the number and label above each statement, then the body. Static text. */
 export function CaseNarrative({ chapters, tone = 'paper' }: CaseNarrativeProps) {
   return (
     <Section tone={tone}>
@@ -20,14 +20,12 @@ export function CaseNarrative({ chapters, tone = 'paper' }: CaseNarrativeProps) 
             aria-labelledby={`chapter-${chapter.id}`}
             className="grid gap-8 lg:grid-cols-12"
           >
-            <div className="lg:col-span-3">
-              <p className="flex gap-3 eyebrow text-muted lg:sticky lg:top-[calc(var(--spacing-header)+2rem)]">
+            <div className="lg:col-span-8 lg:col-start-5">
+              <p className="mb-5 flex gap-3 eyebrow text-muted">
                 <span className="text-accent">{pad2(i + 1)}</span>
                 <span aria-hidden="true">·</span>
                 {chapter.label}
               </p>
-            </div>
-            <div className="lg:col-span-8 lg:col-start-5">
               <Heading
                 id={`chapter-${chapter.id}`}
                 size="display-lg"
