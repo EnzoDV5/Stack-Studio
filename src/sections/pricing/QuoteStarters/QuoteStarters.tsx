@@ -24,8 +24,11 @@ export interface QuoteStartersProps {
   intro: string
   quotes: QuoteStarter[]
   rangeLabel: string
-  /** The last card: for anything the starting quotes don't cover. */
-  custom: CtaContent
+  /**
+   * The last card: for what a package can't cover (apps and software). `lines` are optional
+   * short lines under the body, one each, e.g. from-prices.
+   */
+  custom: CtaContent & { lines?: string[] }
   notes: string[]
   tone?: Tone
 }
@@ -33,7 +36,8 @@ export interface QuoteStartersProps {
 /**
  * Ready-made starting quotes instead of a price list. Each shows who it suits, what it
  * covers and an indicative range, and opens the quote builder pre-filled so the visitor
- * adjusts it rather than starting from zero. Signature motion: the cards rise in, one after
+ * adjusts it rather than starting from zero. The last card covers what can't be packaged
+ * (apps and software), with from-prices instead of a range. Signature motion: the cards rise in, one after
  * the other, as they enter.
  */
 export function QuoteStarters({
@@ -103,13 +107,20 @@ export function QuoteStarters({
             <div>
               <h3 className="text-heading-lg">{custom.title}</h3>
               {custom.body && <p className="mt-3 text-ink/80">{custom.body}</p>}
+              {custom.lines && custom.lines.length > 0 && (
+                <ul className="mt-5 space-y-1 border-t border-ink/20 pt-5 numeric text-small">
+                  {custom.lines.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              )}
             </div>
             <Button
               to={custom.to}
               variant="inverse"
               withArrow
               className="self-start"
-              analytics={{ event: 'Start project click', props: { location: 'pricing-custom' } }}
+              analytics={{ event: 'Start project click', props: { location: 'pricing-apps' } }}
             >
               {custom.label}
             </Button>

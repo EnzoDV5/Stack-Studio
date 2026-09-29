@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { addOns } from '@/data/addons'
+import { pricingContent } from '@/data/pages'
 import { plans } from '@/data/plans'
 import { getQuotePreset, quotePresets } from '@/data/quotes'
 import { offerings } from '@/data/services'
@@ -54,6 +55,22 @@ describe('starting quotes', () => {
       assert.equal(prefill.name, preset.name)
       assert.deepEqual(estimate(prefill.answers), estimate(preset.answers))
     }
+  })
+
+  it('end with an apps card whose from-prices come from real, priced offerings', () => {
+    for (const id of Object.values(pricingContent.quotes.apps.offerings)) {
+      const offering = offerings.find((o) => o.id === id)
+      assert.ok(offering && offering.fromPrice > 0, id)
+      assert.equal(offering.briefCategory, 'software', id)
+    }
+    const prefill = prefillFromParams(
+      new URLSearchParams(pricingContent.quotes.apps.to.split('?')[1]),
+      {
+        offerings,
+        plans,
+      },
+    )
+    assert.equal(prefill.answers.path, 'build')
   })
 
   it('ignore unknown ids', () => {

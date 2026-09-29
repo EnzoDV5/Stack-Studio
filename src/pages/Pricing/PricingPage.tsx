@@ -5,6 +5,7 @@ import { pageMeta, pricingContent } from '@/data/pages'
 import { planFamilies, plans } from '@/data/plans'
 import { policies } from '@/data/policies'
 import { quotePresets } from '@/data/quotes'
+import { getOffering } from '@/data/services'
 import { estimate } from '@/lib/estimate'
 import { formatPrice, formatPriceRange } from '@/lib/format'
 import { isVisible, planPrice } from '@/lib/offer'
@@ -41,6 +42,22 @@ const starters: QuoteStarter[] = quotePresets.flatMap((preset) => {
     },
   ]
 })
+
+/** Apps and software vary too much to package: one card with their from-prices instead. */
+// tests/quotes.test.ts checks these offerings exist and are priced.
+const appIds = c.quotes.apps.offerings
+const fromPrice = (id: string) => formatPrice(getOffering(id)?.fromPrice ?? 0)
+const appsCard = {
+  title: c.quotes.apps.title,
+  body: c.quotes.apps.body,
+  lines: c.quotes.apps.prices(
+    fromPrice(appIds.webApp),
+    fromPrice(appIds.desktop),
+    fromPrice(appIds.mobile),
+  ),
+  label: c.quotes.apps.label,
+  to: c.quotes.apps.to,
+}
 
 /**
  * No fixed price list: how a quote is reached, ready-made starting quotes that open the
@@ -88,7 +105,7 @@ export function PricingPage() {
         intro={c.quotes.intro}
         quotes={starters}
         rangeLabel={c.quotes.rangeLabel}
-        custom={c.quotes.custom}
+        custom={appsCard}
         notes={[policies.vatNote]}
       />
       {/* Below the fold: mounted as it approaches, so the first render stays light. */}

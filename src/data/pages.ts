@@ -296,12 +296,21 @@ export const pricingContent = {
     rangeLabel: 'Typically', // COPY:
     monthly: (price: string) => `plus ${price} for hosting and care`, // COPY:
     start: 'Start from this one', // COPY:
-    custom: {
-      title: 'Something else?', // COPY:
-      body: 'Web apps, taking over an existing site or ongoing development: answer a few questions and get an estimate in two minutes.', // COPY:
-      label: 'Build your own estimate', // COPY:
-      to: '/start',
-    } satisfies CtaContent,
+    /** The last card: apps and software, which vary too much to package. */
+    apps: {
+      title: 'Need an app or software?', // COPY:
+      body: 'Web apps, mobile apps and desktop tools vary too much for a package. Most start with a short paid Discovery phase that gives you a clear plan and a fixed quote.', // COPY:
+      /** Offerings (services.ts) whose from-prices the card shows, so they match everywhere. */
+      offerings: { webApp: 'web-app', desktop: 'desktop-app', mobile: 'custom-software' },
+      prices: (webApp: string, desktop: string, mobile: string) => [
+        `Web apps from ${webApp}`, // COPY:
+        `Desktop apps from ${desktop}`, // COPY:
+        `Mobile apps from ${mobile}`, // COPY:
+      ],
+      label: 'Tell us about your app', // COPY:
+      /** Opens the brief on "What are we building?", where the app types are listed. */
+      to: '/start?path=build',
+    },
   },
   plans: {
     eyebrow: 'Monthly plans', // COPY:
