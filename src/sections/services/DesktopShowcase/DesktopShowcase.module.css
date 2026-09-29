@@ -1,23 +1,26 @@
 @layer components {
-  /* The laptop sits in a wide, low orange glow, like light spilling from its screen onto the
-     desk. From tablet up, negative margins pull the transparent frame's empty edges in, so the
-     laptop sits close to the title and the offerings. */
+  /* The laptop's column. On phones it runs a little past both edges so the laptop fills the
+     width; from tablet up it takes the left seven columns and bleeds off the page's left edge,
+     so the laptop reads large beside the copy. It sits in a wide, low orange glow, like light
+     spilling from its screen. */
   .stage {
     position: relative;
     isolation: isolate;
-    margin-block: 1rem;
+    margin-inline: -10%;
   }
 
   @media (min-width: 48rem) {
     .stage {
-      margin-block: -2rem -1rem;
+      grid-column: 1 / span 7;
+      margin-inline: 0;
+      margin-left: calc(-1 * var(--spacing-gutter) - 4vw);
     }
   }
 
   .stage::before {
     content: '';
     position: absolute;
-    inset: 30% 12% 8%;
+    inset: 25% 10% 10%;
     z-index: -1;
     border-radius: 50%;
     background: radial-gradient(
@@ -25,7 +28,7 @@
       color-mix(in oklab, var(--color-orange) 24%, transparent),
       transparent
     );
-    filter: blur(32px);
+    filter: blur(36px);
     pointer-events: none;
   }
 }

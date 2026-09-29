@@ -90,10 +90,11 @@ illustrative app on screen (not a client's: most client work is websites), playe
 - `phone/app`: 80 frames (3:4) at 480 and 800 wide. An orange iPhone 17 Pro spins from its
   back to face the viewer with a bookings app (`screens/bookings.html`), scrubbed by the
   scroll in "Apps and software" (`AppShowcase`). About 1.5 MB at 800 wide.
-- `laptop/desktop`: 90 frames (16:10) at 720 and 1280 wide. A MacBook Pro opens its lid and
-  turns to face the viewer, its display waking on a stock and orders app
-  (`screens/desktop.html`), played once as it arrives in "Desktop software"
-  (`DesktopShowcase`). About 1.3 MB at 1280 wide.
+- `laptop/desktop`: 72 frames (4:3) at 800, 1200 and 1800 wide, supersampled (rendered at
+  twice the size, then scaled down). A MacBook Pro opens its lid and turns to face the copy,
+  its display waking on a stock and orders app (`screens/desktop.html`, rendered at 2x),
+  scrubbed by the scroll in "Desktop software" (`DesktopShowcase`). About 1.2 MB at 800,
+  2 MB at 1200 and 3.1 MB at 1800 wide; each visitor loads one set.
 
 They are rendered from the models in `assets/models` with three.js in headless Chrome, so
 the site ships images only:

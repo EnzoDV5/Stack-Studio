@@ -125,7 +125,7 @@ function video(
  */
 export const deviceMotion = {
   phone: { frames: 80, widths: [800, 480], aspect: 3 / 4 },
-  laptop: { frames: 90, widths: [1280, 720], aspect: 16 / 10 },
+  laptop: { frames: 72, widths: [1800, 1200, 800], aspect: 4 / 3 },
 } as const
 
 /**

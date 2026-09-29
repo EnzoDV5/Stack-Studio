@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { useInView } from '@/hooks/useInView'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
-import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
+import { gsap, useGSAP } from '@/lib/gsap'
 import { phoneTurn } from '@/lib/motion-tokens'
 import type { ImageSequenceAsset } from '@/types'
 
@@ -10,39 +10,35 @@ export interface ImageSequenceProps {
   sequence: ImageSequenceAsset
   /** Responsive sizes hint for the still (the last frame). */
   sizes?: string
-  /** Scroll positions that start and finish playback (ScrollTrigger syntax). */
-  start?: string
-  end?: string
   /**
-   * Play once on a timer when it's well on screen (an enter), instead of following the scroll.
-   * It starts once every frame has loaded, or after a short wait, whichever comes first.
+   * How it follows the scroll: where playback starts and finishes (ScrollTrigger syntax), how
+   * long the frame takes to catch up (seconds) and the easing across the frames. A motion
+   * token, e.g. `phoneTurn` (the default) or `laptopTurn`.
    */
-  play?: { start: string; duration: number; ease: string }
+  scroll?: { start: string; end: string; scrub: number; ease: string }
   className?: string
 }
 
 type Rendition = ImageSequenceAsset['renditions'][number]
 
-/** The smallest rendition that is still sharp at the slot's size, else the largest. */
+/** The smallest rendition at least as wide as the slot needs (never stretched), else the largest. */
 function pickRendition(renditions: Rendition[], slotWidth: number): Rendition | undefined {
   const needed = slotWidth * Math.min(window.devicePixelRatio || 1, 2)
   const sorted = [...renditions].sort((a, b) => a.width - b.width)
-  return sorted.find((r) => r.width >= needed * 0.9) ?? sorted.at(-1)
+  return sorted.find((r) => r.width >= needed) ?? sorted.at(-1)
 }
 
 /**
  * Pre-rendered frames played back by scroll, like the product turns on Apple's pages: the
  * frames load as it approaches, then each scroll position draws its frame on a canvas
- * (scrubbed, so it glides rather than steps). With `play`, it plays through once on a timer
- * when it arrives instead. Until the first frame is drawn, and with reduced motion or without
- * JS, the last frame is shown as a plain image with the alt text.
+ * (scrubbed and cross-faded, so it glides rather than steps). Until the first frame is drawn,
+ * and with reduced motion or without JS, the last frame is shown as a plain image with the alt
+ * text.
  */
 export function ImageSequence({
   sequence,
   sizes = '100vw',
-  start = phoneTurn.start,
-  end = phoneTurn.end,
-  play,
+  scroll = phoneTurn,
   className,
 }: ImageSequenceProps) {
   const rootRef = useRef<HTMLDivElement>(null)
@@ -76,8 +72,6 @@ export function ImageSequence({
       let shown = -1
       let revealed = false
       let alive = true
-      let loadedCount = 0
-      let onFrameLoaded: (() => void) | undefined
 
       /** The nearest loaded frame at or before `index`, else after it. */
       const nearest = (index: number) => {
@@ -138,54 +132,19 @@ export function ImageSequence({
           .then(() => {
             if (!alive) return
             loaded[index] = true
-            loadedCount++
             shown = -1
             draw()
-            onFrameLoaded?.()
           })
           .catch(() => undefined)
       }
 
-      if (play) {
-        // Once, on a timer. Waiting for every frame keeps the reveal smooth; the fallback
-        // wait means a slow connection still gets it, stepping through what has loaded.
-        const reveal = gsap.to(state, {
-          frame: count - 1,
-          duration: play.duration,
-          ease: play.ease,
-          paused: true,
-          onUpdate: draw,
-        })
-        let entered = false
-        let started = false
-        const begin = (force = false) => {
-          if (started || !entered || (!force && loadedCount < count)) return
-          started = true
-          reveal.play()
-        }
-        onFrameLoaded = () => begin()
-        const enter = () => {
-          entered = true
-          begin()
-          gsap.delayedCall(2.5, () => begin(true))
-        }
-        const st = ScrollTrigger.create({
-          trigger: root,
-          start: play.start,
-          once: true,
-          onEnter: enter,
-        })
-        // Mounted already past the start (a deep link, a refresh mid-page): play now.
-        if (st.scroll() >= st.start) enter()
-      } else {
-        gsap.to(state, {
-          frame: count - 1,
-          // The frames are evenly spaced; the easing gives the turn its slow start and settle.
-          ease: phoneTurn.ease,
-          onUpdate: draw,
-          scrollTrigger: { trigger: root, start, end, scrub: phoneTurn.scrub },
-        })
-      }
+      gsap.to(state, {
+        frame: count - 1,
+        // The frames are evenly spaced; the easing gives the motion its slow start and settle.
+        ease: scroll.ease,
+        onUpdate: draw,
+        scrollTrigger: { trigger: root, start: scroll.start, end: scroll.end, scrub: scroll.scrub },
+      })
 
       return () => {
         alive = false
@@ -193,7 +152,7 @@ export function ImageSequence({
         for (const image of images) image.removeAttribute('src')
       }
     },
-    { scope: rootRef, dependencies: [playing, sequence, start, end, play], revertOnUpdate: true },
+    { scope: rootRef, dependencies: [playing, sequence, scroll], revertOnUpdate: true },
   )
 
   return (

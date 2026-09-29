@@ -3,7 +3,8 @@
   An illustrative desktop app screen for the Services "Desktop software" laptop
   (scripts/devices): a generic stock and orders tool in Stack's colours, with a macOS menu bar.
   Not a client's app, and no real names or data. Sized to the MacBook Pro 14" display
-  (1512 × 982 pt).
+  (1512 × 982 pt) and set large and bold, like a product shot: it's seen at a fraction of its
+  size, so small print would only turn to noise.
 -->
 <html>
   <head>
@@ -15,13 +16,13 @@
         font-weight: 100 900;
       }
       :root {
-        --ink: #0e0e0e;
-        --window: #141414;
-        --side: #101010;
-        --card: #1b1b1b;
-        --line: #2a2a2a;
-        --muted: #8f8a82;
-        --paper: #f3f0ea;
+        --ink: #0c0c0c;
+        --window: #121212;
+        --side: #0e0e0e;
+        --card: #1c1c1c;
+        --line: #2c2c2c;
+        --muted: #a39e95;
+        --paper: #f5f2ec;
         --orange: #ff5a14;
       }
       * {
@@ -36,54 +37,46 @@
         background: var(--ink);
         color: var(--paper);
         font-family: 'Inter Tight', sans-serif;
-        font-size: 14px;
         -webkit-font-smoothing: antialiased;
       }
       .menubar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: 38px;
-        padding: 0 18px;
+        height: 40px;
+        padding: 0 22px;
         background: #000;
-        font-size: 13px;
+        font-size: 15px;
+        font-weight: 500;
       }
-      .menubar .left,
-      .menubar .right {
+      .menubar div {
         display: flex;
-        gap: 22px;
-        align-items: center;
-      }
-      .menubar b {
-        font-weight: 700;
-      }
-      .menubar .dim {
-        color: #cfcac2;
+        gap: 26px;
       }
       .window {
         display: grid;
-        grid-template-columns: 232px 1fr;
-        grid-template-rows: 56px 1fr;
-        height: calc(982px - 38px);
+        grid-template-columns: 290px 1fr;
+        grid-template-rows: 64px 1fr;
+        height: calc(982px - 40px);
         background: var(--window);
       }
       .titlebar {
         grid-column: 1 / -1;
         display: flex;
         align-items: center;
-        gap: 18px;
-        padding: 0 20px;
+        gap: 22px;
+        padding: 0 26px;
         border-bottom: 1px solid var(--line);
-        background: #171717;
+        background: #161616;
       }
       .lights {
         display: flex;
-        gap: 8px;
-        width: 196px;
+        gap: 10px;
+        width: 244px;
       }
       .lights i {
-        width: 12px;
-        height: 12px;
+        width: 15px;
+        height: 15px;
         border-radius: 50%;
         background: #ff5f57;
       }
@@ -94,61 +87,47 @@
         background: #28c840;
       }
       .title {
-        font-size: 15px;
-        font-weight: 600;
-      }
-      .search {
-        margin-left: auto;
-        width: 280px;
-        padding: 8px 12px;
-        border-radius: 8px;
-        background: var(--card);
-        border: 1px solid var(--line);
-        color: var(--muted);
-        font-size: 13px;
+        font-size: 20px;
+        font-weight: 700;
       }
       .new {
-        padding: 9px 16px;
+        margin-left: auto;
+        padding: 12px 24px;
         border-radius: 999px;
         background: var(--orange);
         color: var(--ink);
-        font-weight: 600;
-        font-size: 13px;
+        font-size: 18px;
+        font-weight: 700;
       }
       .side {
         display: flex;
         flex-direction: column;
-        gap: 2px;
-        padding: 18px 12px;
+        gap: 6px;
+        padding: 26px 18px;
         background: var(--side);
         border-right: 1px solid var(--line);
-      }
-      .side .label {
-        margin: 14px 10px 6px;
-        color: var(--muted);
-        font-size: 11px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
       }
       .side a {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 9px 10px;
-        border-radius: 8px;
-        color: #d8d3cb;
+        padding: 14px 16px;
+        border-radius: 12px;
+        color: #d9d4cc;
+        font-size: 21px;
+        font-weight: 500;
       }
       .side a.on {
-        background: rgb(255 90 20 / 0.14);
+        background: rgb(255 90 20 / 0.16);
         color: var(--paper);
-        font-weight: 600;
+        font-weight: 700;
       }
       .side a span {
-        padding: 1px 7px;
+        padding: 2px 11px;
         border-radius: 999px;
         background: var(--card);
         color: var(--muted);
-        font-size: 11px;
+        font-size: 16px;
       }
       .side a.on span {
         background: var(--orange);
@@ -157,24 +136,23 @@
       .sync {
         margin-top: auto;
         display: flex;
-        gap: 8px;
+        gap: 10px;
         align-items: center;
-        padding: 12px 10px;
-        border-top: 1px solid var(--line);
+        padding: 16px;
         color: var(--muted);
-        font-size: 12px;
+        font-size: 16px;
       }
       .sync i {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         background: var(--orange);
       }
       .main {
         display: grid;
         grid-template-rows: auto auto 1fr;
-        gap: 18px;
-        padding: 26px 30px;
+        gap: 26px;
+        padding: 36px 40px;
         overflow: hidden;
       }
       .head {
@@ -183,156 +161,140 @@
         justify-content: space-between;
       }
       h1 {
-        font-size: 30px;
-        font-weight: 700;
-        letter-spacing: -0.03em;
+        font-size: 54px;
+        font-weight: 800;
+        letter-spacing: -0.035em;
       }
       .head p {
         color: var(--muted);
+        font-size: 20px;
       }
       .kpis {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 14px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
       }
       .kpi {
-        padding: 18px;
-        border-radius: 14px;
+        padding: 24px 26px;
+        border-radius: 20px;
         background: var(--card);
         border: 1px solid var(--line);
       }
       .kpi p {
         color: var(--muted);
-        font-size: 12px;
+        font-size: 19px;
+        font-weight: 500;
       }
       .kpi b {
         display: block;
         margin-top: 10px;
-        font-size: 30px;
-        letter-spacing: -0.03em;
-      }
-      .kpi small {
-        color: var(--muted);
-        font-size: 12px;
+        font-size: 64px;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1;
       }
       .kpi.hot {
-        border-color: rgb(255 90 20 / 0.5);
+        background: var(--orange);
+        border-color: var(--orange);
+        color: var(--ink);
       }
-      .kpi.hot b {
-        color: var(--orange);
+      .kpi.hot p {
+        color: rgb(12 12 12 / 0.7);
       }
       .grid {
         display: grid;
-        grid-template-columns: 1fr 1.45fr;
-        gap: 14px;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 20px;
         min-height: 0;
       }
       .card {
-        padding: 18px;
-        border-radius: 14px;
+        display: flex;
+        flex-direction: column;
+        padding: 26px;
+        border-radius: 20px;
         background: var(--card);
         border: 1px solid var(--line);
         overflow: hidden;
       }
       .card h2 {
-        display: flex;
-        justify-content: space-between;
-        font-size: 15px;
-        font-weight: 600;
-      }
-      .card h2 span {
-        color: var(--muted);
-        font-size: 12px;
-        font-weight: 400;
+        font-size: 24px;
+        font-weight: 700;
       }
       .bars {
         display: flex;
         align-items: flex-end;
-        gap: 12px;
-        height: 250px;
-        margin-top: 22px;
-        padding-bottom: 26px;
-        border-bottom: 1px solid var(--line);
-        position: relative;
+        gap: 16px;
+        flex: 1;
+        margin-top: 24px;
       }
       .bar {
         flex: 1;
-        border-radius: 6px 6px 2px 2px;
-        background: #3a3a3a;
-        position: relative;
+        border-radius: 10px 10px 4px 4px;
+        background: #3b3b3b;
       }
       .bar.on {
         background: var(--orange);
       }
-      .bar em {
-        position: absolute;
-        bottom: -22px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: var(--muted);
-        font-size: 11px;
-        font-style: normal;
-      }
-      .legend {
+      .days {
         display: flex;
+        gap: 16px;
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 17px;
+      }
+      .days span {
+        flex: 1;
+        text-align: center;
+      }
+      .orders {
+        display: grid;
+        gap: 14px;
+        margin-top: 22px;
+      }
+      .order {
+        display: flex;
+        align-items: center;
         gap: 18px;
-        margin-top: 16px;
+        padding: 18px 20px;
+        border-radius: 16px;
+        background: #232323;
+      }
+      .order b {
+        font-size: 22px;
+        font-weight: 700;
+      }
+      .order small {
+        display: block;
+        margin-top: 3px;
         color: var(--muted);
-        font-size: 12px;
+        font-size: 17px;
       }
-      .legend b {
-        color: var(--paper);
-        font-weight: 600;
-      }
-      table {
-        width: 100%;
-        margin-top: 14px;
-        border-collapse: collapse;
-        font-size: 13px;
-      }
-      th {
-        padding: 8px 0;
-        color: var(--muted);
-        font-weight: 400;
-        font-size: 12px;
-        text-align: left;
-        border-bottom: 1px solid var(--line);
-      }
-      td {
-        padding: 11px 0;
-        border-bottom: 1px solid var(--line);
-      }
-      td.num,
-      th.num {
-        text-align: right;
+      .order .what {
+        flex: 1;
       }
       .tag {
-        padding: 3px 9px;
+        padding: 6px 14px;
         border-radius: 999px;
-        font-size: 11px;
-        font-weight: 600;
-        background: rgb(243 240 234 / 0.08);
+        font-size: 16px;
+        font-weight: 700;
+        background: rgb(245 242 236 / 0.1);
       }
       .tag.go {
-        background: rgb(255 90 20 / 0.16);
-        color: var(--orange);
+        background: var(--orange);
+        color: var(--ink);
       }
     </style>
   </head>
   <body>
     <div class="menubar">
-      <div class="left">
-        <span></span><b>Stock</b><span>File</span><span>Edit</span><span>View</span
-        ><span>Orders</span><span>Window</span><span>Help</span>
-      </div>
-      <div class="right dim"><span>Synced</span><span>Tue 30 Sep</span><span>09:41</span></div>
+      <div><b>Stock</b><span>File</span><span>Edit</span><span>View</span><span>Window</span></div>
+      <div><span>Synced</span><span>Tue 30 Sep</span><span>09:41</span></div>
     </div>
 
     <div class="window">
       <div class="titlebar">
         <div class="lights"><i></i><i></i><i></i></div>
         <p class="title">Stock &amp; orders</p>
-        <p class="search">Search orders, products, suppliers</p>
         <p class="new">+ New order</p>
       </div>
 
@@ -341,12 +303,8 @@
         <a>Orders <span>12</span></a>
         <a>Stock <span>5</span></a>
         <a>Suppliers</a>
-        <a>Invoices</a>
         <a>Reports</a>
-        <p class="label">Warehouse</p>
-        <a>Main store</a>
-        <a>Branch</a>
-        <p class="sync"><i></i>Works offline · synced 2 min ago</p>
+        <p class="sync"><i></i>Works offline</p>
       </nav>
 
       <main class="main">
@@ -358,86 +316,52 @@
         <div class="kpis">
           <div class="kpi">
             <p>Orders today</p>
-            <b>48</b><small>+9 on yesterday</small>
-          </div>
-          <div class="kpi">
-            <p>To dispatch</p>
-            <b>12</b><small>3 due before noon</small>
+            <b>48</b>
           </div>
           <div class="kpi hot">
-            <p>Low stock</p>
-            <b>5</b><small>Reorder suggested</small>
+            <p>To dispatch</p>
+            <b>12</b>
           </div>
           <div class="kpi">
             <p>This month</p>
-            <b>R 184 200</b><small>+14% on last month</small>
+            <b>R 184k</b>
           </div>
         </div>
 
         <div class="grid">
           <div class="card">
-            <h2>Orders this week <span>Mon – Sun</span></h2>
+            <h2>Orders this week</h2>
             <div class="bars">
-              <div class="bar" style="height: 52%"><em>Mon</em></div>
-              <div class="bar" style="height: 68%"><em>Tue</em></div>
-              <div class="bar on" style="height: 84%"><em>Wed</em></div>
-              <div class="bar" style="height: 61%"><em>Thu</em></div>
-              <div class="bar" style="height: 76%"><em>Fri</em></div>
-              <div class="bar" style="height: 38%"><em>Sat</em></div>
-              <div class="bar" style="height: 22%"><em>Sun</em></div>
+              <div class="bar" style="height: 52%"></div>
+              <div class="bar" style="height: 68%"></div>
+              <div class="bar on" style="height: 92%"></div>
+              <div class="bar" style="height: 61%"></div>
+              <div class="bar" style="height: 76%"></div>
+              <div class="bar" style="height: 38%"></div>
+              <div class="bar" style="height: 24%"></div>
             </div>
-            <div class="legend">
-              <p>Total <b>312</b></p>
-              <p>Busiest <b>Wednesday</b></p>
+            <div class="days">
+              <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span
+              ><span>S</span>
             </div>
           </div>
 
           <div class="card">
-            <h2>Recent orders <span>See all</span></h2>
-            <table>
-              <tr>
-                <th>Order</th>
-                <th>Type</th>
-                <th>Items</th>
-                <th>Status</th>
-                <th class="num">Total</th>
-              </tr>
-              <tr>
-                <td>#1048</td>
-                <td>Wholesale</td>
-                <td>24</td>
-                <td><span class="tag go">Picking</span></td>
-                <td class="num">R 12 480</td>
-              </tr>
-              <tr>
-                <td>#1047</td>
-                <td>Online</td>
-                <td>3</td>
-                <td><span class="tag">Dispatched</span></td>
-                <td class="num">R 1 360</td>
-              </tr>
-              <tr>
-                <td>#1046</td>
-                <td>Counter sale</td>
-                <td>1</td>
-                <td><span class="tag">Paid</span></td>
-                <td class="num">R 420</td>
-              </tr>
-              <tr>
-                <td>#1045</td>
-                <td>Wholesale</td>
-                <td>40</td>
-                <td><span class="tag go">Invoiced</span></td>
-                <td class="num">R 21 900</td>
-              </tr>
-              <tr>
-                <td>#1044</td>
-                <td>Online</td>
-                <td>6</td>
-                <td><span class="tag">Dispatched</span></td>
-                <td class="num">R 2 115</td>
-              </tr>
-            </table>
+            <h2>Recent orders</h2>
+            <div class="orders">
+              <div class="order">
+                <div class="what"><b>#1048</b><small>Wholesale · 24 items</small></div>
+                <span class="tag go">Picking</span>
+              </div>
+              <div class="order">
+                <div class="what"><b>#1047</b><small>Online · 3 items</small></div>
+                <span class="tag">Dispatched</span>
+              </div>
+              <div class="order">
+                <div class="what"><b>#1046</b><small>Counter sale · 1 item</small></div>
+                <span class="tag">Paid</span>
+              </div>
+            </div>
           </div>
         </div>
       </main>

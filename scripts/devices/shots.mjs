@@ -38,27 +38,37 @@ export const devices = {
     },
   },
 
-  /** MacBook Pro 14", space black: 03 Desktop software (the lid opens as it arrives). */
+  /** MacBook Pro 14", space black: 03 Desktop software (scrubbed: the lid opens as it scrolls). */
   laptop: {
     model: 'macbook-pro-14/macbook-pro-14.glb',
     scene: 'laptop-scene.js',
-    /** The whole display in pt (menu bar included, drawn by the screen itself), at 1.5x. */
-    screen: { width: 1512, height: 982, scale: 1.5 },
+    /** The whole display in pt (menu bar included, drawn by the screen itself), at 2x. */
+    screen: { width: 1512, height: 982, scale: 2 },
     look: {
-      exposure: 1.05,
-      fov: 18,
-      margin: 0.8,
-      /** Height above the base the camera aims at (model units, metres). */
-      aim: 0.075,
-      quality: 0.74,
+      exposure: 1,
+      fov: 20,
+      /** Share of the frame the laptop's extent across the whole motion fills (window.fit). */
+      fill: 0.96,
+      /** Reflections from the room, a key light (upper left) and a rim light (behind). */
+      environment: 0.9,
+      key: 1.6,
+      rim: 1.2,
+      /** Roughness for the anodised aluminium (the model has it fully rough and flat). */
+      satin: 0.42,
+      /** Render this many times larger, then scale down: clean edges, a crisp screen. */
+      supersample: 2,
+      quality: 0.8,
     },
-    /** Shut and seen from above at an angle, then the lid opens and it turns to face you. */
+    /**
+     * Shut and seen from above, angled away; the lid opens as it turns to face the content on
+     * its right (positive `turn` shows the laptop's left side).
+     */
     motion: {
-      frames: 90,
-      from: { turn: -34, tilt: 38, lid: 0 },
-      to: { turn: -8, tilt: 12, lid: 104 },
-      aspect: 16 / 10,
-      widths: [720, 1280],
+      frames: 72,
+      from: { turn: 26, tilt: 32, lid: 0 },
+      to: { turn: 12, tilt: 10, lid: 104 },
+      aspect: 4 / 3,
+      widths: [800, 1200, 1800],
     },
   },
 }

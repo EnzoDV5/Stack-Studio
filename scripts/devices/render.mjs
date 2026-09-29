@@ -104,6 +104,17 @@ try {
     })
     await tab.goto('http://render.local/', { waitUntil: 'load' })
     await tab.waitForFunction('window.__ready', { timeout: 180_000, polling: 250 })
+    // Scenes that can (the laptop) frame the camera once around every pose of the motion.
+    const allPoses = Array.from({ length: motion.frames }, (_, i) => pose(motion, i))
+    await tab.evaluate(
+      (poses, aspect) =>
+        window.fit?.(
+          poses.filter((_, i) => i % 4 === 0 || i === poses.length - 1),
+          aspect,
+        ),
+      allPoses,
+      motion.aspect,
+    )
 
     let bytes = 0
     for (const frame of frames) {

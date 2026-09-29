@@ -200,16 +200,20 @@ export const phoneTurn = {
 } as const
 
 /**
- * DesktopShowcase (Services): the laptop opens and turns to face the viewer once, on a timer,
- * when it's well on screen (an enter, not a scrub: the phone turn above it is the scrub). A
- * product reveal, so longer than the usual 0.6–1.2s. The frames come from scripts/devices.
+ * DesktopShowcase (Services): the laptop opens its lid and turns to face the content beside it
+ * as it scrolls through the viewport (scrubbed, like the phone turn above it: a deliberate
+ * exception to "neighbours never share a trigger", asked for by the studio). Longer than the
+ * phone's, since the lid and the turn happen together. The frames come from scripts/devices.
  */
-export const laptopOpen = {
-  start: 'top 65%',
-  /** Seconds from shut to open, facing the viewer. */
-  duration: 2.6,
+export const laptopTurn = {
+  /** Starts as the laptop's top comes up past this line… */
+  start: 'top 85%',
+  /** …and it's open, facing the content, once its centre is a little above the middle. */
+  end: 'center 42%',
+  /** Seconds the frame takes to catch up with the scroll, so it glides. */
+  scrub: 1,
   /** Eases in and out: the lid lifts gently, swings, then settles. */
-  ease: 'power2.inOut',
+  ease: 'sine.inOut',
 } as const
 
 /**

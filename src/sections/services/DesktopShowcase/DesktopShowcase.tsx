@@ -4,7 +4,7 @@ import { ImageSequence } from '@/components/media/ImageSequence'
 import { Button } from '@/components/ui/Button'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Heading } from '@/components/ui/Heading'
-import { laptopOpen } from '@/lib/motion-tokens'
+import { laptopTurn } from '@/lib/motion-tokens'
 import type { OfferRow } from '@/lib/offer'
 import { OfferAccordion } from '@/sections/services/OfferAccordion'
 import type { CtaLink, ImageSequenceAsset } from '@/types'
@@ -17,7 +17,7 @@ export interface DesktopShowcaseProps {
   index?: number
   title: string
   intro: string
-  /** The desktop offerings, as dropdowns under the laptop. */
+  /** The desktop offerings, as dropdowns beside the laptop. */
   rows: OfferRow[]
   includesLabel: string
   cta: CtaLink
@@ -27,10 +27,10 @@ export interface DesktopShowcaseProps {
 }
 
 /**
- * Desktop software: a centred opener, a large laptop, then the offerings. Signature motion (an
- * enter, played once on a timer; the phone turn before it is the scrub): when the laptop is
- * well on screen, its lid lifts, the display wakes on a desktop app and it turns to face the
- * visitor. Reduced motion: the laptop open, still.
+ * Desktop software: a large laptop on the left (it runs off the page edge), the copy and
+ * offerings on the right: the mirror of the phone section above it. Signature motion
+ * (scrubbed): as it scrolls through the view the lid lifts from shut, the display wakes on a
+ * desktop app and the laptop turns to face the copy. Reduced motion: the laptop open, still.
  */
 export function DesktopShowcase({
   id,
@@ -47,32 +47,27 @@ export function DesktopShowcase({
   const headingId = useId()
   return (
     <Section id={id} tone={tone} aria-labelledby={headingId} className="overflow-hidden">
-      <div className="container-site">
-        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-          <Eyebrow index={index} label={eyebrow} className="mb-6 justify-center" />
-          <Heading id={headingId} size="display-lg" compile>
-            {title}
-          </Heading>
-          <p className="mt-6 max-w-[46ch] text-body-lg text-muted">{intro}</p>
-        </div>
-
+      <div className="container-site grid items-center gap-10 md:grid-cols-12 md:gap-8">
         <div className={styles.stage}>
           <ImageSequence
             sequence={laptop}
-            play={laptopOpen}
-            sizes="(min-width: 1024px) 64rem, 100vw"
-            // Wider than the column on phones: the frame's empty sides fall outside it, so the
-            // laptop itself fills the width.
-            className="relative -mx-[20%] w-[140%] max-w-none md:mx-auto md:w-full md:max-w-5xl"
+            scroll={laptopTurn}
+            sizes="(min-width: 768px) 62vw, 120vw"
+            className="relative w-full"
           />
         </div>
 
-        <div className="mx-auto grid max-w-5xl gap-10 md:grid-cols-[minmax(0,1fr)_auto] md:items-start md:gap-16">
-          <OfferAccordion rows={rows} includesLabel={includesLabel} />
+        <div className="md:col-span-5 md:col-start-8">
+          <Eyebrow index={index} label={eyebrow} className="mb-6" />
+          <Heading id={headingId} size="display-lg" compile className="max-w-[12ch]">
+            {title}
+          </Heading>
+          <p className="mt-6 max-w-[40ch] text-body-lg text-muted">{intro}</p>
+          <OfferAccordion rows={rows} includesLabel={includesLabel} size="md" className="mt-10" />
           <Button
             to={cta.to}
             withArrow
-            className="self-start"
+            className="mt-10"
             analytics={{ event: 'Start project click', props: { location: 'services-desktop' } }}
           >
             {cta.label}

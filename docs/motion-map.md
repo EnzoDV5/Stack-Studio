@@ -171,7 +171,10 @@ at 75%; count-ups at `trigger.startLate`, 62%; the process plan at 70%), so they
 Titles compile the moment they're on screen (`trigger.heading`, top at 90%). The WorkReel shrink happens inside its pin rather than while the section slides in, so the
 full-bleed image is seen whole first.
 
-**Deliberate deviations.** StudioSnippet's parallax is pointer-driven, not scroll-driven,
+**Deliberate deviations.** On /services the phone turn (AppShowcase) and the laptop
+opening (DesktopShowcase) are neighbours and both scrubbed: the studio asked for both devices
+to follow the scroll. They read as a pair rather than a repeat: mirrored layouts (phone right,
+laptop left), different devices and different motions (a spin, a lid opening). StudioSnippet's parallax is pointer-driven, not scroll-driven,
 so Home's last two sections read hover · enter. `Parallax trigger="scroll"` is still the
 default elsewhere. ProcessLine plays on entry and is then driven by hover and clicks (people
 couldn't read a week while it followed the scroll). The readout beside it shows an overview
@@ -200,7 +203,7 @@ bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is st
 
 **Services:** PageTitle (load: compile) · StageExplorer (none: the "What do you need?"
 index and 01 Websites) · AppShowcase (scrub: phone turn, 02 Apps and software) ·
-DesktopShowcase (enter: the laptop opens, 03 Desktop software) · StageExplorer (none: 04 Take
+DesktopShowcase (scrub: the laptop opens, 03 Desktop software) · StageExplorer (none: 04 Take
 over, 05 Run, 06 Grow, 07 Partner) · ProcessPinned (pin,
 `#process`) · FaqSection (hover) · ClosingCta (enter). The page groups the offer the way
 visitors look for it; the five stages stay the model elsewhere. Build splits into websites (the
@@ -211,11 +214,10 @@ face the visitor with an illustrative bookings app on screen, scrubbed as it scr
 through the view (`phoneTurn`: phone top at 92% to its centre at 50%, 80 evenly spaced frames, cross-faded, eased by `phoneTurn.ease`). It isn't pinned
 (ProcessPinned is the page's one pin). The frames are pre-rendered from a 3D model
 (scripts/devices) and drawn on a canvas by `ImageSequence`; no 3D library ships. Reduced
-motion: the finished pose as a still image. DesktopShowcase opens centred (unlike the phone's
-split) on a large MacBook: when it's well on screen it plays once on a timer (`laptopOpen`,
-2.6s, an enter, so it never shares the phone's scrub): the lid lifts from shut, the display
-wakes on an illustrative stock and orders app and it turns to face the visitor (90 frames,
-cross-faded). It waits for its frames to load, or 2.5s, before playing. Each group has
+motion: the finished pose as a still image. DesktopShowcase mirrors the phone: a large MacBook on the left (it bleeds off the page edge),
+the copy and offerings on the right. As it scrolls through the view (`laptopTurn`: laptop top
+at 85% to its centre at 42%, 72 evenly spaced frames, cross-faded) the lid lifts from shut,
+the display wakes on an illustrative stock and orders app and it turns to face the copy. Each group has
 its own layout, picked for what it sells (`StageBlock layout`): Websites `feature` (the
 intro beside an image, then dropdowns), Take over `cards`, Run `split` (image column
 beside a priced list), Grow `figures` (two rates as large figures, no image) and Partner
