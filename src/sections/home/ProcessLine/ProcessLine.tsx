@@ -88,8 +88,17 @@ export function ProcessLine({
   const [column, setColumn] = useState(0)
   const [picked, setPicked] = useState(last)
   const [ready, setReady] = useState(false)
-  // Imperative animation state, never read during render.
-  const motion = useRef({ position: 0, shown: 0, hover: -1, parts: null as Parts | null })
+  // Imperative animation state, never read during render. `position` is the playhead (0–1),
+  // `target` where it's following to; `follow` is set once the plan is mounted.
+  const motion = useRef({
+    position: 0,
+    target: 0,
+    shown: 0,
+    hover: -1,
+    parts: null as Parts | null,
+    sweep: null as gsap.core.Tween | null,
+    follow: undefined as ((column: number) => void) | undefined,
+  })
 
   const spans = steps.map((step) => step.span)
   const spansKey = spans.map((span) => `${span.from}-${span.to}`).join(',')
@@ -103,13 +112,18 @@ export function ProcessLine({
     gridTemplateColumns: `repeat(${count}, minmax(0, 1fr))`,
   } as CSSProperties
 
-  /** Draws the plan for the current playhead position: playhead, bars and column band. */
+  /**
+   * Draws the plan for the current playhead position: the playhead, the band (centred on the
+   * playhead, so it glides with it rather than jumping column to column) and every bar.
+   */
   const render = () => {
     const state = motion.current
     const parts = state.parts
     if (!parts) return
     const position = state.position
     gsap.set(parts.playheads, { xPercent: position * 100 })
+    const bandAt = Math.min(count - 1, Math.max(0, position * count - 0.5))
+    gsap.set(parts.bands, { xPercent: bandAt * 100 })
     for (const { el, span } of parts.bars) {
       const hidden = (1 - barReveal(span, count, position)) * 100
       el.style.clipPath = `inset(0% ${hidden}% 0% 0% round 999px)`
@@ -118,15 +132,9 @@ export function ProcessLine({
     if (next === state.shown) return
     state.shown = next
     setColumn(next)
-    gsap.to(parts.bands, {
-      xPercent: next * 100,
-      duration: duration.fast,
-      ease: ease.out,
-      overwrite: 'auto',
-    })
   }
 
-  const { contextSafe } = useGSAP(
+  useGSAP(
     () => {
       const board = boardRef.current
       if (!board || reducedMotion) return
@@ -139,17 +147,54 @@ export function ProcessLine({
           return span ? [{ el, span }] : []
         }),
       }
-      Object.assign(motion.current, { parts, position: 0, shown: 0, hover: -1 })
-      gsap.set(parts.bands, { xPercent: 0 })
+      const state = motion.current
+      Object.assign(state, { parts, position: 0, target: 0, shown: 0, hover: -1, sweep: null })
+      const moving = [...parts.playheads, ...parts.bands]
       render()
+
+      // Following: every frame the playhead closes a share of the gap to its target
+      // (exponential, frame-rate independent), so retargeting mid-glide stays smooth.
+      let following = false
+      const stop = () => {
+        following = false
+        gsap.ticker.remove(tick)
+        gsap.set(moving, { willChange: 'auto' })
+      }
+      const tick = (_time: number, deltaTime: number) => {
+        const k = 1 - Math.exp(-(deltaTime / 1000) * processTimeline.follow)
+        state.position += (state.target - state.position) * k
+        if (Math.abs(state.target - state.position) < 0.0004) {
+          state.position = state.target
+          stop()
+        }
+        render()
+      }
+      state.follow = (target: number) => {
+        state.sweep?.kill()
+        state.sweep = null
+        state.target = columnCentre(target, count)
+        if (following) return
+        following = true
+        gsap.set(moving, { willChange: 'transform' })
+        gsap.ticker.add(tick)
+      }
 
       // The entrance: step names slide in one after another, the weeks fade down, the band
       // and playhead appear, then the playhead sweeps the whole plan and rests on the last
       // column with every bar drawn.
-      const intro = gsap.timeline({
-        paused: true,
-        onComplete: () => setReady(true),
+      const sweep = gsap.to(state, {
+        position: columnCentre(last, count),
+        duration: processTimeline.sweep,
+        ease: processTimeline.sweepEase,
+        onStart: () => gsap.set(moving, { willChange: 'transform' }),
+        onUpdate: render,
+        onComplete: () => {
+          state.target = state.position
+          gsap.set(moving, { willChange: 'auto' })
+        },
       })
+      state.sweep = sweep
+      const intro = gsap.timeline({ paused: true, onComplete: () => setReady(true) })
       intro
         .from(
           '[data-step-label]',
@@ -173,21 +218,8 @@ export function ProcessLine({
           },
           0,
         )
-        .from(
-          [...parts.bands, ...parts.playheads],
-          { opacity: 0, duration: duration.fast, ease: ease.out },
-          processTimeline.sweepDelay,
-        )
-        .to(
-          motion.current,
-          {
-            position: columnCentre(last, count),
-            duration: processTimeline.sweep,
-            ease: processTimeline.sweepEase,
-            onUpdate: render,
-          },
-          processTimeline.sweepDelay,
-        )
+        .from(moving, { opacity: 0, duration: duration.fast, ease: ease.out }, 0)
+        .add(sweep, processTimeline.sweepDelay)
 
       const st = gsap.timeline({
         scrollTrigger: {
@@ -199,28 +231,21 @@ export function ProcessLine({
       }).scrollTrigger
       // Mounted already past the start (a deep link, a lazy mount): play now.
       if (st && st.scroll() >= st.start) void intro.play()
+
+      return () => {
+        stop()
+        state.follow = undefined
+      }
     },
     { scope: boardRef, dependencies: [count, spansKey, reducedMotion], revertOnUpdate: true },
   )
-
-  /** Glides the playhead to the middle of a week. Replaces any glide (or the sweep). */
-  const glideTo = (target: number) =>
-    contextSafe(() => {
-      gsap.to(motion.current, {
-        position: columnCentre(target, count),
-        duration: processTimeline.glide,
-        ease: ease.out,
-        overwrite: true,
-        onUpdate: render,
-      })
-    })()
 
   const pick = (target: number) => {
     const next = Math.min(last, Math.max(0, target))
     setPicked(next)
     setReady(true)
     motion.current.hover = -1
-    glideTo(next)
+    motion.current.follow?.(next)
   }
 
   /** The week under the pointer, or -1 when it's over the step names. */
@@ -237,13 +262,13 @@ export function ProcessLine({
     const target = columnUnder(event.clientX)
     if (target < 0 || target === motion.current.hover) return
     motion.current.hover = target
-    glideTo(target)
+    motion.current.follow?.(target)
   }
 
   const onPointerLeave = () => {
     if (!interactive || motion.current.hover < 0) return
     motion.current.hover = -1
-    glideTo(picked)
+    motion.current.follow?.(picked)
   }
 
   const onBoardClick = (event: { clientX: number }) => {
@@ -431,39 +456,86 @@ export function ProcessLine({
           {readout && (
             <aside aria-hidden="true" className="self-start">
               <p className="eyebrow text-muted">{nowLabel}</p>
-              {/* The week rolls up into place whenever it changes. */}
-              <div className="mt-3 overflow-hidden">
-                <p key={column} className={cn('text-heading-xl', styles.roll)}>
-                  {columns[column]?.label}
-                </p>
+              {/* The week rolls like a counter: forward rolls up, back rolls down. Every label
+                  is stacked in one cell; only the current one sits in view. */}
+              <div className="mt-3 grid overflow-hidden">
+                {columns.map((col, i) => (
+                  <p
+                    key={col.label}
+                    className={cn(
+                      'text-heading-xl transition-[translate,opacity] ease-out-expo [grid-area:1/1]',
+                      i === column
+                        ? 'translate-y-0 opacity-100 duration-(--duration-base)'
+                        : cn(
+                            'opacity-0 duration-(--duration-micro)',
+                            i < column ? '-translate-y-full' : 'translate-y-full',
+                          ),
+                    )}
+                  >
+                    {col.label}
+                  </p>
+                ))}
               </div>
               <div className="mt-8 grid gap-8 border-t border-tone pt-8">
                 {[0, 1].map((slot) => (
                   <div key={slot} className="grid">
-                    {steps.map((step, i) => (
-                      <div
-                        key={step.id}
-                        className={cn(
-                          'transition-[opacity,translate] duration-(--duration-fast) ease-out-expo [grid-area:1/1]',
-                          running[slot] === i
-                            ? 'translate-y-0 opacity-100'
-                            : 'pointer-events-none translate-y-3 opacity-0',
-                        )}
-                      >
-                        <p className="eyebrow text-accent">
-                          {pad2(i + 1)} · {step.title}
-                        </p>
-                        <p className="mt-3 text-small text-muted">{step.summary}</p>
-                        <ul className="mt-4 grid gap-1.5 text-small">
-                          {step.points.map((point) => (
-                            <li key={point} className="flex items-baseline gap-2">
-                              <span className="size-1.5 shrink-0 -translate-y-0.5 rounded-pill bg-orange" />
-                              {point}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
+                    {steps.map((step, i) => {
+                      const current = running[slot]
+                      const shown = current === i
+                      // Direction of travel: earlier steps leave upwards, later ones wait below.
+                      const away =
+                        current === undefined || i > current ? 'translate-y-4' : '-translate-y-3'
+                      // Leaving is quick and together; once it has cleared, each line comes in after the one
+                      // above it.
+                      const reveal = (order: number) => ({
+                        className: cn(
+                          'transition-[opacity,translate] ease-out-expo',
+                          shown
+                            ? 'translate-y-0 opacity-100 duration-(--duration-base)'
+                            : cn('opacity-0 duration-(--duration-micro)', away),
+                        ),
+                        style: { transitionDelay: shown ? `${140 + order * 55}ms` : '0ms' },
+                      })
+                      return (
+                        <div
+                          key={step.id}
+                          className={cn('[grid-area:1/1]', !shown && 'pointer-events-none')}
+                        >
+                          <p
+                            className={cn('eyebrow text-accent', reveal(0).className)}
+                            style={reveal(0).style}
+                          >
+                            {pad2(i + 1)} · {step.title}
+                          </p>
+                          <p
+                            className={cn('mt-3 text-small text-muted', reveal(1).className)}
+                            style={reveal(1).style}
+                          >
+                            {step.summary}
+                          </p>
+                          <ul className="mt-4 grid gap-1.5 text-small">
+                            {step.points.map((point, k) => (
+                              <li
+                                key={point}
+                                className={cn('flex items-baseline gap-2', reveal(2 + k).className)}
+                                style={reveal(2 + k).style}
+                              >
+                                <span
+                                  className={cn(
+                                    'size-1.5 shrink-0 -translate-y-0.5 rounded-pill bg-orange transition-[scale] duration-(--duration-base) ease-out-expo',
+                                    shown ? 'scale-100' : 'scale-0',
+                                  )}
+                                  style={{
+                                    transitionDelay: shown ? `${200 + (2 + k) * 55}ms` : '0ms',
+                                  }}
+                                />
+                                {point}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )
+                    })}
                   </div>
                 ))}
               </div>

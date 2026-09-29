@@ -18,22 +18,4 @@
     );
     mask-image: linear-gradient(to right, #000 55%, transparent);
   }
-
-  /* The readout's week rolls up into place each time it changes (re-keyed in React). */
-  .roll {
-    animation: roll var(--duration-fast) var(--ease-out-expo) both;
-  }
-
-  @keyframes roll {
-    from {
-      opacity: 0;
-      transform: translateY(70%);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .roll {
-      animation: none;
-    }
-  }
 }

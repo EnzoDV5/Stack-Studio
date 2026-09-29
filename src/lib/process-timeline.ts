@@ -46,15 +46,21 @@ export function columnCentre(column: number, count: number): number {
   return (c + 0.5) / count
 }
 
+/** Share of its column an ongoing bar takes to draw: it's complete well before the middle. */
+export const ONGOING_DRAW = 0.35
+
 /**
  * How much of a bar (0–1) is drawn with the playhead at `position` (0–1): nothing before its
  * first column, all of it past its last, and exactly up to the playhead in between, so a bar
- * draws or retracts under the playhead wherever it moves.
+ * draws or retracts under the playhead wherever it moves. An ongoing bar (one that starts in
+ * the last column, e.g. care after launch) has no end to reach, so it draws in full over the
+ * first part of its column and is complete wherever the playhead rests in it.
  */
 export function barReveal(span: Span, count: number, position: number): number {
   const { position: start, duration } = barTiming(span, count)
   if (duration <= 0) return 0
-  return Math.min(1, Math.max(0, (position - start) / duration))
+  const length = span.from >= count ? duration * ONGOING_DRAW : duration
+  return Math.min(1, Math.max(0, (position - start) / length))
 }
 
 /** The 0-based column under a pointer `x` pixels from the left of a track `width` wide. */

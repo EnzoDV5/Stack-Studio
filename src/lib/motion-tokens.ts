@@ -134,8 +134,12 @@ export const processTimeline = {
   sweepDelay: 0.35,
   /** An even, deliberate sweep (it reads as time passing), easing in and out at the ends. */
   sweepEase: 'sine.inOut',
-  /** Seconds for the playhead to glide to a hovered or picked week. */
-  glide: 0.7,
+  /**
+   * How fast the playhead follows to a hovered or picked week (per second, exponential): it
+   * eases toward its target every frame, so a new target mid-glide never jerks it.
+   * 7 covers ~90% of the way in a third of a second, then settles softly.
+   */
+  follow: 7,
 } as const
 
 /**

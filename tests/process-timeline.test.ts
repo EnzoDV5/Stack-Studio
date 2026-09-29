@@ -72,6 +72,16 @@ describe('process timeline interaction', () => {
     assert.equal(barReveal(span, 4, 1), 1)
   })
 
+  it('draws an ongoing bar (last column) in full wherever the playhead rests in it', () => {
+    const ongoing = { from: 4, to: 4 } // the last of 4 columns: 0.75 → 1
+    assert.equal(barReveal(ongoing, 4, 0.7), 0)
+    assert.equal(barReveal(ongoing, 4, columnCentre(3, 4)), 1)
+    assert.ok(barReveal(ongoing, 4, 0.78) > 0 && barReveal(ongoing, 4, 0.78) < 1)
+    const care = processSteps.find((step) => step.span.from === count)
+    assert.ok(care, 'the plan has an ongoing step')
+    assert.equal(barReveal(care.span, count, columnCentre(count - 1, count)), 1)
+  })
+
   it('every bar is fully drawn by the end and hidden at the start', () => {
     for (const span of spans) {
       assert.equal(barReveal(span, count, 0), 0)
