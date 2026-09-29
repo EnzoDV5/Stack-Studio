@@ -513,7 +513,7 @@ export const briefCopy = {
     steps: [
       'We read your brief and reply within one business day.', // COPY:
       'A short call to fill in the gaps.', // COPY:
-      'A written quote or a recommended plan for you to look over.', // COPY:
+      'A fixed quote or a recommended plan for you to look over.', // COPY:
     ],
     urgent: 'Something urgent? Message us on WhatsApp.', // COPY:
     home: { label: 'Back to home', to: '/' }, // COPY:

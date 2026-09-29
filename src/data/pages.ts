@@ -292,7 +292,7 @@ export const pricingContent = {
     eyebrow: 'Starting points', // COPY:
     title: 'Start from a project like yours.', // COPY:
     intro:
-      'Pick the closest one and adjust it in the estimate builder. Ranges are a guide until we’ve talked it through.', // COPY:
+      'Pick the closest one and adjust it in the estimate builder. Ranges are a guide; your fixed quote follows a short call.', // COPY:
     rangeLabel: 'Typically', // COPY:
     monthly: (price: string) => `plus ${price} for hosting and care`, // COPY:
     start: 'Start from this one', // COPY:
