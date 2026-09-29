@@ -290,41 +290,47 @@ export const servicesContent = {
     title: 'From first message to kick-off.', // COPY:
     intro: 'No long sales process. This is exactly what happens once you get in touch.', // COPY:
     /**
-     * Each step shows what the visitor actually sees at that point, as a small interface: the
-     * brief, the reply, the call invite and the quote. Illustrative: no real names. Prices come
-     * from the pricing data (the "Launch website" starting quote), on the Services page.
+     * The real flow, each step shown as a small interface of what the visitor sees: the brief
+     * (it arrives in our inbox), our email reply, the meeting (in person or online) and the fixed
+     * quote that follows it. Illustrative: no real names. Prices come from the pricing data (the
+     * "Launch website" starting quote) and the address from data/site, on the Services page.
      */
     brief: {
-      title: 'Tell us what you need', // COPY:
+      title: 'Send us your brief', // COPY:
       when: 'About two minutes', // COPY:
+      body: 'Answer a few questions and see a rough estimate. It lands in our inbox straight away.', // COPY:
       heading: 'Start a project', // COPY:
       question: 'What are we building?', // COPY:
       options: ['A website', 'An app', 'Help with what I have'], // COPY:
       estimateLabel: 'Rough estimate', // COPY:
+      send: 'Send brief', // COPY:
     },
     reply: {
-      title: 'We get back to you', // COPY:
+      title: 'We reply by email', // COPY:
       when: 'Within one business day', // COPY:
-      sent: 'Brief sent', // COPY:
+      body: 'A real reply, not an automated one, with any questions we have and a few times to meet.', // COPY:
       from: 'Stack Studio', // COPY:
-      message: 'Thanks for the brief! Two quick questions, then let’s find a time to talk.', // COPY:
-      time: 'Next business day, 09:12', // COPY:
+      subject: 'Re: Your project brief', // COPY:
+      time: '09:12', // COPY:
+      message:
+        'Thanks for the brief! A couple of quick questions, and a few times that suit us to meet:', // COPY:
+      slots: ['Tue 10:00', 'Thu 14:00'], // COPY:
     },
-    call: {
-      title: 'A short call', // COPY:
+    meeting: {
+      title: 'We meet, in person or online', // COPY:
       when: 'About 30 minutes', // COPY: confirm
+      body: 'We talk through the business, not just the website, and agree what matters most.', // COPY:
       day: 'Tue', // COPY:
       date: '07', // COPY:
-      event: 'Intro call', // COPY:
-      details: '30 min · video or in person', // COPY: confirm
-      people: ['You', 'Stack'], // COPY:
-      answer: 'Going?', // COPY:
-      yes: 'Yes', // COPY:
-      no: 'No', // COPY:
+      event: 'Project meeting', // COPY:
+      details: '10:00 – 10:30', // COPY:
+      modes: ['In person', 'Online'], // COPY:
+      accepted: 'Accepted', // COPY:
     },
     quote: {
       title: 'Your fixed quote', // COPY:
-      when: 'In writing', // COPY:
+      when: 'After we meet', // COPY:
+      body: 'Scope, timeline and payment milestones in writing. Say yes and we book your start date.', // COPY:
       document: 'Fixed quote', // COPY:
       lines: [
         { label: 'Scope', value: '5 custom pages' }, // COPY:

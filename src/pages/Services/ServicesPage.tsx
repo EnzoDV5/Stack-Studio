@@ -7,6 +7,7 @@ import { policies } from '@/data/policies'
 import { rates } from '@/data/rates'
 import { getQuotePreset } from '@/data/quotes'
 import { offerings, serviceStages } from '@/data/services'
+import { site } from '@/data/site'
 import { estimate } from '@/lib/estimate'
 import { formatPrice, formatPriceRange } from '@/lib/format'
 import { stageRows } from '@/lib/offer'
@@ -133,8 +134,8 @@ export function ServicesPage() {
         title={c.nextSteps.title}
         intro={c.nextSteps.intro}
         brief={{ ...c.nextSteps.brief, estimate: starter.estimate }}
-        reply={c.nextSteps.reply}
-        call={c.nextSteps.call}
+        reply={{ ...c.nextSteps.reply, email: site.email }}
+        meeting={c.nextSteps.meeting}
         quote={{ ...c.nextSteps.quote, total: starter.total }}
         cta={c.nextSteps.cta}
       />

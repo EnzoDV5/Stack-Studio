@@ -10,10 +10,11 @@ import { ease, stepsDeal } from '@/lib/motion-tokens'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
 import type { CtaLink } from '@/types'
 
-interface StepHead {
+interface StepText {
   title: string
   /** How long it takes, e.g. "Within one business day". */
   when: string
+  body: string
 }
 
 export interface NextStepsProps {
@@ -21,29 +22,37 @@ export interface NextStepsProps {
   title: string
   intro: string
   /** 01: the brief, with a real rough estimate. */
-  brief: StepHead & {
+  brief: StepText & {
     heading: string
     question: string
     options: string[]
     estimateLabel: string
     /** e.g. "R 18 000 – R 24 500". */
     estimate: string
+    send: string
   }
-  /** 02: the reply. */
-  reply: StepHead & { sent: string; from: string; message: string; time: string }
-  /** 03: the call invite. */
-  call: StepHead & {
+  /** 02: our reply, as an email. */
+  reply: StepText & {
+    from: string
+    /** The studio's address, e.g. "hello@…". */
+    email: string
+    subject: string
+    time: string
+    message: string
+    /** Suggested meeting times. */
+    slots: string[]
+  }
+  /** 03: the meeting, in person or online. */
+  meeting: StepText & {
     day: string
     date: string
     event: string
     details: string
-    people: string[]
-    answer: string
-    yes: string
-    no: string
+    modes: string[]
+    accepted: string
   }
-  /** 04: the quote. */
-  quote: StepHead & {
+  /** 04: the fixed quote. */
+  quote: StepText & {
     document: string
     lines: { label: string; value: string }[]
     totalLabel: string
@@ -71,13 +80,26 @@ const Check = ({ className }: { className?: string }) => (
   </svg>
 )
 
+/** The studio's avatar in the mock interfaces: the S of Stack on orange. */
+const Avatar = ({ className }: { className?: string }) => (
+  <span
+    className={cn(
+      'grid size-8 shrink-0 place-items-center rounded-pill bg-orange text-small font-bold text-ink',
+      className,
+    )}
+  >
+    S
+  </span>
+)
+
 /**
- * What happens once someone gets in touch, shown rather than told: four cards, each a small
- * version of what the visitor sees at that step (the brief with a real estimate, the reply, the
- * call invite, the fixed quote). The interfaces are illustrative and decorative; each card's
- * title and timing carry the meaning for screen readers. Signature motion (desktop, scrubbed):
- * the cards start as a loose pile and deal out into their row as the section scrolls in.
- * Phones and reduced motion: the cards, in order, still.
+ * What happens once someone gets in touch, shown rather than told: four wide cards, each with
+ * the step on the left and a small version of what the visitor sees on the right (the brief
+ * with a real estimate, our email reply, the meeting invite, the fixed quote). The interfaces
+ * are illustrative and decorative; each card's title, timing and line carry the meaning for
+ * screen readers. Signature motion (desktop, scrubbed): the cards start as a loose pile in the
+ * middle and deal out into their grid as the section scrolls in. Phones and reduced motion:
+ * the cards, in order, still.
  */
 export function NextSteps({
   eyebrow,
@@ -85,7 +107,7 @@ export function NextSteps({
   intro,
   brief,
   reply,
-  call,
+  meeting,
   quote,
   cta,
   tone = 'dark',
@@ -101,20 +123,22 @@ export function NextSteps({
       const mm = gsap.matchMedia()
       mm.add('(min-width: 64rem)', () => {
         const cards = gsap.utils.toArray<HTMLElement>('[data-card]', list)
-        // Each card's distance from the middle of the row, measured in its dealt-out place
+        // Each card's distance from the middle of the grid, measured in its dealt-out place
         // (recomputed on every refresh, so a resize keeps the pile centred).
-        const toCentre = (card: HTMLElement) => {
-          const row = list.getBoundingClientRect()
+        const offset = (i: number, axis: 'x' | 'y') => {
+          const card = cards[i]
+          if (!card) return 0
+          const grid = list.getBoundingClientRect()
           const box = card.getBoundingClientRect()
-          return row.left + row.width / 2 - (box.left + box.width / 2)
+          return axis === 'x'
+            ? grid.left + grid.width / 2 - (box.left + box.width / 2)
+            : grid.top + grid.height / 2 - (box.top + box.height / 2)
         }
+        const pile = (i: number) => stepsDeal.pile[i % stepsDeal.pile.length]
         gsap.from(cards, {
-          x: (i: number) => {
-            const card = cards[i]
-            return card ? toCentre(card) : 0
-          },
-          y: (i: number) => stepsDeal.pile[i % stepsDeal.pile.length]?.y ?? 0,
-          rotation: (i: number) => stepsDeal.pile[i % stepsDeal.pile.length]?.rotation ?? 0,
+          x: (i: number) => offset(i, 'x'),
+          y: (i: number) => offset(i, 'y') + (pile(i)?.y ?? 0),
+          rotation: (i: number) => pile(i)?.rotation ?? 0,
           scale: stepsDeal.scale,
           ease: ease.none,
           scrollTrigger: {
@@ -133,20 +157,21 @@ export function NextSteps({
     { scope: listRef, dependencies: [reducedMotion], revertOnUpdate: true },
   )
 
-  const card = (index: number, head: StepHead, ui: ReactNode) => (
+  const card = (index: number, step: StepText, ui: ReactNode) => (
     <li
       data-card=""
-      className="flex flex-col rounded-lg border border-tone bg-tone-surface p-5 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.6)]"
+      className="grid gap-6 rounded-lg border border-tone bg-tone-surface p-6 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.6)] md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-8 md:p-7"
     >
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-col">
         <span className="eyebrow text-accent">{pad2(index)}</span>
-        <Tag>{head.when}</Tag>
+        <h3 className="mt-4 text-heading-lg">{step.title}</h3>
+        <p className="mt-3 text-small text-muted">{step.body}</p>
+        <Tag className="mt-5 self-start md:mt-auto">{step.when}</Tag>
       </div>
-      <h3 className="mt-4 text-heading-md">{head.title}</h3>
       {/* A small version of what they see at this step (decorative). */}
       <div
         aria-hidden="true"
-        className="mt-5 flex flex-1 flex-col rounded-md border border-tone bg-(--tone-bg) p-4 lg:min-h-72"
+        className="flex flex-col rounded-md border border-tone bg-(--tone-bg) p-5"
       >
         {ui}
       </div>
@@ -164,45 +189,48 @@ export function NextSteps({
           intro={intro}
         />
 
-        <ol ref={listRef} className="mt-14 grid gap-4 sm:grid-cols-2 md:mt-20 lg:grid-cols-4">
+        <ol ref={listRef} className="mt-14 grid gap-4 md:mt-20 lg:grid-cols-2 lg:gap-5">
           {card(
             1,
             brief,
             <>
               <div className="flex items-center justify-between">
                 <p className="text-small font-semibold">{brief.heading}</p>
-                <span className="flex gap-1">
+                <span className="flex gap-1.5">
                   {[0, 1, 2, 3].map((dot) => (
                     <i
                       key={dot}
                       className={cn(
                         'size-1.5 rounded-pill',
-                        dot < 2 ? 'bg-orange' : 'bg-(--tone-border)',
+                        dot < 3 ? 'bg-orange' : 'bg-(--tone-border)',
                       )}
                     />
                   ))}
                 </span>
               </div>
               <p className="mt-4 text-heading-md">{brief.question}</p>
-              <div className="mt-4 grid gap-2">
+              <div className="mt-4 flex flex-wrap gap-2">
                 {brief.options.map((option, i) => (
                   <span
                     key={option}
                     className={cn(
-                      'flex items-center justify-between rounded-pill border px-3 py-2 text-small',
+                      'flex items-center gap-2 rounded-pill border px-3.5 py-2 text-small',
                       i === 0 ? 'border-orange bg-orange/15' : 'border-tone text-muted',
                     )}
                   >
-                    {option}
                     {i === 0 && <Check className="text-accent" />}
+                    {option}
                   </span>
                 ))}
               </div>
-              <div className="mt-auto pt-4">
-                <div className="rounded-md border border-tone p-3">
+              <div className="mt-6 flex flex-wrap items-end justify-between gap-4 border-t border-tone pt-4">
+                <div>
                   <p className="eyebrow text-muted">{brief.estimateLabel}</p>
                   <p className="mt-1 numeric text-heading-md">{brief.estimate}</p>
                 </div>
+                <span className="rounded-pill bg-orange px-4 py-2 text-small font-semibold text-ink">
+                  {brief.send}
+                </span>
               </div>
             </>,
           )}
@@ -210,73 +238,79 @@ export function NextSteps({
           {card(
             2,
             reply,
-            <div className="flex flex-1 flex-col gap-4">
-              <span className="flex items-center gap-2 self-end rounded-lg rounded-br-sm bg-orange px-3 py-2 text-small font-semibold text-ink">
-                {reply.sent}
-                <Check />
-              </span>
-              <div className="mt-auto">
-                <div className="flex items-center gap-2">
-                  <span className="grid size-7 place-items-center rounded-pill bg-orange text-micro font-bold text-ink">
-                    S
-                  </span>
-                  <span className="text-small font-semibold">{reply.from}</span>
+            <>
+              <div className="flex items-center gap-3">
+                <Avatar />
+                <div className="min-w-0 flex-1">
+                  <p className="text-small font-semibold">{reply.from}</p>
+                  <p className="truncate text-small text-muted">{reply.email}</p>
                 </div>
-                <p className="mt-2 rounded-lg rounded-tl-sm border border-tone bg-tone-surface p-3 text-small">
-                  {reply.message}
-                </p>
-                <p className="mt-2 text-micro text-muted">{reply.time}</p>
+                <span className="text-small text-muted">{reply.time}</span>
               </div>
-            </div>,
+              <p className="mt-4 border-t border-tone pt-4 text-small font-semibold">
+                {reply.subject}
+              </p>
+              <p className="mt-2 text-small text-muted">{reply.message}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {reply.slots.map((slot) => (
+                  <span
+                    key={slot}
+                    className="rounded-pill border border-orange px-3.5 py-1.5 text-small text-accent"
+                  >
+                    {slot}
+                  </span>
+                ))}
+              </div>
+            </>,
           )}
 
           {card(
             3,
-            call,
-            <div className="flex flex-1 flex-col">
-              <div className="flex gap-4">
-                <div className="grid w-14 shrink-0 place-items-center rounded-md border border-tone py-2 text-center">
-                  <span className="eyebrow text-accent">{call.day}</span>
-                  <span className="numeric text-heading-lg">{call.date}</span>
+            meeting,
+            <>
+              <div className="flex items-center gap-4">
+                <div className="grid w-16 shrink-0 place-items-center rounded-md border border-tone py-2 text-center">
+                  <span className="eyebrow text-accent">{meeting.day}</span>
+                  <span className="numeric text-heading-lg">{meeting.date}</span>
                 </div>
                 <div className="min-w-0">
-                  <p className="text-heading-md">{call.event}</p>
-                  <p className="mt-1 text-small text-muted">{call.details}</p>
+                  <p className="text-heading-md">{meeting.event}</p>
+                  <p className="mt-1 text-small text-muted">{meeting.details}</p>
                 </div>
               </div>
-              <div className="mt-5 flex -space-x-2">
-                {call.people.map((person, i) => (
+              {/* In person or online: either suits, so both show as options. Centred in the
+                  card, which can be taller than its content beside the quote. */}
+              <div className="my-auto grid grid-cols-2 gap-2 py-5">
+                {meeting.modes.map((mode) => (
                   <span
-                    key={person}
-                    className={cn(
-                      'grid size-9 place-items-center rounded-pill border-2 border-(--tone-bg) text-micro font-bold',
-                      i === 0 ? 'bg-paper text-ink' : 'bg-orange text-ink',
-                    )}
+                    key={mode}
+                    className="flex items-center justify-center gap-2 rounded-md border border-tone py-2.5 text-small"
                   >
-                    {person.slice(0, 1)}
+                    {mode}
                   </span>
                 ))}
               </div>
-              <div className="mt-auto flex items-center justify-between border-t border-tone pt-4">
-                <span className="text-small text-muted">{call.answer}</span>
-                <span className="flex gap-2">
-                  <span className="rounded-pill bg-orange px-4 py-1.5 text-small font-semibold text-ink">
-                    {call.yes}
+              <div className="mt-5 flex items-center justify-between border-t border-tone pt-4">
+                <div className="flex -space-x-2">
+                  <span className="grid size-8 place-items-center rounded-pill border-2 border-(--tone-bg) bg-paper text-small font-bold text-ink">
+                    Y
                   </span>
-                  <span className="rounded-pill border border-tone px-4 py-1.5 text-small text-muted">
-                    {call.no}
-                  </span>
+                  <Avatar className="border-2 border-(--tone-bg)" />
+                </div>
+                <span className="flex items-center gap-2 text-small font-semibold text-accent">
+                  <Check />
+                  {meeting.accepted}
                 </span>
               </div>
-            </div>,
+            </>,
           )}
 
           {card(
             4,
             quote,
-            <div className="flex flex-1 flex-col">
+            <>
               <p className="text-small font-semibold">{quote.document}</p>
-              <dl className="mt-3 divide-y divide-(--tone-border) text-small">
+              <dl className="mt-2 divide-y divide-(--tone-border) text-small">
                 {quote.lines.map((line) => (
                   <div key={line.label} className="flex justify-between gap-3 py-2">
                     <dt className="text-muted">{line.label}</dt>
@@ -288,18 +322,20 @@ export function NextSteps({
                   <dd className="numeric text-heading-md">{quote.total}</dd>
                 </div>
               </dl>
-              <ul className="mt-4 grid gap-1.5 text-micro text-muted">
-                {quote.includes.map((item) => (
-                  <li key={item} className="flex items-center gap-2">
-                    <Check className="size-3.5 text-accent" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <span className="mt-auto block rounded-pill bg-orange py-2.5 text-center text-small font-semibold text-ink">
-                {quote.accept}
-              </span>
-            </div>,
+              <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
+                <ul className="grid gap-1 text-small text-muted">
+                  {quote.includes.map((item) => (
+                    <li key={item} className="flex items-center gap-2">
+                      <Check className="size-3.5 text-accent" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <span className="rounded-pill bg-orange px-4 py-2 text-small font-semibold text-ink">
+                  {quote.accept}
+                </span>
+              </div>
+            </>,
           )}
         </ol>
 
