@@ -22,7 +22,12 @@ export function Logo({ variant = 'full', className, title = 'Stack Studio' }: Lo
       aria-label={labelled ? title : undefined}
       aria-hidden={labelled ? undefined : true}
     >
-      <svg viewBox="0 0 100 100" className="h-[1.35em] w-auto shrink-0" aria-hidden="true">
+      <svg
+        viewBox="0 0 100 100"
+        className="h-[1.35em] w-auto shrink-0"
+        shapeRendering="geometricPrecision"
+        aria-hidden="true"
+      >
         <path d="M50 2 99 98H78L50 42 22 98H1Z" fill="var(--color-orange)" />
         <path d="M50 64 62 98H38Z" fill="var(--color-orange)" />
       </svg>

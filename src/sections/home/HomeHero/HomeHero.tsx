@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { GridOverlay } from '@/components/layout/GridOverlay'
 import { Section } from '@/components/layout/Section'
 import { Video } from '@/components/media/Video'
@@ -6,6 +7,9 @@ import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Logo } from '@/components/ui/Logo'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { TextLink } from '@/components/ui/TextLink'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { gsap, useGSAP } from '@/lib/gsap'
+import { ease, heroMark } from '@/lib/motion-tokens'
 import type { CtaLink, VideoAsset } from '@/types'
 
 export interface HomeHeroProps {
@@ -18,18 +22,46 @@ export interface HomeHeroProps {
 }
 
 /**
- * The opener. The statement rises line by line over the showreel as the preloader lifts
- * (the section's one motion), and the Stack mark fills the right-hand side of the
- * background, running off the edge. On small screens the mark sits faintly behind the
- * statement so the text stays readable.
+ * The opener. The statement rises line by line over the showreel as the preloader lifts,
+ * set high in the viewport under the header. The Stack mark fills the right-hand side of
+ * the background, running off the edge, and sinks as the page scrolls (scrubbed, slower
+ * than the page), so it follows the visitor down and slips off the bottom of the hero,
+ * behind the next section. On small screens the mark sits faintly behind the statement so
+ * the text stays readable. Reduced motion: the mark stays put.
  */
 export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, video }: HomeHeroProps) {
+  const frameRef = useRef<HTMLDivElement>(null)
+  const markRef = useRef<HTMLDivElement>(null)
+  const reducedMotion = useReducedMotion()
+
+  useGSAP(
+    () => {
+      const frame = frameRef.current
+      const mark = markRef.current
+      if (!frame || !mark || reducedMotion) return
+      gsap.to(mark, {
+        yPercent: heroMark.travel,
+        ease: ease.none,
+        scrollTrigger: {
+          // The frame spans the hero: from the page top until the hero has scrolled away.
+          trigger: frame,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+          onToggle: ({ isActive }) =>
+            gsap.set(mark, { willChange: isActive ? 'transform' : 'auto' }),
+        },
+      })
+    },
+    { scope: frameRef, dependencies: [reducedMotion], revertOnUpdate: true },
+  )
+
   return (
     <Section
       tone="dark"
       solid
       spacing="none"
-      className="flex min-h-svh flex-col justify-end overflow-hidden pt-(--spacing-header) pb-8 md:pb-12"
+      className="flex min-h-svh flex-col justify-center overflow-hidden pt-(--spacing-header) pb-[14svh]"
     >
       <div className="absolute inset-0 -z-20">
         <Video video={video} priority mode="controlled" playing className="absolute! inset-0" />
@@ -40,23 +72,26 @@ export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, video }: Ho
       />
       <GridOverlay fade="radial" className="-z-10" />
 
-      {/* The mark: huge, anchored to the right and bleeding off it, fading into the ink at
-          the bottom so the gradient above still reads. Decorative. */}
+      {/* The mark: huge, solid and crisp (vector), anchored to the right and bleeding off it.
+          The hero clips it, so as it sinks it disappears behind the next section. */}
       <div
+        ref={frameRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 -z-10 flex items-center justify-end overflow-hidden [mask-image:linear-gradient(to_bottom,black_55%,transparent)] opacity-15 lg:opacity-90"
+        className="pointer-events-none absolute inset-y-0 right-0 -z-10 flex items-center justify-end overflow-hidden opacity-15 lg:opacity-100"
       >
-        <Logo
-          variant="mark"
-          title=""
-          className="-mr-[12vw] translate-y-[6svh] text-[min(62svh,52vw)] lg:-mr-[6vw] lg:text-[min(66svh,40vw)]"
-        />
+        <div ref={markRef}>
+          <Logo
+            variant="mark"
+            title=""
+            className="-mr-[12vw] translate-y-[6svh] text-[min(62svh,52vw)] lg:-mr-[6vw] lg:text-[min(66svh,40vw)]"
+          />
+        </div>
       </div>
 
       <div className="container-site">
         <Eyebrow label={eyebrow} className="text-grey-300" />
-        {/* 4em: wider than the longest phrase (Grow it., 3.2em), narrower than two (4.8em), so
-            it sets one phrase per line at any size: Build it. / Run it. / Grow it. */}
+        {/* 4em: wider than the longest phrase (Grow it., 3.2em), narrower than two (4.8em),
+            so it sets one phrase per line at any size: Build it. / Run it. / Grow it. */}
         <SplitReveal
           as="h1"
           trigger="intro"

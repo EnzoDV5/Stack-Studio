@@ -168,6 +168,16 @@ export const macbook = {
   scaleTo: 1.8,
 } as const
 
+/**
+ * HomeHero: the Stack mark sinks as the page scrolls (scrubbed), slower than the page, so it
+ * seems to follow the visitor down and slips off the bottom of the hero, behind the next
+ * section.
+ */
+export const heroMark = {
+  /** Travel over the hero's scroll, as a percentage of the mark's own height. */
+  travel: 70,
+} as const
+
 export const parallax = {
   /** Default travel as a percentage of the element height. */
   amount: 12,
