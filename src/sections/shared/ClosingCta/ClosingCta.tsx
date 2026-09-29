@@ -18,8 +18,8 @@ export interface ClosingCtaProps {
 
 /**
  * The closing CTA band. Orange by default: the one big orange moment per page. The heading
- * begins as same-size code characters, then resolves into the readable title as the band
- * scrolls in. The final glyph widths keep the line length stable throughout.
+ * begins as same-size code characters, then compiles once into the readable title when the
+ * band enters. The final glyph widths keep the line length stable throughout.
  */
 export function ClosingCta({
   content,

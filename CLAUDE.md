@@ -172,7 +172,9 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
 
 1. **One signature motion per section.** Two neighbouring sections never share a trigger
    type (load, enter, scrub, pin, hover): no scrub after scrub, no pin after pin. The
-   shell's ClosingCta (a scrub) is every page's last section.
+   shell's ClosingCta (an enter) is every page's last section. `MaskedHeading` titles
+   (every `SectionHeader` and the ClosingCta) compile once, on a timer, when they enter.
+   Don't tie them back to the scroll position.
 2. **SplitReveal line-reveals are limited.** Home: the hero and the closing CTA only. Other
    pages may reveal their page title (`<PageTitle reveal>`) and nothing else. Every other
    heading is static; the content carries the motion.

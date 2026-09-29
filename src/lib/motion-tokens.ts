@@ -132,14 +132,22 @@ export const processTimeline = {
   scrub: 0.6,
 } as const
 
-/** MaskedHeading: same-size code characters slowly compile into the title. */
+/**
+ * MaskedHeading: the title sits as moving code until the heading enters the viewport, then
+ * compiles itself once, left to right, on a timer (not tied to the scroll position).
+ */
 export const maskedHeading = {
-  /** Number of deterministic code-character changes over the full reveal. */
-  scrambleSteps: 18,
-  /** Portion of progress used to crossfade each code character into its title character. */
-  characterReveal: 0.22,
-  /** Smooths the scroll-linked progress so the compile never snaps. */
-  scrub: 0.8,
+  /** Seconds the code keeps running before the first character locks in. */
+  lead: 0.18,
+  /** Seconds added to the left-to-right lock sweep per character. */
+  perCharacter: 0.028,
+  /** Shortest and longest sweep, so short titles still read and long ones don't drag. */
+  minSweep: 0.45,
+  maxSweep: 0.85,
+  /** Seconds between code-glyph changes (about 18 a second). */
+  tick: 0.055,
+  /** Spreads the lock times: early characters lock quickly, the tail settles. */
+  ease: 'power1.out',
 } as const
 
 /**

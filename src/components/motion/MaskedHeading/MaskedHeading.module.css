@@ -25,31 +25,31 @@
     display: inline-block;
   }
 
-  /* Reserve every final glyph's width so the heading never changes length. */
-  .sizer {
-    visibility: hidden;
+  /* The real glyph stays in flow, so every character keeps the final width throughout. */
+  .resolvedCharacter {
+    display: inline-block;
   }
 
-  .codeCharacter,
-  .resolvedCharacter {
+  /*
+   * The running code sits over its character. It isn't clipped (narrow letters would cut it
+   * into slivers) and it's muted, so the compiled title reads as the moment it locks in.
+   * Hidden until the animation parks it, so the title shows without JS.
+   */
+  .codeCharacter {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    overflow: hidden;
-    color: var(--tone-fg);
-  }
-
-  .codeCharacter {
-    font-family: var(--font-mono);
-    font-size: 1em;
-    font-weight: 500;
-    letter-spacing: 0;
-  }
-
-  .resolvedCharacter {
+    display: block;
     opacity: 0;
-    font: inherit;
+    color: var(--tone-muted);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-align: center;
+    /* Monospace glyphs are wider than most title letters: shrink them about the baseline so
+       neighbours don't pile up. GSAP only ever writes opacity here, never transforms. */
+    transform: scale(0.84);
+    transform-origin: 50% 70%;
+    pointer-events: none;
+    user-select: none;
   }
 }

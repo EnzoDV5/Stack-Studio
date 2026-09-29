@@ -153,7 +153,7 @@ Neighbouring sections never share a trigger type, and every section's motion is 
 | First visit       | Mark and counter preloader, under 1.5s, once per session                    | `Preloader`                      |
 | Route change      | Orange then ink panel wipe, scroll reset (or jump to `#hash`)               | `PageTransition`                 |
 | Whole page        | Page colours switch to each section's tone in one short fade                | `ToneController`                 |
-| Section headings  | Same-size code characters slowly compile into the readable title            | `SectionHeader`, `MaskedHeading` |
+| Section headings  | Code characters compile into the title once, on a timer, when it enters     | `SectionHeader`, `MaskedHeading` |
 | Home hero         | Masked line rise; project index crossfades the background                   | `HomeHero`, `SplitReveal`        |
 | Home work         | Full-bleed media shrinks into a card, then a pinned sideways reel           | `WorkReel`                       |
 | Home services     | Horizontal accordion (transform + clip-path)                                | `PathChooser`                    |
@@ -162,7 +162,7 @@ Neighbouring sections never share a trigger type, and every section's motion is 
 | Starting quotes   | Quote cards rise in; each opens the estimator pre-filled                    | `QuoteStarters`, `StaggerGroup`  |
 | Case study site   | The site on a laptop: the screen swings up and grows, then the site scrolls | `CaseDevice`, `MacbookScroll`    |
 | Prices, metrics   | Numbers count up once on enter                                              | `CountUp`                        |
-| Closing band      | Same-size code characters compile into the current-tone title               | `ClosingCta`, `MaskedHeading`    |
+| Closing band      | Code characters compile into the current-tone title once it enters          | `ClosingCta`, `MaskedHeading`    |
 | Work media        | Clip-path mask opens while the image settles; Flip on filter                | `MediaReveal`, `WorkGrid`        |
 | Work cards        | Hover video preview (desktop)                                               | `ProjectMedia`                   |
 | Services, FAQs    | Expanding rows; each service stage has its own layout                       | `Accordion`, `StageBlock`        |

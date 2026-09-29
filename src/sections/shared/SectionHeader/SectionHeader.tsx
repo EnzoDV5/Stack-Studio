@@ -31,8 +31,8 @@ export interface SectionHeaderProps {
 }
 
 /**
- * The section opener. Every title begins as moving code clipped to its letterforms, then
- * resolves into readable type as the heading enters the viewport.
+ * The section opener. Every title waits as running code, then compiles itself into readable
+ * type once, when the heading enters the viewport.
  */
 export function SectionHeader({
   eyebrow,

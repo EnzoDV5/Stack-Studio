@@ -134,10 +134,10 @@ client voices and the founders, then the closing band. Measured on the preview b
 | 5   | WorkReel               | paper  | SectionHeader inline  | Arrives full-bleed; pins (the page's only pin), shrinks into a card, then travels sideways      | scrub + pin  | 2.85   |
 | 6   | ClientVoices           | paper  | SectionHeader stacked | The quote cards rise in one after the other                                                     | enter        | ~1.0   |
 | 7   | StudioSnippet          | paper  | SectionHeader split   | Portraits drift toward the pointer (hover parallax)                                             | hover        | 0.92   |
-| 8   | ClosingCta (app shell) | orange | eyebrow               | Same-size code characters slowly compile into the readable ink title                            | scrub        | ~0.9   |
+| 8   | ClosingCta (app shell) | orange | eyebrow               | Code characters compile into the readable ink title, once, on a timer when the band enters      | enter        | ~0.9   |
 | —   | Footer (chrome)        | ink    | —                     | None. Not part of the tone flow, so the band above stays orange                                 | none         | 0.76   |
 
-Trigger sequence: load · scrub/pin · ambient · enter · hover · scrub · enter · hover · scrub. No two
+Trigger sequence: load · scrub/pin · ambient · enter · hover · scrub · enter · hover · enter. No two
 neighbours share a type. Openers go inline · stacked · split · minimal · stacked · split.
 Every section ends with a "go deeper" link: All work (header row and last panel), See all
 the work, All services, The full process, See all pricing, Meet the studio.
@@ -168,20 +168,22 @@ at 75%; count-ups and the process line at `trigger.startLate`, 62%), so they pla
 The WorkReel shrink happens inside its pin rather than while the section slides in, so the
 full-bleed image is seen whole first.
 
-**One deliberate deviation from the brief.** StudioSnippet's parallax is pointer-driven, not
-scroll-driven, because ClosingCta right after it scrubs, and ClosingCta has to stay a scrub
-(on /work it follows an `enter` grid). `Parallax trigger="scroll"` is still the default
-elsewhere. (ProcessLine is scrubbed again: since the reorder, neither neighbour scrubs.)
+**Deliberate deviations.** StudioSnippet's parallax is pointer-driven, not scroll-driven,
+so Home's last two sections read hover · enter. `Parallax trigger="scroll"` is still the
+default elsewhere. (ProcessLine is scrubbed again: since the reorder, neither neighbour
+scrubs.) On /work the closing band's compile follows the WorkGrid's `enter` reveals. The
+titles used to scrub with the scroll, which felt jittery, and a card grid and one title
+are different enough not to read as a repeat.
 
 ### Other pages
 
 **Work:** PageTitle (none) · WorkGrid (enter: MediaReveal clip per card, Flip on filter
-change) · ClosingCta (scrub). One filter per project (`?filter=<slug>`); a filter change
+change) · ClosingCta (enter). One filter per project (`?filter=<slug>`); a filter change
 Flips the cards that stay into place instead of re-running a rise.
 
 **Case study:** PageTitle (none) · CaseMeta (none) · CaseDevice (scrub + pin: the page's
 one pin) · CaseNarrative (none) · CaseGallery (scrub: parallax) · CaseMetrics (enter:
-CountUp) · Testimonial (none) · CaseOutro (hover) · ClosingCta (scrub). CaseDevice shows the
+CountUp) · Testimonial (none) · CaseOutro (hover) · ClosingCta (enter). CaseDevice shows the
 project's live site on a laptop (`MacbookScroll`, a GSAP port of the Aceternity "MacBook
 scroll"). The lid and keyboard deck are two planes hinged on one edge under a shared
 perspective (no preserve-3d scene), so they stay joined: the laptop starts open, seen from
@@ -190,7 +192,7 @@ fills the view; then a full-page capture of the real site scrolls inside the scr
 bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is static; the gallery uses Parallax.
 
 **Services:** PageTitle (load: title reveal) · StageExplorer (none, sticky nav) ·
-ProcessPinned (pin, `#process`) · FaqSection (hover) · ClosingCta (scrub). Each stage has
+ProcessPinned (pin, `#process`) · FaqSection (hover) · ClosingCta (enter). Each stage has
 its own layout, picked for what it sells (`StageBlock layout`): Build `feature` (text
 beside a tall image, expandable offerings), Take over `cards`, Run `split` (image column
 beside a priced list), Grow `figures` (rates as large figures) and Partner `tiers`. Stage
@@ -198,13 +200,13 @@ loops only play while on screen.
 
 **Pricing:** PageTitle (load: title reveal) · PricingSteps (none) · QuoteStarters (enter:
 cards rise) · PlanTabs (hover: Flip card swap) · IncludedVsExcluded (none) · PoliciesList
-(none) · FaqSection (hover) · ClosingCta (scrub). No fixed price list: ready-made starting
+(none) · FaqSection (hover) · ClosingCta (enter). No fixed price list: ready-made starting
 quotes show the range the estimator computes and open /start pre-filled. Openers: minimal ·
 split · inline · own · split · own. Everything from the plans down mounts as it approaches.
 
 **Studio:** PageTitle (none) · StudioIntro (enter: MediaReveal) · FounderProfiles (scrub:
 parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · ValuesGrid
-"Values" (none) · Testimonial (none) · ClosingCta (scrub).
+"Values" (none) · Testimonial (none) · ClosingCta (enter).
 Openers: split · stacked · inline.
 
 **Start:** PageTitle (none) · BriefFlow (interaction: step transitions, unchanged). The
@@ -224,7 +226,9 @@ These are also in CLAUDE.md. Check every change against them and update the tabl
    ClosingCta counts as every page's last section.
 2. **Section titles share one code-to-title language.** Every `SectionHeader` and the
    `ClosingCta` begins as same-size code characters with the title's exact line length, then
-   resolves left-to-right into readable type. The Home hero and opted-in `PageTitle` headings
+   compiles left to right into readable type. It plays once, on a timer, when the heading
+   crosses `trigger.start` (`maskedHeading` tokens, about 0.6–1s): scrolling starts it but
+   never drives it, and it doesn't replay on the way back up. The Home hero and opted-in `PageTitle` headings
    keep their line reveal.
 3. **Staggered rises are only for groups of cards or list items**, never headers and never
    whole sections. `StaggerGroup` is used only for the client quote cards and the starting quote cards; FadeUp was removed.
