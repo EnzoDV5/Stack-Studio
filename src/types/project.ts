@@ -18,6 +18,15 @@ export interface GalleryItem extends ImageAsset {
   caption?: string
 }
 
+export interface ClientLogo {
+  image: ImageAsset
+  /**
+   * The background the artwork is drawn for: 'dark' for light artwork (white type), 'light'
+   * for dark or full-colour artwork. The logo is always shown on that surface.
+   */
+  surface: 'light' | 'dark'
+}
+
 export interface Project {
   slug: string
   name: string
@@ -34,7 +43,15 @@ export interface Project {
   /** Clearly-fake demo project. Shown with a "Sample" tag. */
   isSample?: boolean
   featured?: boolean
+  /** Work cards and the next-project card (4:3). */
   thumbnail: ImageAsset
+  /**
+   * Wide (16:9) image for Home (hero backdrop and work reel), a different composition from
+   * the thumbnail so the two pages don't repeat. Falls back to the thumbnail.
+   */
+  showcase?: ImageAsset
+  /** The client's logo, shown on the case study. */
+  logo?: ClientLogo
   /** Short muted loop for hover previews on desktop. */
   preview?: VideoAsset
   hero: MediaSlot

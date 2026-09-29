@@ -279,6 +279,7 @@ export function WorkReel({
                     >
                       <ProjectMedia
                         project={project}
+                        variant="showcase"
                         playing={hovered === project.slug}
                         sizes={isCover ? '100vw' : '(min-width: 1024px) 62vw, 82vw'}
                         imageClassName="transition-transform duration-(--duration-base) ease-out-expo group-hover:scale-[1.03]"

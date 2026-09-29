@@ -19,10 +19,12 @@ export const projects: Project[] = [
     stages: ['build', 'run'], // COPY: confirm
     liveUrl: 'https://example.com/gc-solar', // COPY: replace with the live GC Solar URL
     featured: true,
-    thumbnail: media.projects.gcSolar.thumbnail,
+    thumbnail: media.projects.gcSolar.card,
+    showcase: media.projects.gcSolar.showcase,
+    logo: { image: media.projects.gcSolar.logo, surface: 'dark' },
     screen: media.projects.gcSolar.screen,
     preview: media.projects.gcSolar.preview,
-    hero: { image: media.projects.gcSolar.hero, video: media.projects.gcSolar.heroVideo },
+    hero: { image: media.projects.gcSolar.showcase, video: media.projects.gcSolar.heroVideo },
     narrative: {
       problem: {
         heading: 'Great installs, no way to show them.', // COPY:
@@ -78,11 +80,13 @@ export const projects: Project[] = [
     stages: ['build', 'run'], // COPY: confirm
     liveUrl: 'https://example.com/mpg-foundation', // COPY: replace with the live MPG Foundation URL
     featured: true,
-    thumbnail: media.projects.mpgFoundation.thumbnail,
+    thumbnail: media.projects.mpgFoundation.card,
+    showcase: media.projects.mpgFoundation.showcase,
+    logo: { image: media.projects.mpgFoundation.logo, surface: 'light' },
     screen: media.projects.mpgFoundation.screen,
     preview: media.projects.mpgFoundation.preview,
     hero: {
-      image: media.projects.mpgFoundation.hero,
+      image: media.projects.mpgFoundation.showcase,
       video: media.projects.mpgFoundation.heroVideo,
     },
     narrative: {
@@ -145,10 +149,12 @@ export const projects: Project[] = [
     sector: 'Salons & beauty', // COPY: confirm
     services: ['Web design', 'Development'], // COPY: confirm
     stages: ['build'], // COPY: confirm
-    thumbnail: media.projects.salonFriend.thumbnail,
+    thumbnail: media.projects.salonFriend.card,
+    showcase: media.projects.salonFriend.showcase,
+    logo: { image: media.projects.salonFriend.logo, surface: 'light' },
     screen: media.projects.salonFriend.screen,
     preview: media.projects.salonFriend.preview,
-    hero: { image: media.projects.salonFriend.hero },
+    hero: { image: media.projects.salonFriend.showcase },
     narrative: {
       problem: {
         heading: 'Case study coming soon.', // COPY: PLACEHOLDER

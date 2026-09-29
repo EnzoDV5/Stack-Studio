@@ -1,11 +1,13 @@
 /**
  * The mockup images rendered for each project (scripts/mockups/render.mjs), written to
- * public/media/projects/mockups/{project}-{name}.webp plus a half-size -small.webp.
- * `desktop` and `mobile` name captures from shots.mjs. Sizes match their slot in
- * src/data/media.ts: thumbnails 4:3, heroes and full gallery images 16:9, half gallery 4:5.
+ * public/media/projects/mockups/{project}-{name}-{width}.webp at every width of its shape.
+ * `desktop`, `tablet` and `mobile` name captures from shots.mjs. Shapes match their slot
+ * in src/data/media.ts (keep `mockupShapes` there in sync with `shapes` here).
  *
- * Layouts: 'laptop-phone' (a laptop with a phone in front), 'browser' (one browser window),
- * 'browser-stack' (two overlapping windows; `desktop` then `back`), 'phone' (one phone).
+ * Each project gets its own composition for its Work card and its Home showcase, so no two
+ * projects (and no two pages) repeat the same mockup:
+ *   laptop-phone, laptop-phones, tablet-phone, phones-trio, browser-phone, perspective
+ *   (three windows on a tilted plane), browser, browser-stack (first name in front), phone.
  */
 export const themes = {
   // Deep green studio, after GC Solar's own dark greens.
@@ -37,131 +39,146 @@ export const themes = {
   },
 }
 
-const thumb = [1600, 1200]
-const wide = [2400, 1350]
-const tall = [1200, 1500]
+/**
+ * Output sizes. Each width is rendered separately (not downscaled), largest first. The
+ * largest covers a full-bleed retina screen: the Home hero and reel are 100vw.
+ */
+export const shapes = {
+  card: { aspect: 3 / 4, widths: [2400, 1600, 800] }, // Work cards, next-project card
+  showcase: { aspect: 9 / 16, widths: [3840, 2560, 1280] }, // Home hero, work reel, case hero
+  wide: { aspect: 9 / 16, widths: [3840, 2560, 1280] }, // full-width gallery images
+  tall: { aspect: 5 / 4, widths: [2000, 1200, 600] }, // half-width gallery images
+}
 
 export const scenes = [
-  // GC Solar
+  // GC Solar: the classic laptop and phone on the card; floating windows on Home.
   {
     project: 'gc-solar',
-    name: 'thumb',
-    size: thumb,
+    name: 'card',
+    shape: 'card',
     layout: 'laptop-phone',
-    desktop: 'home',
-    mobile: 'home',
+    desktop: ['home'],
+    mobile: ['home'],
   },
   {
     project: 'gc-solar',
-    name: 'hero',
-    size: wide,
-    layout: 'laptop-phone',
-    desktop: 'solutions',
-    mobile: 'projects',
+    name: 'showcase',
+    shape: 'showcase',
+    layout: 'perspective',
+    desktop: ['solutions', 'home', 'projects'],
   },
-  { project: 'gc-solar', name: 'solutions', size: wide, layout: 'browser', desktop: 'solutions' },
-  { project: 'gc-solar', name: 'quote-mobile', size: tall, layout: 'phone', mobile: 'quote' },
-  { project: 'gc-solar', name: 'projects-mobile', size: tall, layout: 'phone', mobile: 'projects' },
+  {
+    project: 'gc-solar',
+    name: 'solutions',
+    shape: 'wide',
+    layout: 'browser',
+    desktop: ['solutions'],
+  },
+  { project: 'gc-solar', name: 'quote-mobile', shape: 'tall', layout: 'phone', mobile: ['quote'] },
+  {
+    project: 'gc-solar',
+    name: 'projects-mobile',
+    shape: 'tall',
+    layout: 'phone',
+    mobile: ['projects'],
+  },
   {
     project: 'gc-solar',
     name: 'company',
-    size: wide,
+    shape: 'wide',
     layout: 'browser-stack',
-    desktop: 'quote',
-    back: 'about',
+    desktop: ['quote', 'about'],
   },
 
-  // MPG Foundation
+  // MPG Foundation: a tablet and phone on the card; a browser and phone on Home.
   {
     project: 'mpg-foundation',
-    name: 'thumb',
-    size: thumb,
-    layout: 'laptop-phone',
-    desktop: 'home',
-    mobile: 'what-we-do',
+    name: 'card',
+    shape: 'card',
+    layout: 'tablet-phone',
+    tablet: 'home',
+    mobile: ['what-we-do'],
   },
   {
     project: 'mpg-foundation',
-    name: 'hero',
-    size: wide,
-    layout: 'laptop-phone',
-    desktop: 'story',
-    mobile: 'donate',
+    name: 'showcase',
+    shape: 'showcase',
+    layout: 'browser-phone',
+    desktop: ['story'],
+    mobile: ['donate'],
   },
   {
     project: 'mpg-foundation',
     name: 'what-we-do',
-    size: wide,
+    shape: 'wide',
     layout: 'browser',
-    desktop: 'what-we-do',
+    desktop: ['what-we-do'],
   },
   {
     project: 'mpg-foundation',
     name: 'donate-mobile',
-    size: tall,
+    shape: 'tall',
     layout: 'phone',
-    mobile: 'donate',
+    mobile: ['donate'],
   },
   {
     project: 'mpg-foundation',
     name: 'what-we-do-mobile',
-    size: tall,
+    shape: 'tall',
     layout: 'phone',
-    mobile: 'what-we-do',
+    mobile: ['what-we-do'],
   },
   {
     project: 'mpg-foundation',
     name: 'story',
-    size: wide,
+    shape: 'wide',
     layout: 'browser-stack',
-    desktop: 'donate',
-    back: 'story',
+    desktop: ['donate', 'story'],
   },
 
-  // Salon Friend
+  // Salon Friend: three phones on the card (it's a shop people use on the go); a laptop
+  // between two phones on Home.
   {
     project: 'salon-friend',
-    name: 'thumb',
-    size: thumb,
-    layout: 'laptop-phone',
-    desktop: 'home',
-    mobile: 'home',
+    name: 'card',
+    shape: 'card',
+    layout: 'phones-trio',
+    mobile: ['home', 'products', 'product'],
   },
   {
     project: 'salon-friend',
-    name: 'hero',
-    size: wide,
-    layout: 'laptop-phone',
-    desktop: 'products',
-    mobile: 'product',
+    name: 'showcase',
+    shape: 'showcase',
+    layout: 'laptop-phones',
+    desktop: ['home'],
+    mobile: ['products', 'product'],
   },
   {
     project: 'salon-friend',
     name: 'catalogue',
-    size: wide,
+    shape: 'wide',
     layout: 'browser',
-    desktop: 'products',
+    desktop: ['products'],
   },
   {
     project: 'salon-friend',
     name: 'product-mobile',
-    size: tall,
+    shape: 'tall',
     layout: 'phone',
-    mobile: 'product',
+    mobile: ['product'],
   },
   {
     project: 'salon-friend',
     name: 'catalogue-mobile',
-    size: tall,
+    shape: 'tall',
     layout: 'phone',
-    mobile: 'products',
+    mobile: ['products'],
   },
   {
     project: 'salon-friend',
     name: 'brands',
-    size: wide,
+    shape: 'wide',
     layout: 'browser-stack',
-    desktop: 'product',
-    back: 'brands',
+    desktop: ['product', 'brands'],
   },
 ]

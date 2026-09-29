@@ -1,4 +1,5 @@
 import { useParams } from 'react-router'
+import { LogoPlate } from '@/components/media/LogoPlate'
 import { PageMeta } from '@/components/seo/PageMeta'
 import { Tag } from '@/components/ui/Tag'
 import { caseStudyContent } from '@/data/pages'
@@ -42,6 +43,7 @@ export function CaseStudyPage() {
           title: project.name,
           intro: project.summary,
         }}
+        aside={project.logo && <LogoPlate logo={project.logo} />}
       >
         {project.isSample && (
           <Tag variant="accent" className="h-auto! max-w-full py-2 whitespace-normal!">

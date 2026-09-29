@@ -1,7 +1,7 @@
 /**
  * The screens captured from each live client site for the mockups (scripts/mockups).
  * `path` is relative to the site; `anchor` scrolls a section to the top of the viewport
- * first (one-page sites). Desktop is 1440×900, mobile 390×844.
+ * first (one-page sites). Desktop is 1440×900, tablet 1180×820 (iPad landscape), mobile 390×844.
  */
 export const sites = {
   'gc-solar': {
@@ -46,6 +46,7 @@ export const shots = [
   { project: 'mpg-foundation', name: 'story', device: 'desktop', path: '/', anchor: '#story' },
   { project: 'mpg-foundation', name: 'donate', device: 'desktop', path: '/', anchor: '#donate' },
   { project: 'mpg-foundation', name: 'home', device: 'mobile', path: '/' },
+  { project: 'mpg-foundation', name: 'home', device: 'tablet', path: '/' },
   { project: 'mpg-foundation', name: 'donate', device: 'mobile', path: '/', anchor: '#donate' },
   {
     project: 'mpg-foundation',
@@ -77,5 +78,6 @@ export const shots = [
 
 export const devices = {
   desktop: { width: 1440, height: 900, deviceScaleFactor: 2 },
+  tablet: { width: 1180, height: 820, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
   mobile: { width: 390, height: 844, deviceScaleFactor: 3, isMobile: true, hasTouch: true },
 }

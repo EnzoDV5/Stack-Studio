@@ -82,7 +82,12 @@ export function HomeHero({
                 key={project.slug}
                 className={cn(layer, active === project.slug ? 'opacity-100' : 'opacity-0')}
               >
-                <ProjectMedia project={project} playing={active === project.slug} sizes="100vw" />
+                <ProjectMedia
+                  project={project}
+                  variant="showcase"
+                  playing={active === project.slug}
+                  sizes="100vw"
+                />
               </div>
             ))}
           </div>

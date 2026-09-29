@@ -11,39 +11,54 @@ import type { StageId } from '@/types'
 import type { ServiceMediaItem } from '@/types/service-media'
 
 /**
- * Full-page desktop capture of a live client site (1440 wide) in /public/media/projects,
- * scrolled on the laptop in the case study. How to recapture: public/media/README.md.
+ * Full-page desktop capture of a live client site in /public/media/projects, scrolled on the
+ * laptop in the case study: the page at 1440 CSS px wide, saved at 1.5× (2160 px) and 0.75×
+ * (1080 px). `cssHeight` is the page height the capture script prints. How to recapture:
+ * public/media/README.md (npm run mockups:capture -- --full).
  */
-function siteCapture(id: string, height: number, alt: string): ImageAsset {
+function siteCapture(id: string, cssHeight: number, alt: string): ImageAsset {
   return {
     src: `/media/projects/${id}-screen.webp`,
-    srcSet: `/media/projects/${id}-screen-small.webp 720w, /media/projects/${id}-screen.webp 1440w`,
-    width: 1440,
-    height,
+    srcSet: `/media/projects/${id}-screen-small.webp 1080w, /media/projects/${id}-screen.webp 2160w`,
+    width: 2160,
+    height: Math.round(cssHeight * 1.5),
     alt,
   }
 }
 
 /**
  * Device mockup of a live client site in /public/media/projects/mockups, rendered from real
- * captures by scripts/mockups (see public/media/README.md). Each has a half-size -small copy.
+ * captures by scripts/mockups (see public/media/README.md) at each width below, largest
+ * first. Keep in sync with `shapes` in scripts/mockups/scenes.mjs.
  */
-type MockupShape = 'thumb' | 'wide' | 'tall'
-const mockupSize: Record<MockupShape, [number, number]> = {
-  thumb: [1600, 1200],
-  wide: [2400, 1350],
-  tall: [1200, 1500],
-}
+const mockupShapes = {
+  /** Work cards and the next-project card (4:3). */
+  card: { aspect: 3 / 4, widths: [2400, 1600, 800] },
+  /** Home hero backdrop and work reel, full-bleed on retina screens (16:9). */
+  showcase: { aspect: 9 / 16, widths: [3840, 2560, 1280] },
+  /** Full-width gallery images (16:9). */
+  wide: { aspect: 9 / 16, widths: [3840, 2560, 1280] },
+  /** Half-width gallery images (4:5). */
+  tall: { aspect: 5 / 4, widths: [2000, 1200, 600] },
+} as const
+type MockupShape = keyof typeof mockupShapes
+
 function mockup(project: string, name: string, shape: MockupShape, alt: string): ImageAsset {
-  const [width, height] = mockupSize[shape]
-  const base = `/media/projects/mockups/${project}-${name}`
+  const { aspect, widths } = mockupShapes[shape]
+  const url = (w: number) => `/media/projects/mockups/${project}-${name}-${w}.webp`
+  const [largest, middle] = widths
   return {
-    src: `${base}.webp`,
-    srcSet: `${base}-small.webp ${width / 2}w, ${base}.webp ${width}w`,
-    width,
-    height,
+    src: url(middle),
+    srcSet: widths.map((w) => `${url(w)} ${w}w`).join(', '),
+    width: largest,
+    height: Math.round(largest * aspect),
     alt,
   }
+}
+
+/** A client's logo (transparent WebP in /public/logos/clients). */
+function clientLogo(id: string, width: number, height: number, alt: string): ImageAsset {
+  return { src: `/logos/clients/${id}.webp`, width, height, alt }
 }
 
 /** picsum placeholder with a responsive srcSet (webp). */
@@ -145,42 +160,45 @@ export const media = {
   },
 
   projects: {
-    // Thumbnails, heroes and galleries are device mockups rendered from real captures of the
-    // live sites (scripts/mockups, 29 Sep 2026). The poster of each missing preview/hero video
-    // is the matching mockup, so nothing falls back to a stock photo.
+    // Cards, showcases and galleries are device mockups rendered from real captures of the
+    // live sites (scripts/mockups, 29 Sep 2026). Each project has its own composition for its
+    // Work card (`card`) and its Home showcase (`showcase`, also the case study hero), so no
+    // two projects or pages repeat a mockup. Missing preview/hero videos show the matching
+    // mockup as their poster.
     gcSolar: {
-      // Full-page capture of gcsolar-redesign-demo.netlify.app (28 Sep 2026), scrolled on the case study laptop.
+      // Full-page capture of gcsolar-redesign-demo.netlify.app (29 Sep 2026, 1.5×), scrolled on the case study laptop.
       screen: siteCapture(
         'gc-solar',
         5991,
         'The GC Solar website, from the homepage down to the footer', // COPY: alt
       ),
-      thumbnail: mockup(
+      card: mockup(
         'gc-solar',
-        'thumb',
-        'thumb',
+        'card',
+        'card',
         'The GC Solar homepage on a laptop and a phone', // COPY: alt
+      ),
+      showcase: mockup(
+        'gc-solar',
+        'showcase',
+        'showcase',
+        'Three GC Solar pages floating side by side: solutions, the homepage and projects', // COPY: alt
       ),
       preview: video(
         'gc-solar-preview.mp4',
         'Scrolling through the GC Solar website', // COPY:
-        mockup('gc-solar', 'thumb', 'thumb', ''),
+        mockup('gc-solar', 'card', 'card', ''),
         1600,
         1200,
-      ),
-      hero: mockup(
-        'gc-solar',
-        'hero',
-        'wide',
-        'The GC Solar solutions page on a laptop, with its projects page on a phone', // COPY: alt
       ),
       heroVideo: video(
         'gc-solar-hero.mp4',
         'GC Solar website walkthrough', // COPY:
-        mockup('gc-solar', 'hero', 'wide', ''),
+        mockup('gc-solar', 'showcase', 'showcase', ''),
         2400,
         1350,
       ),
+      logo: clientLogo('gc-solar', 570, 113, 'GC Solar logo'),
       gallery: [
         mockup('gc-solar', 'solutions', 'wide', 'The GC Solar solutions page in a browser'), // COPY: alt
         mockup('gc-solar', 'quote-mobile', 'tall', 'The GC Solar quote request on a phone'), // COPY: alt
@@ -194,38 +212,39 @@ export const media = {
       ],
     },
     mpgFoundation: {
-      // Full-page capture of mpgf.org.za (28 Sep 2026), scrolled on the case study laptop.
+      // Full-page capture of mpgf.org.za (29 Sep 2026, 1.5×), scrolled on the case study laptop.
       screen: siteCapture(
         'mpg-foundation',
         9605,
         'The MPG Foundation website, from the homepage down to the footer', // COPY: alt
       ),
-      thumbnail: mockup(
+      card: mockup(
         'mpg-foundation',
-        'thumb',
-        'thumb',
-        'The MPG Foundation homepage on a laptop, with its “What we do” section on a phone', // COPY: alt
+        'card',
+        'card',
+        'The MPG Foundation homepage on a tablet, with its “What we do” section on a phone', // COPY: alt
+      ),
+      showcase: mockup(
+        'mpg-foundation',
+        'showcase',
+        'showcase',
+        'MPG Foundation’s waterfront project in a browser, with its donate section on a phone', // COPY: alt
       ),
       preview: video(
         'mpg-foundation-preview.mp4',
         'Scrolling through the MPG Foundation website', // COPY:
-        mockup('mpg-foundation', 'thumb', 'thumb', ''),
+        mockup('mpg-foundation', 'card', 'card', ''),
         1600,
         1200,
-      ),
-      hero: mockup(
-        'mpg-foundation',
-        'hero',
-        'wide',
-        'MPG Foundation’s waterfront project on a laptop, with its donate section on a phone', // COPY: alt
       ),
       heroVideo: video(
         'mpg-foundation-hero.mp4',
         'MPG Foundation website walkthrough', // COPY:
-        mockup('mpg-foundation', 'hero', 'wide', ''),
+        mockup('mpg-foundation', 'showcase', 'showcase', ''),
         2400,
         1350,
       ),
+      logo: clientLogo('mpg-foundation', 1000, 1000, 'MPG Foundation logo'),
       gallery: [
         mockup(
           'mpg-foundation',
@@ -254,31 +273,32 @@ export const media = {
       ],
     },
     salonFriend: {
-      // Full-page capture of salon-friends.web.app (28 Sep 2026), scrolled on the case study laptop.
+      // Full-page capture of salon-friends.web.app (29 Sep 2026, 1.5×), scrolled on the case study laptop.
       screen: siteCapture(
         'salon-friend',
         7142,
         'The Salon Friend website, from the homepage down to the footer', // COPY: alt
       ),
-      thumbnail: mockup(
+      card: mockup(
         'salon-friend',
-        'thumb',
-        'thumb',
-        'The Salon Friend homepage on a laptop and a phone', // COPY: alt
+        'card',
+        'card',
+        'Three Salon Friend pages on phones: the homepage, the catalogue and a product', // COPY: alt
+      ),
+      showcase: mockup(
+        'salon-friend',
+        'showcase',
+        'showcase',
+        'The Salon Friend homepage on a laptop between two phones showing the catalogue and a product', // COPY: alt
       ),
       preview: video(
         'salon-friend-preview.mp4',
         'Scrolling through the Salon Friend website', // COPY:
-        mockup('salon-friend', 'thumb', 'thumb', ''),
+        mockup('salon-friend', 'card', 'card', ''),
         1600,
         1200,
       ),
-      hero: mockup(
-        'salon-friend',
-        'hero',
-        'wide',
-        'The Salon Friend catalogue on a laptop, with a product page on a phone', // COPY: alt
-      ),
+      logo: clientLogo('salon-friend', 682, 468, 'Salon Friend logo'),
       gallery: [
         mockup('salon-friend', 'catalogue', 'wide', 'The Salon Friend catalogue in a browser'), // COPY: alt
         mockup('salon-friend', 'product-mobile', 'tall', 'A Salon Friend product page on a phone'), // COPY: alt

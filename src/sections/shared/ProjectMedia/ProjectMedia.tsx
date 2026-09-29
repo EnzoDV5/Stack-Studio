@@ -2,10 +2,15 @@ import { Image } from '@/components/media/Image'
 import { Video } from '@/components/media/Video'
 import { useIsTouch } from '@/hooks/useIsTouch'
 import { cn } from '@/lib/cn'
-import type { Project } from '@/types'
+import type { ImageAsset, Project } from '@/types'
 
 export interface ProjectMediaProps {
   project: Project
+  /**
+   * Which still to show: 'card' (the thumbnail, Work) or 'showcase' (the wide Home image,
+   * falling back to the thumbnail).
+   */
+  variant?: 'card' | 'showcase'
   /** Play the preview loop (hover or focus on the parent link). Desktop pointers only. */
   playing: boolean
   sizes: string
@@ -22,6 +27,7 @@ export interface ProjectMediaProps {
  */
 export function ProjectMedia({
   project,
+  variant = 'card',
   playing,
   sizes,
   priority = false,
@@ -30,15 +36,12 @@ export function ProjectMedia({
 }: ProjectMediaProps) {
   const isTouch = useIsTouch()
   const preview = isTouch ? undefined : project.preview
+  const still: ImageAsset =
+    variant === 'showcase' ? (project.showcase ?? project.thumbnail) : project.thumbnail
 
   return (
     <div className={cn('relative size-full overflow-hidden bg-ink-700', className)}>
-      <Image
-        image={project.thumbnail}
-        priority={priority}
-        sizes={sizes}
-        className={imageClassName}
-      />
+      <Image image={still} priority={priority} sizes={sizes} className={imageClassName} />
       {preview && (
         <Video
           video={preview}
