@@ -290,7 +290,7 @@ export const pricingContent = {
   },
   quotes: {
     eyebrow: 'Starting points', // COPY:
-    title: 'Start from a project like yours.', // COPY:
+    title: 'Common websites and what they cost.', // COPY:
     intro:
       'Pick the closest one and adjust it in the estimate builder. Ranges are a guide; your fixed quote follows a short call.', // COPY:
     rangeLabel: 'Typically', // COPY:
