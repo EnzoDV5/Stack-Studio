@@ -281,11 +281,45 @@ export const servicesContent = {
     offerings: ['desktop-app', 'backend-api'],
     cta: { label: 'Tell us about your software', to: '/start?path=build' }, // COPY:
   },
-  process: {
-    eyebrow: 'Process', // COPY:
-    title: 'How a project runs.', // COPY:
-    intro: 'Six clear steps, with a staging link from week one so you see progress as it happens.', // COPY:
-    stepLabel: 'Step', // COPY:
+  /**
+   * What happens after someone gets in touch, from the brief to a start date: the last doubt
+   * before contact. (How a project runs week by week is on Home, in the process plan.)
+   */
+  nextSteps: {
+    eyebrow: 'Next steps', // COPY:
+    title: 'From first message to kick-off.', // COPY:
+    intro: 'No long sales process. This is exactly what happens once you get in touch.', // COPY:
+    steps: [
+      {
+        title: 'Tell us what you need', // COPY:
+        when: 'About two minutes', // COPY:
+        body: 'Answer a few questions in the brief and see a rough estimate straight away.', // COPY:
+      },
+      {
+        title: 'We get back to you', // COPY:
+        when: 'Within one business day', // COPY:
+        body: 'A real reply, not an automated one, with any questions we have.', // COPY:
+      },
+      {
+        title: 'A short call', // COPY:
+        when: 'About 30 minutes', // COPY: confirm
+        body: 'We talk through the business, not just the website, and what matters most.', // COPY:
+      },
+      {
+        title: 'Your fixed quote', // COPY:
+        when: 'In writing', // COPY:
+        body: 'Scope, timeline and payment milestones. Say yes and we book your start date.', // COPY:
+      },
+    ],
+    /** What every project comes with, whatever it is (each backed by a policy or FAQ). */
+    promisesLabel: 'Along the way', // COPY:
+    promises: [
+      'A staging link from week one', // COPY:
+      'Training and handover at launch', // COPY:
+      'A 30-day launch warranty', // COPY:
+      'Yours on final payment', // COPY:
+    ],
+    cta: { label: 'Start the brief', to: '/start' }, // COPY:
   },
   labels: {
     includes: 'Includes', // COPY:

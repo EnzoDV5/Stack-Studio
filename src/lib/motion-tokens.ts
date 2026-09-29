@@ -185,7 +185,7 @@ export const macbook = {
 
 /**
  * AppShowcase (Services): the phone turns from its back to face the viewer as it scrolls
- * through the viewport (scrubbed, not pinned: ProcessPinned is the page's one pin). The frames
+ * through the viewport (scrubbed, not pinned). The frames
  * come from scripts/devices.
  */
 export const phoneTurn = {

@@ -4,18 +4,17 @@ import { media, serviceMedia } from '@/data/media'
 import { pageMeta, pricingContent, servicesContent } from '@/data/pages'
 import { planFamilies, plans } from '@/data/plans'
 import { policies } from '@/data/policies'
-import { processSteps } from '@/data/process'
 import { rates } from '@/data/rates'
 import { offerings, serviceStages } from '@/data/services'
 import { stageRows } from '@/lib/offer'
 import { AppShowcase } from '@/sections/services/AppShowcase'
 import { DesktopShowcase } from '@/sections/services/DesktopShowcase'
+import { NextSteps } from '@/sections/services/NextSteps'
 import { ServiceIndex } from '@/sections/services/ServiceIndex'
 import type { StageLayout } from '@/sections/services/StageBlock'
 import { StageExplorer, type StageExplorerStage } from '@/sections/services/StageExplorer'
 import { FaqSection } from '@/sections/shared/FaqSection'
 import { PageTitle } from '@/sections/shared/PageTitle'
-import { ProcessPinned } from '@/sections/shared/ProcessPinned'
 import type { StageId } from '@/types'
 
 const c = servicesContent
@@ -75,7 +74,7 @@ const afterLaunch: StageExplorerStage[] = serviceStages
 /**
  * Services, grouped the way people look for them: a "What do you need?" index, websites, apps
  * and software (the phone), desktop software (the laptop), then taking over, running, growing
- * and partnering on what exists.
+ * and partnering on what exists, then what happens once you get in touch.
  */
 export function ServicesPage() {
   return (
@@ -113,16 +112,15 @@ export function ServicesPage() {
         laptop={media.desktop.laptop}
       />
       <StageExplorer stages={afterLaunch} labels={c.labels} />
-      <ProcessPinned
-        id="process"
-        tone="dark"
-        intro={{
-          eyebrow: c.process.eyebrow,
-          title: c.process.title,
-          intro: c.process.intro,
-        }}
-        steps={processSteps}
-        stepLabel={c.process.stepLabel}
+      {/* What happens after getting in touch (the week-by-week process is on Home). */}
+      <NextSteps
+        eyebrow={c.nextSteps.eyebrow}
+        title={c.nextSteps.title}
+        intro={c.nextSteps.intro}
+        steps={c.nextSteps.steps}
+        promisesLabel={c.nextSteps.promisesLabel}
+        promises={c.nextSteps.promises}
+        cta={c.nextSteps.cta}
       />
       <FaqSection tone="dark" intro={c.faq} faqs={faqsFor('general', 'services', 'process')} />
     </>

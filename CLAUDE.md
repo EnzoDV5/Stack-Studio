@@ -199,7 +199,7 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
 3. **Staggered rises are only for groups of cards or list items**, never headers or whole
    sections. `StaggerGroup` is used only for the client quote cards and the starting quote
    cards (FadeUp was removed).
-4. **At most one pinned section per page.** Home: WorkReel. Services: ProcessPinned. Case
+4. **At most one pinned section per page.** Home: WorkReel. Services: none. Case
    study: CaseDevice (the MacBook scroll).
 5. **Scroll budget:** Home stays about 11 viewports on desktop, footer included (11.05 at
    1440×900). The WorkReel pin is `reel.shrinkScroll` + `reel.panelScroll` × (panels − 1)

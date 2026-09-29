@@ -73,8 +73,9 @@ interface Parts {
  * there, drawing or retracting the bars up to it, a soft band follows the column and the
  * readout beside the plan rolls to that week (until that first hover it shows an overview,
  * so the entrance sweep doesn't flick it through every week); clicking a week (or its label, or the arrow
- * keys) keeps it there. The technology strip runs underneath (ambient). The full sticky
- * version (ProcessPinned) lives on /services. Reduced motion: the whole plan, static.
+ * keys) keeps it there. The technology strip runs underneath (ambient). This is the site's one
+ * week-by-week process; /services explains what happens after getting in touch instead
+ * (NextSteps). Reduced motion: the whole plan, static.
  */
 export function ProcessLine({
   index,

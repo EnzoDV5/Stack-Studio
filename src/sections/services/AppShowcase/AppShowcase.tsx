@@ -27,7 +27,7 @@ export interface AppShowcaseProps {
 
 /**
  * Apps and software: the Build offerings beyond websites, as dropdowns beside the phone.
- * Signature motion (scrubbed, not pinned: ProcessPinned is the page's pin): as the phone
+ * Signature motion (scrubbed, not pinned): as the phone
  * scrolls up through the view it turns from its back to face the visitor with an app on
  * screen. Reduced motion: the finished pose, still.
  */

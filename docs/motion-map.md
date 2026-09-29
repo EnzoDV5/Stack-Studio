@@ -76,7 +76,7 @@ Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whol
 | 3   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)      | scrub   |
 | 4   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)        | enter   |
 | 5   | StageExplorer   | paper  | Take over, Run, Grow, Partner                 | none    |
-| 6   | ProcessPinned   | dark   | Sticky column, active step                    | pin     |
+| 6   | NextSteps       | dark   | A line runs through four steps, lighting each | enter   |
 | 7   | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
 | 8   | ClosingCta      | orange | SplitReveal words                             | enter   |
 
@@ -204,15 +204,19 @@ bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is st
 **Services:** PageTitle (load: compile) · StageExplorer (none: the "What do you need?"
 index and 01 Websites) · AppShowcase (scrub: phone turn, 02 Apps and software) ·
 DesktopShowcase (scrub: the laptop opens, 03 Desktop software) · StageExplorer (none: 04 Take
-over, 05 Run, 06 Grow, 07 Partner) · ProcessPinned (pin,
-`#process`) · FaqSection (hover) · ClosingCta (enter). The page groups the offer the way
+over, 05 Run, 06 Grow, 07 Partner) · NextSteps (enter: a line runs through the steps) ·
+FaqSection (hover) · ClosingCta (enter). The page groups the offer the way
 visitors look for it; the five stages stay the model elsewhere. Build splits into websites (the
 offerings the brief files under 'website'), desktop software (listed in `servicesContent`,
-beside the laptop) and apps (the rest, beside the phone), so nothing repeats. No sticky nav: the index is a row of jump cards at the top. AppShowcase ("Apps and software") is where apps get their own moment, since most
+beside the laptop) and apps (the rest, beside the phone), so nothing repeats. No sticky nav: the index is a row of jump cards at the top. NextSteps replaces the old pinned
+process (Home already shows how a project runs, week by week): what happens once someone
+gets in touch, from the brief to a start date, with how long each step takes and what every
+project comes with. Its one motion is a line that runs through the four steps once, at an
+even pace, lighting each step as it reaches its dot. AppShowcase ("Apps and software") is where apps get their own moment, since most
 client work is websites: an orange iPhone 17 Pro spins on its upright axis from its back, through its side, to
 face the visitor with an illustrative bookings app on screen, scrubbed as it scrolls up
 through the view (`phoneTurn`: phone top at 92% to its centre at 50%, 80 evenly spaced frames, cross-faded, eased by `phoneTurn.ease`). It isn't pinned
-(ProcessPinned is the page's one pin). The frames are pre-rendered from a 3D model
+(the page has no pin). The frames are pre-rendered from a 3D model
 (scripts/devices) and drawn on a canvas by `ImageSequence`; no 3D library ships. Reduced
 motion: the finished pose as a still image. DesktopShowcase mirrors the phone: a large MacBook on the left (it bleeds off the page edge),
 the copy and offerings on the right. As it scrolls through the view (`laptopTurn`: laptop top
@@ -260,7 +264,7 @@ These are also in CLAUDE.md. Check every change against them and update the tabl
    heading stay static.
 3. **Staggered rises are only for groups of cards or list items**, never headers and never
    whole sections. `StaggerGroup` is used only for the client quote cards and the starting quote cards; FadeUp was removed.
-4. **At most one pinned section per page.** Home: WorkReel. Services: ProcessPinned. Case
+4. **At most one pinned section per page.** Home: WorkReel. Services: none. Case
    study: CaseDevice.
 5. **Scroll budget:** Home is about 11 viewports tall on desktop, footer included (it was
    9–10 before the reel's shrink moved inside its pin and the client quotes got their own
