@@ -1,9 +1,10 @@
 /**
- * The case study phone turn: one sequence per project, the same motion for each. The phone
- * starts from behind (camera plateau), turns through its side and settles facing the viewer
- * at a slight angle with the project's mobile site on screen.
+ * The phone turn on the Services page ("Apps and software"). The phone starts from behind
+ * (camera plateau), turns through its side and settles facing the viewer at a slight angle
+ * with an app on screen.
  *
- * `screen` is a mobile capture in .mockups/raw (without .png). Angles are in degrees: `turn`
+ * `screen` is an HTML page in screens/ (`*.html`) or a mobile capture in .mockups/raw
+ * (without .png). Angles are in degrees: `turn`
  * spins it around its upright axis (0 = facing the viewer, ±180 = its back), `tilt` leans the
  * top away, `roll` rotates it in the picture plane.
  */
@@ -28,7 +29,6 @@ export const turn = {
 }
 
 export const sequences = [
-  { id: 'gc-solar', screen: 'gc-solar-home-mobile' },
-  { id: 'mpg-foundation', screen: 'mpg-foundation-home-mobile' },
-  { id: 'salon-friend', screen: 'salon-friend-home-mobile' },
+  /** An illustrative bookings app, not a client's: most client work is websites. */
+  { id: 'app', screen: 'bookings.html' },
 ]

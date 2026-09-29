@@ -210,12 +210,6 @@ export const caseStudyContent = {
     eyebrow: 'The website', // COPY:
     title: (name: string) => `${name}, live.`, // COPY:
   },
-  phone: {
-    eyebrow: 'On the phone', // COPY:
-    title: (name: string) => `${name}, in your pocket.`, // COPY:
-    intro:
-      'Most visitors arrive on a phone, so every page is built to work just as well on a small screen: quick to load, easy to read and a thumb away from getting in touch.', // COPY:
-  },
   meta: {
     client: 'Client', // COPY:
     year: 'Year', // COPY:
@@ -251,6 +245,15 @@ export const servicesContent = {
       'Starting something new or need someone to take over what you already have? Stack handles both, and stays on to keep it working and improving.', // COPY:
   } satisfies PageHeroContent,
   navLabel: 'Service stages', // COPY:
+  /** Apps and software, with the phone turn (between the stages and the process). */
+  apps: {
+    eyebrow: 'Apps and software', // COPY:
+    title: 'When a website isn’t enough.', // COPY:
+    intro:
+      'Booking systems, client portals, dashboards and mobile apps: the software your business runs on, designed and built as carefully as our websites.', // COPY:
+    kinds: ['Web apps', 'Mobile apps', 'Client portals', 'Booking systems', 'Desktop tools'], // COPY:
+    cta: { label: 'Tell us about your app', to: '/start?path=build' }, // COPY:
+  },
   process: {
     eyebrow: 'Process', // COPY:
     title: 'How a project runs.', // COPY:

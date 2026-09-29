@@ -1,6 +1,6 @@
 import { PageMeta } from '@/components/seo/PageMeta'
 import { faqsFor } from '@/data/faqs'
-import { serviceMedia } from '@/data/media'
+import { media, serviceMedia } from '@/data/media'
 import { pageMeta, pricingContent, servicesContent } from '@/data/pages'
 import { planFamilies, plans } from '@/data/plans'
 import { policies } from '@/data/policies'
@@ -8,6 +8,7 @@ import { processSteps } from '@/data/process'
 import { rates } from '@/data/rates'
 import { offerings, serviceStages } from '@/data/services'
 import { stageRows } from '@/lib/offer'
+import { AppShowcase } from '@/sections/services/AppShowcase'
 import type { StageLayout } from '@/sections/services/StageBlock'
 import { StageExplorer } from '@/sections/services/StageExplorer'
 import { FaqSection } from '@/sections/shared/FaqSection'
@@ -52,6 +53,15 @@ export function ServicesPage() {
         stages={stages}
         navLabel={servicesContent.navLabel}
         labels={servicesContent.labels}
+      />
+      {/* Scrubbed, between the stages (none) and the process (pin). */}
+      <AppShowcase
+        eyebrow={servicesContent.apps.eyebrow}
+        title={servicesContent.apps.title}
+        intro={servicesContent.apps.intro}
+        kinds={servicesContent.apps.kinds}
+        cta={servicesContent.apps.cta}
+        phone={media.apps.phone}
       />
       <ProcessPinned
         id="process"

@@ -1,8 +1,8 @@
 # iPhone 17 Pro model
 
 `iphone-17-pro.glb`: a free iPhone 17 Pro model downloaded from Sketchfab (exported from
-Blender, textures embedded). It is a source file for `scripts/phone`, which renders the case
-study phone turn into `public/media/phone`. It is **not** deployed: nothing in `assets/`
+Blender, textures embedded). It is a source file for `scripts/phone`, which renders the phone turn
+on the Services page into `public/media/phone`. It is **not** deployed: nothing in `assets/`
 is served, and the site never loads a 3D model.
 
 `textures/` holds the loose copies of the textures that came with the download. They are

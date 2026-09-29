@@ -73,9 +73,10 @@ Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whol
 | --- | ------------- | ------ | --------------------------------------------- | ------- |
 | 1   | PageTitle     | paper  | Static                                        | none    |
 | 2   | StageExplorer | paper  | Sticky stage nav (scroll-spy), accordion rows | hover   |
-| 3   | ProcessPinned | dark   | Sticky column, active step                    | pin     |
-| 4   | FaqSection    | paper  | Accordion, sticky heading                     | hover   |
-| 5   | ClosingCta    | orange | SplitReveal words                             | enter   |
+| 3   | AppShowcase   | dark   | iPhone turns to face the viewer (frames)      | scrub   |
+| 4   | ProcessPinned | dark   | Sticky column, active step                    | pin     |
+| 5   | FaqSection    | paper  | Accordion, sticky heading                     | hover   |
+| 6   | ClosingCta    | orange | SplitReveal words                             | enter   |
 
 No adjacent clashes.
 
@@ -187,24 +188,23 @@ Flips the cards that stay into place instead of re-running a rise.
 
 **Case study:** PageTitle (load: compile) · CaseMeta (none) · CaseDevice (scrub + pin: the page's
 one pin) · CaseNarrative (none) · CaseGallery (scrub: parallax) · CaseMetrics (enter:
-CountUp) · Testimonial (none) · CasePhone (scrub: phone turn) · CaseOutro (hover) · ClosingCta
-(enter). CaseDevice shows the
+CountUp) · Testimonial (none) · CaseOutro (hover) · ClosingCta (enter). CaseDevice shows the
 project's live site on a laptop (`MacbookScroll`, a GSAP port of the Aceternity "MacBook
 scroll"). The lid and keyboard deck are two planes hinged on one edge under a shared
 perspective (no preserve-3d scene), so they stay joined: the laptop starts open, seen from
 above; the deck folds away as the lid comes upright and the laptop grows until the screen
 fills the view; then a full-page capture of the real site scrolls inside the screen, top to
 bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is static; the gallery uses Parallax.
-CasePhone is the mobile answer to the laptop: an orange iPhone 17 Pro turns from its back,
-through its side, to face the visitor with the project's mobile homepage on screen, scrubbed
-as it scrolls up through the view (`phoneTurn`: phone top at 85% to its centre at 45%). It
-isn't pinned (CaseDevice is the page's one pin). The frames are pre-rendered from a 3D model
-(scripts/phone) and drawn on a canvas by `ImageSequence`; no 3D library ships. It renders
-only when the metrics or a testimonial sit between it and the gallery, since both are
-scrubbed. Reduced motion: the finished pose as a still image.
 
-**Services:** PageTitle (load: compile) · StageExplorer (none, sticky nav) ·
-ProcessPinned (pin, `#process`) · FaqSection (hover) · ClosingCta (enter). Each stage has
+**Services:** PageTitle (load: compile) · StageExplorer (none, sticky nav) · AppShowcase
+(scrub: phone turn) · ProcessPinned (pin, `#process`) · FaqSection (hover) · ClosingCta
+(enter). AppShowcase ("Apps and software") is where apps get their own moment, since most
+client work is websites: an orange iPhone 17 Pro turns from its back, through its side, to
+face the visitor with an illustrative bookings app on screen, scrubbed as it scrolls up
+through the view (`phoneTurn`: phone top at 85% to its centre at 45%). It isn't pinned
+(ProcessPinned is the page's one pin). The frames are pre-rendered from a 3D model
+(scripts/phone) and drawn on a canvas by `ImageSequence`; no 3D library ships. Reduced
+motion: the finished pose as a still image. Each stage has
 its own layout, picked for what it sells (`StageBlock layout`): Build `feature` (text
 beside a tall image, expandable offerings), Take over `cards`, Run `split` (image column
 beside a priced list), Grow `figures` (rates as large figures) and Partner `tiers`. Stage

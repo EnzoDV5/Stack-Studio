@@ -184,9 +184,9 @@ export const macbook = {
 } as const
 
 /**
- * CasePhone: the phone turns from its back to face the viewer as it scrolls through the
- * viewport (scrubbed, not pinned: CaseDevice is the case study's one pin). The frames come
- * from scripts/phone.
+ * AppShowcase (Services): the phone turns from its back to face the viewer as it scrolls
+ * through the viewport (scrubbed, not pinned: ProcessPinned is the page's one pin). The frames
+ * come from scripts/phone.
  */
 export const phoneTurn = {
   /** The turn starts as the phone's top comes up past this line… */

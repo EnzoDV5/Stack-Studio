@@ -1,0 +1,323 @@
+<!doctype html>
+<!--
+  An illustrative app screen for the Services "Apps and software" phone (scripts/phone): a
+  generic bookings app in Stack's colours. Not a client's app, and no real names or data.
+  Sized to the iPhone 17 Pro screen below its status bar (402 × 812 pt, rendered at 3x);
+  render.mjs adds the status bar above it.
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @font-face {
+        font-family: 'Inter Tight';
+        src: url(/font.woff2) format('woff2');
+        font-weight: 100 900;
+      }
+      :root {
+        --ink: #0e0e0e;
+        --card: #1a1a1a;
+        --line: #2a2a2a;
+        --muted: #9a958c;
+        --paper: #f3f0ea;
+        --orange: #ff5a14;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html,
+      body {
+        width: 402px;
+        height: 812px;
+        overflow: hidden;
+        background: var(--ink);
+        color: var(--paper);
+        font-family: 'Inter Tight', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .app {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 12px 20px 0;
+      }
+      .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .date {
+        color: var(--muted);
+        font-size: 13px;
+        letter-spacing: 0.02em;
+      }
+      .avatar {
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--card);
+        border: 1px solid var(--line);
+        font-size: 12px;
+        font-weight: 600;
+      }
+      h1 {
+        margin-top: 6px;
+        font-size: 30px;
+        line-height: 1.05;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 22px;
+      }
+      .stat {
+        padding: 14px;
+        border-radius: 18px;
+        background: var(--card);
+        border: 1px solid var(--line);
+      }
+      .stat.hot {
+        background: var(--orange);
+        border-color: var(--orange);
+        color: var(--ink);
+      }
+      .stat .label {
+        font-size: 12px;
+        opacity: 0.75;
+      }
+      .stat .value {
+        margin-top: 10px;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+      .stat .sub {
+        margin-top: 2px;
+        font-size: 11px;
+        opacity: 0.7;
+      }
+      .week {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 22px;
+      }
+      .day {
+        display: grid;
+        gap: 6px;
+        justify-items: center;
+        width: 44px;
+        padding: 10px 0;
+        border-radius: 14px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .day b {
+        font-size: 16px;
+        color: var(--paper);
+        font-weight: 600;
+      }
+      .day.on {
+        background: var(--paper);
+        color: var(--ink);
+      }
+      .day.on b {
+        color: var(--ink);
+      }
+      .day i {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--orange);
+      }
+      .section {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-top: 24px;
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .section span {
+        color: var(--orange);
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .list {
+        display: grid;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        border-radius: 16px;
+        background: var(--card);
+        border: 1px solid var(--line);
+      }
+      .row .time {
+        width: 44px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .row .bar {
+        width: 3px;
+        align-self: stretch;
+        border-radius: 3px;
+        background: var(--orange);
+      }
+      .row .bar.dim {
+        background: var(--muted);
+      }
+      .row .what {
+        flex: 1;
+        min-width: 0;
+      }
+      .row .what b {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .row .what small {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .row .tag {
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 600;
+        background: rgb(255 90 20 / 0.16);
+        color: var(--orange);
+      }
+      .row .tag.ok {
+        background: rgb(243 240 234 / 0.1);
+        color: var(--paper);
+      }
+      .cta {
+        margin-top: 14px;
+        padding: 15px;
+        border-radius: 999px;
+        background: var(--paper);
+        color: var(--ink);
+        text-align: center;
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .tabs {
+        display: flex;
+        justify-content: space-around;
+        margin: auto -20px 0;
+        padding: 12px 20px 30px;
+        border-top: 1px solid var(--line);
+        background: rgb(14 14 14 / 0.92);
+      }
+      .tab {
+        display: grid;
+        justify-items: center;
+        gap: 4px;
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .tab.on {
+        color: var(--orange);
+      }
+      .tab svg {
+        width: 22px;
+        height: 22px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="top">
+        <p class="date">Tuesday, 30 September</p>
+        <div class="avatar">JM</div>
+      </div>
+      <h1>Good morning.<br />8 bookings today.</h1>
+
+      <div class="stats">
+        <div class="stat hot">
+          <p class="label">This week</p>
+          <p class="value">R 24 600</p>
+          <p class="sub">+18% on last week</p>
+        </div>
+        <div class="stat">
+          <p class="label">New clients</p>
+          <p class="value">12</p>
+          <p class="sub">5 booked online</p>
+        </div>
+      </div>
+
+      <div class="week">
+        <div class="day">Mon<b>29</b></div>
+        <div class="day on">Tue<b>30</b><i></i></div>
+        <div class="day">Wed<b>1</b><i></i></div>
+        <div class="day">Thu<b>2</b></div>
+        <div class="day">Fri<b>3</b><i></i></div>
+        <div class="day">Sat<b>4</b></div>
+      </div>
+
+      <div class="section">Up next <span>See all</span></div>
+      <div class="list">
+        <div class="row">
+          <p class="time">09:00</p>
+          <div class="bar"></div>
+          <div class="what"><b>Consultation</b><small>New client · 30 min</small></div>
+          <span class="tag">Now</span>
+        </div>
+        <div class="row">
+          <p class="time">10:30</p>
+          <div class="bar"></div>
+          <div class="what"><b>Site visit</b><small>Paid online · 1 h</small></div>
+          <span class="tag ok">Paid</span>
+        </div>
+        <div class="row">
+          <p class="time">13:00</p>
+          <div class="bar dim"></div>
+          <div class="what"><b>Follow-up call</b><small>Returning client · 20 min</small></div>
+          <span class="tag ok">Confirmed</span>
+        </div>
+      </div>
+
+      <div class="cta">+ New booking</div>
+
+      <nav class="tabs">
+        <div class="tab on">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" /></svg
+          >Today
+        </div>
+        <div class="tab">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="5" width="18" height="16" rx="2" />
+            <path d="M3 10h18M8 3v4M16 3v4" /></svg
+          >Calendar
+        </div>
+        <div class="tab">
+          <svg viewBox="0 0 24 24">
+            <circle cx="9" cy="8" r="3.5" />
+            <path
+              d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"
+            /></svg
+          >Clients
+        </div>
+        <div class="tab">
+          <svg viewBox="0 0 24 24"><path d="M4 19V11M10 19V5M16 19v-6M22 19H2" /></svg>Reports
+        </div>
+      </nav>
+    </div>
+  </body>
+</html>

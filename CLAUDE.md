@@ -34,7 +34,7 @@ npm run preview      # serve dist/
 node scripts/generate-placeholders.mjs   # regenerate placeholder favicon/OG PNGs
 npm run mockups:capture  # screenshot the live client sites (local Chrome, puppeteer-core; --full for the laptop captures)
 npm run mockups:render   # render the project device mockups (public/media/README.md)
-node scripts/phone/render.mjs            # case study phone turn frames from the iPhone 3D model (local Chrome)
+node scripts/phone/render.mjs            # Services apps phone turn frames from the iPhone 3D model (local Chrome)
 node scripts/founders/encode.mjs <photo> public/media/founders/<id>  # 4:5 WebP founder portraits (local Chrome)
 node scripts/services-media/encode.mjs   # encode the service stage videos (needs ffmpeg; public/media/services/README.md)
 ```

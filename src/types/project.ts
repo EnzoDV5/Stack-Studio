@@ -1,4 +1,4 @@
-import type { ImageAsset, ImageSequenceAsset, MediaSlot, VideoAsset } from './media'
+import type { ImageAsset, MediaSlot, VideoAsset } from './media'
 import type { StageId } from './pricing'
 
 export interface ProjectMetric {
@@ -54,11 +54,6 @@ export interface Project {
    * scrolled top to bottom on the laptop screen in the case study. Falls back to the hero image.
    */
   screen?: ImageAsset
-  /**
-   * The phone turn on the case study: an iPhone, rendered from the 3D model with the site's
-   * mobile homepage on screen, turning from its back to face the viewer as the page scrolls.
-   */
-  phone?: ImageSequenceAsset
   narrative: {
     problem: NarrativeBlock
     approach: NarrativeBlock

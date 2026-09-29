@@ -23,7 +23,6 @@ export const projects: Project[] = [
     showcase: media.projects.gcSolar.showcase,
     logo: media.projects.gcSolar.logo,
     screen: media.projects.gcSolar.screen,
-    phone: media.projects.gcSolar.phone,
     preview: media.projects.gcSolar.preview,
     hero: { image: media.projects.gcSolar.showcase, video: media.projects.gcSolar.heroVideo },
     narrative: {
@@ -85,7 +84,6 @@ export const projects: Project[] = [
     showcase: media.projects.mpgFoundation.showcase,
     logo: media.projects.mpgFoundation.logo,
     screen: media.projects.mpgFoundation.screen,
-    phone: media.projects.mpgFoundation.phone,
     preview: media.projects.mpgFoundation.preview,
     hero: {
       image: media.projects.mpgFoundation.showcase,
@@ -156,7 +154,6 @@ export const projects: Project[] = [
     showcase: media.projects.salonFriend.showcase,
     logo: media.projects.salonFriend.logo,
     screen: media.projects.salonFriend.screen,
-    phone: media.projects.salonFriend.phone,
     preview: media.projects.salonFriend.preview,
     hero: { image: media.projects.salonFriend.showcase },
     narrative: {

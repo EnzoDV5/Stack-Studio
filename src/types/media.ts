@@ -9,7 +9,7 @@ export interface ImageAsset {
 }
 
 /**
- * Pre-rendered frames played back by scroll (ImageSequence), e.g. the case study phone turn.
+ * Pre-rendered frames played back by scroll (ImageSequence), e.g. the Services phone turn.
  * Every rendition has the same frames at a different width; the player picks the sharpest one
  * the slot needs. The last frame doubles as the still (no JS, reduced motion).
  */

@@ -123,11 +123,10 @@ export const phoneTurnFrames = 36
 const phoneTurnWidths = [800, 480]
 
 /**
- * The case study phone turn: the iPhone 17 Pro model with the project's mobile homepage on
- * screen, rendered by scripts/phone as transparent WebP frames (3:4) in
- * /public/media/phone/{project}/turn-{frame}-{width}.webp.
+ * A phone turn: the iPhone 17 Pro model with a screen on it, rendered by scripts/phone as
+ * transparent WebP frames (3:4) in /public/media/phone/{id}/turn-{frame}-{width}.webp.
  */
-function phoneTurn(project: string, alt: string): ImageSequenceAsset {
+function phoneTurn(id: string, alt: string): ImageSequenceAsset {
   const largest = phoneTurnWidths[0] ?? 800
   return {
     width: largest,
@@ -136,8 +135,7 @@ function phoneTurn(project: string, alt: string): ImageSequenceAsset {
       width,
       frames: Array.from(
         { length: phoneTurnFrames },
-        (_, frame) =>
-          `/media/phone/${project}/turn-${String(frame).padStart(2, '0')}-${width}.webp`,
+        (_, frame) => `/media/phone/${id}/turn-${String(frame).padStart(2, '0')}-${width}.webp`,
       ),
     })),
     alt,
@@ -209,6 +207,15 @@ export const media = {
     ),
   },
 
+  // The Services "Apps and software" phone: an illustrative bookings app (not a client's),
+  // designed in scripts/phone/screens/bookings.html.
+  apps: {
+    phone: phoneTurn(
+      'app',
+      'An orange iPhone showing a bookings app with today’s appointments and weekly takings',
+    ), // COPY: alt
+  },
+
   projects: {
     // Cards, showcases and galleries are device mockups rendered from real captures of the
     // live sites (scripts/mockups, 29 Sep 2026). Each project has its own composition for its
@@ -222,8 +229,6 @@ export const media = {
         5991,
         'The GC Solar website, from the homepage down to the footer', // COPY: alt
       ),
-      // The case study phone turn (scripts/phone), with the mobile homepage on screen.
-      phone: phoneTurn('gc-solar', 'An orange iPhone showing the GC Solar website on its screen'), // COPY: alt
       card: mockup(
         'gc-solar',
         'card',
@@ -270,11 +275,6 @@ export const media = {
         9605,
         'The MPG Foundation website, from the homepage down to the footer', // COPY: alt
       ),
-      // The case study phone turn (scripts/phone), with the mobile homepage on screen.
-      phone: phoneTurn(
-        'mpg-foundation',
-        'An orange iPhone showing the MPG Foundation website on its screen',
-      ), // COPY: alt
       card: mockup(
         'mpg-foundation',
         'card',
@@ -336,11 +336,6 @@ export const media = {
         7142,
         'The Salon Friend website, from the homepage down to the footer', // COPY: alt
       ),
-      // The case study phone turn (scripts/phone), with the mobile homepage on screen.
-      phone: phoneTurn(
-        'salon-friend',
-        'An orange iPhone showing the Salon Friend website on its screen',
-      ), // COPY: alt
       card: mockup(
         'salon-friend',
         'card',
