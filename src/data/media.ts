@@ -64,6 +64,19 @@ function clientLogo(file: string, width: number, height: number, alt: string): I
   return { src: `/logos/clients/${file}.webp`, width, height, alt }
 }
 
+/**
+ * A neutral avatar (head-and-shoulders silhouette with initials) standing in for a founder's
+ * portrait: /public/media/founders/{id}-placeholder.svg, 4:5 like the real photos will be.
+ */
+function founderPlaceholder(id: string, name: string): ImageAsset {
+  return {
+    src: `/media/founders/${id}-placeholder.svg`,
+    width: 900,
+    height: 1125,
+    alt: `Placeholder portrait for ${name}`,
+  }
+}
+
 /** picsum placeholder with a responsive srcSet (webp). */
 function picsum(seed: string, width: number, height: number, alt: string): ImageAsset {
   const url = (w: number) =>
@@ -321,9 +334,13 @@ export const media = {
     },
   },
 
+  // COPY: PLACEHOLDER avatars until the real portraits exist. To swap one in, save a 4:5
+  // photo (e.g. 900×1125 WebP) to /public/media/founders/{id}.webp and replace the
+  // founderPlaceholder(...) call with { src: '/media/founders/{id}.webp', width: 900,
+  // height: 1125, alt: 'Portrait of …' }.
   founders: {
-    enzo: picsum('stack-founder-enzo', 900, 1125, 'Portrait of Enzo De Vittorio'), // COPY: replace with real portrait
-    armand: picsum('stack-founder-armand', 900, 1125, 'Portrait of Armand Naudé'), // COPY: replace with real portrait
+    enzo: founderPlaceholder('enzo', 'Enzo De Vittorio'),
+    armand: founderPlaceholder('armand', 'Armand Naudé'),
   },
 
   studio: {
