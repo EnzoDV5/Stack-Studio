@@ -210,6 +210,12 @@ export const caseStudyContent = {
     eyebrow: 'The website', // COPY:
     title: (name: string) => `${name}, live.`, // COPY:
   },
+  phone: {
+    eyebrow: 'On the phone', // COPY:
+    title: (name: string) => `${name}, in your pocket.`, // COPY:
+    intro:
+      'Most visitors arrive on a phone, so every page is built to work just as well on a small screen: quick to load, easy to read and a thumb away from getting in touch.', // COPY:
+  },
   meta: {
     client: 'Client', // COPY:
     year: 'Year', // COPY:

@@ -12,6 +12,7 @@ import { CaseMeta } from '@/sections/case-study/CaseMeta'
 import { CaseMetrics } from '@/sections/case-study/CaseMetrics'
 import { CaseNarrative } from '@/sections/case-study/CaseNarrative'
 import { CaseOutro } from '@/sections/case-study/CaseOutro'
+import { CasePhone } from '@/sections/case-study/CasePhone'
 import { Testimonial } from '@/sections/shared/Testimonial'
 import { PageTitle } from '@/sections/shared/PageTitle'
 
@@ -87,6 +88,17 @@ export function CaseStudyPage() {
       )}
 
       {testimonial && <Testimonial testimonial={testimonial} />}
+
+      {/* The phone turn is scrubbed, like the gallery's parallax: it needs the metrics or a
+          testimonial (neither scrubbed) between them, since neighbours never share a trigger. */}
+      {project.phone && (project.metrics.length > 0 || testimonial) && (
+        <CasePhone
+          eyebrow={caseStudyContent.phone.eyebrow}
+          title={caseStudyContent.phone.title(project.name)}
+          intro={caseStudyContent.phone.intro}
+          phone={project.phone}
+        />
+      )}
 
       <CaseOutro
         cta={{

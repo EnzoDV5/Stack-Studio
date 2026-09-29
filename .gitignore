@@ -30,3 +30,6 @@ Thumbs.db
 
 # original downloads for scripts/services-media
 .media-cache
+
+# loose copies of textures already embedded in the .glb (scripts/phone)
+assets/models/*/textures/

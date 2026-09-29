@@ -80,3 +80,22 @@ grey inverted, brand colours kept):
 ```bash
 node scripts/mockups/logos.mjs   # regenerate {id}-on-dark.webp after replacing a logo
 ```
+
+## Case study phone turn (/public/media/phone)
+
+`{project}/turn-{frame}-{width}.webp`: 36 transparent frames (3:4) at 480 and 800 wide of an
+orange iPhone 17 Pro turning from its back to face the viewer, with the project's mobile
+homepage on screen. `CasePhone` plays them on scroll (`ImageSequence`). They are rendered
+from the 3D model in `assets/models/iphone-17-pro` with three.js in headless Chrome, so the
+site ships images only:
+
+```bash
+npm run mockups:capture                   # the mobile captures the screens come from
+node scripts/phone/render.mjs             # every project (about 20 s)
+node scripts/phone/render.mjs gc-solar 0,35   # one project, a few frames, for a quick look
+```
+
+Motion, finish and sizes are in `scripts/phone/shots.mjs`. If you change the frame count or
+widths, change `phoneTurnFrames`/`phoneTurnWidths` in `src/data/media.ts` too
+(`tests/phone.test.ts` checks every frame exists). About 1.4 MB per project at 800 wide,
+0.7 MB at 480, loaded only as the section approaches.

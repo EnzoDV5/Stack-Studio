@@ -15,7 +15,8 @@ Vite + React 19 + TypeScript (strict, `noUncheckedIndexedAccess`) · Tailwind CS
 `@gsap/react`'s `useGSAP` · Lenis (synced to GSAP's ticker) · zod · @fontsource (Inter Tight
 variable, JetBrains Mono) · ESLint 9 flat config · Prettier with the Tailwind plugin.
 
-**Not allowed:** UI kits, 3D libraries, Framer Motion / `motion`, CSS-in-JS, icon packs (inline
+**Not allowed:** UI kits, 3D libraries (on the site: `scripts/phone` renders the iPhone model
+offline with three.js from a CDN and the site ships the frames), Framer Motion / `motion`, CSS-in-JS, icon packs (inline
 SVG instead). Components from registries like shadcn/Aceternity are ported to GSAP and
 Tailwind by hand (e.g. `MacbookScroll`), not installed with their CLI. Pins: ESLint stays on 9 (jsx-a11y does not support 10 yet) and TypeScript on 6.0
 (typescript-eslint supports `<6.1`).
@@ -33,6 +34,7 @@ npm run preview      # serve dist/
 node scripts/generate-placeholders.mjs   # regenerate placeholder favicon/OG PNGs
 npm run mockups:capture  # screenshot the live client sites (local Chrome, puppeteer-core; --full for the laptop captures)
 npm run mockups:render   # render the project device mockups (public/media/README.md)
+node scripts/phone/render.mjs            # case study phone turn frames from the iPhone 3D model (local Chrome)
 node scripts/founders/encode.mjs <photo> public/media/founders/<id>  # 4:5 WebP founder portraits (local Chrome)
 node scripts/services-media/encode.mjs   # encode the service stage videos (needs ffmpeg; public/media/services/README.md)
 ```
@@ -49,7 +51,7 @@ src/
                 Logo, WhatsAppButton
     layout/     Header, Footer, MobileMenu, PageTransition, Preloader, Cursor, GridOverlay, GrainOverlay,
                 Section, SkipLink, DeferredSection, ToneController
-    media/      Image, Video, MediaReveal, ServiceMedia, MacbookScroll, ClientLogo
+    media/      Image, Video, MediaReveal, ServiceMedia, MacbookScroll, ClientLogo, ImageSequence
     motion/     SplitReveal, Parallax, CountUp, DrawLine, StaggerGroup, MaskedHeading
     seo/        PageMeta
   hooks/        useLenis, useReducedMotion, useIsTouch, useMediaQuery, useInView, useAnalytics,

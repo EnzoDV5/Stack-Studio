@@ -8,7 +8,7 @@
  *   - Videos not yet made (showreel, project previews) fall back to their poster or an
  *     animated brand-gradient placeholder.
  */
-import type { ImageAsset, VideoAsset } from '@/types'
+import type { ImageAsset, ImageSequenceAsset, VideoAsset } from '@/types'
 import type { StageId } from '@/types'
 import type { ServiceMediaItem } from '@/types/service-media'
 
@@ -118,6 +118,32 @@ function video(
   return { src: `/media/${file}`, type: 'video/mp4', label, poster, width, height }
 }
 
+/** Frames and widths of the phone turn: keep in step with scripts/phone/shots.mjs (`turn`). */
+export const phoneTurnFrames = 36
+const phoneTurnWidths = [800, 480]
+
+/**
+ * The case study phone turn: the iPhone 17 Pro model with the project's mobile homepage on
+ * screen, rendered by scripts/phone as transparent WebP frames (3:4) in
+ * /public/media/phone/{project}/turn-{frame}-{width}.webp.
+ */
+function phoneTurn(project: string, alt: string): ImageSequenceAsset {
+  const largest = phoneTurnWidths[0] ?? 800
+  return {
+    width: largest,
+    height: Math.round((largest * 4) / 3),
+    renditions: phoneTurnWidths.map((width) => ({
+      width,
+      frames: Array.from(
+        { length: phoneTurnFrames },
+        (_, frame) =>
+          `/media/phone/${project}/turn-${String(frame).padStart(2, '0')}-${width}.webp`,
+      ),
+    })),
+    alt,
+  }
+}
+
 /**
  * A service stage's looping clip: 1920×1080 with a 1280×720 rendition (the player picks the
  * one that is sharp at the slot's size) and its first frame as a WebP poster at three widths.
@@ -196,6 +222,8 @@ export const media = {
         5991,
         'The GC Solar website, from the homepage down to the footer', // COPY: alt
       ),
+      // The case study phone turn (scripts/phone), with the mobile homepage on screen.
+      phone: phoneTurn('gc-solar', 'An orange iPhone showing the GC Solar website on its screen'), // COPY: alt
       card: mockup(
         'gc-solar',
         'card',
@@ -242,6 +270,11 @@ export const media = {
         9605,
         'The MPG Foundation website, from the homepage down to the footer', // COPY: alt
       ),
+      // The case study phone turn (scripts/phone), with the mobile homepage on screen.
+      phone: phoneTurn(
+        'mpg-foundation',
+        'An orange iPhone showing the MPG Foundation website on its screen',
+      ), // COPY: alt
       card: mockup(
         'mpg-foundation',
         'card',
@@ -303,6 +336,11 @@ export const media = {
         7142,
         'The Salon Friend website, from the homepage down to the footer', // COPY: alt
       ),
+      // The case study phone turn (scripts/phone), with the mobile homepage on screen.
+      phone: phoneTurn(
+        'salon-friend',
+        'An orange iPhone showing the Salon Friend website on its screen',
+      ), // COPY: alt
       card: mockup(
         'salon-friend',
         'card',

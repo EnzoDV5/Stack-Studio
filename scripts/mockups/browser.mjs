@@ -16,6 +16,7 @@ function chromePath() {
   return found
 }
 
-export function launch() {
-  return puppeteer.launch({ executablePath: chromePath(), headless: true })
+/** Extra launch options (e.g. `args` for WebGL) are merged in. */
+export function launch(options = {}) {
+  return puppeteer.launch({ executablePath: chromePath(), headless: true, ...options })
 }

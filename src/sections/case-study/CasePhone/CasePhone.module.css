@@ -1,0 +1,23 @@
+@layer components {
+  /* A soft orange glow behind the phone, so the orange finish sits in light rather than on a
+     flat background. */
+  .stage {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .stage::before {
+    content: '';
+    position: absolute;
+    inset: 12% 8%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--color-orange) 28%, transparent),
+      transparent
+    );
+    filter: blur(24px);
+    pointer-events: none;
+  }
+}
