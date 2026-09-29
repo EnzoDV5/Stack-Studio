@@ -147,6 +147,10 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
   content stays visible if JS or motion is off.
 - Start enter animations with the element well on screen (`trigger.start`, `top 75%`, or
   `trigger.startLate` for things that should play mid-screen) so people see them in full.
+  Titles (`MaskedHeading`) use `trigger.heading` (`top 90%`) and compile as soon as they're
+  on screen. Only put a "mounted past the start, play now" check (`st.scroll() >= st.start`)
+  on a standalone `ScrollTrigger.create`: a timeline's trigger reports `start` 0 until the
+  next tick, so the check passes on mount.
 - `prefers-reduced-motion`: Lenis is not created (native scroll), SplitText is skipped,
   Parallax is static, the preloader and page-wipe are skipped, the marquee stops. Content is
   always visible. Check `useReducedMotion()` in every motion component.

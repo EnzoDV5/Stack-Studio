@@ -47,6 +47,11 @@ export const trigger = {
   start: 'top 75%',
   /** For things that should play in the middle of the screen (count-ups, the process line). */
   startLate: 'top 62%',
+  /**
+   * Titles compile the moment they're on screen (a line clear of the bottom edge), so the
+   * code is never seen sitting still while the visitor waits for it.
+   */
+  heading: 'top 90%',
 } as const
 
 export const preloader = {

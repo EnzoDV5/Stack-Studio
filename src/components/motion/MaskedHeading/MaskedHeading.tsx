@@ -128,7 +128,7 @@ export function MaskedHeading({
             ? {
                 trigger: root,
                 // clamp() so a heading near the end of a short page still gets its start.
-                start: `clamp(${triggerTokens.start})`,
+                start: `clamp(${triggerTokens.heading})`,
                 once: true,
               }
             : undefined,

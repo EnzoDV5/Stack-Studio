@@ -143,7 +143,8 @@ a long settle.
 | `ease.outQuart`            | `power4.out`       | `--ease-out-quart`   |
 | `ease.inOut`               | `expo.inOut`       | `--ease-in-out-expo` |
 | `stagger.tight/base/loose` | 0.04 / 0.08 / 0.14 |                      |
-| `trigger.start`            | `top 85%`          |                      |
+| `trigger.start`            | `top 75%`          |                      |
+| `trigger.heading`          | `top 90%`          |                      |
 
 Neighbouring sections never share a trigger type, and every section's motion is listed in
 `docs/motion-map.md` (with the page-flow rules). Signature ideas in use:

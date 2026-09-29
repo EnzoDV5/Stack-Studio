@@ -13,7 +13,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
 import { pad2 } from '@/lib/format'
-import { gsap, useGSAP } from '@/lib/gsap'
+import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
 import { distance, duration, ease, processTimeline, stagger } from '@/lib/motion-tokens'
 import {
   barReveal,
@@ -221,16 +221,17 @@ export function ProcessLine({
         .from(moving, { opacity: 0, duration: duration.fast, ease: ease.out }, 0)
         .add(sweep, processTimeline.sweepDelay)
 
-      const st = gsap.timeline({
-        scrollTrigger: {
-          trigger: board,
-          start: processTimeline.start,
-          once: true,
-          onEnter: () => void intro.play(),
-        },
-      }).scrollTrigger
+      // A standalone trigger, not one attached to a timeline: GSAP measures a timeline's
+      // trigger a tick later and reports start 0 until then, which made the check below pass
+      // on mount and played the plan while it was still far below the fold.
+      const st = ScrollTrigger.create({
+        trigger: board,
+        start: processTimeline.start,
+        once: true,
+        onEnter: () => void intro.play(),
+      })
       // Mounted already past the start (a deep link, a lazy mount): play now.
-      if (st && st.scroll() >= st.start) void intro.play()
+      if (st.scroll() >= st.start) void intro.play()
 
       return () => {
         stop()

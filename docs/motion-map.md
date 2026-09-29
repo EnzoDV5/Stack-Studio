@@ -165,7 +165,7 @@ colour, not a section's signature motion, so it doesn't count toward rule 1.
 
 **Timing.** Enter animations start with the element well on screen (`trigger.start`, top
 at 75%; count-ups at `trigger.startLate`, 62%; the process plan at 70%), so they play in full.
-The WorkReel shrink happens inside its pin rather than while the section slides in, so the
+Titles compile the moment they're on screen (`trigger.heading`, top at 90%). The WorkReel shrink happens inside its pin rather than while the section slides in, so the
 full-bleed image is seen whole first.
 
 **Deliberate deviations.** StudioSnippet's parallax is pointer-driven, not scroll-driven,
@@ -229,7 +229,7 @@ These are also in CLAUDE.md. Check every change against them and update the tabl
 2. **Titles share one code-to-title language.** Every `PageTitle`, `SectionHeader`, custom
    section opener (`<Heading compile>`) and the `ClosingCta` begins as same-size code characters with the title's exact line length, then
    compiles left to right into readable type. It plays once, on a timer, when the heading
-   crosses `trigger.start` (`maskedHeading` tokens, about 0.6–1s): scrolling starts it but
+   crosses `trigger.heading` (`maskedHeading` tokens, about 0.6–1s): scrolling starts it but
    never drives it, and it doesn't replay on the way back up. Page titles compile as soon
    as the preloader or page wipe lifts. Nothing compiles under the wipe: a title already on
    screen after a route change starts when it's uncovered. The Home hero keeps its line
