@@ -102,12 +102,18 @@ function servicePhoto(id: string, alt: string): ServiceMediaItem {
   }
 }
 
+/**
+ * A service stage's looping clip: 1920×1080 with a 1280×720 rendition (the player picks the
+ * one that is sharp at the slot's size) and its first frame as a WebP poster at three widths.
+ * Encoded by scripts/services-media (sources and licences: public/media/services/README.md).
+ */
 function serviceClip(id: string, alt: string): ServiceMediaItem {
+  const poster = (suffix: string) => `/media/services/${id}-poster${suffix}.webp`
   const image: ImageAsset = {
-    src: `/media/services/${id}-poster.webp`,
-    srcSet: `/media/services/${id}-poster-small.webp 480w, /media/services/${id}-poster.webp 960w`,
-    width: 960,
-    height: 540,
+    src: poster('-960'),
+    srcSet: `${poster('-480')} 480w, ${poster('-960')} 960w, ${poster('')} 1920w`,
+    width: 1920,
+    height: 1080,
     alt,
   }
   return {
@@ -116,30 +122,29 @@ function serviceClip(id: string, alt: string): ServiceMediaItem {
     video: {
       src: `/media/services/${id}.mp4`,
       type: 'video/mp4',
-      width: 960,
-      height: 540,
+      width: 1920,
+      height: 1080,
+      renditions: [{ src: `/media/services/${id}-720.mp4`, width: 1280 }],
       label: alt,
       poster: image,
     },
   }
 }
 
-/** One image per service stage, chosen to show what that stage actually involves. */
+/**
+ * One looping clip per service stage, chosen to show what that stage is about: the first
+ * sketch (Build), reading through existing code (Take over), live infrastructure (Run),
+ * results on a dashboard (Grow) and a team working it through together (Partner).
+ */
 export const serviceMedia: Record<StageId, ServiceMediaItem> = {
-  build: servicePhoto(
-    'wireframes',
-    'Interface wireframes for a new website sketched in a notebook beside a phone',
-  ),
-  takeover: servicePhoto(
-    'code-review',
-    'An existing website’s source code open on a monitor for review',
-  ),
-  run: serviceClip('run', 'Network cables and status lights on live server equipment'),
-  grow: servicePhoto(
-    'analytics',
-    'A website analytics dashboard showing rising traffic on a desktop display',
-  ),
-  partner: serviceClip('partner', 'Four collaborators reviewing work together around a laptop'),
+  build: serviceClip('build', 'A designer sketching an interface on a graphics tablet'), // COPY: alt
+  takeover: serviceClip(
+    'takeover',
+    'An existing website’s code open in an editor on a laptop, being read through',
+  ), // COPY: alt
+  run: serviceClip('run', 'Network cables and status lights on live server equipment'), // COPY: alt
+  grow: serviceClip('grow', 'A developer walking a client through website results on a dashboard'), // COPY: alt
+  partner: serviceClip('partner', 'Two people working through a project together at a laptop'), // COPY: alt
 }
 
 export const media = {

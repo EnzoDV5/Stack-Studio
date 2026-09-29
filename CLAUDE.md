@@ -33,6 +33,7 @@ npm run preview      # serve dist/
 node scripts/generate-placeholders.mjs   # regenerate placeholder favicon/OG PNGs
 npm run mockups:capture  # screenshot the live client sites (local Chrome, puppeteer-core; --full for the laptop captures)
 npm run mockups:render   # render the project device mockups (public/media/README.md)
+node scripts/services-media/encode.mjs   # encode the service stage videos (needs ffmpeg; public/media/services/README.md)
 ```
 
 ## Folder conventions

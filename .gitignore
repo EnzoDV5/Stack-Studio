@@ -27,3 +27,6 @@ Thumbs.db
 
 # mockup captures (scripts/mockups)
 .mockups
+
+# original downloads for scripts/services-media
+.media-cache

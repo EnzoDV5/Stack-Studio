@@ -1,4 +1,4 @@
-# Homepage Services media
+# Services media (Home and the Services page)
 
 Downloaded on 2026-09-24. These are illustrative stock scenes of development work,
 not Stack Studio employees, client projects or endorsements. Every website asset is
@@ -7,34 +7,52 @@ served locally. The gallery catalogue and accessible descriptions live in
 
 ## Videos
 
-All five clips are silent, 8-second, 960 × 540 H.264 MP4s at 24 fps, encoded with
-CRF 28 and `faststart`. WebP posters are extracted from the optimised clips.
+One looping clip per service stage, used on Home (the "Where are you at?" path chooser) and on
+each Services page stage block. Chosen 2026-09-29 to show what each stage is about:
 
-| Local file   | Source                                                                                                                                                                  | Licence                                                                 |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| build.mp4    | [Software developer working on code, screen close up — Mixkit 1728](https://mixkit.co/free-stock-video/software-developer-working-on-code-screen-close-up-1728/)        | [Mixkit Stock Video Free License](https://mixkit.co/license/#videoFree) |
-| takeover.mp4 | [Complex programming codes on a programmer’s screen — Mixkit 41654](https://mixkit.co/free-stock-video/complex-programming-codes-on-a-programmers-screen-41654/)        | Mixkit Stock Video Free License                                         |
-| grow.mp4     | [Experienced programmer working on a powerful computer — Mixkit 41656](https://mixkit.co/free-stock-video/experienced-programmer-working-on-a-powerful-computer-41656/) | Mixkit Stock Video Free License                                         |
-| partner.mp4  | [Team collaboration in a colorful workspace — Mixkit 100319](https://mixkit.co/free-stock-video/team-collaboration-in-a-colorful-workspace-100319/)                     | Mixkit Stock Video Free License                                         |
-| run.mp4      | [Blue colored cables — Dima Krivoy / Pexels 1085656](https://www.pexels.com/video/blue-colored-cables-1085656/)                                                         | [Pexels License](https://www.pexels.com/license/)                       |
+| Stage     | Local file   | What it shows                                 | Source                                                                                                                            | Licence                                           |
+| --------- | ------------ | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Build     | build.mp4    | A designer sketching on a graphics tablet     | [Writing on a graphics tablet — Coverr](https://coverr.co/videos/writing-on-a-graphics-tablet-HGosg0oNwP)                         | [Coverr License](https://coverr.co/license)       |
+| Take over | takeover.mp4 | Existing code being read through in an editor | [Coding on a laptop — Coverr](https://coverr.co/videos/coding-on-a-laptop-rXf1Hyrfkk)                                             | Coverr License                                    |
+| Run       | run.mp4      | Live network cabling and status lights        | [Blue colored cables — Dima Krivoy / Pexels 1085656](https://www.pexels.com/video/blue-colored-cables-1085656/) (4K original)     | [Pexels License](https://www.pexels.com/license/) |
+| Grow      | grow.mp4     | Results presented on a dashboard              | [A young man showing results in a meeting — Coverr](https://coverr.co/videos/a-young-man-showing-results-in-a-meeting-vRPGR76WtO) | Coverr License                                    |
+| Partner   | partner.mp4  | Two people working a project through together | [Teamwork in the office — Coverr](https://coverr.co/videos/teamwork-in-the-office-Sf189e49k5)                                     | Coverr License                                    |
 
-The visible licence on each selected Mixkit item was checked. Restricted-license
-clips from the same search results were excluded. Licence terms were checked at
-download time; retain these records if replacing assets.
+Both licences allow free commercial use with no attribution. Coverr "premium" items and
+Mixkit "Restricted License" items were excluded (Mixkit's data-centre footage is all
+Restricted). These are illustrative stock scenes, not Stack Studio staff, clients or
+endorsements. The download URLs and loop points are in `scripts/services-media/clips.mjs`.
 
-Original downloads:
+Each stage has:
 
-- `https://assets.mixkit.co/videos/1728/1728-720.mp4`
-- `https://assets.mixkit.co/videos/41654/41654-720.mp4`
-- `https://assets.mixkit.co/videos/41656/41656-720.mp4`
-- `https://assets.mixkit.co/active_storage/video_items/100319/1722990360/100319-video-720.mp4`
-- `https://videos.pexels.com/video-files/1085656/1085656-hd_1280_720_25fps.mp4`
+- `{stage}.mp4`: 1920 × 1080, 25 fps, silent H.264 (High, CRF 23, max 3.8 Mb/s), faststart.
+- `{stage}-720.mp4`: 1280 × 720 (CRF 24, max 1.8 Mb/s). The player picks the smallest encode
+  that is sharp at the size the clip is actually drawn (`lib/video-source.ts`, which allows
+  for `object-fit: cover` in tall boxes), so small slots never fetch the 1080p file.
+- `{stage}-poster.webp` (1920), `-poster-960.webp`, `-poster-480.webp`: the loop's first
+  frame, so the poster → video swap is invisible.
+
+Each is a 10-second seamless loop: the last second crossfades back into the first frame.
+Only the stage on screen loads video, and reduced motion shows the posters only.
+
+### Re-encoding or replacing a clip
+
+Edit `scripts/services-media/clips.mjs` (source, licence, loop start/length), then run the
+encoder. It needs ffmpeg on PATH (or `FFMPEG=/path/to/ffmpeg`) and caches originals in
+`.media-cache` (gitignored):
+
+```sh
+node scripts/services-media/encode.mjs          # all stages
+node scripts/services-media/encode.mjs run      # one stage
+```
+
+Update the alt text in `src/data/media.ts` (`serviceMedia`) to describe the new clip.
 
 ## Photographs
 
 All photographs use the [Pexels License](https://www.pexels.com/license/). Images
 are centre-cropped to 1200 × 800 WebP (quality 78), with 480 × 320 variants
-(quality 70). Posters use 960 × 540 and 480 × 270. Shared relevant images are reused
+(quality 70). Shared relevant images are reused
 across services instead of downloading duplicate assets.
 
 | Local basename   | Source                                                                                                                                        |
@@ -54,17 +72,5 @@ across services instead of downloading duplicate assets.
 Photo downloads use the source’s image endpoint:
 `https://images.pexels.com/photos/{id}/pexels-photo-{id}.jpeg?auto=compress&cs=tinysrgb&w=1400`.
 
-## Re-encoding a replacement
-
-Use a commercially permitted source, save the original outside `public`, and encode:
-
-```sh
-ffmpeg -ss 1 -i original.mp4 -t 8 -an -vf "scale=960:540:force_original_aspect_ratio=increase,crop=960:540,fps=24" -c:v libx264 -preset slow -crf 28 -pix_fmt yuv420p -movflags +faststart output.mp4
-ffmpeg -ss 1 -i output.mp4 -frames:v 1 poster.png
-```
-
-Convert the poster to WebP at the two sizes above. The homepage showcase uses one
-item per service (`serviceMedia`); the other photos here are currently unused. Only
-the service on the stage, while visible, receives a video source. Switching away
-from a clip pauses and resets it. Reduced motion uses static images, and a manual
-pause control is available for playing clips.
+The stage clips replaced the Build, Take over and Grow photographs (wireframes, code-review,
+analytics), which stay here unused; `collaboration` is still used on the Studio page.

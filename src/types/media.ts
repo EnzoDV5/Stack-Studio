@@ -17,6 +17,11 @@ export interface VideoAsset {
   label: string
   width: number
   height: number
+  /**
+   * Smaller encodes of the same clip. The player picks the smallest one that is still sharp
+   * at the size it's shown (lib/video-source.ts), so small slots never fetch the full file.
+   */
+  renditions?: { src: string; width: number }[]
 }
 
 /** A media slot that can be an image, a video or both (video with an image poster). */
