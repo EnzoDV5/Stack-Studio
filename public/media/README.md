@@ -83,7 +83,7 @@ node scripts/mockups/logos.mjs   # regenerate {id}-on-dark.webp after replacing 
 
 ## Apps phone turn (/public/media/phone)
 
-`{id}/turn-{frame}-{width}.webp`: 36 transparent frames (3:4) at 480 and 800 wide of an
+`{id}/turn-{frame}-{width}.webp`: 60 transparent frames (3:4) at 480 and 800 wide of an
 orange iPhone 17 Pro turning from its back to face the viewer, with an app on screen. The
 Services page's "Apps and software" section (`AppShowcase`) plays them on scroll
 (`ImageSequence`). The app is illustrative, not a client's (most client work is websites):
@@ -98,6 +98,6 @@ node scripts/phone/render.mjs app 0,35    # a few frames, for a quick look
 
 Motion, finish and sizes are in `scripts/phone/shots.mjs`. If you change the frame count or
 widths, change `phoneTurnFrames`/`phoneTurnWidths` in `src/data/media.ts` too
-(`tests/phone.test.ts` checks every frame exists). About 1.4 MB at 800 wide, 0.7 MB at
+(`tests/phone.test.ts` checks every frame exists). About 1.9 MB at 800 wide, 1 MB at
 480, loaded only as the section approaches. A screen can also be a client's mobile capture
 from .mockups/raw (`npm run mockups:capture`).

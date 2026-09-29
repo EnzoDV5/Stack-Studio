@@ -190,11 +190,11 @@ export const macbook = {
  */
 export const phoneTurn = {
   /** The turn starts as the phone's top comes up past this line… */
-  start: 'top 85%',
-  /** …and it faces the viewer once its centre reaches this one, a little above the middle. */
-  end: 'center 45%',
+  start: 'top 92%',
+  /** …and it faces the viewer once its centre reaches the middle of the view. */
+  end: 'center 50%',
   /** Seconds the frame takes to catch up with the scroll, so the turn glides. */
-  scrub: 0.6,
+  scrub: 1,
 } as const
 
 /**

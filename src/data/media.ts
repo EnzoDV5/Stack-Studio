@@ -119,7 +119,7 @@ function video(
 }
 
 /** Frames and widths of the phone turn: keep in step with scripts/phone/shots.mjs (`turn`). */
-export const phoneTurnFrames = 36
+export const phoneTurnFrames = 60
 const phoneTurnWidths = [800, 480]
 
 /**

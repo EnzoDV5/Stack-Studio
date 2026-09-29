@@ -64,41 +64,71 @@ export function ImageSequence({
       canvas.width = rendition.width
       canvas.height = Math.round((rendition.width * sequence.height) / sequence.width)
       const loaded: boolean[] = new Array<boolean>(count).fill(false)
+      const images: HTMLImageElement[] = []
       const state = { frame: 0 }
       let shown = -1
       let alive = true
 
-      // Draws the frame for the scroll position, or the nearest one that has loaded.
+      /** The nearest loaded frame at or before `index`, else after it. */
+      const nearest = (index: number) => {
+        for (let i = index; i >= 0; i--) if (loaded[i]) return i
+        for (let i = index + 1; i < count; i++) if (loaded[i]) return i
+        return -1
+      }
+
+      // Draws the scroll position between two frames: a cross-fade of the frame before and the
+      // frame after, so the turn glides instead of stepping. Additive ('lighter') drawing of
+      // the two weighted frames is an exact blend, transparent edges included. While frames
+      // are still loading it falls back to the nearest one that has.
       const draw = () => {
-        const target = Math.round(state.frame)
-        let index = target
-        while (index >= 0 && !loaded[index]) index--
-        if (index < 0) {
-          index = target
-          while (index < count && !loaded[index]) index++
-        }
-        const image = images[index]
-        if (!image || !loaded[index] || index === shown) return
-        shown = index
+        const position = Math.min(Math.max(state.frame, 0), count - 1)
+        if (Math.abs(position - shown) < 0.02) return
+        const before = Math.floor(position)
+        const after = Math.min(before + 1, count - 1)
+        const mix = position - before
+        const a = images[before]
+        const b = images[after]
         context.clearRect(0, 0, canvas.width, canvas.height)
-        context.drawImage(image, 0, 0, canvas.width, canvas.height)
+        if (a && b && loaded[before] && loaded[after] && mix > 0.01) {
+          context.globalCompositeOperation = 'lighter'
+          context.globalAlpha = 1 - mix
+          context.drawImage(a, 0, 0, canvas.width, canvas.height)
+          context.globalAlpha = mix
+          context.drawImage(b, 0, 0, canvas.width, canvas.height)
+          context.globalAlpha = 1
+          context.globalCompositeOperation = 'source-over'
+        } else {
+          const index = nearest(Math.round(position))
+          const image = images[index]
+          if (!image) return
+          context.drawImage(image, 0, 0, canvas.width, canvas.height)
+        }
+        shown = position
         setReady(true)
       }
 
-      const images = rendition.frames.map((src, index) => {
+      // Coarse to fine: every 8th frame first (a rough turn is ready almost at once), then
+      // every 4th, every 2nd and the rest.
+      const order: number[] = []
+      for (const step of [8, 4, 2, 1]) {
+        for (let i = 0; i < count; i += step) if (!order.includes(i)) order.push(i)
+      }
+      if (!order.includes(count - 1)) order.splice(1, 0, count - 1)
+      for (const index of order) {
         const image = new window.Image()
         image.decoding = 'async'
-        image.src = src
+        image.src = rendition.frames[index] ?? ''
+        images[index] = image
         image
           .decode()
           .then(() => {
             if (!alive) return
             loaded[index] = true
+            shown = -1
             draw()
           })
           .catch(() => undefined)
-        return image
-      })
+      }
 
       gsap.to(state, {
         frame: count - 1,

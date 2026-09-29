@@ -16,11 +16,11 @@ export const look = {
   fov: 22,
   /** Space around the phone's height in the frame. */
   margin: 1.12,
-  quality: 0.82,
+  quality: 0.78,
 }
 
 export const turn = {
-  frames: 36,
+  frames: 60,
   from: { turn: -158, tilt: 14, roll: -9 },
   to: { turn: -16, tilt: 5, roll: 3 },
   /** Output is width ÷ height; rendered afresh at each width. */
