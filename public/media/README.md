@@ -22,3 +22,30 @@ pinned and scroll-driven sections render once, in their final state, instead of 
 repeated. Scroll through the page once first so lazy images load. WebP quality 0.8 (small
 0.72). When a site changes, recapture it and update its height in `src/data/media.ts`
 (`siteCapture`).
+
+## Device mockups (/public/media/projects/mockups)
+
+Every project thumbnail, case study hero and gallery image is a device mockup (laptop and
+phone, browser windows, a single phone) of the real client site, rendered from fresh
+captures. Nothing is drawn by hand, so rerun both steps whenever a client site changes:
+
+```bash
+npm run mockups:capture   # screenshots of each live site into .mockups/raw (gitignored)
+npm run mockups:render    # device scenes into public/media/projects/mockups
+```
+
+Both take an optional project id (`npm run mockups:render -- salon-friend`).
+
+- `scripts/mockups/shots.mjs`: which pages to capture per site (desktop 1440×900 at 2×,
+  mobile 390×844 at 3×, reduced motion, lazy images loaded), plus per-site fixes: GC Solar's
+  demo host has no SPA rewrite so inner pages are opened client-side; the Netlify badge,
+  GC Solar's fixed bottom blur and MPG's dated announcement bar are hidden.
+- `scripts/mockups/scenes.mjs`: which captures go in which scene, the scene sizes (4:3
+  thumbnails, 16:9 heroes and full gallery images, 4:5 half gallery images) and each
+  client's background colours.
+- `scripts/mockups/render.mjs`: the devices are plain HTML and CSS screenshotted by Chrome,
+  sized in vw so the full-size and `-small` (half) files are both crisp.
+
+Needs a local Chrome or Edge (set `CHROME_PATH` if it isn't found). `puppeteer-core` is a
+dev dependency for this only: it drives that installed browser, downloads nothing and never
+ships with the site. Paths and alt text live in `src/data/media.ts` (`mockup()`).

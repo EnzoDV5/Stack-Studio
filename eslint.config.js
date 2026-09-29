@@ -63,5 +63,10 @@ export default defineConfig([
     files: ['scripts/**/*.{js,mjs}', 'eslint.config.js'],
     extends: [js.configs.recommended],
   },
+  {
+    // Puppeteer scripts: page.evaluate callbacks run in the browser.
+    files: ['scripts/mockups/**/*.mjs'],
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
+  },
   prettier,
 ])

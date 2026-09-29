@@ -13,7 +13,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc -b",
-    "test": "node --import ./scripts/test-register.mjs --test \"tests/**/*.test.ts\""
+    "test": "node --import ./scripts/test-register.mjs --test \"tests/**/*.test.ts\"",
+    "mockups:capture": "node scripts/mockups/capture.mjs",
+    "mockups:render": "node scripts/mockups/render.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter-tight": "^5.3.0",
@@ -41,6 +43,7 @@
     "globals": "^17.12.0",
     "prettier": "^3.9.9",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "puppeteer-core": "^23.11.1",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.70.1",

@@ -24,6 +24,28 @@ function siteCapture(id: string, height: number, alt: string): ImageAsset {
   }
 }
 
+/**
+ * Device mockup of a live client site in /public/media/projects/mockups, rendered from real
+ * captures by scripts/mockups (see public/media/README.md). Each has a half-size -small copy.
+ */
+type MockupShape = 'thumb' | 'wide' | 'tall'
+const mockupSize: Record<MockupShape, [number, number]> = {
+  thumb: [1600, 1200],
+  wide: [2400, 1350],
+  tall: [1200, 1500],
+}
+function mockup(project: string, name: string, shape: MockupShape, alt: string): ImageAsset {
+  const [width, height] = mockupSize[shape]
+  const base = `/media/projects/mockups/${project}-${name}`
+  return {
+    src: `${base}.webp`,
+    srcSet: `${base}-small.webp ${width / 2}w, ${base}.webp ${width}w`,
+    width,
+    height,
+    alt,
+  }
+}
+
 /** picsum placeholder with a responsive srcSet (webp). */
 function picsum(seed: string, width: number, height: number, alt: string): ImageAsset {
   const url = (w: number) =>
@@ -123,6 +145,9 @@ export const media = {
   },
 
   projects: {
+    // Thumbnails, heroes and galleries are device mockups rendered from real captures of the
+    // live sites (scripts/mockups, 29 Sep 2026). The poster of each missing preview/hero video
+    // is the matching mockup, so nothing falls back to a stock photo.
     gcSolar: {
       // Full-page capture of gcsolar-redesign-demo.netlify.app (28 Sep 2026), scrolled on the case study laptop.
       screen: siteCapture(
@@ -130,32 +155,42 @@ export const media = {
         5991,
         'The GC Solar website, from the homepage down to the footer', // COPY: alt
       ),
-      thumbnail: picsum('stack-gc-solar-thumb', 1600, 1200, 'GC Solar website shown on a laptop'), // COPY: alt
+      thumbnail: mockup(
+        'gc-solar',
+        'thumb',
+        'thumb',
+        'The GC Solar homepage on a laptop and a phone', // COPY: alt
+      ),
       preview: video(
         'gc-solar-preview.mp4',
         'Scrolling through the GC Solar website', // COPY:
-        picsum('stack-gc-solar-thumb', 1600, 1200, ''),
+        mockup('gc-solar', 'thumb', 'thumb', ''),
         1600,
         1200,
       ),
-      hero: picsum(
-        'stack-gc-solar-hero',
-        2400,
-        1350,
-        'GC Solar homepage hero with rooftop solar installation',
-      ), // COPY: alt
+      hero: mockup(
+        'gc-solar',
+        'hero',
+        'wide',
+        'The GC Solar solutions page on a laptop, with its projects page on a phone', // COPY: alt
+      ),
       heroVideo: video(
         'gc-solar-hero.mp4',
         'GC Solar website walkthrough', // COPY:
-        picsum('stack-gc-solar-hero', 2400, 1350, ''),
+        mockup('gc-solar', 'hero', 'wide', ''),
         2400,
         1350,
       ),
       gallery: [
-        picsum('stack-gc-solar-g1', 2400, 1350, 'GC Solar services page on desktop'), // COPY: alt
-        picsum('stack-gc-solar-g2', 1200, 1500, 'GC Solar quote form on mobile'), // COPY: alt
-        picsum('stack-gc-solar-g3', 1200, 1500, 'GC Solar project gallery on mobile'), // COPY: alt
-        picsum('stack-gc-solar-g4', 2400, 1350, 'GC Solar about page with team photography'), // COPY: alt
+        mockup('gc-solar', 'solutions', 'wide', 'The GC Solar solutions page in a browser'), // COPY: alt
+        mockup('gc-solar', 'quote-mobile', 'tall', 'The GC Solar quote request on a phone'), // COPY: alt
+        mockup('gc-solar', 'projects-mobile', 'tall', 'GC Solar’s completed projects on a phone'), // COPY: alt
+        mockup(
+          'gc-solar',
+          'company',
+          'wide',
+          'The GC Solar company page behind its quote request page, in two browser windows',
+        ), // COPY: alt
       ],
     },
     mpgFoundation: {
@@ -165,32 +200,57 @@ export const media = {
         9605,
         'The MPG Foundation website, from the homepage down to the footer', // COPY: alt
       ),
-      thumbnail: picsum('stack-mpg-thumb', 1600, 1200, 'MPG Foundation website on a tablet'), // COPY: alt
+      thumbnail: mockup(
+        'mpg-foundation',
+        'thumb',
+        'thumb',
+        'The MPG Foundation homepage on a laptop, with its “What we do” section on a phone', // COPY: alt
+      ),
       preview: video(
         'mpg-foundation-preview.mp4',
         'Scrolling through the MPG Foundation website', // COPY:
-        picsum('stack-mpg-thumb', 1600, 1200, ''),
+        mockup('mpg-foundation', 'thumb', 'thumb', ''),
         1600,
         1200,
       ),
-      hero: picsum(
-        'stack-mpg-hero',
-        2400,
-        1350,
-        'MPG Foundation homepage with community programme imagery',
-      ), // COPY: alt
+      hero: mockup(
+        'mpg-foundation',
+        'hero',
+        'wide',
+        'MPG Foundation’s waterfront project on a laptop, with its donate section on a phone', // COPY: alt
+      ),
       heroVideo: video(
         'mpg-foundation-hero.mp4',
         'MPG Foundation website walkthrough', // COPY:
-        picsum('stack-mpg-hero', 2400, 1350, ''),
+        mockup('mpg-foundation', 'hero', 'wide', ''),
         2400,
         1350,
       ),
       gallery: [
-        picsum('stack-mpg-g1', 2400, 1350, 'MPG Foundation programmes overview'), // COPY: alt
-        picsum('stack-mpg-g2', 1200, 1500, 'MPG Foundation donate flow on mobile'), // COPY: alt
-        picsum('stack-mpg-g3', 1200, 1500, 'MPG Foundation impact stories on mobile'), // COPY: alt
-        picsum('stack-mpg-g4', 2400, 1350, 'MPG Foundation volunteer sign-up page'), // COPY: alt
+        mockup(
+          'mpg-foundation',
+          'what-we-do',
+          'wide',
+          'The MPG Foundation “What we do” section in a browser',
+        ), // COPY: alt
+        mockup(
+          'mpg-foundation',
+          'donate-mobile',
+          'tall',
+          'The MPG Foundation donate section on a phone',
+        ), // COPY: alt
+        mockup(
+          'mpg-foundation',
+          'what-we-do-mobile',
+          'tall',
+          'How the MPG Foundation works, on a phone',
+        ), // COPY: alt
+        mockup(
+          'mpg-foundation',
+          'story',
+          'wide',
+          'The MPG Foundation waterfront project behind its donate section, in two browser windows',
+        ), // COPY: alt
       ],
     },
     salonFriend: {
@@ -200,19 +260,35 @@ export const media = {
         7142,
         'The Salon Friend website, from the homepage down to the footer', // COPY: alt
       ),
-      thumbnail: picsum('stack-salon-friend-thumb', 1600, 1200, 'The Salon Friend website'), // COPY: alt, replace with a real screenshot
+      thumbnail: mockup(
+        'salon-friend',
+        'thumb',
+        'thumb',
+        'The Salon Friend homepage on a laptop and a phone', // COPY: alt
+      ),
       preview: video(
         'salon-friend-preview.mp4',
         'Scrolling through the Salon Friend website', // COPY:
-        picsum('stack-salon-friend-thumb', 1600, 1200, ''),
+        mockup('salon-friend', 'thumb', 'thumb', ''),
         1600,
         1200,
       ),
-      hero: picsum('stack-salon-friend-hero', 2400, 1350, 'The Salon Friend homepage'), // COPY: alt
+      hero: mockup(
+        'salon-friend',
+        'hero',
+        'wide',
+        'The Salon Friend catalogue on a laptop, with a product page on a phone', // COPY: alt
+      ),
       gallery: [
-        picsum('stack-salon-friend-g1', 2400, 1350, 'Salon Friend page on desktop'), // COPY: alt
-        picsum('stack-salon-friend-g2', 1200, 1500, 'Salon Friend on mobile'), // COPY: alt
-        picsum('stack-salon-friend-g3', 1200, 1500, 'Salon Friend on mobile'), // COPY: alt
+        mockup('salon-friend', 'catalogue', 'wide', 'The Salon Friend catalogue in a browser'), // COPY: alt
+        mockup('salon-friend', 'product-mobile', 'tall', 'A Salon Friend product page on a phone'), // COPY: alt
+        mockup('salon-friend', 'catalogue-mobile', 'tall', 'The Salon Friend catalogue on a phone'), // COPY: alt
+        mockup(
+          'salon-friend',
+          'brands',
+          'wide',
+          'The Salon Friend brands page behind a product page, in two browser windows',
+        ), // COPY: alt
       ],
     },
   },

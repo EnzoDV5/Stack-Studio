@@ -53,10 +53,10 @@ export const projects: Project[] = [
       },
     },
     gallery: [
-      { ...media.projects.gcSolar.gallery[0], span: 'full', caption: 'Services overview' }, // COPY:
+      { ...media.projects.gcSolar.gallery[0], span: 'full', caption: 'Solutions' }, // COPY:
       { ...media.projects.gcSolar.gallery[1], span: 'half', caption: 'Guided quote request' }, // COPY:
-      { ...media.projects.gcSolar.gallery[2], span: 'half', caption: 'Install gallery' }, // COPY:
-      { ...media.projects.gcSolar.gallery[3], span: 'full' },
+      { ...media.projects.gcSolar.gallery[2], span: 'half', caption: 'Completed projects' }, // COPY:
+      { ...media.projects.gcSolar.gallery[3], span: 'full', caption: 'Company and quote pages' }, // COPY:
     ],
     metrics: [
       { value: '6 wks', label: 'Brief to launch' }, // COPY: PLACEHOLDER METRIC
@@ -115,10 +115,18 @@ export const projects: Project[] = [
       },
     },
     gallery: [
-      { ...media.projects.mpgFoundation.gallery[0], span: 'full', caption: 'Programmes overview' }, // COPY:
-      { ...media.projects.mpgFoundation.gallery[1], span: 'half', caption: 'Donate flow' }, // COPY:
-      { ...media.projects.mpgFoundation.gallery[2], span: 'half', caption: 'Impact stories' }, // COPY:
-      { ...media.projects.mpgFoundation.gallery[3], span: 'full' },
+      { ...media.projects.mpgFoundation.gallery[0], span: 'full', caption: 'What we do' }, // COPY:
+      { ...media.projects.mpgFoundation.gallery[1], span: 'half', caption: 'Giving by EFT' }, // COPY:
+      {
+        ...media.projects.mpgFoundation.gallery[2],
+        span: 'half',
+        caption: 'How the work gets done',
+      }, // COPY:
+      {
+        ...media.projects.mpgFoundation.gallery[3],
+        span: 'full',
+        caption: 'The waterfront project and giving',
+      }, // COPY:
     ],
     metrics: [
       { value: '3', label: 'Audiences, one clear path each' }, // COPY: PLACEHOLDER METRIC
@@ -162,9 +170,14 @@ export const projects: Project[] = [
       },
     },
     gallery: [
-      { ...media.projects.salonFriend.gallery[0], span: 'full' },
-      { ...media.projects.salonFriend.gallery[1], span: 'half' },
-      { ...media.projects.salonFriend.gallery[2], span: 'half' },
+      { ...media.projects.salonFriend.gallery[0], span: 'full', caption: 'The catalogue' }, // COPY:
+      { ...media.projects.salonFriend.gallery[1], span: 'half', caption: 'Product page' }, // COPY:
+      { ...media.projects.salonFriend.gallery[2], span: 'half', caption: 'Catalogue on mobile' }, // COPY:
+      {
+        ...media.projects.salonFriend.gallery[3],
+        span: 'full',
+        caption: 'Brands and product pages',
+      }, // COPY:
     ],
     metrics: [], // COPY: add real, client-approved results when there are some
     briefType: 'business-website', // COPY: confirm
