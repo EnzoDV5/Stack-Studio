@@ -5,7 +5,10 @@ import { pageMeta, pricingContent, servicesContent } from '@/data/pages'
 import { planFamilies, plans } from '@/data/plans'
 import { policies } from '@/data/policies'
 import { rates } from '@/data/rates'
+import { getQuotePreset } from '@/data/quotes'
 import { offerings, serviceStages } from '@/data/services'
+import { estimate } from '@/lib/estimate'
+import { formatPrice, formatPriceRange } from '@/lib/format'
 import { stageRows } from '@/lib/offer'
 import { AppShowcase } from '@/sections/services/AppShowcase'
 import { DesktopShowcase } from '@/sections/services/DesktopShowcase'
@@ -71,6 +74,18 @@ const afterLaunch: StageExplorerStage[] = serviceStages
     layout: layouts[stage.id as Exclude<StageId, 'build'>],
   }))
 
+// The next-steps cards show real numbers: the "Launch website" starting quote's estimate range
+// (as the brief shows it) and a fixed total inside it.
+const starter = (() => {
+  const preset = getQuotePreset('launch')
+  const result = preset ? estimate(preset.answers) : undefined
+  if (!result || result.kind !== 'range') return { estimate: '', total: '' }
+  return {
+    estimate: formatPriceRange(result.low, result.high, 1_000),
+    total: formatPrice(Math.round((result.low + result.high) / 2 / 1_000) * 1_000),
+  }
+})()
+
 /**
  * Services, grouped the way people look for them: a "What do you need?" index, websites, apps
  * and software (the phone), desktop software (the laptop), then taking over, running, growing
@@ -117,9 +132,10 @@ export function ServicesPage() {
         eyebrow={c.nextSteps.eyebrow}
         title={c.nextSteps.title}
         intro={c.nextSteps.intro}
-        steps={c.nextSteps.steps}
-        promisesLabel={c.nextSteps.promisesLabel}
-        promises={c.nextSteps.promises}
+        brief={{ ...c.nextSteps.brief, estimate: starter.estimate }}
+        reply={c.nextSteps.reply}
+        call={c.nextSteps.call}
+        quote={{ ...c.nextSteps.quote, total: starter.total }}
         cta={c.nextSteps.cta}
       />
       <FaqSection tone="dark" intro={c.faq} faqs={faqsFor('general', 'services', 'process')} />

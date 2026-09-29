@@ -217,6 +217,25 @@ export const laptopTurn = {
 } as const
 
 /**
+ * NextSteps (Services, desktop): the four step cards start as a loose, overlapping pile and deal
+ * out into their row as the section scrolls into view (scrubbed; transforms only).
+ */
+export const stepsDeal = {
+  start: 'top 80%',
+  end: 'center 55%',
+  scrub: 1,
+  /** Where each card sits in the pile: its tilt (degrees) and a little vertical scatter (px). */
+  pile: [
+    { rotation: -8, y: 36 },
+    { rotation: 5, y: -14 },
+    { rotation: -3, y: 22 },
+    { rotation: 7, y: -24 },
+  ],
+  /** The pile is a little smaller than the row. */
+  scale: 0.9,
+} as const
+
+/**
  * HomeHero: the Stack mark sinks as the page scrolls (scrubbed), slower than the page, so it
  * seems to follow the visitor down and slips off the bottom of the hero, behind the next
  * section.

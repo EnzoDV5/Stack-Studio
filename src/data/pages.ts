@@ -289,36 +289,53 @@ export const servicesContent = {
     eyebrow: 'Next steps', // COPY:
     title: 'From first message to kick-off.', // COPY:
     intro: 'No long sales process. This is exactly what happens once you get in touch.', // COPY:
-    steps: [
-      {
-        title: 'Tell us what you need', // COPY:
-        when: 'About two minutes', // COPY:
-        body: 'Answer a few questions in the brief and see a rough estimate straight away.', // COPY:
-      },
-      {
-        title: 'We get back to you', // COPY:
-        when: 'Within one business day', // COPY:
-        body: 'A real reply, not an automated one, with any questions we have.', // COPY:
-      },
-      {
-        title: 'A short call', // COPY:
-        when: 'About 30 minutes', // COPY: confirm
-        body: 'We talk through the business, not just the website, and what matters most.', // COPY:
-      },
-      {
-        title: 'Your fixed quote', // COPY:
-        when: 'In writing', // COPY:
-        body: 'Scope, timeline and payment milestones. Say yes and we book your start date.', // COPY:
-      },
-    ],
-    /** What every project comes with, whatever it is (each backed by a policy or FAQ). */
-    promisesLabel: 'Along the way', // COPY:
-    promises: [
-      'A staging link from week one', // COPY:
-      'Training and handover at launch', // COPY:
-      'A 30-day launch warranty', // COPY:
-      'Yours on final payment', // COPY:
-    ],
+    /**
+     * Each step shows what the visitor actually sees at that point, as a small interface: the
+     * brief, the reply, the call invite and the quote. Illustrative: no real names. Prices come
+     * from the pricing data (the "Launch website" starting quote), on the Services page.
+     */
+    brief: {
+      title: 'Tell us what you need', // COPY:
+      when: 'About two minutes', // COPY:
+      heading: 'Start a project', // COPY:
+      question: 'What are we building?', // COPY:
+      options: ['A website', 'An app', 'Help with what I have'], // COPY:
+      estimateLabel: 'Rough estimate', // COPY:
+    },
+    reply: {
+      title: 'We get back to you', // COPY:
+      when: 'Within one business day', // COPY:
+      sent: 'Brief sent', // COPY:
+      from: 'Stack Studio', // COPY:
+      message: 'Thanks for the brief! Two quick questions, then let’s find a time to talk.', // COPY:
+      time: 'Next business day, 09:12', // COPY:
+    },
+    call: {
+      title: 'A short call', // COPY:
+      when: 'About 30 minutes', // COPY: confirm
+      day: 'Tue', // COPY:
+      date: '07', // COPY:
+      event: 'Intro call', // COPY:
+      details: '30 min · video or in person', // COPY: confirm
+      people: ['You', 'Stack'], // COPY:
+      answer: 'Going?', // COPY:
+      yes: 'Yes', // COPY:
+      no: 'No', // COPY:
+    },
+    quote: {
+      title: 'Your fixed quote', // COPY:
+      when: 'In writing', // COPY:
+      document: 'Fixed quote', // COPY:
+      lines: [
+        { label: 'Scope', value: '5 custom pages' }, // COPY:
+        { label: 'Timeline', value: '6 weeks' }, // COPY:
+        { label: 'Payments', value: '3 milestones' }, // COPY:
+      ],
+      totalLabel: 'Total', // COPY:
+      accept: 'Accept quote', // COPY:
+      /** What every project comes with (each backed by a policy or FAQ). */
+      includes: ['30-day launch warranty', 'Staging link from week one', 'Yours on final payment'], // COPY:
+    },
     cta: { label: 'Start the brief', to: '/start' }, // COPY:
   },
   labels: {
