@@ -112,6 +112,7 @@ export function HomePage() {
           steps={processSteps}
           stepLabel={process.stepLabel}
           nowLabel={process.nowLabel}
+          overview={process.overview}
           columns={process.columns}
           more={process.more}
           technologies={{ ...technologyContent, rows: [technologies] }}

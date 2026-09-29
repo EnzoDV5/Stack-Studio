@@ -171,7 +171,9 @@ full-bleed image is seen whole first.
 **Deliberate deviations.** StudioSnippet's parallax is pointer-driven, not scroll-driven,
 so Home's last two sections read hover · enter. `Parallax trigger="scroll"` is still the
 default elsewhere. ProcessLine plays on entry and is then driven by hover and clicks (people
-couldn't read a week while it followed the scroll), so it shares a trigger with both
+couldn't read a week while it followed the scroll). The readout beside it shows an overview
+until the first hover, click or arrow key, so the entrance sweep doesn't flick it through
+every week. It shares a trigger with both
 neighbours (PathChooser's hover, PricingSnapshot's count-up); the plan's own sweep and the
 count-up are far enough apart on the page not to read as a repeat. On /work the closing band's compile follows the WorkGrid's `enter` reveals. The
 titles used to scrub with the scroll, which felt jittery, and a card grid and one title

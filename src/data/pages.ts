@@ -125,6 +125,16 @@ export const homeContent = {
     title: 'How a project runs.', // COPY:
     stepLabel: 'Step', // COPY:
     nowLabel: 'Where we are', // COPY:
+    /** Shown beside the plan until the visitor points at a week. */
+    overview: {
+      label: 'At a glance', // COPY:
+      title: 'Six weeks to launch', // COPY:
+      text: 'Six steps that overlap, so nothing waits on a handover, and care that carries on after launch.', // COPY:
+      hint: {
+        pointer: 'Hover a week to see what happens in it.', // COPY:
+        touch: 'Tap a week to see what happens in it.', // COPY:
+      },
+    },
     /** Timeline columns. Step spans in data/process.ts index into this list. */
     columns: [
       { label: 'Week 1', short: 'W1' }, // COPY:

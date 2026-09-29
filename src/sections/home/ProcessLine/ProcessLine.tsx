@@ -37,6 +37,11 @@ export interface ProcessLineProps {
   stepLabel: string
   /** Label above the live readout, e.g. "Where we are". */
   nowLabel: string
+  /**
+   * What sits beside the plan until the visitor points at a week, so the entrance sweep
+   * doesn't flick the readout through every week. `hint` invites them to explore.
+   */
+  overview: ProcessOverview
   /** The timeline's columns (weeks, then after launch). Step spans index into these. */
   columns: TimelineColumn[]
   /** "Go deeper" link to the full process. */
@@ -44,6 +49,13 @@ export interface ProcessLineProps {
   /** The tools behind the work, as one slow row under the plan. */
   technologies?: Omit<TechnologyMarqueeProps, 'tone'>
   tone?: Tone
+}
+
+export interface ProcessOverview {
+  label: string
+  title: string
+  text: string
+  hint: { pointer: string; touch: string }
 }
 
 /** The animated parts of the plan, collected once per mount. */
@@ -59,7 +71,8 @@ interface Parts {
  * enters, the steps slide in and a playhead sweeps the weeks once on its own, drawing each bar
  * under it. Then the plan is the visitor's: hovering (or tapping) a week glides the playhead
  * there, drawing or retracting the bars up to it, a soft band follows the column and the
- * readout beside the plan rolls to that week; clicking a week (or its label, or the arrow
+ * readout beside the plan rolls to that week (until that first hover it shows an overview,
+ * so the entrance sweep doesn't flick it through every week); clicking a week (or its label, or the arrow
  * keys) keeps it there. The technology strip runs underneath (ambient). The full sticky
  * version (ProcessPinned) lives on /services. Reduced motion: the whole plan, static.
  */
@@ -70,6 +83,7 @@ export function ProcessLine({
   steps,
   stepLabel,
   nowLabel,
+  overview,
   columns,
   more,
   technologies,
@@ -88,6 +102,9 @@ export function ProcessLine({
   const [column, setColumn] = useState(0)
   const [picked, setPicked] = useState(last)
   const [ready, setReady] = useState(false)
+  // Whether the visitor has pointed at, tapped or keyed to a week. Until then the readout
+  // shows the overview: the entrance sweep would otherwise flick it through every week.
+  const [explored, setExplored] = useState(false)
   // Imperative animation state, never read during render. `position` is the playhead (0–1),
   // `target` where it's following to; `follow` is set once the plan is mounted.
   const motion = useRef({
@@ -245,6 +262,7 @@ export function ProcessLine({
     const next = Math.min(last, Math.max(0, target))
     setPicked(next)
     setReady(true)
+    setExplored(true)
     motion.current.hover = -1
     motion.current.follow?.(next)
   }
@@ -262,6 +280,7 @@ export function ProcessLine({
     if (!interactive || isTouch || !ready) return
     const target = columnUnder(event.clientX)
     if (target < 0 || target === motion.current.hover) return
+    if (!explored) setExplored(true)
     motion.current.hover = target
     motion.current.follow?.(target)
   }
@@ -297,6 +316,17 @@ export function ProcessLine({
         )}
       </span>
     )
+
+  /** One of the readout's two stacked layers (overview, live readout). */
+  const layer = (shown: boolean) => ({
+    className: cn(
+      'transition-[opacity,translate] ease-out-expo [grid-area:1/1]',
+      shown
+        ? 'translate-y-0 opacity-100 duration-(--duration-base)'
+        : 'pointer-events-none translate-y-3 opacity-0 duration-(--duration-micro)',
+    ),
+    style: { transitionDelay: shown ? '160ms' : '0ms' },
+  })
 
   // A soft highlight on the playhead's column, across every row.
   const band = () =>
@@ -455,90 +485,109 @@ export function ProcessLine({
           </div>
 
           {readout && (
-            <aside aria-hidden="true" className="self-start">
-              <p className="eyebrow text-muted">{nowLabel}</p>
-              {/* The week rolls like a counter: forward rolls up, back rolls down. Every label
-                  is stacked in one cell; only the current one sits in view. */}
-              <div className="mt-3 grid overflow-hidden">
-                {columns.map((col, i) => (
-                  <p
-                    key={col.label}
-                    className={cn(
-                      'text-heading-xl transition-[translate,opacity] ease-out-expo [grid-area:1/1]',
-                      i === column
-                        ? 'translate-y-0 opacity-100 duration-(--duration-base)'
-                        : cn(
-                            'opacity-0 duration-(--duration-micro)',
-                            i < column ? '-translate-y-full' : 'translate-y-full',
-                          ),
-                    )}
-                  >
-                    {col.label}
+            <aside aria-hidden="true" className="grid self-start">
+              {/* The overview until the visitor points at a week, then the live readout. Both
+                  share one cell and cross-fade: the leaving layer goes quickly, the arriving
+                  one follows once it has cleared. */}
+              <div {...layer(!explored)}>
+                <p className="eyebrow text-muted">{overview.label}</p>
+                <p className="mt-3 text-heading-xl">{overview.title}</p>
+                <div className="mt-8 border-t border-tone pt-8">
+                  <p className="text-small text-muted">{overview.text}</p>
+                  <p className="mt-4 flex items-baseline gap-2 text-small">
+                    <span className="size-1.5 shrink-0 -translate-y-0.5 rounded-pill bg-orange" />
+                    {isTouch ? overview.hint.touch : overview.hint.pointer}
                   </p>
-                ))}
+                </div>
               </div>
-              <div className="mt-8 grid gap-8 border-t border-tone pt-8">
-                {[0, 1].map((slot) => (
-                  <div key={slot} className="grid">
-                    {steps.map((step, i) => {
-                      const current = running[slot]
-                      const shown = current === i
-                      // Direction of travel: earlier steps leave upwards, later ones wait below.
-                      const away =
-                        current === undefined || i > current ? 'translate-y-4' : '-translate-y-3'
-                      // Leaving is quick and together; once it has cleared, each line comes in after the one
-                      // above it.
-                      const reveal = (order: number) => ({
-                        className: cn(
-                          'transition-[opacity,translate] ease-out-expo',
-                          shown
-                            ? 'translate-y-0 opacity-100 duration-(--duration-base)'
-                            : cn('opacity-0 duration-(--duration-micro)', away),
-                        ),
-                        style: { transitionDelay: shown ? `${140 + order * 55}ms` : '0ms' },
-                      })
-                      return (
-                        <div
-                          key={step.id}
-                          className={cn('[grid-area:1/1]', !shown && 'pointer-events-none')}
-                        >
-                          <p
-                            className={cn('eyebrow text-accent', reveal(0).className)}
-                            style={reveal(0).style}
+              <div {...layer(explored)}>
+                <p className="eyebrow text-muted">{nowLabel}</p>
+                {/* The week rolls like a counter: forward rolls up, back rolls down. Every label
+                  is stacked in one cell; only the current one sits in view. */}
+                <div className="mt-3 grid overflow-hidden">
+                  {columns.map((col, i) => (
+                    <p
+                      key={col.label}
+                      className={cn(
+                        'text-heading-xl transition-[translate,opacity] ease-out-expo [grid-area:1/1]',
+                        i === column
+                          ? 'translate-y-0 opacity-100 duration-(--duration-base)'
+                          : cn(
+                              'opacity-0 duration-(--duration-micro)',
+                              i < column ? '-translate-y-full' : 'translate-y-full',
+                            ),
+                      )}
+                    >
+                      {col.label}
+                    </p>
+                  ))}
+                </div>
+                <div className="mt-8 grid gap-8 border-t border-tone pt-8">
+                  {[0, 1].map((slot) => (
+                    <div key={slot} className="grid">
+                      {steps.map((step, i) => {
+                        const current = running[slot]
+                        const shown = current === i
+                        // Direction of travel: earlier steps leave upwards, later ones wait below.
+                        const away =
+                          current === undefined || i > current ? 'translate-y-4' : '-translate-y-3'
+                        // Leaving is quick and together; once it has cleared, each line comes in after the one
+                        // above it.
+                        const reveal = (order: number) => ({
+                          className: cn(
+                            'transition-[opacity,translate] ease-out-expo',
+                            shown
+                              ? 'translate-y-0 opacity-100 duration-(--duration-base)'
+                              : cn('opacity-0 duration-(--duration-micro)', away),
+                          ),
+                          style: { transitionDelay: shown ? `${140 + order * 55}ms` : '0ms' },
+                        })
+                        return (
+                          <div
+                            key={step.id}
+                            className={cn('[grid-area:1/1]', !shown && 'pointer-events-none')}
                           >
-                            {pad2(i + 1)} · {step.title}
-                          </p>
-                          <p
-                            className={cn('mt-3 text-small text-muted', reveal(1).className)}
-                            style={reveal(1).style}
-                          >
-                            {step.summary}
-                          </p>
-                          <ul className="mt-4 grid gap-1.5 text-small">
-                            {step.points.map((point, k) => (
-                              <li
-                                key={point}
-                                className={cn('flex items-baseline gap-2', reveal(2 + k).className)}
-                                style={reveal(2 + k).style}
-                              >
-                                <span
+                            <p
+                              className={cn('eyebrow text-accent', reveal(0).className)}
+                              style={reveal(0).style}
+                            >
+                              {pad2(i + 1)} · {step.title}
+                            </p>
+                            <p
+                              className={cn('mt-3 text-small text-muted', reveal(1).className)}
+                              style={reveal(1).style}
+                            >
+                              {step.summary}
+                            </p>
+                            <ul className="mt-4 grid gap-1.5 text-small">
+                              {step.points.map((point, k) => (
+                                <li
+                                  key={point}
                                   className={cn(
-                                    'size-1.5 shrink-0 -translate-y-0.5 rounded-pill bg-orange transition-[scale] duration-(--duration-base) ease-out-expo',
-                                    shown ? 'scale-100' : 'scale-0',
+                                    'flex items-baseline gap-2',
+                                    reveal(2 + k).className,
                                   )}
-                                  style={{
-                                    transitionDelay: shown ? `${200 + (2 + k) * 55}ms` : '0ms',
-                                  }}
-                                />
-                                {point}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )
-                    })}
-                  </div>
-                ))}
+                                  style={reveal(2 + k).style}
+                                >
+                                  <span
+                                    className={cn(
+                                      'size-1.5 shrink-0 -translate-y-0.5 rounded-pill bg-orange transition-[scale] duration-(--duration-base) ease-out-expo',
+                                      shown ? 'scale-100' : 'scale-0',
+                                    )}
+                                    style={{
+                                      transitionDelay: shown ? `${200 + (2 + k) * 55}ms` : '0ms',
+                                    }}
+                                  />
+                                  {point}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  ))}
+                </div>
               </div>
             </aside>
           )}
