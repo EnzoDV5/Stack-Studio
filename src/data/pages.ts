@@ -244,14 +244,31 @@ export const servicesContent = {
     intro:
       'Starting something new or need someone to take over what you already have? Stack handles both, and stays on to keep it working and improving.', // COPY:
   } satisfies PageHeroContent,
-  navLabel: 'Service stages', // COPY:
-  /** Apps and software, with the phone turn (between the stages and the process). */
+  /**
+   * The Services page groups the offer the way visitors think about it: websites, apps, then
+   * what happens to something that already exists. The stages (data/services) stay the model.
+   */
+  index: {
+    label: 'What do you need?', // COPY:
+    items: [
+      { to: '#stage-build', name: 'A website', line: 'A new site that wins you work.' }, // COPY:
+      { to: '#apps', name: 'An app or software', line: 'Portals, bookings, mobile and desktop.' }, // COPY:
+      { to: '#stage-takeover', name: 'Help with what I have', line: 'We take over and fix it.' }, // COPY:
+      { to: '#stage-run', name: 'Ongoing care', line: 'Hosting, updates and a team on call.' }, // COPY:
+    ],
+  },
+  /** The Build stage's website offerings, shown as their own group. */
+  websites: {
+    name: 'Websites', // COPY:
+    line: 'Designed from scratch, built to win you work.', // COPY:
+    cta: { label: 'Start a website', to: '/start?path=build' }, // COPY:
+  },
+  /** The Build stage's apps and software, with the phone turn (dark, between the groups). */
   apps: {
     eyebrow: 'Apps and software', // COPY:
     title: 'When a website isn’t enough.', // COPY:
     intro:
-      'Booking systems, client portals, dashboards and mobile apps: the software your business runs on, designed and built as carefully as our websites.', // COPY:
-    kinds: ['Web apps', 'Mobile apps', 'Client portals', 'Booking systems', 'Desktop tools'], // COPY:
+      'Booking systems, client portals, dashboards and mobile apps: the software your business runs on.', // COPY:
     cta: { label: 'Tell us about your app', to: '/start?path=build' }, // COPY:
   },
   process: {
@@ -262,7 +279,6 @@ export const servicesContent = {
   },
   labels: {
     includes: 'Includes', // COPY:
-    examples: 'Examples', // COPY:
   },
   faq: {
     eyebrow: 'FAQ', // COPY:

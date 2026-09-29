@@ -9,76 +9,105 @@ import { rates } from '@/data/rates'
 import { offerings, serviceStages } from '@/data/services'
 import { stageRows } from '@/lib/offer'
 import { AppShowcase } from '@/sections/services/AppShowcase'
+import { ServiceIndex } from '@/sections/services/ServiceIndex'
 import type { StageLayout } from '@/sections/services/StageBlock'
-import { StageExplorer } from '@/sections/services/StageExplorer'
+import { StageExplorer, type StageExplorerStage } from '@/sections/services/StageExplorer'
 import { FaqSection } from '@/sections/shared/FaqSection'
 import { PageTitle } from '@/sections/shared/PageTitle'
 import { ProcessPinned } from '@/sections/shared/ProcessPinned'
 import type { StageId } from '@/types'
 
-/** Each stage laid out for what it sells; no two stages share a layout. */
-const stageLayouts: Record<StageId, StageLayout> = {
-  build: 'feature',
+const c = servicesContent
+const l = pricingContent.priceLabels
+const data = { offerings, plans, rates }
+
+/** Each group laid out for what it sells; no two share a layout. */
+const layouts: Record<Exclude<StageId, 'build'>, StageLayout> = {
   takeover: 'cards',
   run: 'split',
   grow: 'figures',
   partner: 'tiers',
 }
 
-const stageNotes: Partial<Record<StageId, string[]>> = {
+const notes: Partial<Record<StageId, string[]>> = {
   run: [policies.hostingOnRequest],
   partner: planFamilies.flatMap((f) => (f.id === 'partner' && f.note ? [f.note] : [])),
 }
 
-export function ServicesPage() {
-  const data = { offerings, plans, rates }
-  const stages = serviceStages.map((stage) => ({
-    id: stage.id,
-    index: stage.index,
+// Build splits in two, the way visitors look for it: websites, then apps and software (with
+// the phone). Websites are the build offerings the brief files under 'website'.
+const buildRows = stageRows('build', data, l)
+const isWebsite = (id: string) => offerings.find((o) => o.id === id)?.briefCategory === 'website'
+const websiteRows = buildRows.filter((row) => isWebsite(row.id))
+const appRows = buildRows.filter((row) => !isWebsite(row.id))
+
+const websites: StageExplorerStage = {
+  id: 'stage-build',
+  index: 1,
+  name: c.websites.name,
+  line: c.websites.line,
+  rows: websiteRows,
+  cta: c.websites.cta,
+  media: serviceMedia.build,
+  layout: 'feature',
+}
+
+// Then what happens to something that already exists: take over, run, grow, partner (03–06).
+const afterLaunch: StageExplorerStage[] = serviceStages
+  .filter((stage) => stage.id !== 'build')
+  .map((stage, i) => ({
+    id: `stage-${stage.id}`,
+    index: i + 3,
     name: stage.name,
     line: stage.line,
-    summary: stage.summary,
-    rows: stageRows(stage.id, data, pricingContent.priceLabels),
-    notes: stageNotes[stage.id],
+    rows: stageRows(stage.id, data, l),
+    notes: notes[stage.id],
     cta: stage.cta,
-    media: serviceMedia[stage.id],
-    layout: stageLayouts[stage.id],
+    // Grow is two hourly rates: a compact row, no image.
+    media: stage.id === 'grow' ? undefined : serviceMedia[stage.id],
+    layout: layouts[stage.id as Exclude<StageId, 'build'>],
   }))
 
+/**
+ * Services, grouped the way people look for them: a "What do you need?" index, websites, apps
+ * and software (the phone), then taking over, running, growing and partnering on what exists.
+ */
+export function ServicesPage() {
   return (
     <>
       <PageMeta {...pageMeta.services} />
-      <PageTitle content={servicesContent.hero} />
+      <PageTitle content={c.hero} />
       <StageExplorer
-        stages={stages}
-        navLabel={servicesContent.navLabel}
-        labels={servicesContent.labels}
+        className="pt-8"
+        lead={<ServiceIndex label={c.index.label} items={c.index.items} />}
+        stages={[websites]}
+        labels={c.labels}
       />
-      {/* Scrubbed, between the stages (none) and the process (pin). */}
+      {/* Scrubbed, between two runs of groups (none) and before the process (pin). */}
       <AppShowcase
-        eyebrow={servicesContent.apps.eyebrow}
-        title={servicesContent.apps.title}
-        intro={servicesContent.apps.intro}
-        kinds={servicesContent.apps.kinds}
-        cta={servicesContent.apps.cta}
+        id="apps"
+        index={2}
+        eyebrow={c.apps.eyebrow}
+        title={c.apps.title}
+        intro={c.apps.intro}
+        rows={appRows}
+        includesLabel={c.labels.includes}
+        cta={c.apps.cta}
         phone={media.apps.phone}
       />
+      <StageExplorer stages={afterLaunch} labels={c.labels} />
       <ProcessPinned
         id="process"
         tone="dark"
         intro={{
-          eyebrow: servicesContent.process.eyebrow,
-          title: servicesContent.process.title,
-          intro: servicesContent.process.intro,
+          eyebrow: c.process.eyebrow,
+          title: c.process.title,
+          intro: c.process.intro,
         }}
         steps={processSteps}
-        stepLabel={servicesContent.process.stepLabel}
+        stepLabel={c.process.stepLabel}
       />
-      <FaqSection
-        tone="dark"
-        intro={servicesContent.faq}
-        faqs={faqsFor('general', 'services', 'process')}
-      />
+      <FaqSection tone="dark" intro={c.faq} faqs={faqsFor('general', 'services', 'process')} />
     </>
   )
 }

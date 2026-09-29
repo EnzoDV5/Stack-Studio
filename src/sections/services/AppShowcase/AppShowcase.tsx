@@ -4,16 +4,21 @@ import { ImageSequence } from '@/components/media/ImageSequence'
 import { Button } from '@/components/ui/Button'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Heading } from '@/components/ui/Heading'
-import { Tag } from '@/components/ui/Tag'
+import type { OfferRow } from '@/lib/offer'
+import { OfferAccordion } from '@/sections/services/OfferAccordion'
 import type { CtaLink, ImageSequenceAsset } from '@/types'
 import styles from './AppShowcase.module.css'
 
 export interface AppShowcaseProps {
+  id?: string
   eyebrow: string
+  /** Number shown in the eyebrow (the group's place on the page). */
+  index?: number
   title: string
   intro: string
-  /** The kinds of apps, shown as tags (e.g. "Client portals"). */
-  kinds: string[]
+  /** The app and software offerings, as dropdowns. */
+  rows: OfferRow[]
+  includesLabel: string
   cta: CtaLink
   /** The phone turn, with an app on screen. */
   phone: ImageSequenceAsset
@@ -21,37 +26,34 @@ export interface AppShowcaseProps {
 }
 
 /**
- * Apps and software, beyond websites. Signature motion (scrubbed, not pinned: ProcessPinned
- * follows): as the phone scrolls up through the view it turns from its back, through its
- * side, to face the visitor with an app on screen, like a product turn on Apple's pages.
- * Reduced motion: the finished pose, still.
+ * Apps and software: the Build offerings beyond websites, as dropdowns beside the phone.
+ * Signature motion (scrubbed, not pinned: ProcessPinned is the page's pin): as the phone
+ * scrolls up through the view it turns from its back to face the visitor with an app on
+ * screen. Reduced motion: the finished pose, still.
  */
 export function AppShowcase({
+  id,
   eyebrow,
+  index,
   title,
   intro,
-  kinds,
+  rows,
+  includesLabel,
   cta,
   phone,
   tone = 'dark',
 }: AppShowcaseProps) {
   const headingId = useId()
   return (
-    <Section tone={tone} aria-labelledby={headingId} className="overflow-hidden">
+    <Section id={id} tone={tone} aria-labelledby={headingId} className="overflow-hidden">
       <div className="container-site grid items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
         <div>
-          <Eyebrow label={eyebrow} className="mb-6" />
+          <Eyebrow index={index} label={eyebrow} className="mb-6" />
           <Heading id={headingId} size="display-lg" compile className="max-w-[12ch]">
             {title}
           </Heading>
-          <p className="mt-8 max-w-[42ch] text-body-lg text-muted">{intro}</p>
-          <ul className="mt-8 flex flex-wrap gap-2">
-            {kinds.map((kind) => (
-              <li key={kind}>
-                <Tag>{kind}</Tag>
-              </li>
-            ))}
-          </ul>
+          <p className="mt-6 max-w-[40ch] text-body-lg text-muted">{intro}</p>
+          <OfferAccordion rows={rows} includesLabel={includesLabel} size="md" className="mt-10" />
           <Button
             to={cta.to}
             withArrow

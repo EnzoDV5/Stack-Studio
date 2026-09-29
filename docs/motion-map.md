@@ -72,11 +72,12 @@ Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whol
 | #   | Section       | Tone   | Motion                                        | Trigger |
 | --- | ------------- | ------ | --------------------------------------------- | ------- |
 | 1   | PageTitle     | paper  | Static                                        | none    |
-| 2   | StageExplorer | paper  | Sticky stage nav (scroll-spy), accordion rows | hover   |
+| 2   | StageExplorer | paper  | "What do you need?" index, Websites dropdowns | none    |
 | 3   | AppShowcase   | dark   | iPhone turns to face the viewer (frames)      | scrub   |
-| 4   | ProcessPinned | dark   | Sticky column, active step                    | pin     |
-| 5   | FaqSection    | paper  | Accordion, sticky heading                     | hover   |
-| 6   | ClosingCta    | orange | SplitReveal words                             | enter   |
+| 4   | StageExplorer | paper  | Take over, Run, Grow, Partner                 | none    |
+| 5   | ProcessPinned | dark   | Sticky column, active step                    | pin     |
+| 6   | FaqSection    | dark   | Accordion, sticky heading                     | hover   |
+| 7   | ClosingCta    | orange | SplitReveal words                             | enter   |
 
 No adjacent clashes.
 
@@ -196,19 +197,23 @@ above; the deck folds away as the lid comes upright and the laptop grows until t
 fills the view; then a full-page capture of the real site scrolls inside the screen, top to
 bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is static; the gallery uses Parallax.
 
-**Services:** PageTitle (load: compile) · StageExplorer (none, sticky nav) · AppShowcase
-(scrub: phone turn) · ProcessPinned (pin, `#process`) · FaqSection (hover) · ClosingCta
-(enter). AppShowcase ("Apps and software") is where apps get their own moment, since most
+**Services:** PageTitle (load: compile) · StageExplorer (none: the "What do you need?"
+index and 01 Websites) · AppShowcase (scrub: phone turn, 02 Apps and software) ·
+StageExplorer (none: 03 Take over, 04 Run, 05 Grow, 06 Partner) · ProcessPinned (pin,
+`#process`) · FaqSection (hover) · ClosingCta (enter). The page groups the offer the way
+visitors look for it; the five stages stay the model elsewhere. Build splits into websites and
+apps (the offerings the brief files under 'website', then the rest), so apps live only beside
+the phone. No sticky nav: the index is a row of jump cards at the top. AppShowcase ("Apps and software") is where apps get their own moment, since most
 client work is websites: an orange iPhone 17 Pro spins on its upright axis from its back, through its side, to
 face the visitor with an illustrative bookings app on screen, scrubbed as it scrolls up
 through the view (`phoneTurn`: phone top at 92% to its centre at 50%, 80 evenly spaced frames, cross-faded, eased by `phoneTurn.ease`). It isn't pinned
 (ProcessPinned is the page's one pin). The frames are pre-rendered from a 3D model
 (scripts/phone) and drawn on a canvas by `ImageSequence`; no 3D library ships. Reduced
-motion: the finished pose as a still image. Each stage has
-its own layout, picked for what it sells (`StageBlock layout`): Build `feature` (text
-beside a tall image, expandable offerings), Take over `cards`, Run `split` (image column
-beside a priced list), Grow `figures` (rates as large figures) and Partner `tiers`. Stage
-loops only play while on screen.
+motion: the finished pose as a still image. Each group has
+its own layout, picked for what it sells (`StageBlock layout`): Websites `feature` (the
+intro beside an image, then dropdowns), Take over `cards`, Run `split` (image column
+beside a priced list), Grow `figures` (two rates as large figures, no image) and Partner
+`tiers`. Each intro is a name and one line (no paragraph). Loops only play while on screen.
 
 **Pricing:** PageTitle (load: compile) · PricingSteps (none) · QuoteStarters (enter:
 cards rise) · PlanTabs (hover: Flip card swap) · IncludedVsExcluded (none) · PoliciesList

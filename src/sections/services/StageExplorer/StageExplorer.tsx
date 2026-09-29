@@ -1,37 +1,33 @@
+import type { ReactNode } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
 import { StageBlock, type StageBlockProps } from '@/sections/services/StageBlock'
-import { StageNav } from '@/sections/services/StageNav'
 
-export type StageExplorerStage = Omit<StageBlockProps, 'id' | 'labels'> & { id: string }
+export type StageExplorerStage = Omit<StageBlockProps, 'labels'>
 
 export interface StageExplorerProps {
   stages: StageExplorerStage[]
-  navLabel: string
   labels: StageBlockProps['labels']
+  /** Above the first group, e.g. the "What do you need?" index. */
+  lead?: ReactNode
   tone?: Tone
+  className?: string
 }
 
-const PREFIX = 'stage-'
-
-/** The five stages: sticky progress on the left, one expandable block per stage on the right. */
-export function StageExplorer({ stages, navLabel, labels, tone = 'paper' }: StageExplorerProps) {
+/** A run of offering groups, one after another at full width (no sticky nav). */
+export function StageExplorer({
+  stages,
+  labels,
+  lead,
+  tone = 'paper',
+  className,
+}: StageExplorerProps) {
   return (
-    <Section tone={tone} className="pt-8">
-      <div className="container-site grid gap-10 lg:grid-cols-12">
-        <div className="lg:col-span-3">
-          <div className="lg:sticky lg:top-[calc(var(--spacing-header)+2rem)]">
-            <StageNav
-              label={navLabel}
-              idPrefix={PREFIX}
-              items={stages.map((s) => ({ id: s.id, index: s.index, name: s.name }))}
-            />
-          </div>
-        </div>
-        <div className="lg:col-span-8 lg:col-start-5">
-          {stages.map((stage) => (
-            <StageBlock key={stage.id} {...stage} id={`${PREFIX}${stage.id}`} labels={labels} />
-          ))}
-        </div>
+    <Section tone={tone} className={className}>
+      <div className="container-site">
+        {lead && <div className="mb-12 md:mb-16">{lead}</div>}
+        {stages.map((stage) => (
+          <StageBlock key={stage.id} {...stage} labels={labels} />
+        ))}
       </div>
     </Section>
   )
