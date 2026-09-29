@@ -15,8 +15,8 @@ Studio snippet   Metrics, quotes    /services, /pricing   Email (footer)
 ## Primary path (the flow the home page is built around)
 
 1. **Land on Home.** A short preloader (once per session) opens onto a big statement over
-   the showreel, with the project index beside it: work is on the first screen, and the
-   CTA is visible within 1 second. _Doubt removed: Find._
+   the showreel ("Build it. Run it. Grow it.") with the Stack mark filling the right side,
+   and the CTA is visible within 1 second. The work follows straight after. _Doubt removed: Find._
 2. **Scroll.** The showreel gives way to the work reel: every project, large, sliding past,
    then what those clients say about it. Hovering previews the work in motion. _Doubt
    removed: Trust._

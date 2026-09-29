@@ -79,7 +79,7 @@ export function HomePage() {
     <>
       <PageMeta {...pageMeta.home} />
 
-      <HomeHero {...hero} video={media.home.showreel} projects={projects} />
+      <HomeHero {...hero} video={media.home.showreel} />
 
       <DeferredSection minHeight="110vh">
         <PathChooser

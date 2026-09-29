@@ -82,13 +82,11 @@ export const closingCtaCode = [
 export const homeContent = {
   hero: {
     eyebrow: 'Digital studio · Centurion, ZA', // COPY:
-    title: 'Brand-led websites that do the work.', // COPY:
+    title: 'Build it. Run it. Grow it.', // COPY: sets as three lines (see HomeHero)
     intro:
-      'Starting something new or need someone to take over what you already have? Stack handles both.', // COPY:
+      'Websites, web apps and custom software: we design and build them, take over what you already have, and keep it all running and improving.', // COPY:
     cta: { label: 'Start a project', to: '/start' }, // COPY:
     secondaryCta: { label: 'See the work', to: '/work' }, // COPY:
-    indexLabel: 'Selected work', // COPY:
-    cursorLabel: 'View', // COPY:
   },
   work: {
     eyebrow: 'Selected work', // COPY:

@@ -125,17 +125,17 @@ Order, as a story: what the visitor needs, how Stack works, indicative pricing, 
 client voices and the founders, then the closing band. Measured on the preview build: 11.05 viewports tall at
 1440×900 (footer included), 10.79 at 390×844. Heights below are in viewports.
 
-| #   | Section                | Tone   | Opener                | Signature motion                                                                                | Trigger      | Height |
-| --- | ---------------------- | ------ | --------------------- | ----------------------------------------------------------------------------------------------- | ------------ | ------ |
-| 1   | HomeHero               | dark   | own                   | Statement line-reveal (1 of Home's 2 type moments); the project index crossfades the background | load + hover | 1.00   |
-| 2   | PathChooser            | dark   | SectionHeader split   | Horizontal accordion (transform + clip-path, GSAP); rows on mobile. No scroll motion            | hover        | 1.22   |
-| 3   | ProcessLine            | dark   | SectionHeader minimal | The line draws with scroll and lights each step; the technology strip runs underneath           | scrub        | ~1.1   |
-| 4   | PricingSnapshot        | paper  | SectionHeader stacked | Three figures count up once, mid-screen                                                         | enter        | 1.05   |
-| 5   | WorkReel               | paper  | SectionHeader inline  | Arrives full-bleed; pins (the page's only pin), shrinks into a card, then travels sideways      | scrub + pin  | 2.85   |
-| 6   | ClientVoices           | paper  | SectionHeader stacked | The quote cards rise in one after the other                                                     | enter        | ~1.0   |
-| 7   | StudioSnippet          | paper  | SectionHeader split   | Portraits drift toward the pointer (hover parallax)                                             | hover        | 0.92   |
-| 8   | ClosingCta (app shell) | orange | eyebrow               | Code characters compile into the readable ink title, once, on a timer when the band enters      | enter        | ~0.9   |
-| —   | Footer (chrome)        | ink    | —                     | None. Not part of the tone flow, so the band above stays orange                                 | none         | 0.76   |
+| #   | Section                | Tone   | Opener                | Signature motion                                                                                     | Trigger     | Height |
+| --- | ---------------------- | ------ | --------------------- | ---------------------------------------------------------------------------------------------------- | ----------- | ------ |
+| 1   | HomeHero               | dark   | own                   | Statement line-reveal (1 of Home's 2 type moments) over the showreel; the Stack mark fills the right | load        | 1.00   |
+| 2   | PathChooser            | dark   | SectionHeader split   | Horizontal accordion (transform + clip-path, GSAP); rows on mobile. No scroll motion                 | hover       | 1.22   |
+| 3   | ProcessLine            | dark   | SectionHeader minimal | The line draws with scroll and lights each step; the technology strip runs underneath                | scrub       | ~1.1   |
+| 4   | PricingSnapshot        | paper  | SectionHeader stacked | Three figures count up once, mid-screen                                                              | enter       | 1.05   |
+| 5   | WorkReel               | paper  | SectionHeader inline  | Arrives full-bleed; pins (the page's only pin), shrinks into a card, then travels sideways           | scrub + pin | 2.85   |
+| 6   | ClientVoices           | paper  | SectionHeader stacked | The quote cards rise in one after the other                                                          | enter       | ~1.0   |
+| 7   | StudioSnippet          | paper  | SectionHeader split   | Portraits drift toward the pointer (hover parallax)                                                  | hover       | 0.92   |
+| 8   | ClosingCta (app shell) | orange | eyebrow               | Code characters compile into the readable ink title, once, on a timer when the band enters           | enter       | ~0.9   |
+| —   | Footer (chrome)        | ink    | —                     | None. Not part of the tone flow, so the band above stays orange                                      | none        | 0.76   |
 
 Trigger sequence: load · scrub/pin · ambient · enter · hover · scrub · enter · hover · enter. No two
 neighbours share a type. Openers go inline · stacked · split · minimal · stacked · split.

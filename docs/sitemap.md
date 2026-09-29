@@ -29,7 +29,7 @@ visitors choose where to go. About 11 viewports on desktop.
 
 | #   | Section           | Tone   | Purpose                                                                               |
 | --- | ----------------- | ------ | ------------------------------------------------------------------------------------- |
-| —   | Hero              | dark   | Statement over the showreel, a project index (chips on mobile), **Start a project**   |
+| —   | Hero              | dark   | Statement over the showreel, the Stack mark large on the right, **Start a project**   |
 | 01  | Where are you at? | dark   | The five stages as a self-select router: key prices, See details, Get an estimate     |
 | 02  | Process           | dark   | The six steps along one line, then the technologies strip → /services#process         |
 | 03  | Pricing           | paper  | Three "from" figures (website, care, partner), VAT note, Build my estimate → /pricing |

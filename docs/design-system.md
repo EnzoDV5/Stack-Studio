@@ -154,7 +154,7 @@ Neighbouring sections never share a trigger type, and every section's motion is 
 | Route change      | Orange then ink panel wipe, scroll reset (or jump to `#hash`)               | `PageTransition`                 |
 | Whole page        | Page colours switch to each section's tone in one short fade                | `ToneController`                 |
 | Section headings  | Code characters compile into the title once, on a timer, when it enters     | `SectionHeader`, `MaskedHeading` |
-| Home hero         | Masked line rise; project index crossfades the background                   | `HomeHero`, `SplitReveal`        |
+| Home hero         | Masked line rise over the showreel; a huge Stack mark fills the right side  | `HomeHero`, `SplitReveal`        |
 | Home work         | Full-bleed media shrinks into a card, then a pinned sideways reel           | `WorkReel`                       |
 | Home services     | Horizontal accordion (transform + clip-path)                                | `PathChooser`                    |
 | Home process      | A line draws through the steps with scroll and lights them                  | `ProcessLine`, `DrawLine`        |
