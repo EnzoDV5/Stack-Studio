@@ -44,7 +44,7 @@ export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, video }: Ho
           the bottom so the gradient above still reads. Decorative. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 -z-10 flex items-center justify-end overflow-hidden opacity-15 [mask-image:linear-gradient(to_bottom,black_55%,transparent)] lg:opacity-90"
+        className="pointer-events-none absolute inset-y-0 right-0 -z-10 flex items-center justify-end overflow-hidden [mask-image:linear-gradient(to_bottom,black_55%,transparent)] opacity-15 lg:opacity-90"
       >
         <Logo
           variant="mark"
