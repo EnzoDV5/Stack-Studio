@@ -2,9 +2,18 @@
  * Stack's five stages and every offering (see docs/pricing-model.md, the source of truth).
  * Client-facing prices only. Never add internal rates, costs or margins here.
  * visibility: 'pricing' = Pricing + Services pages · 'services' = Services page only
- * ("Quoted per project") · 'hidden' = kept in data, never rendered.
+ * (Build items still show their calculated estimate) · 'hidden' = kept in data, never rendered.
  */
 import type { Offering, ServiceStage, StageId } from '@/types'
+import { BUILD_RATE_PER_HOUR, CARE_RATE_PER_HOUR } from './rates'
+
+const estimateAt = (estimatedHours: number, pricePerHour: number) => ({
+  estimatedHours,
+  fromPrice: estimatedHours * pricePerHour,
+})
+const buildEstimate = (estimatedHours: number) => estimateAt(estimatedHours, BUILD_RATE_PER_HOUR)
+const careEstimate = (estimatedHours: number) => estimateAt(estimatedHours, CARE_RATE_PER_HOUR)
+const buildPrice = (estimatedHours: number) => buildEstimate(estimatedHours).fromPrice
 
 export const serviceStages: ServiceStage[] = [
   {
@@ -40,11 +49,11 @@ export const serviceStages: ServiceStage[] = [
   {
     id: 'grow',
     index: 4,
-    name: 'Grow', // COPY:
-    line: 'We keep improving it.', // COPY:
+    name: 'Improve', // COPY:
+    line: 'Update, extend or redesign what you already have.', // COPY:
     summary:
-      'New features, integrations and improvements as your business changes, priced as a project or billed by the hour.', // COPY:
-    cta: { label: 'Plan an improvement', to: '/start?path=develop' }, // COPY:
+      'We quote changes to an existing website or app from estimated working hours at R400/hour, then offer ongoing Care at R200/hour after launch.', // COPY:
+    cta: { label: 'Quote my changes', to: '/start?path=develop' }, // COPY:
     briefPath: 'develop',
   },
   {
@@ -66,7 +75,7 @@ export const offerings: Offering[] = [
     stage: 'build',
     name: 'Business Website', // COPY:
     summary: 'Not a template. A properly designed and developed business website.', // COPY:
-    fromPrice: 18_000,
+    ...buildEstimate(45),
     includedPages: 5,
     includes: [
       'Custom UX/UI', // COPY:
@@ -88,7 +97,7 @@ export const offerings: Offering[] = [
     stage: 'build',
     name: 'Custom / Immersive Website', // COPY:
     summary: 'Cinematic, motion-led sites with custom functionality behind them.', // COPY:
-    fromPrice: 35_000,
+    ...buildEstimate(87.5),
     includedPages: 8,
     includes: [
       'Custom UX/UI', // COPY:
@@ -109,7 +118,7 @@ export const offerings: Offering[] = [
     stage: 'build',
     name: 'E-commerce Website', // COPY:
     summary: 'A custom storefront that sells, with the admin to run it.', // COPY:
-    fromPrice: 45_000,
+    ...buildEstimate(112.5),
     includedPages: 5,
     includes: [
       'Custom storefront', // COPY:
@@ -130,7 +139,7 @@ export const offerings: Offering[] = [
     stage: 'build',
     name: 'Web Apps & MVPs', // COPY:
     summary: 'Portals, booking systems, dashboards and SaaS products, built properly.', // COPY:
-    fromPrice: 75_000,
+    ...buildEstimate(187.5),
     examples: [
       'Client portals', // COPY:
       'Booking systems', // COPY:
@@ -159,7 +168,7 @@ export const offerings: Offering[] = [
     stage: 'build',
     name: 'Custom Software & Mobile Apps', // COPY:
     summary: 'The internal systems and mobile apps your business actually runs on.', // COPY:
-    fromPrice: 120_000,
+    ...buildEstimate(300),
     examples: [
       'Custom CRM', // COPY:
       'Inventory', // COPY:
@@ -189,11 +198,11 @@ export const offerings: Offering[] = [
     stage: 'build',
     name: 'AI & Automation', // COPY:
     summary: 'We add useful AI features to the systems we build or the ones you already use.', // COPY:
-    fromPrice: 15_000,
+    ...buildEstimate(37.5),
     tiers: [
-      { label: 'Automation', fromPrice: 15_000 }, // COPY:
-      { label: 'AI features', fromPrice: 20_000 }, // COPY:
-      { label: 'Larger AI platforms', fromPrice: 75_000 }, // COPY:
+      { label: 'Automation', fromPrice: buildPrice(37.5) }, // COPY:
+      { label: 'AI features', fromPrice: buildPrice(50) }, // COPY:
+      { label: 'Larger AI platforms', fromPrice: buildPrice(187.5) }, // COPY:
     ],
     examples: [
       'Website → CRM', // COPY:
@@ -220,7 +229,7 @@ export const offerings: Offering[] = [
     stage: 'build',
     name: 'Backend & API Development', // COPY:
     summary: 'Backend systems built around your requirements.', // COPY:
-    fromPrice: 30_000,
+    ...buildEstimate(75),
     includes: [
       'REST APIs', // COPY:
       'Auth, business logic and roles', // COPY:
@@ -238,7 +247,7 @@ export const offerings: Offering[] = [
     stage: 'build',
     name: 'Desktop Applications', // COPY:
     summary: 'Windows and macOS business tools, online, offline or both.', // COPY:
-    fromPrice: 80_000,
+    ...buildEstimate(200),
     examples: [
       'Inventory', // COPY:
       'Internal tools', // COPY:
@@ -256,7 +265,7 @@ export const offerings: Offering[] = [
     stage: 'build',
     name: 'Software Discovery & Scoping', // COPY:
     summary: 'A paid scoping phase that turns an idea into a buildable plan and a real estimate.', // COPY:
-    fromPrice: 7_500,
+    ...buildEstimate(18.75),
     includes: [
       'Requirements, users and roles', // COPY:
       'Features and database design', // COPY:
@@ -265,7 +274,7 @@ export const offerings: Offering[] = [
       'Technical approach and timeline', // COPY:
       'Full development estimate', // COPY:
     ],
-    tiers: [{ label: 'Large systems', fromPrice: 15_000 }], // COPY: large systems R15,000–R40,000+
+    tiers: [{ label: 'Large systems', fromPrice: buildPrice(37.5) }], // COPY: large systems R15,000–R40,000+
     notes: ['Required before any build of R120,000+.', 'Large systems: R15,000–R40,000+.'], // COPY:
     visibility: 'pricing',
   },
@@ -274,7 +283,7 @@ export const offerings: Offering[] = [
     stage: 'build',
     name: 'Large-Scale Software Platform', // COPY:
     summary: 'Scoped individually.', // COPY:
-    fromPrice: 250_000,
+    ...buildEstimate(625),
     includes: [],
     requiresDiscovery: true,
     visibility: 'hidden',
@@ -287,7 +296,7 @@ export const offerings: Offering[] = [
     name: 'Website Technical Audit', // COPY:
     summary:
       'A Technical Health Report with clear recommendations: Good, Needs attention or Critical.', // COPY:
-    fromPrice: 2_500,
+    ...careEstimate(12.5),
     includes: [
       'Source code and framework', // COPY:
       'Hosting, domain/DNS and SSL', // COPY:
@@ -304,7 +313,7 @@ export const offerings: Offering[] = [
     stage: 'takeover',
     name: 'App / Software Audit', // COPY:
     summary: 'A full technical review before anyone touches a line of code.', // COPY:
-    fromPrice: 5_000,
+    ...careEstimate(25),
     includes: [
       'Frontend, backend and database', // COPY:
       'Code quality and security', // COPY:
@@ -321,7 +330,7 @@ export const offerings: Offering[] = [
     stage: 'takeover',
     name: 'Website Takeover', // COPY:
     summary: 'We move your site somewhere safe and take responsibility for it.', // COPY:
-    fromPrice: 3_500,
+    ...careEstimate(17.5),
     includes: [
       'Repository move and Stack access', // COPY:
       'Hosting and domain/DNS', // COPY:
@@ -337,7 +346,7 @@ export const offerings: Offering[] = [
     stage: 'takeover',
     name: 'Software / App Takeover', // COPY:
     summary: 'Your application, migrated, documented and stable under our care.', // COPY:
-    fromPrice: 10_000,
+    ...careEstimate(50),
     includes: [
       'Repository migration', // COPY:
       'Environment setup and database access', // COPY:

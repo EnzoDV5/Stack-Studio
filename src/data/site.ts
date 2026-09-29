@@ -39,6 +39,8 @@ export const site: SiteConfig = {
   responsePromise: 'We reply within one business day.', // COPY:
 }
 
-export function whatsappHref(message = site.whatsapp.message): string {
+export function whatsappHref(message = site.whatsapp.message): string | undefined {
+  // Hide WhatsApp controls until a real South African number replaces the placeholder.
+  if (!/^27[1-9]\d{8}$/.test(site.whatsapp.number)) return undefined
   return `https://wa.me/${site.whatsapp.number}?text=${encodeURIComponent(message)}`
 }

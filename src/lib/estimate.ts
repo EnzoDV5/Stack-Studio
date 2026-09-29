@@ -227,7 +227,7 @@ function estimateExisting(answers: Partial<BriefAnswers>, data: EstimateData): E
     auditIsFrom: !isWebsite,
     takeover: find(data.offerings, isWebsite ? 'website-takeover' : 'software-takeover'),
     credit: isWebsite,
-    emergencyRate: answers.urgency === 'today' ? findRate(data.rates, 'emergency') : null,
+    emergencyRate: answers.urgency === 'today' ? findRate(data.rates, 'care') : null,
   }
 }
 

@@ -457,7 +457,7 @@ export const briefCopy = {
       required: (price: string) => `Starts with Discovery & Scoping from ${price}`, // COPY:
       optional: (price: string) =>
         `We confirm scope on a short call. Complex builds start with Discovery & Scoping from ${price}.`, // COPY:
-      context: (name: string, price: string) => `${name} from ${price}`, // COPY:
+      context: (name: string, price: string) => `${name}: ${price}`, // COPY:
       why: 'Discovery turns requirements into a buildable plan and a full development estimate.', // COPY:
     },
     audit: {
@@ -496,7 +496,7 @@ export const briefCopy = {
 
   aside: {
     title: 'Prefer to talk?', // COPY:
-    body: 'Skip the form and message us on WhatsApp, or email us directly.', // COPY:
+    body: 'Skip the form and contact us directly.', // COPY:
     whatsappLabel: 'WhatsApp us', // COPY:
     whatsappMessage: 'Hi Stack Studio, I’d like to chat about a project.', // COPY:
   },

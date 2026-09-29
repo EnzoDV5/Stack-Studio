@@ -25,6 +25,7 @@ const partnerNote = planFamilies.find((f) => f.id === 'partner')?.note
  */
 export function StartPage() {
   const [params] = useSearchParams()
+  const whatsapp = whatsappHref(briefCopy.aside.whatsappMessage)
   const [initial] = useState(() => {
     const prefill = prefillFromParams(params, { ...defaultEstimateData, quotes: quotePresets })
     const base = loadDraft() ?? emptyAnswers
@@ -33,7 +34,7 @@ export function StartPage() {
       prefill.answers.path && prefill.answers.path !== base.path
         ? { ...emptyAnswers, contact: base.contact, ...prefill.answers }
         : { ...base, ...prefill.answers }
-    const stepId = firstOpenStepId(briefSteps, answers, defaultEstimateData)
+    const stepId = prefill.stepId ?? firstOpenStepId(briefSteps, answers, defaultEstimateData)
     return { answers, stepId, prefillName: prefill.name }
   })
 
@@ -52,10 +53,9 @@ export function StartPage() {
           initialStepId={initial.stepId}
           prefillName={initial.prefillName}
           privacyHref="/privacy"
-          whatsapp={{
-            href: whatsappHref(briefCopy.aside.whatsappMessage),
-            label: briefCopy.aside.whatsappLabel,
-          }}
+          whatsapp={
+            whatsapp ? { href: whatsapp, label: briefCopy.aside.whatsappLabel } : undefined
+          }
           email={site.email}
         />
       </Section>

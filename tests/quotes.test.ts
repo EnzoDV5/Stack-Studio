@@ -4,6 +4,7 @@ import { addOns } from '@/data/addons'
 import { pricingContent } from '@/data/pages'
 import { plans } from '@/data/plans'
 import { getQuotePreset, quotePresets } from '@/data/quotes'
+import { BUILD_RATE_PER_HOUR } from '@/data/rates'
 import { offerings } from '@/data/services'
 import { prefillFromParams } from '@/lib/brief-prefill'
 import { estimate } from '@/lib/estimate'
@@ -57,11 +58,13 @@ describe('starting quotes', () => {
     }
   })
 
-  it('end with an apps card whose from-prices come from real, priced offerings', () => {
+  it('shows software estimates calculated from the development rate', () => {
     for (const id of Object.values(pricingContent.quotes.apps.offerings)) {
       const offering = offerings.find((o) => o.id === id)
       assert.ok(offering && offering.fromPrice > 0, id)
       assert.equal(offering.briefCategory, 'software', id)
+      assert.ok(offering.estimatedHours, id)
+      assert.equal(offering.fromPrice, offering.estimatedHours * BUILD_RATE_PER_HOUR, id)
     }
     const prefill = prefillFromParams(
       new URLSearchParams(pricingContent.quotes.apps.to.split('?')[1]),

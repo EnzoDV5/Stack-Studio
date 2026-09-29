@@ -26,7 +26,7 @@ export const pageMeta = {
   pricing: {
     title: 'Pricing', // COPY:
     description:
-      'Starting prices for once-off website builds and monthly hosting, care and growth plans, so you know roughly where you stand before we talk.', // COPY:
+      'Starting prices for once-off website builds, changes to existing sites, and monthly care plans, so you know roughly where you stand before we talk.', // COPY:
     path: '/pricing',
   },
   studio: {
@@ -104,7 +104,7 @@ export const homeContent = {
   },
   paths: {
     eyebrow: 'Services', // COPY:
-    title: 'Where are you at?', // COPY:
+    title: 'What do you need?', // COPY:
     intro:
       'New build, rescue job or a team on call: choose the one that sounds like you and see where it starts.', // COPY:
     /** The self-select line for each stage, in the visitor's words. */
@@ -127,9 +127,9 @@ export const homeContent = {
     nowLabel: 'Where we are', // COPY:
     /** Shown beside the plan until the visitor points at a week. */
     overview: {
-      label: 'At a glance', // COPY:
-      title: 'Six weeks to launch', // COPY:
-      text: 'Six steps that overlap, so nothing waits on a handover, and care that carries on after launch.', // COPY:
+      label: 'Typical timeline', // COPY:
+      title: 'Around six weeks to launch', // COPY:
+      text: 'This is a typical website project, not a fixed deadline. Scope, content and feedback can make it shorter or longer, and we confirm the schedule in your quote.', // COPY:
       hint: {
         pointer: 'Hover a week to see what happens in it.', // COPY:
         touch: 'Tap a week to see what happens in it.', // COPY:
@@ -145,7 +145,7 @@ export const homeContent = {
       { label: 'Week 6', short: 'W6' }, // COPY:
       { label: 'After launch', short: '+' }, // COPY:
     ],
-    more: { label: 'The full process', to: '/services#process' }, // COPY:
+    more: { label: 'The full process', to: '/services#next-steps' }, // COPY:
   },
   clients: {
     eyebrow: 'Clients', // COPY:
@@ -240,7 +240,7 @@ export const caseStudyContent = {
 export const servicesContent = {
   hero: {
     eyebrow: 'Services', // COPY:
-    title: 'Build, take over, run, grow, partner.', // COPY:
+    title: 'Build, take over, run, improve, partner.', // COPY:
     intro:
       'Starting something new or need someone to take over what you already have? Stack handles both, and stays on to keep it working and improving.', // COPY:
   } satisfies PageHeroContent,
@@ -253,7 +253,11 @@ export const servicesContent = {
     items: [
       { to: '#stage-build', name: 'A website', line: 'A new site that wins you work.' }, // COPY:
       { to: '#apps', name: 'An app or software', line: 'Portals, bookings, mobile and desktop.' }, // COPY:
-      { to: '#stage-takeover', name: 'Help with what I have', line: 'We take over and fix it.' }, // COPY:
+      {
+        to: '#stage-grow',
+        name: 'Changes to my website',
+        line: 'Updates, features or a redesign.',
+      }, // COPY:
       { to: '#stage-run', name: 'Ongoing care', line: 'Hosting, updates and a team on call.' }, // COPY:
     ],
   },
@@ -280,6 +284,9 @@ export const servicesContent = {
     /** Build offerings shown here instead of under apps (ids in data/services). */
     offerings: ['desktop-app', 'backend-api'],
     cta: { label: 'Tell us about your software', to: '/start?path=build' }, // COPY:
+  },
+  improve: {
+    note: 'We quote the estimated hours before work starts. Once the changes are live, you can add ongoing Care at R200 per working hour.', // COPY:
   },
   /**
    * What happens after someone gets in touch, from the brief to a start date: the last doubt
@@ -325,6 +332,7 @@ export const servicesContent = {
       event: 'Project meeting', // COPY:
       details: '10:00 – 10:30', // COPY:
       modes: ['In person', 'Online'], // COPY:
+      note: 'The video link or where we’ll meet comes with the invite.', // COPY:
       accepted: 'Accepted', // COPY:
     },
     quote: {
@@ -391,8 +399,8 @@ export const pricingContent = {
     /** The last card: apps and software, which vary too much to package. */
     apps: {
       title: 'Need an app or software?', // COPY:
-      body: 'Web apps, mobile apps and desktop tools vary too much for a package. Most start with a short paid Discovery phase that gives you a clear plan and a fixed quote.', // COPY:
-      /** Offerings (services.ts) whose from-prices the card shows, so they match everywhere. */
+      body: 'Web apps, mobile apps and desktop tools vary by scope. These starting estimates are calculated at R400 per working hour; after scoping, we turn the hours into a fixed quote.', // COPY:
+      /** Representative software offerings whose calculated estimates appear on the card. */
       offerings: { webApp: 'web-app', desktop: 'desktop-app', mobile: 'custom-software' },
       prices: (webApp: string, desktop: string, mobile: string) => [
         `Web apps from ${webApp}`, // COPY:
@@ -408,7 +416,7 @@ export const pricingContent = {
     eyebrow: 'Monthly plans', // COPY:
     title: 'Keep it running. Keep it improving.', // COPY:
     tabsLabel: 'Plan types', // COPY:
-    popular: 'Most popular', // COPY:
+    recommended: 'Recommended', // COPY:
     choose: 'Choose', // COPY:
     minTerm: (n: number) => `${n}-month minimum, billed monthly in advance`, // COPY:
   },
@@ -421,7 +429,6 @@ export const pricingContent = {
     eyebrow: 'How we bill', // COPY:
     title: 'Payment terms and policies.', // COPY:
     scheduleLabel: 'Payment schedule', // COPY:
-    termsLink: { label: 'Read the full terms', to: '/terms' }, // COPY:
   },
   priceLabels: {
     from: 'From', // COPY:

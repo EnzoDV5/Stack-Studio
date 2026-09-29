@@ -54,7 +54,7 @@ export interface BriefFlowProps {
   /** Name of what a deep link pre-selected, shown as a notice. */
   prefillName?: string
   privacyHref: string
-  whatsapp: { href: string; label: string }
+  whatsapp?: { href: string; label: string }
   email: string
 }
 
@@ -91,6 +91,7 @@ export function BriefFlow({
   const honeypotRef = useRef<HTMLInputElement>(null)
   const shownStep = useRef(state.stepId)
   const lastResultKind = useRef<string>('none')
+  const returnToReview = useRef(false)
 
   const ctx = useMemo(() => ({ offerings: data.offerings }), [data.offerings])
   const optionData: OptionData = useMemo(
@@ -170,11 +171,21 @@ export function BriefFlow({
       index: stepIndex + 1,
       path: answers.path ?? 'none',
     })
+    if (returnToReview.current && step.kind !== 'review') {
+      returnToReview.current = false
+      dispatch({ type: 'goTo', stepId: 'review', direction: 1 })
+      return
+    }
     const next = nextStepId(steps, step.id, answers, ctx)
     if (next) dispatch({ type: 'goTo', stepId: next, direction: 1 })
   }
 
   const goBack = () => {
+    if (returnToReview.current) {
+      returnToReview.current = false
+      dispatch({ type: 'goTo', stepId: 'review', direction: 1 })
+      return
+    }
     const prev = prevStepId(steps, step.id, answers, ctx)
     if (prev) dispatch({ type: 'goTo', stepId: prev, direction: -1 })
   }
@@ -392,7 +403,10 @@ export function BriefFlow({
           <ReviewStep
             rows={reviewRows}
             editLabel={copy.nav.edit}
-            onEdit={(stepId) => dispatch({ type: 'goTo', stepId, direction: -1 })}
+            onEdit={(stepId) => {
+              returnToReview.current = true
+              dispatch({ type: 'goTo', stepId, direction: -1 })
+            }}
           />
         )
     }
@@ -420,7 +434,7 @@ export function BriefFlow({
           stepOf={copy.nav.stepOf}
         />
 
-        {prefillName && step.id !== 'path' && stepIndex < 3 && (
+        {prefillName && step.id !== 'path' && (stepIndex < 3 || step.id === 'contact') && (
           <p className="mt-6 flex flex-wrap items-center gap-3 text-small text-muted">
             <span className="size-1.5 bg-orange" aria-hidden="true" />
             {copy.prefill.notice(prefillName)}

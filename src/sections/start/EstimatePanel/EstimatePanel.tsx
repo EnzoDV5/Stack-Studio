@@ -133,7 +133,7 @@ export function EstimatePanel({
                 !result.required && copy.discovery.optional(price),
                 copy.discovery.context(
                   result.offering.name,
-                  formatPrice(result.offering.fromPrice),
+                  `${l.from} ${formatPrice(result.offering.fromPrice)}`,
                 ),
                 copy.discovery.why,
               ]}

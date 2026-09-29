@@ -49,6 +49,8 @@ export interface NextStepsProps {
     event: string
     details: string
     modes: string[]
+    /** A line under the options, e.g. what comes with the invite. */
+    note: string
     accepted: string
   }
   /** 04: the fixed quote. */
@@ -93,13 +95,13 @@ const Avatar = ({ className }: { className?: string }) => (
 )
 
 /**
- * What happens once someone gets in touch, shown rather than told: four wide cards, each with
- * the step on the left and a small version of what the visitor sees on the right (the brief
- * with a real estimate, our email reply, the meeting invite, the fixed quote). The interfaces
- * are illustrative and decorative; each card's title, timing and line carry the meaning for
- * screen readers. Signature motion (desktop, scrubbed): the cards start as a loose pile in the
- * middle and deal out into their grid as the section scrolls in. Phones and reduced motion:
- * the cards, in order, still.
+ * What happens once someone gets in touch, shown rather than told: four cards side by side, each
+ * with the step above a small version of what the visitor sees (the brief with a real estimate,
+ * our email reply, the meeting invite, the fixed quote). The interfaces are illustrative and
+ * decorative; each card's title, timing and line carry the meaning for screen readers.
+ * Signature motion (desktop, scrubbed): the cards start as a loose pile in the middle and deal
+ * out into their row as the section scrolls in. Phones and reduced motion: the cards, in order,
+ * still.
  */
 export function NextSteps({
   eyebrow,
@@ -123,7 +125,7 @@ export function NextSteps({
       const mm = gsap.matchMedia()
       mm.add('(min-width: 64rem)', () => {
         const cards = gsap.utils.toArray<HTMLElement>('[data-card]', list)
-        // Each card's distance from the middle of the grid, measured in its dealt-out place
+        // Each card's distance from the middle of the list, measured in its dealt-out place
         // (recomputed on every refresh, so a resize keeps the pile centred).
         const offset = (i: number, axis: 'x' | 'y') => {
           const card = cards[i]
@@ -157,21 +159,23 @@ export function NextSteps({
     { scope: listRef, dependencies: [reducedMotion], revertOnUpdate: true },
   )
 
+  // Each card spans two rows of the list's subgrid (the step, then its interface), so the
+  // interfaces line up across the row even when titles wrap differently.
   const card = (index: number, step: StepText, ui: ReactNode) => (
     <li
       data-card=""
-      className="grid gap-6 rounded-lg border border-tone bg-tone-surface p-6 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.6)] md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-8 md:p-7"
+      className="grid gap-5 rounded-lg border border-tone bg-tone-surface p-5 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.6)] md:row-span-2 md:grid-rows-subgrid"
     >
       <div className="flex flex-col">
         <span className="eyebrow text-accent">{pad2(index)}</span>
-        <h3 className="mt-4 text-heading-lg">{step.title}</h3>
-        <p className="mt-3 text-small text-muted">{step.body}</p>
-        <Tag className="mt-5 self-start md:mt-auto">{step.when}</Tag>
+        <h3 className="mt-3 text-heading-md">{step.title}</h3>
+        <p className="mt-2 text-small text-muted">{step.body}</p>
+        <Tag className="mt-4 self-start">{step.when}</Tag>
       </div>
       {/* A small version of what they see at this step (decorative). */}
       <div
         aria-hidden="true"
-        className="flex flex-col rounded-md border border-tone bg-(--tone-bg) p-5"
+        className="flex flex-col rounded-md border border-tone bg-(--tone-bg) p-4"
       >
         {ui}
       </div>
@@ -179,7 +183,12 @@ export function NextSteps({
   )
 
   return (
-    <Section tone={tone} aria-labelledby={headingId} className="overflow-hidden">
+    <Section
+      id="next-steps"
+      tone={tone}
+      aria-labelledby={headingId}
+      className="overflow-hidden"
+    >
       <div className="container-site">
         <SectionHeader
           id={headingId}
@@ -189,7 +198,11 @@ export function NextSteps({
           intro={intro}
         />
 
-        <ol ref={listRef} className="mt-14 grid gap-4 md:mt-20 lg:grid-cols-2 lg:gap-5">
+        {/* Side by side: one row of four from xl, two by two on smaller desktops and tablets. */}
+        <ol
+          ref={listRef}
+          className="mt-14 grid gap-4 md:mt-20 md:grid-cols-2 md:gap-x-4 md:gap-y-5 xl:grid-cols-4"
+        >
           {card(
             1,
             brief,
@@ -208,27 +221,25 @@ export function NextSteps({
                   ))}
                 </span>
               </div>
-              <p className="mt-4 text-heading-md">{brief.question}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
+              <p className="mt-3 text-heading-md">{brief.question}</p>
+              <div className="mt-3 grid gap-1.5">
                 {brief.options.map((option, i) => (
                   <span
                     key={option}
                     className={cn(
-                      'flex items-center gap-2 rounded-pill border px-3.5 py-2 text-small',
+                      'flex items-center justify-between rounded-pill border px-3.5 py-1.5 text-small',
                       i === 0 ? 'border-orange bg-orange/15' : 'border-tone text-muted',
                     )}
                   >
-                    {i === 0 && <Check className="text-accent" />}
                     {option}
+                    {i === 0 && <Check className="text-accent" />}
                   </span>
                 ))}
               </div>
-              <div className="mt-6 flex flex-wrap items-end justify-between gap-4 border-t border-tone pt-4">
-                <div>
-                  <p className="eyebrow text-muted">{brief.estimateLabel}</p>
-                  <p className="mt-1 numeric text-heading-md">{brief.estimate}</p>
-                </div>
-                <span className="rounded-pill bg-orange px-4 py-2 text-small font-semibold text-ink">
+              <div className="mt-auto pt-4">
+                <p className="eyebrow text-muted">{brief.estimateLabel}</p>
+                <p className="mt-1 numeric text-heading-md">{brief.estimate}</p>
+                <span className="mt-3 block rounded-pill bg-orange py-2 text-center text-small font-semibold text-ink">
                   {brief.send}
                 </span>
               </div>
@@ -245,17 +256,17 @@ export function NextSteps({
                   <p className="text-small font-semibold">{reply.from}</p>
                   <p className="truncate text-small text-muted">{reply.email}</p>
                 </div>
-                <span className="text-small text-muted">{reply.time}</span>
+                <span className="self-start text-small text-muted">{reply.time}</span>
               </div>
               <p className="mt-4 border-t border-tone pt-4 text-small font-semibold">
                 {reply.subject}
               </p>
               <p className="mt-2 text-small text-muted">{reply.message}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="mt-auto grid grid-cols-2 gap-2 pt-4">
                 {reply.slots.map((slot) => (
                   <span
                     key={slot}
-                    className="rounded-pill border border-orange px-3.5 py-1.5 text-small text-accent"
+                    className="rounded-pill border border-orange py-1.5 text-center text-small text-accent"
                   >
                     {slot}
                   </span>
@@ -268,8 +279,8 @@ export function NextSteps({
             3,
             meeting,
             <>
-              <div className="flex items-center gap-4">
-                <div className="grid w-16 shrink-0 place-items-center rounded-md border border-tone py-2 text-center">
+              <div className="flex items-center gap-3">
+                <div className="grid w-14 shrink-0 place-items-center rounded-md border border-tone py-1.5 text-center">
                   <span className="eyebrow text-accent">{meeting.day}</span>
                   <span className="numeric text-heading-lg">{meeting.date}</span>
                 </div>
@@ -278,19 +289,19 @@ export function NextSteps({
                   <p className="mt-1 text-small text-muted">{meeting.details}</p>
                 </div>
               </div>
-              {/* In person or online: either suits, so both show as options. Centred in the
-                  card, which can be taller than its content beside the quote. */}
-              <div className="my-auto grid grid-cols-2 gap-2 py-5">
+              {/* In person or online: either suits, so both show as options. */}
+              <div className="mt-4 grid grid-cols-2 gap-2">
                 {meeting.modes.map((mode) => (
                   <span
                     key={mode}
-                    className="flex items-center justify-center gap-2 rounded-md border border-tone py-2.5 text-small"
+                    className="rounded-md border border-tone py-2 text-center text-small"
                   >
                     {mode}
                   </span>
                 ))}
               </div>
-              <div className="mt-5 flex items-center justify-between border-t border-tone pt-4">
+              <p className="mt-3 text-small text-muted">{meeting.note}</p>
+              <div className="mt-auto flex items-center justify-between pt-4">
                 <div className="flex -space-x-2">
                   <span className="grid size-8 place-items-center rounded-pill border-2 border-(--tone-bg) bg-paper text-small font-bold text-ink">
                     Y
@@ -310,31 +321,29 @@ export function NextSteps({
             quote,
             <>
               <p className="text-small font-semibold">{quote.document}</p>
-              <dl className="mt-2 divide-y divide-(--tone-border) text-small">
+              <dl className="mt-1 divide-y divide-(--tone-border) text-small">
                 {quote.lines.map((line) => (
-                  <div key={line.label} className="flex justify-between gap-3 py-2">
+                  <div key={line.label} className="flex justify-between gap-3 py-1.5">
                     <dt className="text-muted">{line.label}</dt>
                     <dd>{line.value}</dd>
                   </div>
                 ))}
-                <div className="flex items-baseline justify-between gap-3 pt-3">
+                <div className="flex items-baseline justify-between gap-3 pt-2">
                   <dt className="text-muted">{quote.totalLabel}</dt>
                   <dd className="numeric text-heading-md">{quote.total}</dd>
                 </div>
               </dl>
-              <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
-                <ul className="grid gap-1 text-small text-muted">
-                  {quote.includes.map((item) => (
-                    <li key={item} className="flex items-center gap-2">
-                      <Check className="size-3.5 text-accent" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <span className="rounded-pill bg-orange px-4 py-2 text-small font-semibold text-ink">
-                  {quote.accept}
-                </span>
-              </div>
+              <ul className="mt-3 grid gap-1 text-small text-muted">
+                {quote.includes.map((item) => (
+                  <li key={item} className="flex items-center gap-2">
+                    <Check className="size-3.5 text-accent" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <span className="mt-auto block rounded-pill bg-orange py-2 text-center text-small font-semibold text-ink">
+                {quote.accept}
+              </span>
             </>,
           )}
         </ol>

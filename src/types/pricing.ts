@@ -8,7 +8,7 @@ import type { BriefPathId } from './brief'
 
 export type StageId = 'build' | 'takeover' | 'run' | 'grow' | 'partner'
 
-/** Where an offering/plan is rendered. `hidden` = kept in data, never shown. */
+/** Where an offering/plan is rendered. `services` = Services only; `hidden` = never shown. */
 export type Visibility = 'pricing' | 'services' | 'hidden'
 
 export interface ServiceStage {
@@ -40,6 +40,8 @@ export interface Offering {
   summary: string
   /** Starting price in ZAR. */
   fromPrice: number
+  /** Working hours used to calculate the public starting estimate. */
+  estimatedHours?: number
   /** Pages included in fromPrice (website builds). */
   includedPages?: number
   includes: string[]
@@ -68,7 +70,7 @@ export interface Plan {
   priceSuffix?: string
   /** Included / reserved hours per month (0.5 = 30 min). */
   includedHours?: number
-  /** Human label for the hours, e.g. "30 min", "22 hours". */
+  /** Human label for the hours, e.g. "30 min", "20 hours". */
   hoursLabel?: string
   includes: string[]
   minimumTermMonths: number
@@ -86,7 +88,7 @@ export interface PlanFamilyInfo {
 }
 
 export interface Rate {
-  id: 'feature' | 'emergency'
+  id: 'feature' | 'care'
   name: string
   pricePerHour: number
   description: string

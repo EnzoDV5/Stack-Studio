@@ -10,7 +10,7 @@ export interface PlanCardProps {
   hours?: string
   includes: string[]
   highlighted?: boolean
-  popularLabel: string
+  recommendedLabel: string
   cta: { label: string; to: string; location: string }
   /** Slot id so PlanTabs can Flip a card into the one it replaces. */
   flipId?: string
@@ -24,7 +24,7 @@ export function PlanCard({
   hours,
   includes,
   highlighted,
-  popularLabel,
+  recommendedLabel,
   cta,
   flipId,
 }: PlanCardProps) {
@@ -36,12 +36,14 @@ export function PlanCard({
         highlighted ? 'border-orange bg-tone-surface' : 'border-tone',
       )}
     >
-      {highlighted && (
-        <Tag variant="accent" className="mb-5 self-start">
-          {popularLabel}
-        </Tag>
-      )}
-      <h3 className="text-heading-lg">{name}</h3>
+      <div className="flex items-start justify-between gap-4">
+        <h3 className="min-w-0 text-heading-lg">{name}</h3>
+        {highlighted && (
+          <Tag variant="accent" className="shrink-0">
+            {recommendedLabel}
+          </Tag>
+        )}
+      </div>
       <p className="mt-1 text-small text-muted">{tagline}</p>
       <p className="mt-8 numeric text-heading-xl">{price}</p>
       {hours && <p className="mt-3 eyebrow text-muted">{hours}</p>}

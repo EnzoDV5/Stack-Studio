@@ -47,7 +47,7 @@ export interface PathChooserProps {
 const COLLAPSED_REM = 5.5
 
 /**
- * "Where are you at?": the five stages as a self-select router. Signature motion is
+ * "What do you need?": the five stages as a self-select router. Signature motion is
  * interaction only, no scroll animation. Desktop: horizontal accordion panels; the
  * hovered or focused one opens (panels slide with transform and uncover with clip-path,
  * GSAP-driven). Arrow keys move between panels, Enter opens one, and each trigger reports

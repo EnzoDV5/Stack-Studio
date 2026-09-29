@@ -15,7 +15,7 @@ import type { ServiceMediaItem } from '@/types/service-media'
  * - `cards`: intro and a banner image, then the offerings side by side as cards.
  * - `split`: the image in its own column beside a compact priced list (plans).
  * - `tiers`: a banner image, then the offerings side by side as tiers (bundles of hours).
- * - `figures`: the intro beside the offerings as large figures (hourly rates), no image.
+ * - `figures`: the intro and CTA beside a large hourly quote and examples.
  * Give every group a different layout.
  */
 export type StageLayout = 'feature' | 'cards' | 'split' | 'tiers' | 'figures'
@@ -85,10 +85,7 @@ export function StageBlock({
     cards: () => (
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {rows.map((row) => (
-          <li
-            key={row.id}
-            className="flex flex-col gap-4 rounded-lg border border-tone bg-tone-surface p-6"
-          >
+          <li key={row.id} className="flex flex-col gap-4 rounded-lg border border-tone p-6">
             <div>
               <h3 className="text-heading-md">{row.name}</h3>
               <p className="mt-2 numeric text-small text-accent">{row.price}</p>
@@ -120,10 +117,20 @@ export function StageBlock({
     figures: () => (
       <ul className="divide-y divide-(--tone-border) border-y border-tone">
         {rows.map((row) => (
-          <li key={row.id} className="py-6">
-            <h3 className="eyebrow text-muted">{row.name}</h3>
-            <p className="mt-3 numeric text-heading-xl">{row.price}</p>
-            <p className="mt-2 text-small text-muted">{row.summary}</p>
+          <li key={row.id} className="py-8 md:py-10">
+            <h3 className="text-heading-lg">{row.name}</h3>
+            <p className="mt-4 numeric text-display-lg text-accent">{row.price}</p>
+            <p className="mt-4 max-w-[56ch] text-body-lg text-muted">{row.summary}</p>
+            {row.examples.length > 0 && (
+              <ul className="mt-8 grid gap-x-8 gap-y-3 border-t border-tone pt-6 text-small sm:grid-cols-2">
+                {row.examples.map((example) => (
+                  <li key={example} className="flex gap-3">
+                    <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 bg-marker" />
+                    {example}
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ul>
@@ -146,10 +153,17 @@ export function StageBlock({
     ),
   }
 
-  const footer = (
+  const footer = (nested = false) => (
     <>
       {notes.length > 0 && (
-        <div className="mt-6 space-y-1 text-small text-muted">
+        <div
+          className={cn(
+            'space-y-1 text-muted',
+            nested
+              ? 'mt-8 max-w-[38ch] border-l-2 border-orange py-1 pl-4 text-small'
+              : 'mt-6 text-small',
+          )}
+        >
           {notes.map((note) => (
             <p key={note}>{note}</p>
           ))}
@@ -158,7 +172,7 @@ export function StageBlock({
       <Button
         to={cta.to}
         withArrow
-        className="mt-10"
+        className={nested ? 'mt-8' : 'mt-10'}
         analytics={{ event: 'Start project click', props: { location: `services-stage:${id}` } }}
       >
         {cta.label}
@@ -167,11 +181,7 @@ export function StageBlock({
   )
 
   return (
-    <section
-      id={id}
-      aria-labelledby={headingId}
-      className="border-t border-tone pt-12 pb-16 first:border-t-0 first:pt-0 md:pb-20"
-    >
+    <section id={id} aria-labelledby={headingId} className="pt-12 pb-16 first:pt-0 md:pb-20">
       {layout === 'feature' && (
         <>
           <div className="grid gap-10 md:grid-cols-2 md:items-end">
@@ -207,8 +217,11 @@ export function StageBlock({
 
       {layout === 'figures' && (
         <div className="grid gap-10 md:grid-cols-12 md:items-start">
-          <div className="md:col-span-6">{intro}</div>
-          <div className="md:col-span-6">{offerings.figures()}</div>
+          <div className="md:col-span-5">
+            {intro}
+            {footer(true)}
+          </div>
+          <div className="md:col-span-7">{offerings.figures()}</div>
         </div>
       )}
 
@@ -220,7 +233,7 @@ export function StageBlock({
         </>
       )}
 
-      {footer}
+      {layout !== 'figures' && footer()}
     </section>
   )
 }

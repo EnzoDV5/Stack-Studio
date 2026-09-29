@@ -3,6 +3,7 @@
  * See docs/pricing-model.md. All plans: 3-month minimum, billed monthly in advance.
  */
 import type { Plan, PlanFamily, PlanFamilyInfo } from '@/types'
+import { BUILD_RATE_PER_HOUR, CARE_RATE_PER_HOUR } from './rates'
 
 const MIN_TERM = 3
 
@@ -10,19 +11,20 @@ export const planFamilies: PlanFamilyInfo[] = [
   {
     id: 'care',
     name: 'Website Care', // COPY:
-    description: 'For websites. Hosting, security, updates and a set amount of changes each month.', // COPY:
+    description: 'For websites. Included working time is calculated at R200 per hour.', // COPY:
     hoursLabel: 'Included changes', // COPY:
   },
   {
     id: 'managed',
     name: 'Managed Software', // COPY:
-    description: 'For applications. Monitoring, deployments, backups, security and fixes, handled.', // COPY:
+    description: 'For applications. Included management and support time is R200 per hour.', // COPY:
     hoursLabel: 'Included support', // COPY:
   },
   {
     id: 'partner',
     name: 'Partner', // COPY:
-    description: 'Reserved monthly hours with a team that knows your systems.', // COPY:
+    description:
+      'Reserved software-development hours at R400 per hour with a team that knows your systems.', // COPY:
     note: 'Limited to 3 partner clients at a time.', // COPY:
     hoursLabel: 'Reserved hours', // COPY:
   },
@@ -35,7 +37,7 @@ export const plans: Plan[] = [
     family: 'care',
     name: 'Care Essential', // COPY:
     tagline: 'The essentials, looked after.', // COPY:
-    pricePerMonth: 1_250,
+    pricePerMonth: 0.5 * CARE_RATE_PER_HOUR,
     includedHours: 0.5,
     hoursLabel: '30 min', // COPY:
     includes: [
@@ -54,7 +56,7 @@ export const plans: Plan[] = [
     family: 'care',
     name: 'Care Business', // COPY:
     tagline: 'For sites that bring in the work.', // COPY:
-    pricePerMonth: 2_750,
+    pricePerMonth: 2 * CARE_RATE_PER_HOUR,
     includedHours: 2,
     hoursLabel: '2 hours', // COPY:
     includes: [
@@ -74,7 +76,7 @@ export const plans: Plan[] = [
     family: 'care',
     name: 'Care Pro', // COPY:
     tagline: 'For busy, business-critical sites.', // COPY:
-    pricePerMonth: 5_500,
+    pricePerMonth: 3 * CARE_RATE_PER_HOUR,
     includedHours: 3,
     hoursLabel: '3 hours', // COPY:
     includes: [
@@ -95,7 +97,7 @@ export const plans: Plan[] = [
     family: 'managed',
     name: 'Managed App', // COPY:
     tagline: 'Your app, kept healthy.', // COPY:
-    pricePerMonth: 7_500,
+    pricePerMonth: 4 * CARE_RATE_PER_HOUR,
     priceIsFrom: true,
     includedHours: 4,
     hoursLabel: '4 hours', // COPY:
@@ -115,7 +117,7 @@ export const plans: Plan[] = [
     family: 'managed',
     name: 'Managed Business System', // COPY:
     tagline: 'For systems the business can’t run without.', // COPY:
-    pricePerMonth: 12_500,
+    pricePerMonth: 8 * CARE_RATE_PER_HOUR,
     priceIsFrom: true,
     includedHours: 8,
     hoursLabel: '8 hours', // COPY:
@@ -175,7 +177,7 @@ export const plans: Plan[] = [
     family: 'partner',
     name: 'Partner 10', // COPY:
     tagline: 'A steady development partner.', // COPY:
-    pricePerMonth: 10_000,
+    pricePerMonth: 10 * BUILD_RATE_PER_HOUR,
     includedHours: 10,
     hoursLabel: '10 hours', // COPY:
     includes: [
@@ -193,9 +195,9 @@ export const plans: Plan[] = [
     family: 'partner',
     name: 'Partner 20', // COPY:
     tagline: 'Your part-time product team.', // COPY:
-    pricePerMonth: 20_000,
-    includedHours: 22,
-    hoursLabel: '22 hours', // COPY:
+    pricePerMonth: 20 * BUILD_RATE_PER_HOUR,
+    includedHours: 20,
+    hoursLabel: '20 hours', // COPY:
     includes: [
       'Everything in Partner 10', // COPY:
       'Database work and API integrations', // COPY:
@@ -212,7 +214,7 @@ export const plans: Plan[] = [
     family: 'partner',
     name: 'Partner 40', // COPY:
     tagline: 'A development capability, on tap.', // COPY:
-    pricePerMonth: 35_000,
+    pricePerMonth: 40 * BUILD_RATE_PER_HOUR,
     includedHours: 40,
     hoursLabel: '40 hours', // COPY:
     includes: [

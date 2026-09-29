@@ -69,16 +69,16 @@ Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whol
 
 ### Services
 
-| #   | Section         | Tone   | Motion                                         | Trigger |
-| --- | --------------- | ------ | ---------------------------------------------- | ------- |
-| 1   | PageTitle       | paper  | Static                                         | none    |
-| 2   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns  | none    |
-| 3   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)       | scrub   |
-| 4   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)         | enter   |
-| 5   | StageExplorer   | paper  | Take over, Run, Grow, Partner                  | none    |
-| 6   | NextSteps       | dark   | Four step cards deal out of a pile into a grid | scrub   |
-| 7   | FaqSection      | dark   | Accordion, sticky heading                      | hover   |
-| 8   | ClosingCta      | orange | SplitReveal words                              | enter   |
+| #   | Section         | Tone   | Motion                                        | Trigger |
+| --- | --------------- | ------ | --------------------------------------------- | ------- |
+| 1   | PageTitle       | paper  | Static                                        | none    |
+| 2   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns | none    |
+| 3   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)      | scrub   |
+| 4   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)        | enter   |
+| 5   | StageExplorer   | paper  | Take over, Run, Grow, Partner                 | none    |
+| 6   | NextSteps       | dark   | Four step cards deal out of a pile into a row | scrub   |
+| 7   | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
+| 8   | ClosingCta      | orange | SplitReveal words                             | enter   |
 
 No adjacent clashes.
 
@@ -213,9 +213,9 @@ process (Home already shows how a project runs, week by week): what happens once
 gets in touch, shown rather than told, in the studio's real order: the brief (with a real
 estimate from the "Launch website" starting quote) lands in the inbox, we reply by email with
 times to meet, we meet in person or online, then the fixed quote (with its warranty, staging and
-ownership ticks). Four wide cards in a 2 × 2 grid, each with the step on the left and its small
-interface on the right. On desktop they start as a loose, tilted pile in the middle and deal out
-into the grid as the section scrolls in (`stepsDeal`, transforms only); on phones and with
+ownership ticks). Four cards side by side (one row from xl, two by two below), each with the step above its
+small interface; the interfaces line up across the row (subgrid). On desktop they start as a loose, tilted pile in the middle and deal out
+into their row as the section scrolls in (`stepsDeal`, transforms only); on phones and with
 reduced motion they sit in order. AppShowcase ("Apps and software") is where apps get their own moment, since most
 client work is websites: an orange iPhone 17 Pro spins on its upright axis from its back, through its side, to
 face the visitor with an illustrative bookings app on screen, scrubbed as it scrolls up

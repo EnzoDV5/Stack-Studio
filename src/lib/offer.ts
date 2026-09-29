@@ -9,7 +9,7 @@ export interface PriceLabels {
   from: string
   perMonth: string
   perHour: string
-  /** Label for `services`-visibility offerings, e.g. "Quoted per project". */
+  /** Label for non-Build `services`-visibility offerings, e.g. "Quoted per project". */
   quoted: string
   /** e.g. (label) => `${label} included each month` */
   hours: (label: string) => string
@@ -34,7 +34,7 @@ export interface OfferData {
 export const isVisible = (item: { visibility: string }) => item.visibility !== 'hidden'
 
 export function offeringPrice(offering: Offering, l: PriceLabels): string {
-  return offering.visibility === 'services'
+  return offering.visibility === 'services' && offering.stage !== 'build'
     ? l.quoted
     : `${l.from} ${formatPrice(offering.fromPrice)}`
 }
@@ -50,6 +50,12 @@ export function ratePrice(rate: Rate, l: PriceLabels): string {
 }
 
 function offeringRow(o: Offering, l: PriceLabels): OfferRow {
+  const estimateNotes =
+    o.stage === 'build' && o.estimatedHours
+      ? [
+          `Estimated from ${o.estimatedHours} working hours at ${formatPrice(o.fromPrice / o.estimatedHours)}${l.perHour}.`,
+        ]
+      : []
   const tierNotes = (o.tiers ?? []).map(
     (t) => `${t.label}: ${l.from.toLowerCase()} ${formatPrice(t.fromPrice)}`,
   )
@@ -60,7 +66,7 @@ function offeringRow(o: Offering, l: PriceLabels): OfferRow {
     summary: o.summary,
     includes: o.includes,
     examples: o.examples ?? [],
-    notes: [...tierNotes, ...(o.notes ?? [])],
+    notes: [...estimateNotes, ...tierNotes, ...(o.notes ?? [])],
   }
 }
 
@@ -107,7 +113,7 @@ export function stageRows(
         .filter((p) => (p.family === 'care' || p.family === 'managed') && isVisible(p))
         .map((p) => planRow(p, l))
     case 'grow':
-      return data.rates.map((r) => rateRow(r, l))
+      return data.rates.filter((r) => r.id === 'feature').map((r) => rateRow(r, l))
     case 'partner':
       return data.plans
         .filter((p) => p.family === 'partner' && isVisible(p))

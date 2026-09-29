@@ -22,6 +22,8 @@ export const quotePresets: QuotePreset[] = [
       pages: 5,
       addOns: [],
       carePlan: 'care-essential',
+      timeline: 'standard',
+      budget: 'unsure',
     },
   },
   {
@@ -39,6 +41,8 @@ export const quotePresets: QuotePreset[] = [
       pages: 6,
       addOns: ['booking'],
       carePlan: 'care-business',
+      timeline: 'standard',
+      budget: 'unsure',
     },
   },
   {
@@ -56,6 +60,8 @@ export const quotePresets: QuotePreset[] = [
       pages: 8,
       addOns: ['copywriting', 'blog'],
       carePlan: 'care-business',
+      timeline: 'standard',
+      budget: 'unsure',
     },
   },
   {
@@ -73,6 +79,8 @@ export const quotePresets: QuotePreset[] = [
       pages: 5,
       addOns: ['copywriting'],
       carePlan: 'care-business',
+      timeline: 'standard',
+      budget: 'unsure',
     },
   },
   {
@@ -90,6 +98,8 @@ export const quotePresets: QuotePreset[] = [
       pages: 8,
       addOns: [],
       carePlan: 'care-pro',
+      timeline: 'standard',
+      budget: 'unsure',
     },
   },
 ]

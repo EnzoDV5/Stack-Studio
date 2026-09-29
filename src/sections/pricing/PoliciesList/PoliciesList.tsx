@@ -1,8 +1,7 @@
 import { useId } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
-import { TextLink } from '@/components/ui/TextLink'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
-import type { CtaLink, PaymentSchedule, PolicyItem } from '@/types'
+import type { PaymentSchedule, PolicyItem } from '@/types'
 
 export interface PoliciesListProps {
   eyebrow: string
@@ -11,8 +10,7 @@ export interface PoliciesListProps {
   schedules: PaymentSchedule[]
   items: PolicyItem[]
   vatNote: string
-  termsLink?: CtaLink
-  /** Heading level for the policy titles (h3 under a page section, h2 on /terms). */
+  /** Heading level for the policy titles. */
   itemHeading?: 'h2' | 'h3'
   tone?: Tone
 }
@@ -25,7 +23,6 @@ export function PoliciesList({
   schedules,
   items,
   vatNote,
-  termsLink,
   itemHeading: H = 'h3',
   tone = 'dark',
 }: PoliciesListProps) {
@@ -80,10 +77,7 @@ export function PoliciesList({
           ))}
         </dl>
 
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 text-small text-muted">
-          <p>{vatNote}</p>
-          {termsLink && <TextLink to={termsLink.to}>{termsLink.label}</TextLink>}
-        </div>
+        <p className="mt-10 text-small text-muted">{vatNote}</p>
       </div>
     </Section>
   )

@@ -43,7 +43,7 @@ export function ServiceIndex({ label, items, className }: ServiceIndexProps) {
               className={cn(
                 'group grid h-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-4 rounded-lg border border-tone px-4 py-3',
                 'sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:gap-y-6 sm:p-5',
-                'transition-colors duration-(--duration-micro) hover:border-orange hover:bg-tone-surface',
+                'transition-colors duration-(--duration-micro) hover:border-orange',
               )}
             >
               <span className="eyebrow text-accent sm:col-start-1 sm:row-start-1">
@@ -55,7 +55,7 @@ export function ServiceIndex({ label, items, className }: ServiceIndexProps) {
               </span>
               <span
                 aria-hidden="true"
-                className="text-muted transition-colors duration-(--duration-micro) group-hover:text-accent sm:col-start-2 sm:row-start-1 sm:justify-self-end"
+                className="text-muted sm:col-start-2 sm:row-start-1 sm:justify-self-end"
               >
                 ↓
               </span>

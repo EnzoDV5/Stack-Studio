@@ -5,7 +5,7 @@ import { trackEvent } from '@/lib/analytics'
 export interface BriefAsideProps {
   title: string
   body: string
-  whatsapp: { href: string; label: string }
+  whatsapp?: { href: string; label: string }
   email: string
 }
 
@@ -16,7 +16,14 @@ export function BriefAside({ title, body, whatsapp, email }: BriefAsideProps) {
       <p className="text-heading-md">{title}</p>
       <p className="mt-2 text-small text-muted">{body}</p>
       <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-4">
-        <WhatsAppButton href={whatsapp.href} label={whatsapp.label} location="start" size="sm" />
+        {whatsapp && (
+          <WhatsAppButton
+            href={whatsapp.href}
+            label={whatsapp.label}
+            location="start"
+            size="sm"
+          />
+        )}
         <TextLink
           href={`mailto:${email}`}
           className="text-small"

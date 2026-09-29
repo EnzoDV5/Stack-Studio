@@ -43,8 +43,7 @@ const starters: QuoteStarter[] = quotePresets.flatMap((preset) => {
   ]
 })
 
-/** Apps and software vary too much to package: one card with their from-prices instead. */
-// tests/quotes.test.ts checks these offerings exist and are priced.
+/** Apps and software vary by scope, so show calculated starting estimates for each type. */
 const appIds = c.quotes.apps.offerings
 const fromPrice = (id: string) => formatPrice(getOffering(id)?.fromPrice ?? 0)
 const appsCard = {
@@ -116,7 +115,7 @@ export function PricingPage() {
           title={c.plans.title}
           tabsLabel={c.plans.tabsLabel}
           tabs={tabs}
-          popularLabel={c.plans.popular}
+          recommendedLabel={c.plans.recommended}
           footnotes={[c.plans.minTerm(policies.minimumTermMonths), policies.hostingOnRequest]}
         />
         <IncludedVsExcluded
@@ -137,7 +136,6 @@ export function PricingPage() {
           schedules={policies.paymentSchedules}
           items={policies.items}
           vatNote={policies.vatNote}
-          termsLink={c.policies.termsLink}
         />
         <FaqSection tone="paper" intro={c.faq} faqs={faqsFor('pricing')} />
       </DeferredSection>

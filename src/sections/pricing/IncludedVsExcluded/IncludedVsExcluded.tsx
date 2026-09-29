@@ -25,7 +25,7 @@ export function IncludedVsExcluded({
   tone = 'dark',
 }: IncludedVsExcludedProps) {
   return (
-    <Section tone={tone} spacing="sm">
+    <Section tone={tone} spacing="none" className="pt-8 pb-section md:pt-10">
       <div className="container-site grid gap-12 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <Eyebrow label={eyebrow} className="mb-5" />

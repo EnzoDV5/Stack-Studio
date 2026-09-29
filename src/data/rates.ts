@@ -1,32 +1,35 @@
 /**
- * Public hourly rates for work outside a retainer (04 Grow). These are client-facing
- * prices, not internal costs.
+ * Public hourly rates for development and hands-on care. These are client-facing prices,
+ * not internal costs.
  */
 import type { Rate } from '@/types'
+
+export const BUILD_RATE_PER_HOUR = 400
+export const CARE_RATE_PER_HOUR = 200
 
 export const rates: Rate[] = [
   {
     id: 'feature',
-    name: 'Feature development', // COPY:
-    pricePerHour: 1_200,
-    description: 'Without a retainer: by the hour, or at a set price for a defined piece of work.', // COPY:
+    name: 'Changes, additions & redesigns', // COPY:
+    pricePerHour: BUILD_RATE_PER_HOUR,
+    description:
+      'For an existing website or app. We estimate the working hours and give you a quote before work starts.', // COPY:
     examples: [
-      'New dashboards', // COPY:
-      'Payment methods', // COPY:
-      'Booking features', // COPY:
-      'AI features', // COPY:
-      'Reports', // COPY:
-      'User roles', // COPY:
+      'Website updates', // COPY:
+      'New pages and sections', // COPY:
+      'New features', // COPY:
+      'Booking and payments', // COPY:
       'Integrations', // COPY:
-      'New pages', // COPY:
-      'UX improvements', // COPY:
+      'UX/UI improvements', // COPY:
+      'Partial or full redesigns', // COPY:
+      'App and software improvements', // COPY:
     ],
   },
   {
-    id: 'emergency',
-    name: 'Emergency work', // COPY:
-    pricePerHour: 1_600,
-    description: 'Same-day, without a support agreement. Retainer clients get priority.', // COPY:
+    id: 'care',
+    name: 'Care & support', // COPY:
+    pricePerHour: CARE_RATE_PER_HOUR,
+    description: 'Maintenance, fixes and support during working hours.', // COPY:
   },
 ]
 

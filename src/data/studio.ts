@@ -10,7 +10,8 @@ export const founders: Founder[] = [
     bio: 'Enzo leads UX, visual design, motion and front-end development, and works on the back-end as well, so the whole build hangs together. He cares about sites that are visually strong and actually work.', // COPY:
     focus: ['Front-end', 'UX / UI', 'Motion', 'Back-end'], // COPY:
     portrait: media.founders.enzo,
-    linkedin: 'https://www.linkedin.com/', // COPY: personal LinkedIn URL
+    // COPY: add the personal LinkedIn URL (the button stays hidden until then)
+    linkedin: undefined,
   },
   {
     id: 'armand',
@@ -20,7 +21,8 @@ export const founders: Founder[] = [
     bio: 'Armand focuses on back-end development, hosting and client delivery, and helps build the front-end too. He makes sure every project ships on time and keeps running smoothly long after launch.', // COPY:
     focus: ['Back-end', 'Hosting', 'Client delivery', 'Front-end'], // COPY:
     portrait: media.founders.armand,
-    linkedin: 'https://www.linkedin.com/', // COPY: personal LinkedIn URL
+    // COPY: add the personal LinkedIn URL (the button stays hidden until then)
+    linkedin: undefined,
   },
 ]
 

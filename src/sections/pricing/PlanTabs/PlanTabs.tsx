@@ -14,7 +14,7 @@ export interface PlanTab {
   description: string
   /** e.g. "Limited to 3 partner clients at a time." */
   note?: string
-  plans: (Omit<PlanCardProps, 'popularLabel'> & { id: string })[]
+  plans: (Omit<PlanCardProps, 'recommendedLabel'> & { id: string })[]
 }
 
 export interface PlanTabsProps {
@@ -22,7 +22,7 @@ export interface PlanTabsProps {
   title: string
   tabsLabel: string
   tabs: PlanTab[]
-  popularLabel: string
+  recommendedLabel: string
   /** Under the panels, e.g. minimum term and "Hosting-only available on request". */
   footnotes: string[]
   tone?: Tone
@@ -38,7 +38,7 @@ export function PlanTabs({
   title,
   tabsLabel,
   tabs,
-  popularLabel,
+  recommendedLabel,
   footnotes,
   tone = 'paper',
 }: PlanTabsProps) {
@@ -93,7 +93,7 @@ export function PlanTabs({
   }
 
   return (
-    <Section tone={tone}>
+    <Section tone={tone} spacing="none" className="pt-section pb-8 md:pb-10">
       <div ref={rootRef} className="container-site">
         <SectionHeader variant="inline" eyebrow={eyebrow} title={title} />
         <div
@@ -148,7 +148,12 @@ export function PlanTabs({
               )}
             >
               {tab.plans.map(({ id, ...plan }, i) => (
-                <PlanCard key={id} {...plan} popularLabel={popularLabel} flipId={`slot-${i}`} />
+                <PlanCard
+                  key={id}
+                  {...plan}
+                  recommendedLabel={recommendedLabel}
+                  flipId={`slot-${i}`}
+                />
               ))}
             </ul>
             {tab.note && <p className="mt-6 text-small font-semibold text-accent">{tab.note}</p>}

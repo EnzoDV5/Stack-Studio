@@ -7,6 +7,14 @@ here first, then in the data.
 > **Public bundle rule:** no internal hourly cost, margin or contingency logic lives anywhere
 > in `src/`. The JavaScript bundle is public. Only client-facing prices belong in the data.
 
+## Public hourly rates
+
+- **Software and development:** R400/hour.
+- **Care, maintenance and support:** R200/hour during working hours.
+- Every Build starting estimate is calculated from estimated working hours at R400/hour.
+  Custom software uses that same rate across web, mobile, desktop, backend, API, AI and
+  automation work; the site shows the estimated project cost rather than only the rate.
+
 ## Positioning
 
 - **Tagline:** "We build, manage and grow the digital systems your business depends on."
@@ -17,34 +25,35 @@ here first, then in the data.
 
 ## Five stages
 
-| #   | Stage     | Line                                               |
-| --- | --------- | -------------------------------------------------- |
-| 01  | Build     | We create it.                                      |
-| 02  | Take over | Already built? We'll take it from here.            |
-| 03  | Run       | We keep it working.                                |
-| 04  | Grow      | We keep improving it.                              |
-| 05  | Partner   | We become part of your development capability.     |
+| #   | Stage     | Line                                           |
+| --- | --------- | ---------------------------------------------- |
+| 01  | Build     | We create it.                                  |
+| 02  | Take over | Already built? We'll take it from here.        |
+| 03  | Run       | We keep it working.                            |
+| 04  | Improve   | Update, extend or redesign what you have.      |
+| 05  | Partner   | We become part of your development capability. |
 
 Every offering and plan has a `visibility`:
 
 - `pricing`: shown on the Pricing and Services pages.
-- `services`: Services page only, labelled "Quoted per project".
+- `services`: Services page only. Build items show their calculated starting estimate;
+  takeover items are labelled "Quoted per project".
 - `hidden`: kept in data, never rendered.
 
 ## 01 Build (once-off)
 
-| Offering                        | From      | Visibility | Notes                                                              |
-| ------------------------------- | --------- | ---------- | ------------------------------------------------------------------ |
-| Business Website                | R18,000   | pricing    | 5 pages included                                                   |
-| Custom / Immersive Website      | R35,000   | pricing    | 8 pages included                                                   |
-| E-commerce Website              | R45,000   | pricing    | 5 content pages plus the store; complex stores quoted separately   |
-| Web Apps & MVPs                 | R75,000   | pricing    | Requires discovery                                                 |
-| Custom Software & Mobile Apps   | R120,000  | pricing    | Requires discovery                                                 |
-| AI & Automation                 | R15,000   | pricing    | Automation from R15k, AI features from R20k, AI platforms from R75k |
-| Backend & API Development       | R30,000   | services   | "Backend systems built around your requirements"                   |
-| Desktop Applications            | R80,000   | services   | Windows/macOS business tools                                       |
-| Software Discovery & Scoping    | R7,500    | pricing    | Required before any build of R120k+; large systems R15k–R40k+      |
-| Large-Scale Software Platform   | R250,000  | hidden     | Scoped individually                                                |
+| Offering                      | From     | Visibility | Notes                                                               |
+| ----------------------------- | -------- | ---------- | ------------------------------------------------------------------- |
+| Business Website              | R18,000  | pricing    | 5 pages included                                                    |
+| Custom / Immersive Website    | R35,000  | pricing    | 8 pages included                                                    |
+| E-commerce Website            | R45,000  | pricing    | 5 content pages plus the store; complex stores quoted separately    |
+| Web Apps & MVPs               | R75,000  | pricing    | 187.5 estimated hours; requires discovery                           |
+| Custom Software & Mobile Apps | R120,000 | pricing    | 300 estimated hours; requires discovery                             |
+| AI & Automation               | R15,000  | pricing    | Automation from R15k, AI features from R20k, AI platforms from R75k |
+| Backend & API Development     | R30,000  | services   | 75 estimated hours                                                  |
+| Desktop Applications          | R80,000  | services   | 200 estimated hours                                                 |
+| Software Discovery & Scoping  | R7,500   | pricing    | 18.75 estimated hours; required before any build of R120k+          |
+| Large-Scale Software Platform | R250,000 | hidden     | 625 estimated hours; scoped individually                            |
 
 - **Business Website** includes custom UX/UI, responsive desktop + mobile, front-end
   development, contact forms, basic animations, basic SEO, Google Analytics, deployment,
@@ -85,12 +94,12 @@ Every offering and plan has a `visibility`:
 
 ## 02 Take over
 
-| Offering               | From     | Visibility | Notes                                                                        |
-| ---------------------- | -------- | ---------- | ---------------------------------------------------------------------------- |
+| Offering                | From    | Visibility | Notes                                                                                                              |
+| ----------------------- | ------- | ---------- | ------------------------------------------------------------------------------------------------------------------ |
 | Website Technical Audit | R2,500  | pricing    | Technical Health Report (Good / Needs attention / Critical); fee credited against a takeover signed within 30 days |
-| App / Software Audit   | R5,000   | services   | Large systems: custom quote                                                  |
-| Website Takeover       | R3,500   | services   | Then the client moves onto a Care plan                                       |
-| Software / App Takeover | R10,000 | services   | Then the client moves onto Managed or Partner                                |
+| App / Software Audit    | R5,000  | services   | Large systems: custom quote                                                                                        |
+| Website Takeover        | R3,500  | services   | Then the client moves onto a Care plan                                                                             |
+| Software / App Takeover | R10,000 | services   | Then the client moves onto Managed or Partner                                                                      |
 
 - **Website audit** checks source code, framework, hosting, domain/DNS, SSL, performance,
   security, dependencies, database, backups, analytics, repository access and deployment.
@@ -106,16 +115,16 @@ Every offering and plan has a `visibility`:
 
 Care is for websites only; Managed is for applications only.
 
-| Plan                        | Price            | Time    | Visibility          |
-| --------------------------- | ---------------- | ------- | ------------------- |
-| Care Essential              | R1,250/month     | 30 min  | pricing             |
-| Care Business               | R2,750/month     | 2 hours | pricing, highlighted |
-| Care Pro                    | R5,500/month     | 3 hours | pricing             |
-| Managed App                 | from R7,500/month | 4 hours | pricing            |
-| Managed Business System     | from R12,500/month | 8 hours | pricing           |
-| Mission-Critical Management | from R20,000/month | –      | hidden              |
-| Website Hosting only        | from R450/month  | –       | hidden              |
-| App Hosting only            | from R1,500/month + infrastructure | – | hidden     |
+| Plan                        | Price                              | Time    | Visibility           |
+| --------------------------- | ---------------------------------- | ------- | -------------------- |
+| Care Essential              | R100/month                         | 30 min  | pricing              |
+| Care Business               | R400/month                         | 2 hours | pricing, highlighted |
+| Care Pro                    | R600/month                         | 3 hours | pricing              |
+| Managed App                 | from R800/month                    | 4 hours | pricing              |
+| Managed Business System     | from R1,600/month                  | 8 hours | pricing              |
+| Mission-Critical Management | from R20,000/month                 | –       | hidden               |
+| Website Hosting only        | from R450/month                    | –       | hidden               |
+| App Hosting only            | from R1,500/month + infrastructure | –       | hidden               |
 
 - **Care Essential:** managed hosting, SSL, domain/DNS, backups, uptime monitoring,
   dependency updates, basic security, small fixes, basic support, up to 30 min of content
@@ -133,23 +142,25 @@ Care is for websites only; Managed is for applications only.
   database size and integrations.
 - **Hosting-only plans** are rendered only as the line "Hosting-only available on
   request".
+- Website Care and Managed Software are calculated from their included working hours at
+  R200/hour. Third-party infrastructure and usage remain separate where applicable.
 
-## 04 Grow
+## 04 Improve
 
-- **Feature development without a retainer:** R1,200/hour, or quoted as a fixed project.
-  Examples: new dashboards, payment methods, booking features, AI, reports, user roles,
-  integrations, new pages, UX improvements.
-- **Emergency work** (no support agreement, same-day): R1,600/hour. Retainer clients get
-  priority.
+- For an existing website or app that needs updates, new pages, added features,
+  integrations, UX/UI improvements, or a partial or full redesign.
+- Work is estimated at R400/hour and presented as an estimated-hours quote before it starts.
+- Once the changes are live, ongoing Website Care or Managed Software can be added at
+  R200 per included working hour.
 
 ## 05 Partner (monthly, 3-month minimum, billed in advance)
 
-| Plan               | Price           | Reserved hours | Visibility          |
-| ------------------ | --------------- | -------------- | ------------------- |
-| Partner 10         | R10,000/month   | 10             | pricing             |
-| Partner 20         | R20,000/month   | 22             | pricing, highlighted |
-| Partner 40         | R35,000/month   | 40             | pricing             |
-| Dedicated Capacity | from R50,000/month | –           | hidden              |
+| Plan               | Price              | Reserved hours | Visibility           |
+| ------------------ | ------------------ | -------------- | -------------------- |
+| Partner 10         | R4,000/month       | 10             | pricing              |
+| Partner 20         | R8,000/month       | 20             | pricing, highlighted |
+| Partner 40         | R16,000/month      | 40             | pricing              |
+| Dedicated Capacity | from R50,000/month | –              | hidden               |
 
 - **Partner 10:** UX/UI, frontend, backend, small integrations, improvements, technical
   support, monthly planning, priority over non-retainer work.
@@ -183,16 +194,16 @@ Care is for websites only; Managed is for applications only.
 
 ## Add-ons (website builds only)
 
-| Add-on                                  | Price          |
-| --------------------------------------- | -------------- |
-| Extra page beyond included              | R1,500 each    |
-| Copywriting                             | R5,000         |
-| Blog or news section                    | R4,000         |
-| Extra language                          | R3,500 each    |
-| Booking or quote system                 | R8,000         |
-| Online payments (non-e-commerce)        | R7,500         |
-| Integration (CRM, WhatsApp, accounting…) | R5,000 each   |
-| AI feature                              | R20,000        |
+| Add-on                                   | Price       |
+| ---------------------------------------- | ----------- |
+| Extra page beyond included               | R1,500 each |
+| Copywriting                              | R5,000      |
+| Blog or news section                     | R4,000      |
+| Extra language                           | R3,500 each |
+| Booking or quote system                  | R8,000      |
+| Online payments (non-e-commerce)         | R7,500      |
+| Integration (CRM, WhatsApp, accounting…) | R5,000 each |
+| AI feature                               | R20,000     |
 
 **Timeline multipliers:** flexible ×0.95, standard ×1, within 6 weeks ×1.15, ASAP ×1.3.
 
@@ -202,14 +213,15 @@ Care is for websites only; Managed is for applications only.
 
 - **Build:** Business Websites from R18,000 · Custom/Immersive from R35,000 · E-commerce
   from R45,000 · Web Apps & MVPs from R75,000 · Custom Software & Mobile Apps from
-  R120,000 · AI & Automation from R15,000 · Discovery from R7,500
+  R120,000 · AI & Automation from R15,000 · Discovery from R7,500. Every estimate uses
+  the R400/hour development rate.
 - **Take over:** audit from R2,500
-- **Run:** Website Care from R1,250/month · Managed Software from R7,500/month
-- **Partner:** from R10,000/month
+- **Run:** Website Care from R100/month · Managed Software from R800/month
+- **Partner:** from R4,000/month
 - Underneath: "Need something more specific? Every project is different. Build a quick
   project brief and we'll give you a more accurate estimate. → Build my estimate"
 
-Home teaser: "Websites from R18,000 · Care from R1,250/month · Partner from R10,000/month".
+Home teaser: "Websites from R18,000 · Care from R100/month · Partner from R4,000/month".
 
 ## Quote builder (/start)
 
@@ -219,13 +231,13 @@ the visible steps. Deep links work, e.g. `/start?path=build&type=ecommerce` and
 
 Step 1 asks "What do you need?" and branches:
 
-| Path                   | Steps                                                                                                  |
-| ---------------------- | ------------------------------------------------------------------------------------------------------ |
+| Path                   | Steps                                                                                                                                                                     |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | A. Build something new | type → (website: pages, add-ons, languages, Care plan defaulting to Care Business or "No plan for now") / (app, software, AI: who uses it, key needs) → timeline → budget |
-| B. Something exists    | what is it → code and hosting access → situation (multi) → urgency                                     |
-| C. Keep it running     | website or app → who built it → change frequency                                                       |
-| D. Ongoing development | kind of work (multi) → hours per month                                                                 |
-| E. Not sure            | short description                                                                                      |
+| B. Something exists    | what is it → code and hosting access → situation (multi) → urgency                                                                                                        |
+| C. Keep it running     | website or app → who built it → change frequency                                                                                                                          |
+| D. Ongoing development | kind of work (multi) → hours per month                                                                                                                                    |
+| E. Not sure            | short description                                                                                                                                                         |
 
 All paths then go contact details → POPIA consent → review → submit.
 
@@ -243,13 +255,13 @@ Result kinds: `range` | `discovery` | `plan` | `audit` | `consult`.
   Discovery & Scoping from R7,500", with the offering's from price as context.
 - **B → audit.**
   - Website R2,500; app from R5,000. Mentions the takeover credit.
-  - Urgency "today" adds emergency work at R1,600/hour.
+  - Urgency "today" adds hands-on care at R200/hour.
 - **C → plan.**
   - Website: rarely → Care Essential, monthly → Care Business, weekly → Care Pro.
   - App: rarely or monthly → Managed App, weekly → Managed Business System.
   - Built by someone else adds "Starts with an audit and takeover."
 - **D → plan.**
-  - A few → ad-hoc R1,200/hour or Partner 10.
+  - A few → ad-hoc R400/hour or Partner 10.
   - About 10 → Partner 10; about 20 → Partner 20; 40+ → Partner 40 (limited spots).
 - **E → consult:** "We'll suggest the right starting point after a short call."
 - Always shows: "Indicative estimate. Final quote after a short call."

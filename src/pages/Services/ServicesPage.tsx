@@ -35,6 +35,7 @@ const layouts: Record<Exclude<StageId, 'build'>, StageLayout> = {
 
 const notes: Partial<Record<StageId, string[]>> = {
   run: [policies.hostingOnRequest],
+  grow: [c.improve.note],
   partner: planFamilies.flatMap((f) => (f.id === 'partner' && f.note ? [f.note] : [])),
 }
 
@@ -59,7 +60,7 @@ const websites: StageExplorerStage = {
   layout: 'feature',
 }
 
-// Then what happens to something that already exists: take over, run, grow, partner (04–07).
+// Then what happens to something that already exists: take over, run, improve, partner (04–07).
 const afterLaunch: StageExplorerStage[] = serviceStages
   .filter((stage) => stage.id !== 'build')
   .map((stage, i) => ({
@@ -70,7 +71,6 @@ const afterLaunch: StageExplorerStage[] = serviceStages
     rows: stageRows(stage.id, data, l),
     notes: notes[stage.id],
     cta: stage.cta,
-    // Grow is two hourly rates: a compact row, no image.
     media: stage.id === 'grow' ? undefined : serviceMedia[stage.id],
     layout: layouts[stage.id as Exclude<StageId, 'build'>],
   }))
@@ -89,7 +89,7 @@ const starter = (() => {
 
 /**
  * Services, grouped the way people look for them: a "What do you need?" index, websites, apps
- * and software (the phone), desktop software (the laptop), then taking over, running, growing
+ * and software (the phone), desktop software (the laptop), then taking over, running, improving
  * and partnering on what exists, then what happens once you get in touch.
  */
 export function ServicesPage() {

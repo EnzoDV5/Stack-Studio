@@ -218,7 +218,7 @@ export const laptopTurn = {
 
 /**
  * NextSteps (Services, desktop): the four step cards start as a loose, overlapping pile in the
- * middle and deal out into their 2 × 2 grid as the section scrolls into view (scrubbed;
+ * middle and deal out into their row as the section scrolls into view (scrubbed;
  * transforms only).
  */
 export const stepsDeal = {
@@ -232,7 +232,7 @@ export const stepsDeal = {
     { rotation: -3, y: 22 },
     { rotation: 7, y: -24 },
   ],
-  /** The pile is a little smaller than the grid. */
+  /** The pile is a little smaller than the row. */
   scale: 0.9,
 } as const
 

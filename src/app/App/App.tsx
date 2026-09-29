@@ -19,6 +19,7 @@ import { ClosingCta } from '@/sections/shared/ClosingCta'
 export function App() {
   usePageviewTracking()
   useScrollRefresh()
+  const whatsapp = whatsappHref()
 
   return (
     <>
@@ -62,7 +63,9 @@ export function App() {
                 nav: chromeCopy.navHeading,
               }}
               email={site.email}
-              whatsapp={{ href: whatsappHref(), label: chromeCopy.whatsappLabel }}
+              whatsapp={
+                whatsapp ? { href: whatsapp, label: chromeCopy.whatsappLabel } : undefined
+              }
               responsePromise={site.responsePromise}
               socials={site.socials}
               nav={footerNav}

@@ -7,21 +7,20 @@ served locally. The gallery catalogue and accessible descriptions live in
 
 ## Videos
 
-One looping clip per service stage, used on Home (the "Where are you at?" path chooser) and on
+One looping clip per service stage, used on Home (the "What do you need?" path chooser) and on
 each Services page stage block. Chosen 2026-09-29 to show what each stage is about:
 
-| Stage     | Local file   | What it shows                                 | Source                                                                                                                            | Licence                                           |
-| --------- | ------------ | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| Build     | build.mp4    | A designer sketching on a graphics tablet     | [Writing on a graphics tablet — Coverr](https://coverr.co/videos/writing-on-a-graphics-tablet-HGosg0oNwP)                         | [Coverr License](https://coverr.co/license)       |
-| Take over | takeover.mp4 | Existing code being read through in an editor | [Coding on a laptop — Coverr](https://coverr.co/videos/coding-on-a-laptop-rXf1Hyrfkk)                                             | Coverr License                                    |
-| Run       | run.mp4      | Live network cabling and status lights        | [Blue colored cables — Dima Krivoy / Pexels 1085656](https://www.pexels.com/video/blue-colored-cables-1085656/) (4K original)     | [Pexels License](https://www.pexels.com/license/) |
-| Grow      | grow.mp4     | Results presented on a dashboard              | [A young man showing results in a meeting — Coverr](https://coverr.co/videos/a-young-man-showing-results-in-a-meeting-vRPGR76WtO) | Coverr License                                    |
-| Partner   | partner.mp4  | Two people working a project through together | [Teamwork in the office — Coverr](https://coverr.co/videos/teamwork-in-the-office-Sf189e49k5)                                     | Coverr License                                    |
+| Stage     | Local file   | What it shows                                | Source                                                                                                                                                   | Licence                                           |
+| --------- | ------------ | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Build     | build.mp4    | A software team building together            | [People coding on a computer — cottonbro studio / Pexels 6804109](https://www.pexels.com/video/people-coding-on-computer-6804109/)                       | [Pexels License](https://www.pexels.com/license/) |
+| Take over | takeover.mp4 | People reviewing an existing project         | [People discussing around a laptop — Kindel Media / Pexels 7687649](https://www.pexels.com/video/people-discussing-while-looking-at-the-laptop-7687649/) | Pexels License                                    |
+| Run       | run.mp4      | Live network cabling and status lights       | [Blue colored cables — Dima Krivoy / Pexels 1085656](https://www.pexels.com/video/blue-colored-cables-1085656/) (4K original)                            | [Pexels License](https://www.pexels.com/license/) |
+| Improve   | grow.mp4     | A designer editing an existing visual layout | [A woman making a graphic design — ArtHouse Studio / Pexels 7204567](https://www.pexels.com/video/a-woman-making-a-graphic-design-7204567/)              | Pexels License                                    |
+| Partner   | partner.mp4  | A team planning a project together           | [Teammates working on a project — MART PRODUCTION / Pexels 7534861](https://www.pexels.com/video/teammates-working-in-a-project-7534861/)                | Pexels License                                    |
 
-Both licences allow free commercial use with no attribution. Coverr "premium" items and
-Mixkit "Restricted License" items were excluded (Mixkit's data-centre footage is all
-Restricted). These are illustrative stock scenes, not Stack Studio staff, clients or
-endorsements. The download URLs and loop points are in `scripts/services-media/clips.mjs`.
+The Pexels License allows free commercial use with no attribution. These are illustrative
+stock scenes, not Stack Studio staff, clients or endorsements. The download URLs and loop
+points are in `scripts/services-media/clips.mjs`.
 
 Each stage has:
 
@@ -32,7 +31,7 @@ Each stage has:
 - `{stage}-poster.webp` (1920), `-poster-960.webp`, `-poster-480.webp`: the loop's first
   frame, so the poster → video swap is invisible.
 
-Each is a 10-second seamless loop: the last second crossfades back into the first frame.
+Each is a roughly 10-second seamless loop: the last second crossfades back into the first frame.
 Only the stage on screen loads video, and reduced motion shows the posters only.
 
 ### Re-encoding or replacing a clip
@@ -72,5 +71,5 @@ across services instead of downloading duplicate assets.
 Photo downloads use the source’s image endpoint:
 `https://images.pexels.com/photos/{id}/pexels-photo-{id}.jpeg?auto=compress&cs=tinysrgb&w=1400`.
 
-The stage clips replaced the Build, Take over and Grow photographs (wireframes, code-review,
+The stage clips replaced the Build, Take over and Improve photographs (wireframes, code-review,
 analytics), which stay here unused; `collaboration` is still used on the Studio page.

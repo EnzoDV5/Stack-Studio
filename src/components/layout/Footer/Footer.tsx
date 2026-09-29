@@ -8,7 +8,7 @@ import type { NavItem, SocialLink } from '@/types'
 export interface FooterProps {
   headings: { contact: string; social: string; nav: string }
   email: string
-  whatsapp: { href: string; label: string }
+  whatsapp?: { href: string; label: string }
   responsePromise: string
   socials: SocialLink[]
   nav: NavItem[]
@@ -52,14 +52,16 @@ export function Footer({
             >
               {email}
             </a>
-            <div className="mt-6">
-              <WhatsAppButton
-                href={whatsapp.href}
-                label={whatsapp.label}
-                location="footer"
-                size="sm"
-              />
-            </div>
+            {whatsapp && (
+              <div className="mt-6">
+                <WhatsAppButton
+                  href={whatsapp.href}
+                  label={whatsapp.label}
+                  location="footer"
+                  size="sm"
+                />
+              </div>
+            )}
             <p className="mt-5 text-small text-muted">{responsePromise}</p>
           </div>
 

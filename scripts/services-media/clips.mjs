@@ -10,25 +10,25 @@
 export const clips = [
   {
     stage: 'build',
-    // A designer drawing on a graphics tablet: the first sketch, the start of every build.
-    title: 'Writing on a graphics tablet',
-    source: 'https://coverr.co/videos/writing-on-a-graphics-tablet-HGosg0oNwP',
-    download: 'https://cdn.coverr.co/videos/coverr-writing-on-a-graphics-tablet-2744/1080p.mp4',
-    license: 'Coverr License (https://coverr.co/license)',
-    sourceId: 'coverr-2744',
-    start: 0.2,
-    duration: 9.5,
+    // A development team building together: the former Partner clip, moved here for Build.
+    title: 'People coding on a computer (cottonbro studio)',
+    source: 'https://www.pexels.com/video/people-coding-on-computer-6804109/',
+    download: 'https://videos.pexels.com/video-files/6804109/6804109-uhd_4096_2160_25fps.mp4',
+    license: 'Pexels License (https://www.pexels.com/license/)',
+    sourceId: 'pexels-6804109-4k',
+    start: 2,
+    duration: 10,
   },
   {
     stage: 'takeover',
-    // Code on a laptop screen being read through: auditing what the client already has.
-    title: 'Coding on a laptop',
-    source: 'https://coverr.co/videos/coding-on-a-laptop-rXf1Hyrfkk',
-    download: 'https://cdn.coverr.co/videos/coverr-coding-on-a-laptop-2116/1080p.mp4',
-    license: 'Coverr License (https://coverr.co/license)',
-    sourceId: 'coverr-2116',
-    start: 1,
-    duration: 10,
+    // People examining an existing project and its reports together: review before takeover.
+    title: 'People discussing while looking at a laptop (Kindel Media)',
+    source: 'https://www.pexels.com/video/people-discussing-while-looking-at-the-laptop-7687649/',
+    download: 'https://videos.pexels.com/video-files/7687649/7687649-uhd_3840_2160_30fps.mp4',
+    license: 'Pexels License (https://www.pexels.com/license/)',
+    sourceId: 'pexels-7687649-4k',
+    start: 0,
+    duration: 8.5,
   },
   {
     stage: 'run',
@@ -43,25 +43,24 @@ export const clips = [
   },
   {
     stage: 'grow',
-    // Results presented on a dashboard: measuring and improving what's live.
-    title: 'A young man showing results in a meeting',
-    source: 'https://coverr.co/videos/a-young-man-showing-results-in-a-meeting-vRPGR76WtO',
-    download:
-      'https://cdn.coverr.co/videos/coverr-a-young-man-showing-results-in-a-meeting-726/1080p.mp4',
-    license: 'Coverr License (https://coverr.co/license)',
-    sourceId: 'coverr-726',
-    start: 1,
+    // A designer editing an existing visual layout: changes and redesign work, not another code clip.
+    title: 'A woman making a graphic design (ArtHouse Studio)',
+    source: 'https://www.pexels.com/video/a-woman-making-a-graphic-design-7204567/',
+    download: 'https://videos.pexels.com/video-files/7204567/7204567-uhd_3840_2160_24fps.mp4',
+    license: 'Pexels License (https://www.pexels.com/license/)',
+    sourceId: 'pexels-7204567-4k',
+    start: 2,
     duration: 10,
   },
   {
     stage: 'partner',
-    // Two people working through something together: a team that knows your systems.
-    title: 'Teamwork in the office',
-    source: 'https://coverr.co/videos/teamwork-in-the-office-Sf189e49k5',
-    download: 'https://cdn.coverr.co/videos/coverr-teamwork-in-the-office-7943/1080p.mp4',
-    license: 'Coverr License (https://coverr.co/license)',
-    sourceId: 'coverr-7943',
-    start: 1.5,
+    // A team planning together around one table: ongoing, embedded partnership.
+    title: 'Teammates working on a project (MART PRODUCTION)',
+    source: 'https://www.pexels.com/video/teammates-working-in-a-project-7534861/',
+    download: 'https://videos.pexels.com/video-files/7534861/7534861-uhd_4096_2160_25fps.mp4',
+    license: 'Pexels License (https://www.pexels.com/license/)',
+    sourceId: 'pexels-7534861-4k',
+    start: 1,
     duration: 10,
   },
 ]

@@ -23,6 +23,8 @@ export interface Prefill {
   answers: Partial<BriefAnswers>
   /** Name of what was pre-selected, for the "We've pre-selected…" notice. */
   name?: string
+  /** A complete package can skip the already-filled questions and collect contact details. */
+  stepId?: string
 }
 
 export function prefillFromParams(
@@ -30,7 +32,7 @@ export function prefillFromParams(
   data: { offerings: Offering[]; plans: Plan[]; quotes?: QuotePreset[] },
 ): Prefill {
   const quote = data.quotes?.find((q) => q.id === params.get('quote'))
-  if (quote) return { answers: quote.answers, name: quote.name }
+  if (quote) return { answers: quote.answers, name: quote.name, stepId: 'contact' }
 
   const type = params.get('type')
   const offering = data.offerings.find(

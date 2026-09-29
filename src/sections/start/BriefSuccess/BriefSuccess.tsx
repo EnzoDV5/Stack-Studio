@@ -12,7 +12,7 @@ export interface BriefSuccessProps {
   body: string
   steps: string[]
   urgent: string
-  whatsapp: { href: string; label: string }
+  whatsapp?: { href: string; label: string }
   primary: CtaLink
   secondary: CtaLink
 }
@@ -59,15 +59,17 @@ export function BriefSuccess({
           {secondary.label}
         </Button>
       </div>
-      <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-tone pt-8">
-        <p className="text-muted">{urgent}</p>
-        <WhatsAppButton
-          href={whatsapp.href}
-          label={whatsapp.label}
-          location="start-success"
-          size="sm"
-        />
-      </div>
+      {whatsapp && (
+        <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-tone pt-8">
+          <p className="text-muted">{urgent}</p>
+          <WhatsAppButton
+            href={whatsapp.href}
+            label={whatsapp.label}
+            location="start-success"
+            size="sm"
+          />
+        </div>
+      )}
     </div>
   )
 }

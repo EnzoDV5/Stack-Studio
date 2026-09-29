@@ -167,7 +167,7 @@ Neighbouring sections never share a trigger type, and every section's motion is 
 | Work media          | Clip-path mask opens while the image settles; Flip on filter                | `MediaReveal`, `WorkGrid`        |
 | Work cards          | Hover video preview (desktop)                                               | `ProjectMedia`                   |
 | Services, FAQs      | Expanding rows; each service stage has its own layout                       | `Accordion`, `StageBlock`        |
-| Services next steps | Step cards (mini interfaces) deal out of a pile into a grid on scroll       | `NextSteps`                      |
+| Services next steps | Step cards (mini interfaces) deal out of a pile into a row on scroll        | `NextSteps`                      |
 | Plan tabs           | Cards Flip into the slot they replace                                       | `PlanTabs`                       |
 | Portraits, images   | Gentle parallax (scroll, or pointer on Home)                                | `Parallax`                       |
 | Technologies        | CSS marquee, hover pause and pause control                                  | `TechnologyMarquee`, `Marquee`   |

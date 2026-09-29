@@ -185,18 +185,18 @@ function serviceClip(id: string, alt: string): ServiceMediaItem {
 
 /**
  * One looping clip per service stage, chosen to show what that stage is about: the first
- * sketch (Build), reading through existing code (Take over), live infrastructure (Run),
- * results on a dashboard (Grow) and a team working it through together (Partner).
+ * a development team at work (Build), reviewing an existing project (Take over), live
+ * infrastructure (Run), interface redesign work (Improve) and team planning (Partner).
  */
 export const serviceMedia: Record<StageId, ServiceMediaItem> = {
-  build: serviceClip('build', 'A designer sketching an interface on a graphics tablet'), // COPY: alt
+  build: serviceClip('build', 'A software team building together at a development workstation'), // COPY: alt
   takeover: serviceClip(
     'takeover',
-    'An existing website’s code open in an editor on a laptop, being read through',
+    'People reviewing an existing project and its reports together around a laptop',
   ), // COPY: alt
   run: serviceClip('run', 'Network cables and status lights on live server equipment'), // COPY: alt
-  grow: serviceClip('grow', 'A developer walking a client through website results on a dashboard'), // COPY: alt
-  partner: serviceClip('partner', 'Two people working through a project together at a laptop'), // COPY: alt
+  grow: serviceClip('grow', 'A designer editing an existing visual layout on a laptop'), // COPY: alt
+  partner: serviceClip('partner', 'A team planning a project together around one table'), // COPY: alt
 }
 
 export const media = {
