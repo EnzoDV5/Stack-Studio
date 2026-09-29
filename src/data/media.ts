@@ -1,10 +1,11 @@
 /**
- * EVERY media path in the site lives here. Swap placeholders for real assets by editing
- * this file only:
- *   - Images: replace picsum URLs with files in /public/media/images (keep width/height accurate).
- *   - Videos: drop MP4s into /public/media/ using the file names below. Until they exist,
- *     <Video> falls back to its poster or an animated brand-gradient placeholder.
- * Placeholder images use picsum.photos with FIXED seeds so they don't change between loads.
+ * EVERY media path in the site lives here. Everything is served locally from /public/media
+ * (keep width/height accurate when swapping a file):
+ *   - Projects: device mockups rendered from the live client sites (scripts/mockups).
+ *   - Services: stage videos and posters (scripts/services-media).
+ *   - Studio: licensed stock photos; founders: avatar placeholders until real portraits exist.
+ *   - Videos not yet made (showreel, project previews) fall back to their poster or an
+ *     animated brand-gradient placeholder.
  */
 import type { ImageAsset, VideoAsset } from '@/types'
 import type { StageId } from '@/types'
@@ -77,17 +78,16 @@ function founderPlaceholder(id: string, name: string): ImageAsset {
   }
 }
 
-/** picsum placeholder with a responsive srcSet (webp). */
-function picsum(seed: string, width: number, height: number, alt: string): ImageAsset {
-  const url = (w: number) =>
-    `https://picsum.photos/seed/${seed}/${w}/${Math.round((w * height) / width)}.webp`
-  const widths = [480, 800, 1200, 1600, 2400].filter((w) => w < width).concat(width)
+/** A photo in /public/media/studio at each width (largest first); `aspect` is height ÷ width. */
+function studioPhoto(id: string, widths: number[], aspect: number, alt: string): ImageAsset {
+  const url = (w: number) => `/media/studio/${id}-${w}.webp`
+  const largest = widths[0] ?? 1600
   return {
-    src: url(width),
+    src: url(widths[1] ?? largest),
     srcSet: widths.map((w) => `${url(w)} ${w}w`).join(', '),
+    width: largest,
+    height: Math.round(largest * aspect),
     alt,
-    width,
-    height,
   }
 }
 
@@ -99,20 +99,6 @@ function video(
   height = 1080,
 ): VideoAsset {
   return { src: `/media/${file}`, type: 'video/mp4', label, poster, width, height }
-}
-
-/** Locally hosted stock media; sources and processing notes are in public/media/services/README.md. */
-function servicePhoto(id: string, alt: string): ServiceMediaItem {
-  return {
-    id,
-    image: {
-      src: `/media/services/${id}.webp`,
-      srcSet: `/media/services/${id}-small.webp 480w, /media/services/${id}.webp 1200w`,
-      width: 1200,
-      height: 800,
-      alt,
-    },
-  }
 }
 
 /**
@@ -343,16 +329,22 @@ export const media = {
     armand: founderPlaceholder('armand', 'Armand Naudé'),
   },
 
+  // Pexels License stock (free for commercial use, no attribution), chosen for what each
+  // section says; sources in public/media/studio/README.md. Swap for real studio photos later.
   studio: {
-    workspace: picsum(
-      'stack-studio-workspace',
-      2400,
-      1350,
-      'The Stack Studio workspace in Centurion',
+    // "Design, motion and development in one team": a designer and a developer at one screen.
+    workspace: studioPhoto(
+      'one-team',
+      [1600, 1000, 640],
+      4 / 5,
+      'A designer and a developer working through a build together at one screen',
     ), // COPY: alt
-    // COPY: alt. Licensed stock already in /public/media/services (see its README). Swap
-    // for a real studio photo when there is one.
-    detail: servicePhoto('collaboration', 'Two people reviewing software together on a laptop')
-      .image,
+    // "Built to grow": a team gathered around one table.
+    detail: studioPhoto(
+      'growing-team',
+      [3200, 2000, 1200],
+      1 / 2,
+      'A team working together around one large table, seen from above',
+    ), // COPY: alt
   },
 } as const
