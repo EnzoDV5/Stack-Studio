@@ -181,7 +181,7 @@ export const homeContent = {
     eyebrow: 'Studio', // COPY:
     title: 'Founder-led and hands-on.', // COPY:
     intro:
-      'Enzo and Armand started Stack, and they stay involved in every project, from the first call to long after launch.', // COPY:
+      'We started Stack to do websites properly, and we stay involved in every project, from the first call to long after launch.', // COPY:
     more: { label: 'Meet the studio', to: '/studio' }, // COPY:
   },
 }
@@ -347,7 +347,7 @@ export const studioContent = {
     eyebrow: 'Who we are', // COPY:
     title: 'Design, motion and development in one team.', // COPY:
     paragraphs: [
-      'Most businesses end up choosing between a designer who can’t build and a developer who can’t design. We started Stack to close that gap: one team that handles strategy, UX, visual design, motion and front-end, and then deploys it for real.', // COPY:
+      'Most businesses end up choosing between a designer who can’t build and a developer who can’t design. We started Stack to close that gap: one team that handles strategy, UX, visual design, motion, front-end and back-end, and then deploys it for real. We each have our focus, but we work across both ends of every build.', // COPY:
       'The result is websites that look the part and actually work: fast, accessible, easy to update and designed to turn visitors into enquiries.', // COPY:
     ],
   },

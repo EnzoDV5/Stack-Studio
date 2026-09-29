@@ -5,20 +5,20 @@ export const founders: Founder[] = [
   {
     id: 'enzo',
     name: 'Enzo De Vittorio',
-    role: 'Co-founder · Design and front-end', // COPY: confirm title
-    line: 'Designs it, animates it and builds the front-end you click through.', // COPY:
-    bio: 'Enzo leads UX, visual design and motion, and builds the front-end that brings it to life. He cares about sites that are visually strong and actually work.', // COPY:
-    focus: ['UX / UI', 'Motion', 'Front-end'], // COPY:
+    role: 'Co-founder · Front-end and design', // COPY: confirm title
+    line: 'Designs and builds the front-end you click through, and works on the back-end too.', // COPY:
+    bio: 'Enzo leads UX, visual design, motion and front-end development, and works on the back-end as well, so the whole build hangs together. He cares about sites that are visually strong and actually work.', // COPY:
+    focus: ['Front-end', 'UX / UI', 'Motion', 'Back-end'], // COPY:
     portrait: media.founders.enzo,
     linkedin: 'https://www.linkedin.com/', // COPY: personal LinkedIn URL
   },
   {
     id: 'armand',
     name: 'Armand Naudé',
-    role: 'Co-founder · Development and delivery', // COPY: confirm title
-    line: 'Builds what runs underneath, ships it on time and keeps it running.', // COPY:
-    bio: 'Armand leads development, hosting and client delivery, making sure every project ships on time and keeps running smoothly long after launch.', // COPY:
-    focus: ['Development', 'Hosting', 'Client delivery'], // COPY:
+    role: 'Co-founder · Back-end and delivery', // COPY: confirm title
+    line: 'Builds what runs underneath, helps on the front-end and keeps it all running.', // COPY:
+    bio: 'Armand focuses on back-end development, hosting and client delivery, and helps build the front-end too. He makes sure every project ships on time and keeps running smoothly long after launch.', // COPY:
+    focus: ['Back-end', 'Hosting', 'Client delivery', 'Front-end'], // COPY:
     portrait: media.founders.armand,
     linkedin: 'https://www.linkedin.com/', // COPY: personal LinkedIn URL
   },
@@ -51,7 +51,7 @@ export const principles: ValueItem[] = [
   {
     id: 'direct',
     title: 'Founders on every project', // COPY:
-    body: 'Enzo and Armand stay involved from the first call to launch, so the thinking behind your project carries all the way through.', // COPY:
+    body: 'We stay involved from the first call to launch, so the thinking behind your project carries all the way through.', // COPY:
   },
   {
     id: 'growing',
