@@ -43,11 +43,11 @@ Each project has its own composition for its Work card (`card`, 4:3) and its Hom
 (`showcase`, 16:9: the Home hero backdrop, the work reel and the case study hero), so no two
 projects and no two pages repeat a mockup:
 
-| Project        | Work card        | Home showcase                            |
-| -------------- | ---------------- | ---------------------------------------- |
-| GC Solar       | Laptop and phone | Three windows floating on a tilted plane |
-| MPG Foundation | Tablet and phone | Browser window and phone                 |
-| Salon Friend   | Three phones     | Laptop between two phones                |
+| Project        | Work card        | Home showcase                          |
+| -------------- | ---------------- | -------------------------------------- |
+| GC Solar       | Laptop and phone | Tablet, laptop and phone (three pages) |
+| MPG Foundation | Tablet and phone | Browser window and phone               |
+| Salon Friend   | Three phones     | Laptop between two phones              |
 
 Every scene is rendered separately at each output width (never downscaled), so text stays
 sharp at every size: cards 2400/1600/800, showcases and full gallery images 3840/2560/1280
@@ -71,7 +71,12 @@ ships with the site. Paths and alt text live in `src/data/media.ts` (`mockup()`)
 
 ## Client logos (/public/logos/clients)
 
-Transparent WebP logos, shown on each case study beside the title (`LogoPlate`). Each
-project's `logo.surface` in `src/data/projects.ts` says which background the artwork is drawn
-for: GC Solar's white type needs `dark`; MPG Foundation's colour mark and Salon Friend's black
-mark need `light`.
+Transparent WebP logos, shown straight on each case study's dark title, beside the name, with
+no plate or background (`ClientLogo`, sized by optical weight so wordmarks and marks balance).
+Every logo used must be drawn for dark backgrounds: GC Solar's already is; MPG Foundation's
+and Salon Friend's are drawn for light, so they use generated `-on-dark` versions (black and
+grey inverted, brand colours kept):
+
+```bash
+node scripts/mockups/logos.mjs   # regenerate {id}-on-dark.webp after replacing a logo
+```

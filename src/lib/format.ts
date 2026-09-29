@@ -20,3 +20,9 @@ export function formatPriceRange(low: number, high: number, step = 500): string 
 export function pad2(n: number): string {
   return String(n).padStart(2, '0')
 }
+
+/** "https://www.mpgf.org.za/" → "mpgf.org.za"; keeps a path ("site.app/shop"). */
+export function displayUrl(url: string): string {
+  const { host, pathname } = new URL(url)
+  return (host.replace(/^www\./, '') + pathname).replace(/\/+$/, '')
+}

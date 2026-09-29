@@ -6,7 +6,7 @@
  *
  * Each project gets its own composition for its Work card and its Home showcase, so no two
  * projects (and no two pages) repeat the same mockup:
- *   laptop-phone, laptop-phones, tablet-phone, phones-trio, browser-phone, perspective
+ *   laptop-phone, laptop-phones, devices-trio, tablet-phone, phones-trio, browser-phone, perspective
  *   (three windows on a tilted plane), browser, browser-stack (first name in front), phone.
  */
 export const themes = {
@@ -51,7 +51,8 @@ export const shapes = {
 }
 
 export const scenes = [
-  // GC Solar: the classic laptop and phone on the card; floating windows on Home.
+  // GC Solar: the classic laptop and phone on the card; the device family (tablet, laptop,
+  // phone) on Home, each on a different page.
   {
     project: 'gc-solar',
     name: 'card',
@@ -64,8 +65,10 @@ export const scenes = [
     project: 'gc-solar',
     name: 'showcase',
     shape: 'showcase',
-    layout: 'perspective',
-    desktop: ['solutions', 'home', 'projects'],
+    layout: 'devices-trio',
+    desktop: ['solutions'],
+    tablet: 'projects',
+    mobile: ['home'],
   },
   {
     project: 'gc-solar',

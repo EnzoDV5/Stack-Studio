@@ -17,11 +17,11 @@ export const projects: Project[] = [
     sector: 'Renewable energy', // COPY:
     services: ['UX strategy', 'Web design', 'Development', 'SEO & analytics'], // COPY:
     stages: ['build', 'run'], // COPY: confirm
-    liveUrl: 'https://example.com/gc-solar', // COPY: replace with the live GC Solar URL
+    liveUrl: 'https://gcsolar-redesign-demo.netlify.app/',
     featured: true,
     thumbnail: media.projects.gcSolar.card,
     showcase: media.projects.gcSolar.showcase,
-    logo: { image: media.projects.gcSolar.logo, surface: 'dark' },
+    logo: media.projects.gcSolar.logo,
     screen: media.projects.gcSolar.screen,
     preview: media.projects.gcSolar.preview,
     hero: { image: media.projects.gcSolar.showcase, video: media.projects.gcSolar.heroVideo },
@@ -78,11 +78,11 @@ export const projects: Project[] = [
     sector: 'Non-profit', // COPY:
     services: ['Content strategy', 'Web design', 'Development', 'Hosting & care'], // COPY:
     stages: ['build', 'run'], // COPY: confirm
-    liveUrl: 'https://example.com/mpg-foundation', // COPY: replace with the live MPG Foundation URL
+    liveUrl: 'https://mpgf.org.za/',
     featured: true,
     thumbnail: media.projects.mpgFoundation.card,
     showcase: media.projects.mpgFoundation.showcase,
-    logo: { image: media.projects.mpgFoundation.logo, surface: 'light' },
+    logo: media.projects.mpgFoundation.logo,
     screen: media.projects.mpgFoundation.screen,
     preview: media.projects.mpgFoundation.preview,
     hero: {
@@ -149,9 +149,10 @@ export const projects: Project[] = [
     sector: 'Salons & beauty', // COPY: confirm
     services: ['Web design', 'Development'], // COPY: confirm
     stages: ['build'], // COPY: confirm
+    liveUrl: 'https://salon-friends.web.app/',
     thumbnail: media.projects.salonFriend.card,
     showcase: media.projects.salonFriend.showcase,
-    logo: { image: media.projects.salonFriend.logo, surface: 'light' },
+    logo: media.projects.salonFriend.logo,
     screen: media.projects.salonFriend.screen,
     preview: media.projects.salonFriend.preview,
     hero: { image: media.projects.salonFriend.showcase },

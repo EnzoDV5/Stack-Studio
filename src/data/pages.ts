@@ -206,7 +206,6 @@ export const caseStudyContent = {
     year: 'Year', // COPY:
     services: 'Services', // COPY:
     live: 'Live site', // COPY:
-    visit: 'Visit site', // COPY:
   },
   narrativeLabels: {
     problem: 'Problem', // COPY:

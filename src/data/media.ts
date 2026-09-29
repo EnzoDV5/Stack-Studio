@@ -56,9 +56,12 @@ function mockup(project: string, name: string, shape: MockupShape, alt: string):
   }
 }
 
-/** A client's logo (transparent WebP in /public/logos/clients). */
-function clientLogo(id: string, width: number, height: number, alt: string): ImageAsset {
-  return { src: `/logos/clients/${id}.webp`, width, height, alt }
+/**
+ * A client's logo for dark backgrounds (transparent WebP in /public/logos/clients). Logos drawn
+ * for light backgrounds use their generated -on-dark file (scripts/mockups/logos.mjs).
+ */
+function clientLogo(file: string, width: number, height: number, alt: string): ImageAsset {
+  return { src: `/logos/clients/${file}.webp`, width, height, alt }
 }
 
 /** picsum placeholder with a responsive srcSet (webp). */
@@ -244,7 +247,7 @@ export const media = {
         2400,
         1350,
       ),
-      logo: clientLogo('mpg-foundation', 1000, 1000, 'MPG Foundation logo'),
+      logo: clientLogo('mpg-foundation-on-dark', 1000, 1000, 'MPG Foundation logo'),
       gallery: [
         mockup(
           'mpg-foundation',
@@ -298,7 +301,7 @@ export const media = {
         1600,
         1200,
       ),
-      logo: clientLogo('salon-friend', 682, 468, 'Salon Friend logo'),
+      logo: clientLogo('salon-friend-on-dark', 682, 468, 'Salon Friend logo'),
       gallery: [
         mockup('salon-friend', 'catalogue', 'wide', 'The Salon Friend catalogue in a browser'), // COPY: alt
         mockup('salon-friend', 'product-mobile', 'tall', 'A Salon Friend product page on a phone'), // COPY: alt

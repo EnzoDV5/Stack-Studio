@@ -30,6 +30,7 @@ export const shots = [
   { project: 'gc-solar', name: 'projects', device: 'desktop', path: '/projects' },
   { project: 'gc-solar', name: 'about', device: 'desktop', path: '/about' },
   { project: 'gc-solar', name: 'quote', device: 'desktop', path: '/quote' },
+  { project: 'gc-solar', name: 'projects', device: 'tablet', path: '/projects' },
   { project: 'gc-solar', name: 'home', device: 'mobile', path: '/' },
   { project: 'gc-solar', name: 'quote', device: 'mobile', path: '/quote' },
   { project: 'gc-solar', name: 'projects', device: 'mobile', path: '/projects' },

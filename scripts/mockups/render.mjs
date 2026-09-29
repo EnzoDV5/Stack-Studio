@@ -168,6 +168,33 @@ function layout(scene, H) {
         })
       )
     }
+    // The device family: a tablet behind on the left, the laptop, a phone in front on the right,
+    // all standing on one line.
+    case 'devices-trio': {
+      const lw = 48
+      const tw = 30
+      const pw = 12
+      const lx = 30
+      const ly = (H - lw * ratio.laptop) / 2
+      const floor = ly + lw * ratio.laptop + lw * 0.028
+      return (
+        tablet({
+          image: capture(project, scene.tablet, 'tablet'),
+          w: tw,
+          x: 6,
+          y: floor - tw * ratio.tablet,
+          z: 1,
+        }) +
+        laptop({ image: desktop(d0), w: lw, x: lx, y: ly, z: 2 }) +
+        phone({
+          image: mobile(m0),
+          w: pw,
+          x: lx + lw - pw * 0.35,
+          y: floor - pw * ratio.phone,
+          z: 3,
+        })
+      )
+    }
     // Three phones: the middle one forward, the outer two lower and behind.
     case 'phones-trio': {
       const cw = H > 60 ? 21 : 16

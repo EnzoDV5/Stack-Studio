@@ -1,8 +1,9 @@
 import { Section, type Tone } from '@/components/layout/Section'
 import { TextLink } from '@/components/ui/TextLink'
+import { displayUrl } from '@/lib/format'
 
 export interface CaseMetaProps {
-  labels: { client: string; year: string; services: string; live: string; visit: string }
+  labels: { client: string; year: string; services: string; live: string }
   client: string
   year: number
   services: string[]
@@ -10,7 +11,7 @@ export interface CaseMetaProps {
   tone?: Tone
 }
 
-/** Client, year, services and live link, as a definition list. */
+/** Client, year, services and the live site (shown by its address), as a definition list. */
 export function CaseMeta({
   labels,
   client,
@@ -44,7 +45,9 @@ export function CaseMeta({
           <div>
             <dt className="mb-3 eyebrow text-muted">{labels.live}</dt>
             <dd>
-              <TextLink href={liveUrl}>{labels.visit}</TextLink>
+              <TextLink href={liveUrl} className="break-all">
+                {displayUrl(liveUrl)}
+              </TextLink>
             </dd>
           </div>
         )}

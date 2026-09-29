@@ -18,15 +18,6 @@ export interface GalleryItem extends ImageAsset {
   caption?: string
 }
 
-export interface ClientLogo {
-  image: ImageAsset
-  /**
-   * The background the artwork is drawn for: 'dark' for light artwork (white type), 'light'
-   * for dark or full-colour artwork. The logo is always shown on that surface.
-   */
-  surface: 'light' | 'dark'
-}
-
 export interface Project {
   slug: string
   name: string
@@ -50,8 +41,11 @@ export interface Project {
    * the thumbnail so the two pages don't repeat. Falls back to the thumbnail.
    */
   showcase?: ImageAsset
-  /** The client's logo, shown on the case study. */
-  logo?: ClientLogo
+  /**
+   * The client's logo for dark backgrounds (transparent), shown straight on the case study
+   * title. Logos drawn for light backgrounds get an -on-dark version: scripts/mockups/logos.mjs.
+   */
+  logo?: ImageAsset
   /** Short muted loop for hover previews on desktop. */
   preview?: VideoAsset
   hero: MediaSlot
