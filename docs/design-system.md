@@ -67,12 +67,12 @@ weight:
 
 | Utility            | Size (min → max)    | Line height / tracking | Use                              |
 | ------------------ | ------------------- | ---------------------- | -------------------------------- |
-| `text-display-2xl` | 52px → 200px        | 0.86 / −0.055em, 800   | Home hero, closing CTA           |
-| `text-display-xl`  | 44px → 128px        | 0.9 / −0.05em, 800     | Large display text               |
-| `text-display-lg`  | 36px → 80px         | 0.95 / −0.045em, 750   | Section headlines                |
-| `text-heading-xl`  | 28px → 48px         | 1.02 / −0.035em, 700   | Inner-page titles, cards, prices |
-| `text-heading-lg`  | 22px → 32px         | 1.1 / −0.025em, 650    | Sub-headings                     |
-| `text-heading-md`  | 18px → 22px         | 1.25 / −0.015em, 600   | Small headings                   |
+| `text-display-2xl` | 52px → 200px        | 0.86 / −0.035em, 800   | Home hero, closing CTA           |
+| `text-display-xl`  | 44px → 128px        | 0.9 / −0.032em, 800    | Large display text               |
+| `text-display-lg`  | 36px → 80px         | 0.95 / −0.028em, 750   | Section headlines                |
+| `text-heading-xl`  | 28px → 48px         | 1.02 / −0.022em, 700   | Inner-page titles, cards, prices |
+| `text-heading-lg`  | 22px → 32px         | 1.1 / −0.016em, 650    | Sub-headings                     |
+| `text-heading-md`  | 18px → 22px         | 1.25 / −0.01em, 600    | Small headings                   |
 | `text-body-lg`     | 17px → 21px         | 1.55                   | Intros, lead paragraphs          |
 | `text-body`        | 16px                | 1.6                    | Body                             |
 | `text-small`       | 14px                | 1.5                    | Meta, captions                   |

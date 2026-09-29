@@ -37,7 +37,7 @@ export function ClosingCta({
         <MaskedHeading
           text={content.title}
           codeLines={codeLines}
-          className="max-w-[16ch] font-display text-[clamp(2.75rem,1.55rem+5.4vw,7.5rem)] leading-[0.9] font-extrabold tracking-[-0.05em]"
+          className="max-w-[16ch] font-display text-[clamp(2.75rem,1.55rem+5.4vw,7.5rem)] leading-[0.9] font-extrabold tracking-[-0.032em]"
         />
         {content.body && (
           <p className="mt-10 max-w-[40ch] text-body-lg text-muted">{content.body}</p>
