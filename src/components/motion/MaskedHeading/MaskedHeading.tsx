@@ -1,15 +1,27 @@
 import { useRef } from 'react'
+import { useIntro } from '@/app/providers/IntroProvider'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
 import { gsap, useGSAP } from '@/lib/gsap'
-import { ease, maskedHeading, trigger } from '@/lib/motion-tokens'
+import { ease, maskedHeading, trigger as triggerTokens } from '@/lib/motion-tokens'
 import styles from './MaskedHeading.module.css'
+
+/** Decorative glyph pool used when no codeLines are passed. Not copy: it's never read. */
+const defaultCode = [
+  'const ship = () => build({ fast: true });',
+  '<div>{work[0]}</div>; return 01;',
+]
 
 export interface MaskedHeadingProps {
   /** Plain text compiled from code characters into the readable title. */
   text: string
   /** Decorative code whose characters fill the title before it compiles. */
-  codeLines: string[]
+  codeLines?: string[]
+  /**
+   * 'scroll' compiles once the heading enters the viewport. 'intro' compiles as soon as the
+   * preloader or page wipe has lifted (page titles at the top of a page).
+   */
+  trigger?: 'scroll' | 'intro'
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'p'
   id?: string
   className?: string
@@ -23,7 +35,8 @@ export interface MaskedHeadingProps {
  */
 export function MaskedHeading({
   text,
-  codeLines,
+  codeLines = defaultCode,
+  trigger = 'scroll',
   as: Tag = 'h2',
   id,
   className,
@@ -32,9 +45,14 @@ export function MaskedHeading({
   const codeRefs = useRef<(HTMLSpanElement | null)[]>([])
   const resolvedRefs = useRef<(HTMLSpanElement | null)[]>([])
   const reducedMotion = useReducedMotion()
+  const { ready } = useIntro()
   const words = text.split(/\s+/).filter(Boolean)
   const characterCount = words.reduce((total, word) => total + Array.from(word).length, 0)
   const codeKey = codeLines.join('').replace(/\s+/g, '') || '<>{}[]/01'
+  // Nothing compiles under the preloader or page wipe: a title already on screen would be
+  // half done by the time it's uncovered. The shell's closing band re-parks on each wipe, so
+  // it compiles again on the next page.
+  const waiting = !ready
 
   useGSAP(
     () => {
@@ -70,6 +88,8 @@ export function MaskedHeading({
       })
       gsap.set(codeEls, { opacity: 1 })
       gsap.set(resolvedEls, { opacity: 0 })
+      // Behind the preloader or page wipe: stay parked until it lifts, then run again.
+      if (waiting) return
 
       // Only characters still running get touched, and only once per tick, so a frame
       // costs a handful of text writes at most, not the whole heading.
@@ -93,22 +113,34 @@ export function MaskedHeading({
         }
       }
 
-      gsap.to(state, {
+      const compile = gsap.to(state, {
         time: total,
         duration: total,
         ease: ease.none,
         onUpdate: draw,
-        scrollTrigger: {
-          trigger: root,
-          // clamp() so a heading near the end of a short page still gets its start.
-          start: `clamp(${trigger.start})`,
-          once: true,
+        // GSAP rounds the final value, which can land a hair short of the last lock time.
+        onComplete: () => {
+          state.time = Number.POSITIVE_INFINITY
+          draw()
         },
+        scrollTrigger:
+          trigger === 'scroll'
+            ? {
+                trigger: root,
+                // clamp() so a heading near the end of a short page still gets its start.
+                start: `clamp(${triggerTokens.start})`,
+                once: true,
+              }
+            : undefined,
       })
+      // A trigger created after a page wipe only checks itself on the next scroll, so a title
+      // already on screen would sit as code until the visitor scrolls. Check it now.
+      const st = compile.scrollTrigger
+      if (st && st.scroll() >= st.start) compile.play()
     },
     {
       scope: rootRef,
-      dependencies: [characterCount, codeKey, reducedMotion, text],
+      dependencies: [characterCount, codeKey, reducedMotion, text, trigger, waiting],
       revertOnUpdate: true,
     },
   )

@@ -73,7 +73,7 @@ export function PricingPage() {
   return (
     <>
       <PageMeta {...pageMeta.pricing} />
-      <PageTitle content={c.hero} reveal />
+      <PageTitle content={c.hero} />
       <PricingSteps
         tone="paper"
         eyebrow={c.approach.eyebrow}

@@ -21,7 +21,7 @@ export function FaqSection({ intro, faqs, index, tone = 'paper' }: FaqSectionPro
         <div className="lg:col-span-4">
           <div className="lg:sticky lg:top-[calc(var(--spacing-header)+2rem)]">
             <Eyebrow label={intro.eyebrow} index={index} className="mb-6" />
-            <Heading id={headingId} size="heading-xl">
+            <Heading id={headingId} size="heading-xl" compile>
               {intro.title}
             </Heading>
             {intro.intro && <p className="mt-5 text-muted">{intro.intro}</p>}

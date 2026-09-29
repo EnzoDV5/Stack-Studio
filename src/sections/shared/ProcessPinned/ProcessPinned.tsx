@@ -64,7 +64,7 @@ export function ProcessPinned({
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-[calc(var(--spacing-header)+3rem)]">
             <Eyebrow label={intro.eyebrow} index={index} className="mb-6" />
-            <Heading id={headingId} size="display-lg" className="max-w-[12ch]">
+            <Heading id={headingId} size="display-lg" className="max-w-[12ch]" compile>
               {intro.title}
             </Heading>
             {intro.intro && (

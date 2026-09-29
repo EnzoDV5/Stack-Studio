@@ -1,5 +1,6 @@
 import { Section, type Tone } from '@/components/layout/Section'
 import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
 
 export interface IncludedVsExcludedProps {
   eyebrow: string
@@ -28,7 +29,9 @@ export function IncludedVsExcluded({
       <div className="container-site grid gap-12 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <Eyebrow label={eyebrow} className="mb-5" />
-          <h2 className="text-heading-xl">{title}</h2>
+          <Heading size="heading-xl" compile>
+            {title}
+          </Heading>
           <p className="mt-4 text-muted">{intro}</p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:col-span-7 lg:col-start-6">

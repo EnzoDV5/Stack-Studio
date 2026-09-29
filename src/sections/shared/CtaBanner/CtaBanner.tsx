@@ -1,6 +1,7 @@
 import { Section, type Tone } from '@/components/layout/Section'
 import { Button } from '@/components/ui/Button'
 import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
 import type { CtaContent } from '@/types'
 
 export interface CtaBannerProps {
@@ -16,7 +17,9 @@ export function CtaBanner({ content, location, tone = 'dark' }: CtaBannerProps) 
       <div className="container-site flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
         <div>
           {content.eyebrow && <Eyebrow label={content.eyebrow} className="mb-5" />}
-          <h2 className="max-w-[20ch] text-heading-xl">{content.title}</h2>
+          <Heading size="heading-xl" className="max-w-[20ch]" compile>
+            {content.title}
+          </Heading>
           {content.body && <p className="mt-3 max-w-[48ch] text-muted">{content.body}</p>}
         </div>
         <Button

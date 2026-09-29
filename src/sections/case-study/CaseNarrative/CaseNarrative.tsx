@@ -1,4 +1,5 @@
 import { Section, type Tone } from '@/components/layout/Section'
+import { Heading } from '@/components/ui/Heading'
 import { pad2 } from '@/lib/format'
 import type { NarrativeBlock } from '@/types'
 
@@ -27,9 +28,14 @@ export function CaseNarrative({ chapters, tone = 'paper' }: CaseNarrativeProps) 
               </p>
             </div>
             <div className="lg:col-span-8 lg:col-start-5">
-              <h2 id={`chapter-${chapter.id}`} className="max-w-[20ch] text-display-lg">
+              <Heading
+                id={`chapter-${chapter.id}`}
+                size="display-lg"
+                className="max-w-[20ch]"
+                compile
+              >
                 {chapter.block.heading}
-              </h2>
+              </Heading>
               <div className="mt-8 max-w-[60ch] space-y-5 text-body-lg text-muted">
                 {chapter.block.paragraphs.map((p) => (
                   <p key={p}>{p}</p>

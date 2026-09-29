@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Heading, type HeadingSize } from '@/components/ui/Heading'
-import { closingCtaCode } from '@/data/pages'
 import { cn } from '@/lib/cn'
 
 /**
@@ -51,7 +50,7 @@ export function SectionHeader({
       as={titleAs}
       id={id}
       size={size ?? (variant === 'minimal' ? 'heading-xl' : 'display-lg')}
-      codeLines={closingCtaCode}
+      compile
       className={maxWidth}
     >
       {title}

@@ -175,9 +175,11 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
    shell's ClosingCta (an enter) is every page's last section. `MaskedHeading` titles
    (every `SectionHeader` and the ClosingCta) compile once, on a timer, when they enter.
    Don't tie them back to the scroll position.
-2. **SplitReveal line-reveals are limited.** Home: the hero and the closing CTA only. Other
-   pages may reveal their page title (`<PageTitle reveal>`) and nothing else. Every other
-   heading is static; the content carries the motion.
+2. **Every title compiles from code; SplitReveal is for the Home hero only.** Page titles
+   (`PageTitle`, once the preloader or wipe lifts), section titles (`SectionHeader`, or
+   `<Heading compile>` for a custom opener) and the ClosingCta all use `MaskedHeading`, and
+   nothing compiles under the wipe. Card titles, legal subheadings, eyebrow labels and the
+   brief's focused step heading stay static; the content carries the motion.
 3. **Staggered rises are only for groups of cards or list items**, never headers or whole
    sections. `StaggerGroup` is used only for the client quote cards and the starting quote
    cards (FadeUp was removed).

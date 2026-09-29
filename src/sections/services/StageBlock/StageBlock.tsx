@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from 'react'
 import { ServiceMedia } from '@/components/media/ServiceMedia'
 import { Accordion } from '@/components/ui/Accordion'
 import { Button } from '@/components/ui/Button'
+import { Heading } from '@/components/ui/Heading'
 import { Tag } from '@/components/ui/Tag'
 import { cn } from '@/lib/cn'
 import { pad2 } from '@/lib/format'
@@ -55,9 +56,9 @@ export function StageBlock({
   const intro = (
     <div>
       <p className="mb-5 eyebrow text-accent">{pad2(index)}</p>
-      <h2 id={headingId} className="text-display-lg">
+      <Heading id={headingId} size="display-lg" compile>
         {name}
-      </h2>
+      </Heading>
       <p className="mt-3 text-heading-lg text-muted">{line}</p>
       <p className="mt-6 max-w-[56ch] text-body-lg">{summary}</p>
     </div>

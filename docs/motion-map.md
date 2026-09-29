@@ -177,11 +177,11 @@ are different enough not to read as a repeat.
 
 ### Other pages
 
-**Work:** PageTitle (none) · WorkGrid (enter: MediaReveal clip per card, Flip on filter
+**Work:** PageTitle (load: compile) · WorkGrid (enter: MediaReveal clip per card, Flip on filter
 change) · ClosingCta (enter). One filter per project (`?filter=<slug>`); a filter change
 Flips the cards that stay into place instead of re-running a rise.
 
-**Case study:** PageTitle (none) · CaseMeta (none) · CaseDevice (scrub + pin: the page's
+**Case study:** PageTitle (load: compile) · CaseMeta (none) · CaseDevice (scrub + pin: the page's
 one pin) · CaseNarrative (none) · CaseGallery (scrub: parallax) · CaseMetrics (enter:
 CountUp) · Testimonial (none) · CaseOutro (hover) · ClosingCta (enter). CaseDevice shows the
 project's live site on a laptop (`MacbookScroll`, a GSAP port of the Aceternity "MacBook
@@ -191,25 +191,25 @@ above; the deck folds away as the lid comes upright and the laptop grows until t
 fills the view; then a full-page capture of the real site scrolls inside the screen, top to
 bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is static; the gallery uses Parallax.
 
-**Services:** PageTitle (load: title reveal) · StageExplorer (none, sticky nav) ·
+**Services:** PageTitle (load: compile) · StageExplorer (none, sticky nav) ·
 ProcessPinned (pin, `#process`) · FaqSection (hover) · ClosingCta (enter). Each stage has
 its own layout, picked for what it sells (`StageBlock layout`): Build `feature` (text
 beside a tall image, expandable offerings), Take over `cards`, Run `split` (image column
 beside a priced list), Grow `figures` (rates as large figures) and Partner `tiers`. Stage
 loops only play while on screen.
 
-**Pricing:** PageTitle (load: title reveal) · PricingSteps (none) · QuoteStarters (enter:
+**Pricing:** PageTitle (load: compile) · PricingSteps (none) · QuoteStarters (enter:
 cards rise) · PlanTabs (hover: Flip card swap) · IncludedVsExcluded (none) · PoliciesList
 (none) · FaqSection (hover) · ClosingCta (enter). No fixed price list: ready-made starting
 quotes show the range the estimator computes and open /start pre-filled. Openers: minimal ·
 split · inline · own · split · own. Everything from the plans down mounts as it approaches.
 
-**Studio:** PageTitle (none) · StudioIntro (enter: MediaReveal) · FounderProfiles (scrub:
+**Studio:** PageTitle (load: compile) · StudioIntro (enter: MediaReveal) · FounderProfiles (scrub:
 parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · ValuesGrid
 "Values" (none) · Testimonial (none) · ClosingCta (enter).
 Openers: split · stacked · inline.
 
-**Start:** PageTitle (none) · BriefFlow (interaction: step transitions, unchanged). The
+**Start:** PageTitle (load: compile) · BriefFlow (interaction: step transitions, unchanged). The
 success heading no longer line-reveals.
 
 **Privacy, 404:** static.
@@ -224,12 +224,15 @@ These are also in CLAUDE.md. Check every change against them and update the tabl
 1. **One signature motion per section.** Two neighbouring sections never share a trigger
    type (no scrub after scrub, pin after pin or enter after enter). The app-shell
    ClosingCta counts as every page's last section.
-2. **Section titles share one code-to-title language.** Every `SectionHeader` and the
-   `ClosingCta` begins as same-size code characters with the title's exact line length, then
+2. **Titles share one code-to-title language.** Every `PageTitle`, `SectionHeader`, custom
+   section opener (`<Heading compile>`) and the `ClosingCta` begins as same-size code characters with the title's exact line length, then
    compiles left to right into readable type. It plays once, on a timer, when the heading
    crosses `trigger.start` (`maskedHeading` tokens, about 0.6–1s): scrolling starts it but
-   never drives it, and it doesn't replay on the way back up. The Home hero and opted-in `PageTitle` headings
-   keep their line reveal.
+   never drives it, and it doesn't replay on the way back up. Page titles compile as soon
+   as the preloader or page wipe lifts. Nothing compiles under the wipe: a title already on
+   screen after a route change starts when it's uncovered. The Home hero keeps its line
+   reveal. Card titles, legal subheadings, eyebrow labels and the brief's focused step
+   heading stay static.
 3. **Staggered rises are only for groups of cards or list items**, never headers and never
    whole sections. `StaggerGroup` is used only for the client quote cards and the starting quote cards; FadeUp was removed.
 4. **At most one pinned section per page.** Home: WorkReel. Services: ProcessPinned. Case

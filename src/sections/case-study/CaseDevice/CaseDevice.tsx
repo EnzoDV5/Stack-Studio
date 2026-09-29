@@ -2,6 +2,7 @@ import { useId } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
 import { MacbookScroll } from '@/components/media/MacbookScroll'
 import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
 import type { ImageAsset } from '@/types'
 
 export interface CaseDeviceProps {
@@ -28,9 +29,9 @@ export function CaseDevice({ eyebrow, title, screen, tone = 'dark' }: CaseDevice
         title={
           <>
             <Eyebrow label={eyebrow} className="mb-4 justify-center" />
-            <h2 id={headingId} className="font-display text-heading-xl">
+            <Heading id={headingId} size="heading-xl" compile>
               {title}
-            </h2>
+            </Heading>
           </>
         }
       />

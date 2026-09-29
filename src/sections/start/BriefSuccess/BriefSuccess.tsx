@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { pad2 } from '@/lib/format'
 import type { CtaLink } from '@/types'
@@ -37,7 +38,9 @@ export function BriefSuccess({
     <div role="status" aria-live="polite">
       <div ref={headingRef} tabIndex={-1} className="outline-none">
         <Eyebrow label={eyebrow} className="mb-6" />
-        <h2 className="max-w-[14ch] font-display text-display-lg">{title}</h2>
+        <Heading size="display-lg" className="max-w-[14ch]" compile>
+          {title}
+        </Heading>
       </div>
       <p className="mt-8 text-body-lg text-muted">{body}</p>
       <ol className="mt-8 space-y-4">

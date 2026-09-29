@@ -47,7 +47,7 @@ export function ServicesPage() {
   return (
     <>
       <PageMeta {...pageMeta.services} />
-      <PageTitle content={servicesContent.hero} reveal />
+      <PageTitle content={servicesContent.hero} />
       <StageExplorer
         stages={stages}
         navLabel={servicesContent.navLabel}

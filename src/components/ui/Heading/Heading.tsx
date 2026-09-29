@@ -10,7 +10,12 @@ export interface HeadingProps {
   size?: HeadingSize
   id?: string
   className?: string
-  /** When supplied for a text heading, reveal moving code before resolving the title. */
+  /**
+   * Compile a text heading from running code when it enters the viewport (MaskedHeading).
+   * Implied by codeLines.
+   */
+  compile?: boolean
+  /** Decorative code for the compile; MaskedHeading has its own default. */
   codeLines?: string[]
   children: ReactNode
 }
@@ -33,12 +38,13 @@ export function Heading({
   size = 'display-lg',
   id,
   className,
+  compile = false,
   codeLines,
   children,
 }: HeadingProps) {
   const classes = cn(sizeClass[size], 'font-display', className)
 
-  if (codeLines && typeof children === 'string') {
+  if ((compile || codeLines) && typeof children === 'string') {
     return (
       <MaskedHeading as={Tag} id={id} text={children} codeLines={codeLines} className={classes} />
     )

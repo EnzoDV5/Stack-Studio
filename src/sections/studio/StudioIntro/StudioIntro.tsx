@@ -26,7 +26,7 @@ export function StudioIntro({
       <div className="container-site grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-6">
           <Eyebrow label={eyebrow} className="mb-6" />
-          <Heading size="display-lg" className="max-w-[14ch]">
+          <Heading size="display-lg" className="max-w-[14ch]" compile>
             {title}
           </Heading>
           <div className="mt-10 max-w-[52ch] space-y-5 text-body-lg text-muted">

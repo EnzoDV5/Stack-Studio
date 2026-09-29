@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { Section, type Tone } from '@/components/layout/Section'
 import { Image } from '@/components/media/Image'
 import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import type { CtaContent, Project } from '@/types'
 
@@ -24,7 +25,9 @@ export function CaseOutro({ cta, next, nextLabel, cursorLabel, tone = 'dark' }: 
       <div className="container-site grid gap-16 lg:grid-cols-12">
         <div className="lg:col-span-5">
           {cta.eyebrow && <Eyebrow label={cta.eyebrow} className="mb-6" />}
-          <h2 className="max-w-[12ch] text-display-lg">{cta.title}</h2>
+          <Heading size="display-lg" className="max-w-[12ch]" compile>
+            {cta.title}
+          </Heading>
           {cta.body && <p className="mt-6 max-w-[40ch] text-muted">{cta.body}</p>}
           <div className="mt-10">
             <MagneticButton
