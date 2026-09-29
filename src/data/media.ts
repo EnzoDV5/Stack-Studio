@@ -118,24 +118,36 @@ function video(
   return { src: `/media/${file}`, type: 'video/mp4', label, poster, width, height }
 }
 
-/** Frames and widths of the phone turn: keep in step with scripts/phone/shots.mjs (`turn`). */
-export const phoneTurnFrames = 80
-const phoneTurnWidths = [800, 480]
+/**
+ * The Services device sequences, rendered by scripts/devices. Keep frames, widths and aspect in
+ * step with each device's `motion` in scripts/devices/shots.mjs (tests/devices.test.ts checks
+ * every frame exists).
+ */
+export const deviceMotion = {
+  phone: { frames: 80, widths: [800, 480], aspect: 3 / 4 },
+  laptop: { frames: 90, widths: [1280, 720], aspect: 16 / 10 },
+} as const
 
 /**
- * A phone turn: the iPhone 17 Pro model with a screen on it, rendered by scripts/phone as
- * transparent WebP frames (3:4) in /public/media/phone/{id}/turn-{frame}-{width}.webp.
+ * A device sequence: transparent WebP frames of a 3D model with a screen on it, in
+ * /public/media/{device}/{id}/frame-{nn}-{width}.webp.
  */
-function phoneTurn(id: string, alt: string): ImageSequenceAsset {
-  const largest = phoneTurnWidths[0] ?? 800
+function deviceFrames(
+  device: keyof typeof deviceMotion,
+  id: string,
+  alt: string,
+): ImageSequenceAsset {
+  const { frames, widths, aspect } = deviceMotion[device]
+  const largest = widths[0]
   return {
     width: largest,
-    height: Math.round((largest * 4) / 3),
-    renditions: phoneTurnWidths.map((width) => ({
+    height: Math.round(largest / aspect),
+    renditions: widths.map((width) => ({
       width,
       frames: Array.from(
-        { length: phoneTurnFrames },
-        (_, frame) => `/media/phone/${id}/turn-${String(frame).padStart(2, '0')}-${width}.webp`,
+        { length: frames },
+        (_, frame) =>
+          `/media/${device}/${id}/frame-${String(frame).padStart(2, '0')}-${width}.webp`,
       ),
     })),
     alt,
@@ -207,12 +219,20 @@ export const media = {
     ),
   },
 
-  // The Services "Apps and software" phone: an illustrative bookings app (not a client's),
-  // designed in scripts/phone/screens/bookings.html.
+  // The Services device sections, with illustrative apps (not clients'), designed in
+  // scripts/devices/screens: a bookings app on the phone, a stock and orders tool on the laptop.
   apps: {
-    phone: phoneTurn(
+    phone: deviceFrames(
+      'phone',
       'app',
       'An orange iPhone showing a bookings app with today’s appointments and weekly takings',
+    ), // COPY: alt
+  },
+  desktop: {
+    laptop: deviceFrames(
+      'laptop',
+      'desktop',
+      'A MacBook showing a stock and orders app with today’s orders and a weekly chart',
     ), // COPY: alt
   },
 

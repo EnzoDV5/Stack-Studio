@@ -81,23 +81,30 @@ grey inverted, brand colours kept):
 node scripts/mockups/logos.mjs   # regenerate {id}-on-dark.webp after replacing a logo
 ```
 
-## Apps phone turn (/public/media/phone)
+## Services devices (/public/media/phone, /public/media/laptop)
 
-`{id}/turn-{frame}-{width}.webp`: 80 transparent frames (3:4) at 480 and 800 wide of an
-orange iPhone 17 Pro turning from its back to face the viewer, with an app on screen. The
-Services page's "Apps and software" section (`AppShowcase`) plays them on scroll
-(`ImageSequence`). The app is illustrative, not a client's (most client work is websites):
-`scripts/phone/screens/bookings.html`. They are rendered
-from the 3D model in `assets/models/iphone-17-pro` with three.js in headless Chrome, so the
-site ships images only:
+`{device}/{id}/frame-{nn}-{width}.webp`: transparent frames of a 3D device with an
+illustrative app on screen (not a client's: most client work is websites), played by
+`ImageSequence` on the Services page:
+
+- `phone/app`: 80 frames (3:4) at 480 and 800 wide. An orange iPhone 17 Pro spins from its
+  back to face the viewer with a bookings app (`screens/bookings.html`), scrubbed by the
+  scroll in "Apps and software" (`AppShowcase`). About 1.5 MB at 800 wide.
+- `laptop/desktop`: 90 frames (16:10) at 720 and 1280 wide. A MacBook Pro opens its lid and
+  turns to face the viewer, its display waking on a stock and orders app
+  (`screens/desktop.html`), played once as it arrives in "Desktop software"
+  (`DesktopShowcase`). About 1.3 MB at 1280 wide.
+
+They are rendered from the models in `assets/models` with three.js in headless Chrome, so
+the site ships images only:
 
 ```bash
-node scripts/phone/render.mjs             # every sequence (about 10 s)
-node scripts/phone/render.mjs app 0,35    # a few frames, for a quick look
+node scripts/devices/render.mjs                # every sequence (about 30 s)
+node scripts/devices/render.mjs desktop 0,89   # one sequence, a few frames, for a quick look
 ```
 
-Motion, finish and sizes are in `scripts/phone/shots.mjs`. If you change the frame count or
-widths, change `phoneTurnFrames`/`phoneTurnWidths` in `src/data/media.ts` too
-(`tests/phone.test.ts` checks every frame exists). About 1.5 MB at 800 wide, 0.9 MB at
-480, loaded only as the section approaches. A screen can also be a client's mobile capture
-from .mockups/raw (`npm run mockups:capture`).
+Devices, looks and motion are in `scripts/devices/shots.mjs`. If you change a frame count,
+widths or aspect, change `deviceMotion` in `src/data/media.ts` too
+(`tests/devices.test.ts` checks every frame exists). Frames load only as a section
+approaches. A screen can also be a client's mobile capture from .mockups/raw
+(`npm run mockups:capture`).

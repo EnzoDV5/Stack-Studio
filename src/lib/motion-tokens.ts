@@ -186,7 +186,7 @@ export const macbook = {
 /**
  * AppShowcase (Services): the phone turns from its back to face the viewer as it scrolls
  * through the viewport (scrubbed, not pinned: ProcessPinned is the page's one pin). The frames
- * come from scripts/phone.
+ * come from scripts/devices.
  */
 export const phoneTurn = {
   /** The turn starts as the phone's top comes up past this line… */
@@ -197,6 +197,19 @@ export const phoneTurn = {
   scrub: 1,
   /** Eases in and out, so the spin starts gently and settles as it faces the viewer. */
   ease: 'sine.inOut',
+} as const
+
+/**
+ * DesktopShowcase (Services): the laptop opens and turns to face the viewer once, on a timer,
+ * when it's well on screen (an enter, not a scrub: the phone turn above it is the scrub). A
+ * product reveal, so longer than the usual 0.6–1.2s. The frames come from scripts/devices.
+ */
+export const laptopOpen = {
+  start: 'top 65%',
+  /** Seconds from shut to open, facing the viewer. */
+  duration: 2.6,
+  /** Eases in and out: the lid lifts gently, swings, then settles. */
+  ease: 'power2.inOut',
 } as const
 
 /**

@@ -9,6 +9,7 @@ import { rates } from '@/data/rates'
 import { offerings, serviceStages } from '@/data/services'
 import { stageRows } from '@/lib/offer'
 import { AppShowcase } from '@/sections/services/AppShowcase'
+import { DesktopShowcase } from '@/sections/services/DesktopShowcase'
 import { ServiceIndex } from '@/sections/services/ServiceIndex'
 import type { StageLayout } from '@/sections/services/StageBlock'
 import { StageExplorer, type StageExplorerStage } from '@/sections/services/StageExplorer'
@@ -34,12 +35,15 @@ const notes: Partial<Record<StageId, string[]>> = {
   partner: planFamilies.flatMap((f) => (f.id === 'partner' && f.note ? [f.note] : [])),
 }
 
-// Build splits in two, the way visitors look for it: websites, then apps and software (with
-// the phone). Websites are the build offerings the brief files under 'website'.
+// Build splits in three, the way visitors look for it: websites (the offerings the brief files
+// under 'website'), desktop software (listed in servicesContent, with the laptop) and apps and
+// software (the rest, with the phone).
 const buildRows = stageRows('build', data, l)
 const isWebsite = (id: string) => offerings.find((o) => o.id === id)?.briefCategory === 'website'
+const desktopIds: readonly string[] = c.desktop.offerings
 const websiteRows = buildRows.filter((row) => isWebsite(row.id))
-const appRows = buildRows.filter((row) => !isWebsite(row.id))
+const desktopRows = desktopIds.flatMap((id) => buildRows.filter((row) => row.id === id))
+const appRows = buildRows.filter((row) => !isWebsite(row.id) && !desktopIds.includes(row.id))
 
 const websites: StageExplorerStage = {
   id: 'stage-build',
@@ -52,12 +56,12 @@ const websites: StageExplorerStage = {
   layout: 'feature',
 }
 
-// Then what happens to something that already exists: take over, run, grow, partner (03–06).
+// Then what happens to something that already exists: take over, run, grow, partner (04–07).
 const afterLaunch: StageExplorerStage[] = serviceStages
   .filter((stage) => stage.id !== 'build')
   .map((stage, i) => ({
     id: `stage-${stage.id}`,
-    index: i + 3,
+    index: i + 4,
     name: stage.name,
     line: stage.line,
     rows: stageRows(stage.id, data, l),
@@ -70,7 +74,8 @@ const afterLaunch: StageExplorerStage[] = serviceStages
 
 /**
  * Services, grouped the way people look for them: a "What do you need?" index, websites, apps
- * and software (the phone), then taking over, running, growing and partnering on what exists.
+ * and software (the phone), desktop software (the laptop), then taking over, running, growing
+ * and partnering on what exists.
  */
 export function ServicesPage() {
   return (
@@ -83,7 +88,8 @@ export function ServicesPage() {
         stages={[websites]}
         labels={c.labels}
       />
-      {/* Scrubbed, between two runs of groups (none) and before the process (pin). */}
+      {/* The phone turn is scrubbed; the laptop after it plays once (an enter), so the two
+          device sections never share a trigger. */}
       <AppShowcase
         id="apps"
         index={2}
@@ -94,6 +100,17 @@ export function ServicesPage() {
         includesLabel={c.labels.includes}
         cta={c.apps.cta}
         phone={media.apps.phone}
+      />
+      <DesktopShowcase
+        id="desktop"
+        index={3}
+        eyebrow={c.desktop.eyebrow}
+        title={c.desktop.title}
+        intro={c.desktop.intro}
+        rows={desktopRows}
+        includesLabel={c.labels.includes}
+        cta={c.desktop.cta}
+        laptop={media.desktop.laptop}
       />
       <StageExplorer stages={afterLaunch} labels={c.labels} />
       <ProcessPinned

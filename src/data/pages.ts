@@ -271,6 +271,16 @@ export const servicesContent = {
       'Booking systems, client portals, dashboards and mobile apps: the software your business runs on.', // COPY:
     cta: { label: 'Tell us about your app', to: '/start?path=build' }, // COPY:
   },
+  /** Desktop software and the systems behind it, with the laptop (dark, after the apps). */
+  desktop: {
+    eyebrow: 'Desktop software', // COPY:
+    title: 'Software for the desk.', // COPY:
+    intro:
+      'Windows and macOS tools for the work your team does every day, online or offline, and the systems that keep them in sync.', // COPY:
+    /** Build offerings shown here instead of under apps (ids in data/services). */
+    offerings: ['desktop-app', 'backend-api'],
+    cta: { label: 'Tell us about your software', to: '/start?path=build' }, // COPY:
+  },
   process: {
     eyebrow: 'Process', // COPY:
     title: 'How a project runs.', // COPY:

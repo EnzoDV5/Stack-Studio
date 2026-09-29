@@ -1,0 +1,31 @@
+@layer components {
+  /* The laptop sits in a wide, low orange glow, like light spilling from its screen onto the
+     desk. From tablet up, negative margins pull the transparent frame's empty edges in, so the
+     laptop sits close to the title and the offerings. */
+  .stage {
+    position: relative;
+    isolation: isolate;
+    margin-block: 1rem;
+  }
+
+  @media (min-width: 48rem) {
+    .stage {
+      margin-block: -2rem -1rem;
+    }
+  }
+
+  .stage::before {
+    content: '';
+    position: absolute;
+    inset: 30% 12% 8%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--color-orange) 24%, transparent),
+      transparent
+    );
+    filter: blur(32px);
+    pointer-events: none;
+  }
+}

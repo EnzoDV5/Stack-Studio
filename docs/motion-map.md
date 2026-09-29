@@ -69,15 +69,16 @@ Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whol
 
 ### Services
 
-| #   | Section       | Tone   | Motion                                        | Trigger |
-| --- | ------------- | ------ | --------------------------------------------- | ------- |
-| 1   | PageTitle     | paper  | Static                                        | none    |
-| 2   | StageExplorer | paper  | "What do you need?" index, Websites dropdowns | none    |
-| 3   | AppShowcase   | dark   | iPhone turns to face the viewer (frames)      | scrub   |
-| 4   | StageExplorer | paper  | Take over, Run, Grow, Partner                 | none    |
-| 5   | ProcessPinned | dark   | Sticky column, active step                    | pin     |
-| 6   | FaqSection    | dark   | Accordion, sticky heading                     | hover   |
-| 7   | ClosingCta    | orange | SplitReveal words                             | enter   |
+| #   | Section         | Tone   | Motion                                        | Trigger |
+| --- | --------------- | ------ | --------------------------------------------- | ------- |
+| 1   | PageTitle       | paper  | Static                                        | none    |
+| 2   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns | none    |
+| 3   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)      | scrub   |
+| 4   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)        | enter   |
+| 5   | StageExplorer   | paper  | Take over, Run, Grow, Partner                 | none    |
+| 6   | ProcessPinned   | dark   | Sticky column, active step                    | pin     |
+| 7   | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
+| 8   | ClosingCta      | orange | SplitReveal words                             | enter   |
 
 No adjacent clashes.
 
@@ -199,17 +200,22 @@ bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is st
 
 **Services:** PageTitle (load: compile) · StageExplorer (none: the "What do you need?"
 index and 01 Websites) · AppShowcase (scrub: phone turn, 02 Apps and software) ·
-StageExplorer (none: 03 Take over, 04 Run, 05 Grow, 06 Partner) · ProcessPinned (pin,
+DesktopShowcase (enter: the laptop opens, 03 Desktop software) · StageExplorer (none: 04 Take
+over, 05 Run, 06 Grow, 07 Partner) · ProcessPinned (pin,
 `#process`) · FaqSection (hover) · ClosingCta (enter). The page groups the offer the way
-visitors look for it; the five stages stay the model elsewhere. Build splits into websites and
-apps (the offerings the brief files under 'website', then the rest), so apps live only beside
-the phone. No sticky nav: the index is a row of jump cards at the top. AppShowcase ("Apps and software") is where apps get their own moment, since most
+visitors look for it; the five stages stay the model elsewhere. Build splits into websites (the
+offerings the brief files under 'website'), desktop software (listed in `servicesContent`,
+beside the laptop) and apps (the rest, beside the phone), so nothing repeats. No sticky nav: the index is a row of jump cards at the top. AppShowcase ("Apps and software") is where apps get their own moment, since most
 client work is websites: an orange iPhone 17 Pro spins on its upright axis from its back, through its side, to
 face the visitor with an illustrative bookings app on screen, scrubbed as it scrolls up
 through the view (`phoneTurn`: phone top at 92% to its centre at 50%, 80 evenly spaced frames, cross-faded, eased by `phoneTurn.ease`). It isn't pinned
 (ProcessPinned is the page's one pin). The frames are pre-rendered from a 3D model
-(scripts/phone) and drawn on a canvas by `ImageSequence`; no 3D library ships. Reduced
-motion: the finished pose as a still image. Each group has
+(scripts/devices) and drawn on a canvas by `ImageSequence`; no 3D library ships. Reduced
+motion: the finished pose as a still image. DesktopShowcase opens centred (unlike the phone's
+split) on a large MacBook: when it's well on screen it plays once on a timer (`laptopOpen`,
+2.6s, an enter, so it never shares the phone's scrub): the lid lifts from shut, the display
+wakes on an illustrative stock and orders app and it turns to face the visitor (90 frames,
+cross-faded). It waits for its frames to load, or 2.5s, before playing. Each group has
 its own layout, picked for what it sells (`StageBlock layout`): Websites `feature` (the
 intro beside an image, then dropdowns), Take over `cards`, Run `split` (image column
 beside a priced list), Grow `figures` (two rates as large figures, no image) and Partner

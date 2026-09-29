@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { useInView } from '@/hooks/useInView'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
-import { gsap, useGSAP } from '@/lib/gsap'
+import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
 import { phoneTurn } from '@/lib/motion-tokens'
 import type { ImageSequenceAsset } from '@/types'
 
@@ -13,6 +13,11 @@ export interface ImageSequenceProps {
   /** Scroll positions that start and finish playback (ScrollTrigger syntax). */
   start?: string
   end?: string
+  /**
+   * Play once on a timer when it's well on screen (an enter), instead of following the scroll.
+   * It starts once every frame has loaded, or after a short wait, whichever comes first.
+   */
+  play?: { start: string; duration: number; ease: string }
   className?: string
 }
 
@@ -28,14 +33,16 @@ function pickRendition(renditions: Rendition[], slotWidth: number): Rendition | 
 /**
  * Pre-rendered frames played back by scroll, like the product turns on Apple's pages: the
  * frames load as it approaches, then each scroll position draws its frame on a canvas
- * (scrubbed, so it glides rather than steps). Until the first frame is drawn, and with
- * reduced motion or without JS, the last frame is shown as a plain image with the alt text.
+ * (scrubbed, so it glides rather than steps). With `play`, it plays through once on a timer
+ * when it arrives instead. Until the first frame is drawn, and with reduced motion or without
+ * JS, the last frame is shown as a plain image with the alt text.
  */
 export function ImageSequence({
   sequence,
   sizes = '100vw',
   start = phoneTurn.start,
   end = phoneTurn.end,
+  play,
   className,
 }: ImageSequenceProps) {
   const rootRef = useRef<HTMLDivElement>(null)
@@ -69,6 +76,8 @@ export function ImageSequence({
       let shown = -1
       let revealed = false
       let alive = true
+      let loadedCount = 0
+      let onFrameLoaded: (() => void) | undefined
 
       /** The nearest loaded frame at or before `index`, else after it. */
       const nearest = (index: number) => {
@@ -129,19 +138,54 @@ export function ImageSequence({
           .then(() => {
             if (!alive) return
             loaded[index] = true
+            loadedCount++
             shown = -1
             draw()
+            onFrameLoaded?.()
           })
           .catch(() => undefined)
       }
 
-      gsap.to(state, {
-        frame: count - 1,
-        // The frames are evenly spaced; the easing gives the turn its slow start and settle.
-        ease: phoneTurn.ease,
-        onUpdate: draw,
-        scrollTrigger: { trigger: root, start, end, scrub: phoneTurn.scrub },
-      })
+      if (play) {
+        // Once, on a timer. Waiting for every frame keeps the reveal smooth; the fallback
+        // wait means a slow connection still gets it, stepping through what has loaded.
+        const reveal = gsap.to(state, {
+          frame: count - 1,
+          duration: play.duration,
+          ease: play.ease,
+          paused: true,
+          onUpdate: draw,
+        })
+        let entered = false
+        let started = false
+        const begin = (force = false) => {
+          if (started || !entered || (!force && loadedCount < count)) return
+          started = true
+          reveal.play()
+        }
+        onFrameLoaded = () => begin()
+        const enter = () => {
+          entered = true
+          begin()
+          gsap.delayedCall(2.5, () => begin(true))
+        }
+        const st = ScrollTrigger.create({
+          trigger: root,
+          start: play.start,
+          once: true,
+          onEnter: enter,
+        })
+        // Mounted already past the start (a deep link, a refresh mid-page): play now.
+        if (st.scroll() >= st.start) enter()
+      } else {
+        gsap.to(state, {
+          frame: count - 1,
+          // The frames are evenly spaced; the easing gives the turn its slow start and settle.
+          ease: phoneTurn.ease,
+          onUpdate: draw,
+          scrollTrigger: { trigger: root, start, end, scrub: phoneTurn.scrub },
+        })
+      }
 
       return () => {
         alive = false
@@ -149,7 +193,7 @@ export function ImageSequence({
         for (const image of images) image.removeAttribute('src')
       }
     },
-    { scope: rootRef, dependencies: [playing, sequence, start, end], revertOnUpdate: true },
+    { scope: rootRef, dependencies: [playing, sequence, start, end, play], revertOnUpdate: true },
   )
 
   return (

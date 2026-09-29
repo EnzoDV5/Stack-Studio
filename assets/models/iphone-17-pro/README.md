@@ -1,7 +1,7 @@
 # iPhone 17 Pro model
 
 `iphone-17-pro.glb`: a free iPhone 17 Pro model downloaded from Sketchfab (exported from
-Blender, textures embedded). It is a source file for `scripts/phone`, which renders the phone turn
+Blender, textures embedded). It is a source file for `scripts/devices`, which renders the phone turn
 on the Services page into `public/media/phone`. It is **not** deployed: nothing in `assets/`
 is served, and the site never loads a 3D model.
 
@@ -22,7 +22,7 @@ If it is CC BY, add the credit to the site (the Privacy page or the footer) befo
 
 ## What the render changes
 
-`scripts/phone/scene.js` swaps the wallpaper on the `OLED` material for a site capture (with an
+`scripts/devices/phone-scene.js` swaps the wallpaper on the `OLED` material for a site capture (with an
 iOS status bar), thins the dark `Glass` layer so the unlit screen shows true colours, and
 recolours the body (`Anodized aluminum`), back glass (`Frosted glass`) and back accents
 (`Glass tint`) to Cosmic Orange. The model file itself is unchanged.
