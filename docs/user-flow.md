@@ -39,7 +39,7 @@ link, so visitors choose where to go next.
 
 - **Home:** who are you, and can you do it? (stages and the stack, packages, work, clients,
   founders)
-- **Services:** what do you do, and how does a project run? No prices. Picking a service
+- **Services:** how do we start, what do you do, and how does a project run? No prices. Picking a service
   opens the brief ready for it (`/start?type=<service>` or the group's `?path=`).
 - **Work With Us:** what ongoing support fits? Website Care and Managed Software cards show
   monthly prices. The orange Partner card

@@ -20,6 +20,7 @@ import { formatPrice, formatPriceRange } from '@/lib/format'
 import { stageRows, type OfferRow } from '@/lib/offer'
 import { AppShowcase } from '@/sections/services/AppShowcase'
 import { DesktopShowcase } from '@/sections/services/DesktopShowcase'
+import { HowItWorks } from '@/sections/services/HowItWorks'
 import { NextSteps } from '@/sections/services/NextSteps'
 import { ProcessLine } from '@/sections/services/ProcessLine'
 import { ServicesHero } from '@/sections/services/ServicesHero'
@@ -105,7 +106,7 @@ const starter = (() => {
 })()
 
 /**
- * Services, grouped the way people look for them: websites, apps
+ * Services opens with how to start, then groups work the way people look for it: websites, apps
  * and software (the phone), desktop software (the laptop), then taking over, running, improving
  * and partnering on what exists; then how a project runs week by week and what happens once
  * you get in touch. The brief gives project estimates; ongoing plans are on /pricing.
@@ -117,6 +118,9 @@ export function ServicesPage() {
       <SectionNavigator {...c.navigation} />
       <div id="services-top">
         <ServicesHero content={c.hero} />
+      </div>
+      <div id="services-how-it-works">
+        <HowItWorks {...c.approach} tone="paper" />
       </div>
       <StageExplorer className="pt-4 md:pt-8" stages={[websites]} labels={c.labels} />
       {/* The phone turn is scrubbed; the laptop after it plays once (an enter), so the two

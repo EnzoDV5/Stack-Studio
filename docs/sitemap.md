@@ -64,7 +64,7 @@ Seeded with GC Solar, MPG Foundation and one clearly labelled sample project.
 ## Services `/services`
 
 What we do, how a project runs and how to start. **No prices**: project estimates open in /start, and ongoing plans live on /pricing. Compact page
-title, then 01 new websites,
+title, then How it works as the first content section, followed by 01 new websites,
 02 apps and software (the phone), 03 desktop software (the laptop), then 04 fixing or moving
 an existing site or app, 05 ongoing care, 06 improvements, 07 a monthly software team. Every build service
 opens to a **Start with this** link (`/start?type=<id>`) and every group ends with a button
@@ -87,7 +87,7 @@ on Services. Its pricing action opens a brief to discuss the projects and monthl
 
 ## Work With Us `/pricing`
 
-The page explains how to start, then compares Website Care, Managed Software and Partner
+The page compares Website Care, Managed Software and Partner
 with what each includes and excludes. Payment terms, common questions and the closing CTA
 follow. The Home package showcase keeps indicative project ranges and sends visitors to
 the brief for a project estimate. The existing `/pricing` URL stays in place for old links.

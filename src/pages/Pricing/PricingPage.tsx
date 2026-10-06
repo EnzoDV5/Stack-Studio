@@ -6,7 +6,6 @@ import { policies } from '@/data/policies'
 import { isVisible, planPrice } from '@/lib/offer'
 import { MonthlyPlans } from '@/sections/pricing/MonthlyPlans'
 import { PoliciesList } from '@/sections/pricing/PoliciesList'
-import { PricingSteps } from '@/sections/pricing/PricingSteps'
 import { FaqSection } from '@/sections/shared/FaqSection'
 import { PageTitle } from '@/sections/shared/PageTitle'
 import { SectionNavigator } from '@/sections/shared/SectionNavigator'
@@ -50,15 +49,6 @@ export function PricingPage() {
       <SectionNavigator {...c.navigation} />
       <div id="pricing-top">
         <PageTitle content={c.hero} />
-      </div>
-      <div id="pricing-approach">
-        <PricingSteps
-          tone="paper"
-          eyebrow={c.approach.eyebrow}
-          title={c.approach.title}
-          steps={c.approach.steps}
-          cta={c.approach.cta}
-        />
       </div>
       <div id="pricing-plans">
         <MonthlyPlans

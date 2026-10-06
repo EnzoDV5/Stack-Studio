@@ -242,6 +242,7 @@ export const servicesContent = {
   navigation: {
     label: 'Services sections', // COPY:
     items: [
+      { id: 'services-how-it-works', label: 'How it works' }, // COPY:
       { id: 'stage-build', label: 'New website' }, // COPY:
       { id: 'apps', label: 'Apps and software' }, // COPY:
       { id: 'desktop', label: 'Desktop software' }, // COPY:
@@ -253,6 +254,25 @@ export const servicesContent = {
       { id: 'next-steps', label: 'Next steps' }, // COPY:
       { id: 'services-faq', label: 'Questions' }, // COPY:
     ],
+  },
+  approach: {
+    eyebrow: 'How it works', // COPY:
+    title: 'A clear way to get started.', // COPY:
+    steps: [
+      {
+        title: 'Tell us what you need', // COPY:
+        body: 'Tell us what you want to build, fix or ask us to manage.', // COPY:
+      },
+      {
+        title: 'Talk it through', // COPY:
+        body: 'We look at what you have, what needs attention and the work involved.', // COPY:
+      },
+      {
+        title: 'Agree the scope', // COPY:
+        body: 'We confirm what is included, the price, timeline and start date.', // COPY:
+      },
+    ],
+    cta: { label: 'Tell us what you need', to: '/start' }, // COPY:
   },
   /** The Build stage's website offerings, shown as their own group. */
   websites: {
@@ -420,31 +440,11 @@ export const pricingContent = {
   navigation: {
     label: 'Work with us sections', // COPY:
     items: [
-      { id: 'pricing-approach', label: 'How it works' }, // COPY:
       { id: 'pricing-plans', label: 'Monthly plans' }, // COPY:
       { id: 'pricing-partner', label: 'Partner plan' }, // COPY:
       { id: 'pricing-terms', label: 'Payment terms' }, // COPY:
       { id: 'pricing-faq', label: 'Questions' }, // COPY:
     ],
-  },
-  approach: {
-    eyebrow: 'How it works', // COPY:
-    title: 'A clear way to get started.', // COPY:
-    steps: [
-      {
-        title: 'Tell us what you need', // COPY:
-        body: 'Choose a care plan or describe the projects you want us to create and manage.', // COPY:
-      },
-      {
-        title: 'Talk it through', // COPY:
-        body: 'We look at what you have, what needs attention and the hours the work may take.', // COPY:
-      },
-      {
-        title: 'Agree the scope', // COPY:
-        body: 'We confirm what is included, the monthly price and when work starts.', // COPY:
-      },
-    ],
-    cta: { label: 'Tell us what you need', to: '/start' }, // COPY:
   },
   plans: {
     eyebrow: 'Monthly plans', // COPY:

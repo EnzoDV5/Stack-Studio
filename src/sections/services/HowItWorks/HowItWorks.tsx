@@ -5,7 +5,7 @@ import { pad2 } from '@/lib/format'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
 import type { CtaLink } from '@/types'
 
-export interface PricingStepsProps {
+export interface HowItWorksProps {
   eyebrow: string
   title: string
   steps: { title: string; body: string }[]
@@ -13,8 +13,8 @@ export interface PricingStepsProps {
   tone?: Tone
 }
 
-/** How a price is reached: estimate, conversation, fixed quote. Static. */
-export function PricingSteps({ eyebrow, title, steps, cta, tone = 'paper' }: PricingStepsProps) {
+/** The first Services section: from a client's need to an agreed scope. */
+export function HowItWorks({ eyebrow, title, steps, cta, tone = 'paper' }: HowItWorksProps) {
   const headingId = useId()
   return (
     <Section tone={tone} className="pt-10" aria-labelledby={headingId}>
@@ -28,7 +28,10 @@ export function PricingSteps({ eyebrow, title, steps, cta, tone = 'paper' }: Pri
             <Button
               to={cta.to}
               withArrow
-              analytics={{ event: 'Start project click', props: { location: 'pricing-steps' } }}
+              analytics={{
+                event: 'Start project click',
+                props: { location: 'services-how-it-works' },
+              }}
             >
               {cta.label}
             </Button>

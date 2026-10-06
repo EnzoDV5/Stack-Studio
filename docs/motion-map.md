@@ -72,15 +72,16 @@ Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whol
 | #   | Section         | Tone   | Motion                                        | Trigger |
 | --- | --------------- | ------ | --------------------------------------------- | ------- |
 | 1   | PageTitle       | paper  | Static                                        | none    |
-| 2   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns | none    |
-| 3   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)      | scrub   |
-| 4   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)        | enter   |
-| 5   | StageExplorer   | paper  | Take over, Run, Grow                          | none    |
-| 6   | PartnerSection  | white  | Ongoing team and service comparison           | none    |
-| 7   | ProcessLine     | dark   | Timeline enters and responds to hover         | enter   |
-| 8   | NextSteps       | dark   | Four step cards deal out of a pile into a row | scrub   |
-| 9   | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
-| 10  | ClosingCta      | orange | SplitReveal words                             | enter   |
+| 2   | HowItWorks      | paper  | Three static steps                            | none    |
+| 3   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns | none    |
+| 4   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)      | scrub   |
+| 5   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)        | enter   |
+| 6   | StageExplorer   | paper  | Take over, Run, Grow                          | none    |
+| 7   | PartnerSection  | white  | Ongoing team and service comparison           | none    |
+| 8   | ProcessLine     | dark   | Timeline enters and responds to hover         | enter   |
+| 9   | NextSteps       | dark   | Four step cards deal out of a pile into a row | scrub   |
+| 10  | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
+| 11  | ClosingCta      | orange | SplitReveal words                             | enter   |
 
 No adjacent clashes.
 
@@ -89,11 +90,10 @@ No adjacent clashes.
 | #   | Section      | Tone   | Motion            | Trigger |
 | --- | ------------ | ------ | ----------------- | ------- |
 | 1   | PageTitle    | paper  | Heading compiles  | load    |
-| 2   | PricingSteps | paper  | Static            | none    |
-| 3   | MonthlyPlans | dark   | Static comparison | none    |
-| 4   | PoliciesList | paper  | Static            | none    |
-| 5   | FaqSection   | paper  | Accordion         | click   |
-| 6   | ClosingCta   | orange | SplitReveal words | enter   |
+| 2   | MonthlyPlans | dark   | Static comparison | none    |
+| 3   | PoliciesList | paper  | Static            | none    |
+| 4   | FaqSection   | paper  | Accordion         | click   |
+| 5   | ClosingCta   | orange | SplitReveal words | enter   |
 
 ### Studio
 
@@ -249,10 +249,9 @@ beside a priced list) and Grow `figures` (two rates as large figures, no image).
 own section with a short comparison and a discussion brief. Framed images and video reveal on
 scroll; loops only play while on screen.
 
-**Work With Us:** PageTitle (load: compile) · PricingSteps (none) · MonthlyPlans
-(none; three comparison cards) · PoliciesList (none) · FaqSection (hover) ·
-ClosingCta (enter). Openers: minimal · inline · split · own. The plan cards and
-terms mount as they approach.
+**Work With Us:** PageTitle (load: compile) · MonthlyPlans (none; three comparison
+cards) · PoliciesList (none) · FaqSection (hover) · ClosingCta (enter). The plan
+cards and terms mount as they approach.
 
 **Studio:** PageTitle (load: compile) · StudioIntro (enter: MediaReveal) · FounderProfiles (enter:
 MediaReveal; scrub: parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · ValuesGrid
