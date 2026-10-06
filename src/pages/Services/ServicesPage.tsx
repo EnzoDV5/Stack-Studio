@@ -1,8 +1,14 @@
 import { PageMeta } from '@/components/seo/PageMeta'
 import { faqsFor } from '@/data/faqs'
 import { media, serviceMedia } from '@/data/media'
-import { homeContent, pageMeta, pricingContent, servicesContent } from '@/data/pages'
-import { planFamilies, plans } from '@/data/plans'
+import {
+  homeContent,
+  pageMeta,
+  partnerSectionContent,
+  pricingContent,
+  servicesContent,
+} from '@/data/pages'
+import { plans } from '@/data/plans'
 import { policies } from '@/data/policies'
 import { rates } from '@/data/rates'
 import { getQuotePreset } from '@/data/quotes'
@@ -20,6 +26,7 @@ import { ServicesHero } from '@/sections/services/ServicesHero'
 import type { StageLayout } from '@/sections/services/StageBlock'
 import { StageExplorer, type StageExplorerStage } from '@/sections/services/StageExplorer'
 import { FaqSection } from '@/sections/shared/FaqSection'
+import { PartnerSection } from '@/sections/shared/PartnerSection'
 import { SectionNavigator } from '@/sections/shared/SectionNavigator'
 import type { StageId } from '@/types'
 
@@ -38,17 +45,15 @@ const withStart = (row: OfferRow): OfferRow =>
 const rowsFor = (stage: StageId) => stageRows(stage, data, l, { prices: false }).map(withStart)
 
 /** Each group laid out for what it sells; no two share a layout. */
-const layouts: Record<Exclude<StageId, 'build'>, StageLayout> = {
+const layouts: Record<Exclude<StageId, 'build' | 'partner'>, StageLayout> = {
   takeover: 'cards',
   run: 'split',
   grow: 'figures',
-  partner: 'tiers',
 }
 
 const notes: Partial<Record<StageId, string[]>> = {
   run: [policies.hostingOnRequest],
   grow: [c.improve.note],
-  partner: planFamilies.flatMap((f) => (f.id === 'partner' && f.note ? [f.note] : [])),
 }
 
 // Build splits in three, the way visitors look for it: websites (the offerings the brief files
@@ -72,9 +77,9 @@ const websites: StageExplorerStage = {
   layout: 'feature',
 }
 
-// Then what happens to something that already exists: take over, run, improve, partner (04–07).
+// After launch: take over, run and improve (04–06). Partner has its own section below.
 const afterLaunch: StageExplorerStage[] = serviceStages
-  .filter((stage) => stage.id !== 'build')
+  .filter((stage) => stage.id !== 'build' && stage.id !== 'partner')
   .map((stage, i) => ({
     id: `stage-${stage.id}`,
     index: i + 4,
@@ -84,7 +89,7 @@ const afterLaunch: StageExplorerStage[] = serviceStages
     notes: notes[stage.id],
     cta: stage.cta,
     media: stage.id === 'grow' ? undefined : serviceMedia[stage.id],
-    layout: layouts[stage.id as Exclude<StageId, 'build'>],
+    layout: layouts[stage.id as Exclude<StageId, 'build' | 'partner'>],
   }))
 
 // The next-steps cards show real numbers: the "Launch website" starting quote's estimate range
@@ -139,6 +144,12 @@ export function ServicesPage() {
         laptop={media.desktop.laptop}
       />
       <StageExplorer stages={afterLaunch} labels={c.labels} />
+      <PartnerSection
+        id="stage-partner"
+        index={7}
+        title={c.partner.title}
+        {...partnerSectionContent}
+      />
       {/* How a project runs, then how to start one: the plan plays on entry, and the step
           cards after it deal out on scroll, so the two never share a trigger. */}
       <ProcessLine

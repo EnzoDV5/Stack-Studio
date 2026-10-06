@@ -14,7 +14,7 @@ export interface SectionNavigatorProps {
 
 /** A compact page outline that follows the section currently under the reading line. */
 export function SectionNavigator({ label, items }: SectionNavigatorProps) {
-  const [active, setActive] = useState(0)
+  const [active, setActive] = useState(-1)
   const [mobileOpen, setMobileOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
   const desktopRef = useRef<HTMLElement>(null)
@@ -25,22 +25,25 @@ export function SectionNavigator({ label, items }: SectionNavigatorProps) {
     let frame = 0
     const update = () => {
       frame = 0
-      const readingLine = window.innerHeight * 0.35
-      let current = 0
+      const readingLine = window.innerHeight * 0.25
+      let current = -1
       const sections = items.map((item) => document.getElementById(item.id))
       sections.forEach((section, index) => {
         if (section && section.getBoundingClientRect().top <= readingLine) current = index
       })
-      const thisSection = sections[current]
-      const nextSection = sections[current + 1]
-      const start = thisSection?.getBoundingClientRect().top ?? readingLine
-      const end =
-        nextSection?.getBoundingClientRect().top ??
-        thisSection?.getBoundingClientRect().bottom ??
-        readingLine
-      const within =
-        end > start ? Math.max(0, Math.min(1, (readingLine - start) / (end - start))) : 0
-      const progress = ((current + 0.5 + within) / items.length) * 100
+      let progress = 0
+      if (current >= 0) {
+        const thisSection = sections[current]
+        const nextSection = sections[current + 1]
+        const start = thisSection?.getBoundingClientRect().top ?? readingLine
+        const end =
+          nextSection?.getBoundingClientRect().top ??
+          thisSection?.getBoundingClientRect().bottom ??
+          readingLine
+        const within =
+          end > start ? Math.max(0, Math.min(1, (readingLine - start) / (end - start))) : 0
+        progress = ((current + 0.5 + within) / items.length) * 100
+      }
       desktopRef.current?.style.setProperty('--progress', `${progress}%`)
       const surface = document
         .elementFromPoint(window.innerWidth / 2, window.innerHeight / 2)
@@ -80,15 +83,10 @@ export function SectionNavigator({ label, items }: SectionNavigatorProps) {
     }
   }, [mobileOpen])
 
-  const jump = (
-    event: MouseEvent<HTMLAnchorElement>,
-    item: SectionNavigatorItem,
-    index: number,
-  ) => {
+  const jump = (event: MouseEvent<HTMLAnchorElement>, item: SectionNavigatorItem) => {
     const section = document.getElementById(item.id)
     if (!section) return
     event.preventDefault()
-    setActive(index)
     setMobileOpen(false)
     scrollToElement(section)
     history.replaceState(null, '', `#${item.id}`)
@@ -98,7 +96,7 @@ export function SectionNavigator({ label, items }: SectionNavigatorProps) {
     <li key={item.id}>
       <a
         href={`#${item.id}`}
-        onClick={(event) => jump(event, item, index)}
+        onClick={(event) => jump(event, item)}
         aria-label={`Go to ${item.label}`}
         aria-current={index === active ? 'location' : undefined}
         className={styles.link}
@@ -118,17 +116,23 @@ export function SectionNavigator({ label, items }: SectionNavigatorProps) {
         className={styles.desktop}
         style={{ '--section-count': items.length } as CSSProperties}
       >
-        <div className={styles.current} aria-hidden="true">
-          <span key={items[active]?.id} className={styles.currentName}>
-            {items[active]?.label}
-          </span>
-        </div>
         <p className={styles.count} aria-hidden="true">
           {String(active + 1).padStart(2, '0')}/{String(items.length).padStart(2, '0')}
         </p>
         <div className={styles.trackArea}>
           <ol>{links}</ol>
           <span className={styles.progressHead} aria-hidden="true" />
+          {active >= 0 && (
+            <div
+              className={styles.current}
+              style={{ top: `${((active + 0.5) / items.length) * 100}%` }}
+              aria-hidden="true"
+            >
+              <span key={items[active]?.id} className={styles.currentName}>
+                {items[active]?.label}
+              </span>
+            </div>
+          )}
         </div>
       </nav>
 

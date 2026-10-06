@@ -40,9 +40,9 @@ export const serviceStages: ServiceStage[] = [
     id: 'run',
     index: 3,
     name: 'Keep it working', // COPY:
-    line: 'Hosting, updates and support each month.', // COPY:
+    line: 'Website hosting and care, or app care with three monthly changes.', // COPY:
     summary:
-      'For the websites and apps we build or take over: Care for websites and Managed plans for apps, covering hosting, monitoring, backups, updates and fixes.', // COPY:
+      'Website Care includes hosting, a standard domain and routine upkeep. Managed Software includes app hosting, technical upkeep and three small changes each month.', // COPY:
     cta: { label: 'Find my plan', to: '/start?path=run' }, // COPY:
     briefPath: 'run',
   },
@@ -60,10 +60,10 @@ export const serviceStages: ServiceStage[] = [
     id: 'partner',
     index: 5,
     name: 'A software team', // COPY:
-    line: 'A team and monthly hours for your software.', // COPY:
+    line: 'New features and bigger changes within agreed monthly hours.', // COPY:
     summary:
-      'Reserved monthly hours for companies with large or business-critical systems: managing, developing, integrating and planning, with a team that knows your software.', // COPY:
-    cta: { label: 'Talk about your software', to: '/start?path=develop' }, // COPY:
+      'Send requests as they come up. The same team plans and builds new features, design changes and integrations within agreed monthly hours.', // COPY:
+    cta: { label: 'Talk about your software', to: '/start?path=develop&partner=discuss' }, // COPY:
     briefPath: 'develop',
   },
 ]

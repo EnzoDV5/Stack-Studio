@@ -168,7 +168,7 @@ Neighbouring sections never share a trigger type, and every section's motion is 
 | Work cards          | Hover video preview (desktop)                                                                         | `ProjectMedia`                   |
 | Services, FAQs      | Expanding rows; each service stage has its own layout                                                 | `Accordion`, `StageBlock`        |
 | Services next steps | Step cards (mini interfaces) deal out of a pile into a row on scroll                                  | `NextSteps`                      |
-| Plan tabs           | Cards Flip into the slot they replace                                                                 | `PlanTabs`                       |
+| Monthly plans       | Two fixed bundles shown side by side for comparison                                                   | `MonthlyPlans`, `PlanCard`       |
 | Portraits, images   | Gentle parallax (scroll, or pointer on Home)                                                          | `Parallax`                       |
 | Technologies        | CSS marquee, hover pause and pause control                                                            | `TechnologyMarquee`, `Marquee`   |
 | Chrome              | Header hides on scroll and follows the page tone; cursor; magnetic CTAs                               | `Header`, `Cursor`               |

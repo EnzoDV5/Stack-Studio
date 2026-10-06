@@ -73,24 +73,27 @@ with **See what it costs** → /pricing), what happens once you get in touch (br
 meeting → fixed quote), the FAQ and the closing CTA.
 
 A transparent, viewport-height section rail stays at the side on desktop and becomes a section
-menu on phones. Its connected markers show reading progress, the current section name stays
-visible, and hovering or focusing another marker reveals its name before jumping.
+menu on phones. The page title sits outside the count. Its connected markers show reading
+progress, and the current section name animates beside its marker. Hovering or focusing another
+marker reveals its name before jumping.
 Pricing uses the same navigator.
 
-Ongoing care and a software team answer different needs: **Care** for websites and **Managed**
-for apps look after what we built or took over (hosting, monitoring, updates); **Partner** is reserved
-monthly hours for larger businesses with large or business-critical software.
-Partner has fixed 10, 20 and 40 hour starting packages, plus direct briefs for custom hours
-and for clients who want to discuss the monthly amount first.
+The three ongoing options have different scopes: **Website Care** includes hosting, one
+standard domain and routine upkeep for one site; **Managed Software** includes app hosting,
+technical upkeep and three small change requests each month; **Partner** plans and builds
+larger changes and new features within monthly hours agreed together.
+Partner is a separate section on Services and Pricing, with no pricing cards. Its action opens
+a brief to discuss the work and agree monthly hours together.
 
 ## Pricing `/pricing`
 
-Every number lives here. Packages give a ballpark, the brief gives an estimate for the actual
-project, and a short call turns it into a fixed quote. Compact page title, then how pricing
+Packages give a ballpark, the brief gives an estimate for the actual project, and a short
+call turns it into a fixed quote. Compact page title, then how pricing
 works (estimate → call → fixed quote), then **starting quotes** (packages): ready-made quotes (launch,
 bookings, content and leads, online store, brand experience) showing the range the
 estimator computes, each opening `/start?quote=<id>` pre-filled, plus "Something else?"
-for everything else. Then the monthly plans, what plans cover, payment terms, the pricing
+for everything else. Then one Website Care and one Managed Software monthly plan, what they cover, a separate
+Partner section, payment terms, the pricing
 FAQ and the closing CTA. Starting quotes live in `src/data/quotes.ts`; prices in
 `src/data/services.ts`, `plans.ts` and `addons.ts`.
 

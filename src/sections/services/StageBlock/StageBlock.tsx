@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { ServiceMedia } from '@/components/media/ServiceMedia'
 import { MediaReveal } from '@/components/media/MediaReveal'
 import { Button } from '@/components/ui/Button'
@@ -15,11 +15,10 @@ import type { ServiceMediaItem } from '@/types/service-media'
  * - `feature`: the intro beside a wide image, then the offerings as dropdowns.
  * - `cards`: intro and a banner image, then the offerings side by side as cards.
  * - `split`: the image in its own column beside a compact priced list (plans).
- * - `tiers`: a banner image, then the offerings side by side as tiers (bundles of hours).
  * - `figures`: the intro and CTA beside a large hourly quote and examples.
  * Give every group a different layout.
  */
-export type StageLayout = 'feature' | 'cards' | 'split' | 'tiers' | 'figures'
+export type StageLayout = 'feature' | 'cards' | 'split' | 'figures'
 
 export interface StageBlockProps {
   id: string
@@ -68,17 +67,6 @@ export function StageBlock({
         <ServiceMedia item={media} active paused={false} sizes={sizes} />
       </MediaReveal>
     )
-
-  const bullets = (items: string[]) => (
-    <ul className="space-y-2 text-small">
-      {items.map((item) => (
-        <li key={item} className="flex gap-3">
-          <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 bg-marker" />
-          {item}
-        </li>
-      ))}
-    </ul>
-  )
 
   const offerings: Record<StageLayout, () => ReactNode> = {
     feature: () => <OfferAccordion rows={rows} includesLabel={labels.includes} />,
@@ -137,22 +125,6 @@ export function StageBlock({
           </li>
         ))}
       </ul>
-    ),
-
-    tiers: () => (
-      <ol
-        className="grid gap-px overflow-hidden rounded-lg border border-tone bg-(--tone-border) md:grid-cols-(--tiers)"
-        style={{ '--tiers': `repeat(${rows.length}, minmax(0, 1fr))` } as CSSProperties}
-      >
-        {rows.map((row) => (
-          <li key={row.id} className="flex flex-col gap-4 bg-(--tone-bg) p-6 md:p-7">
-            <h3 className="text-heading-lg">{row.name}</h3>
-            {row.price && <p className="numeric text-heading-lg">{row.price}</p>}
-            {row.notes.length > 0 && <p className="eyebrow text-muted">{row.notes.join(' ')}</p>}
-            {row.includes.length > 0 && bullets(row.includes.slice(0, 3))}
-          </li>
-        ))}
-      </ol>
     ),
   }
 
@@ -226,14 +198,6 @@ export function StageBlock({
           </div>
           <div className="md:col-span-7">{offerings.figures()}</div>
         </div>
-      )}
-
-      {layout === 'tiers' && (
-        <>
-          {image('mb-10 aspect-video sm:aspect-[4/1]', '100vw')}
-          {intro}
-          <div className="mt-10">{offerings.tiers()}</div>
-        </>
       )}
 
       {layout !== 'figures' && footer()}

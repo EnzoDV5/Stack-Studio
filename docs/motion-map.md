@@ -75,27 +75,28 @@ Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whol
 | 2   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns | none    |
 | 3   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)      | scrub   |
 | 4   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)        | enter   |
-| 5   | StageExplorer   | paper  | Take over, Run, Grow, Partner                 | none    |
-| 6   | NextSteps       | dark   | Four step cards deal out of a pile into a row | scrub   |
-| 7   | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
-| 8   | ClosingCta      | orange | SplitReveal words                             | enter   |
+| 5   | StageExplorer   | paper  | Take over, Run, Grow                          | none    |
+| 6   | PartnerSection  | white  | Ongoing team and service comparison           | none    |
+| 7   | ProcessLine     | dark   | Timeline enters and responds to hover         | enter   |
+| 8   | NextSteps       | dark   | Four step cards deal out of a pile into a row | scrub   |
+| 9   | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
+| 10  | ClosingCta      | orange | SplitReveal words                             | enter   |
 
 No adjacent clashes.
 
 ### Pricing
 
-| #   | Section            | Tone   | Opener                  | Motion            | Trigger |
-| --- | ------------------ | ------ | ----------------------- | ----------------- | ------- |
-| 1   | PageTitle          | paper  | own                     | Static            | none    |
-| 2   | PricingSummary     | paper  | SectionHeader (stacked) | Static            | none    |
-| 3   | PlanTabs           | dark   | SectionHeader (stacked) | Instant tab swap  | hover   |
-| 4   | IncludedVsExcluded | paper  | left column             | Static            | none    |
-| 5   | RatesStrip         | dark   | eyebrow + title         | Static            | none    |
-| 6   | PoliciesList       | paper  | SectionHeader (stacked) | Static            | none    |
-| 7   | FaqSection         | dark   | sticky left column      | Accordion         | hover   |
-| 8   | ClosingCta         | orange | eyebrow                 | SplitReveal words | enter   |
-
-Clashes: 2→3 use the same stacked opener.
+| #   | Section            | Tone   | Motion            | Trigger |
+| --- | ------------------ | ------ | ----------------- | ------- |
+| 1   | PageTitle          | paper  | Heading compiles  | load    |
+| 2   | PricingSteps       | paper  | Static            | none    |
+| 3   | QuoteStarters      | paper  | Cards rise        | enter   |
+| 4   | MonthlyPlans       | dark   | Static comparison | none    |
+| 5   | IncludedVsExcluded | dark   | Static            | none    |
+| 6   | PartnerSection     | white  | Heading compiles  | enter   |
+| 7   | PoliciesList       | paper  | Static            | none    |
+| 8   | FaqSection         | paper  | Accordion         | click   |
+| 9   | ClosingCta         | orange | SplitReveal words | enter   |
 
 ### Studio
 
@@ -218,13 +219,14 @@ reveals before its Parallax drift.
 
 **Services:** ServicesHero (load: compile) · StageExplorer (MediaReveal on framed images and video: 01 Websites) · AppShowcase (scrub: phone turn, 02 Apps and software) ·
 DesktopShowcase (scrub: the laptop opens, 03 Desktop software) · StageExplorer (MediaReveal on framed media: 04 Take
-over, 05 Run, 06 Grow, 07 Partner) · ProcessLine (enter + hover: how a project runs, week by
+over, 05 Run, 06 Grow) · PartnerSection (07 Partner, separate from plan tiers) · ProcessLine (enter + hover: how a project runs, week by
 week) · NextSteps (scrub: the step cards deal out) ·
 FaqSection (hover) · ClosingCta (enter). The page groups the offer the way
 visitors look for it; the five stages stay the model elsewhere. Build splits into websites (the
 offerings the brief files under 'website'), desktop software (listed in `servicesContent`,
 beside the laptop) and apps (the rest, beside the phone), so nothing repeats. A transparent,
-viewport-height section rail follows progress and shows the current section title. Each marker
+viewport-height section rail follows progress and moves the current title beside its marker. The
+page introduction is outside the count. Each marker
 reveals its own label on hover or focus; on phones it becomes a menu. No prices on the page (they live on
 /pricing); each build service's dropdown opens the brief with it picked (`/start?type=<id>`).
 ProcessLine shows how a project runs, then NextSteps shows what happens once someone
@@ -246,12 +248,12 @@ at 85% to its centre at 42%, 72 evenly spaced frames, cross-faded) the lid lifts
 the display wakes on an illustrative stock and orders app and it turns to face the copy. Each group has
 its own layout, picked for what it sells (`StageBlock layout`): Websites `feature` (the
 intro beside an image, then dropdowns), Take over `cards`, Run `split` (image column
-beside a priced list), Grow `figures` (two rates as large figures, no image) and Partner
-`tiers`. Each intro is a name and one line (no paragraph). Framed images and video reveal on
+beside a priced list) and Grow `figures` (two rates as large figures, no image). Partner has its
+own section with a short comparison and a discussion brief. Framed images and video reveal on
 scroll; loops only play while on screen.
 
 **Pricing:** PageTitle (load: compile) · PricingSteps (none) · QuoteStarters (enter:
-cards rise) · PlanTabs (hover: Flip card swap) · IncludedVsExcluded (none) · PoliciesList
+cards rise) · MonthlyPlans (none) · IncludedVsExcluded (none) · PartnerSection (none) · PoliciesList
 (none) · FaqSection (hover) · ClosingCta (enter). No fixed price list: ready-made starting
 quotes show the range the estimator computes and open /start pre-filled. Openers: minimal ·
 split · inline · own · split · own. Everything from the plans down mounts as it approaches.

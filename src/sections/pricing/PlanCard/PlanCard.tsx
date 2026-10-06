@@ -1,6 +1,4 @@
 import { Button } from '@/components/ui/Button'
-import { Tag } from '@/components/ui/Tag'
-import { cn } from '@/lib/cn'
 
 export interface PlanCardProps {
   name: string
@@ -9,11 +7,7 @@ export interface PlanCardProps {
   /** e.g. "2 hours included each month". */
   hours?: string
   includes: string[]
-  highlighted?: boolean
-  recommendedLabel: string
   cta: { label: string; to: string; location: string }
-  /** Slot id so PlanTabs can Flip a card into the one it replaces. */
-  flipId?: string
 }
 
 /** One monthly plan: name, price, hours, what's included and a pre-filled CTA. */
@@ -23,27 +17,11 @@ export function PlanCard({
   price,
   hours,
   includes,
-  highlighted,
-  recommendedLabel,
   cta,
-  flipId,
 }: PlanCardProps) {
   return (
-    <li
-      data-flip-id={flipId}
-      className={cn(
-        'relative flex flex-col rounded-lg border p-7 md:p-8',
-        highlighted ? 'border-orange bg-tone-surface' : 'border-tone',
-      )}
-    >
-      <div className="flex items-start justify-between gap-4">
-        <h3 className="min-w-0 text-heading-lg">{name}</h3>
-        {highlighted && (
-          <Tag variant="accent" className="shrink-0">
-            {recommendedLabel}
-          </Tag>
-        )}
-      </div>
+    <li className="relative flex flex-col rounded-lg border border-tone p-7 md:p-8">
+      <h3 className="text-heading-lg">{name}</h3>
       <p className="mt-1 text-small text-muted">{tagline}</p>
       <p className="mt-8 numeric text-heading-xl">{price}</p>
       {hours && <p className="mt-3 eyebrow text-muted">{hours}</p>}
@@ -57,7 +35,7 @@ export function PlanCard({
       </ul>
       <Button
         to={cta.to}
-        variant={highlighted ? 'primary' : 'secondary'}
+        variant="secondary"
         size="sm"
         withArrow
         className="mt-8 self-start"

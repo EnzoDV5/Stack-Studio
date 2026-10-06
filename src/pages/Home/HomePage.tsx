@@ -90,7 +90,7 @@ function stageItems(stage: StageId) {
     case 'run':
       return [familyItem('care'), familyItem('managed')]
     case 'partner':
-      return [familyItem('partner')]
+      return homeContent.paths.partnerExamples
     default:
       return stageRows(stage, { offerings, plans, rates }, pricingContent.priceLabels, {
         pricedOnly: stage !== 'takeover',
@@ -128,7 +128,10 @@ export function HomePage() {
             line: stage.line,
             items: stageItems(stage.id),
             details: { label: paths.details, to: `/services#stage-${stage.id}` },
-            estimate: { label: paths.estimate, to: `/start?path=${stage.briefPath}` },
+            estimate: {
+              label: paths.estimate,
+              to: stage.id === 'partner' ? stage.cta.to : `/start?path=${stage.briefPath}`,
+            },
             media: serviceMedia[stage.id],
           }))}
         />

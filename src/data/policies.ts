@@ -35,7 +35,7 @@ export const policies: Policies = {
       title: 'Retainers', // COPY:
       body: [
         'Billed monthly in advance with a 3-month minimum.', // COPY:
-        'Unused hours roll over one month, then expire.', // COPY:
+        'Managed change requests reset each month. Unused Partner hours roll over one month, then expire.', // COPY:
         'Support during business hours (SAST).', // COPY:
       ],
     },
@@ -48,14 +48,16 @@ export const policies: Policies = {
       id: 'third-party',
       title: 'Third-party costs', // COPY:
       body: [
-        'Cloud (AWS, Azure, Firebase, Supabase, Cloudflare), AI/API usage, email, SMS and storage are billed at actual cost.', // COPY:
-        'You pay the Stack plan plus actual usage.', // COPY:
+        'The hosting listed in Website Care and Managed Software is included in the plan price.', // COPY:
+        'Extra cloud capacity, AI/API usage, email, SMS and storage are agreed first and billed at cost.', // COPY:
       ],
     },
     {
       id: 'domains',
       title: 'Domains', // COPY:
-      body: ['Registration and renewal at cost. Management is included in relevant plans.'], // COPY:
+      body: [
+        'Website Care includes one standard domain registration or renewal up to R600 a year. Extra or premium domains are billed at cost.', // COPY:
+      ],
     },
     {
       id: 'warranty',
@@ -71,23 +73,25 @@ export const policies: Policies = {
     },
   ],
   maintenance: {
-    title: 'Maintenance is not unlimited features.', // COPY:
+    title: 'What the monthly plans cover.', // COPY:
     intro:
-      'Plans keep what you have healthy. New work is scoped separately or taken from retainer hours.', // COPY:
+      'Care keeps one website running. Managed keeps one app running and includes three small change requests a month.', // COPY:
     included: [
-      'Bug fixes', // COPY:
-      'Updates', // COPY:
-      'Monitoring', // COPY:
-      'The plan’s included hours', // COPY:
+      'Hosting and routine updates', // COPY:
+      'Backups and monitoring', // COPY:
+      'Routine fixes to covered systems', // COPY:
+      'Three small changes in Managed Software', // COPY:
     ],
     excluded: [
+      'Content or design changes in Website Care', // COPY:
+      'Changes beyond Managed Software’s three requests', // COPY:
       'New functionality', // COPY:
       'Redesigns', // COPY:
       'Major integrations', // COPY:
       'New applications', // COPY:
       'Large content changes', // COPY:
     ],
-    outro: 'Anything not included is quoted separately or taken from retainer hours.', // COPY:
+    outro: 'Extra requests are quoted first. Partner is for regular features and larger changes.', // COPY:
   },
   vatNote: 'Prices exclude VAT where applicable.', // COPY: confirm VAT status
   hostingOnRequest: 'Hosting-only available on request.', // COPY:

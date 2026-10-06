@@ -33,14 +33,14 @@ export const quotePresets: QuotePreset[] = [
     includes: [
       '6 custom-designed pages', // COPY:
       'Online booking or quote requests', // COPY:
-      'Hosting, updates and small changes each month', // COPY:
+      'Website hosting, domain and routine upkeep', // COPY:
     ],
     answers: {
       path: 'build',
       buildType: 'business-website',
       pages: 6,
       addOns: ['booking'],
-      carePlan: 'care-business',
+      carePlan: 'care-essential',
       timeline: 'standard',
       budget: 'unsure',
     },
@@ -52,14 +52,14 @@ export const quotePresets: QuotePreset[] = [
     includes: [
       '8 custom-designed pages', // COPY:
       'Copywriting and a blog or news section', // COPY:
-      'Hosting, updates and small changes each month', // COPY:
+      'Website hosting, domain and routine upkeep', // COPY:
     ],
     answers: {
       path: 'build',
       buildType: 'business-website',
       pages: 8,
       addOns: ['copywriting', 'blog'],
-      carePlan: 'care-business',
+      carePlan: 'care-essential',
       timeline: 'standard',
       budget: 'unsure',
     },
@@ -71,14 +71,14 @@ export const quotePresets: QuotePreset[] = [
     includes: [
       'Custom storefront, cart and payments', // COPY:
       'Product copy for your key pages', // COPY:
-      'Hosting, updates and small changes each month', // COPY:
+      'Website hosting, domain and routine upkeep', // COPY:
     ],
     answers: {
       path: 'build',
       buildType: 'ecommerce',
       pages: 5,
       addOns: ['copywriting'],
-      carePlan: 'care-business',
+      carePlan: 'care-essential',
       timeline: 'standard',
       budget: 'unsure',
     },
@@ -90,14 +90,14 @@ export const quotePresets: QuotePreset[] = [
     includes: [
       '8 pages with scroll animation and interactive sections', // COPY:
       'Custom CMS and integrations', // COPY:
-      'Priority care and support', // COPY:
+      'Website hosting, domain and routine upkeep', // COPY:
     ],
     answers: {
       path: 'build',
       buildType: 'immersive-website',
       pages: 8,
       addOns: [],
-      carePlan: 'care-pro',
+      carePlan: 'care-essential',
       timeline: 'standard',
       budget: 'unsure',
     },

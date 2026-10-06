@@ -53,16 +53,16 @@ export const faqs: Faq[] = [
   {
     id: 'rollover',
     category: 'pricing',
-    question: 'What happens to unused hours?', // COPY:
+    question: 'Do unused changes or hours roll over?', // COPY:
     answer:
-      'Unused plan or retainer hours roll over one month, then expire. Support runs during business hours (SAST).', // COPY:
+      'Managed Software’s three change requests reset each month. Unused Partner hours roll over once, then expire. Support runs during business hours (SAST).', // COPY:
   },
   {
     id: 'third-party',
     category: 'pricing',
     question: 'What about hosting, cloud and AI costs?', // COPY:
     answer:
-      'Cloud (AWS, Azure, Firebase, Supabase, Cloudflare), AI/API usage, email, SMS and storage are billed at actual cost, with no markup. You pay the Stack plan plus actual usage. Domains are registered and renewed at cost.', // COPY:
+      'Standard hosting is included in Website Care and Managed Software. Website Care also includes one standard domain up to R600 a year. Extra cloud capacity, AI/API usage, email and SMS are agreed first and billed at cost.', // COPY:
   },
   {
     id: 'vat',

@@ -1,7 +1,7 @@
 import { PageMeta } from '@/components/seo/PageMeta'
 import { faqsFor } from '@/data/faqs'
-import { pageMeta, pricingContent } from '@/data/pages'
-import { planFamilies, plans } from '@/data/plans'
+import { pageMeta, partnerSectionContent, pricingContent } from '@/data/pages'
+import { plans } from '@/data/plans'
 import { policies } from '@/data/policies'
 import { quotePresets } from '@/data/quotes'
 import { getOffering } from '@/data/services'
@@ -9,12 +9,13 @@ import { estimate } from '@/lib/estimate'
 import { formatPrice, formatPriceRange } from '@/lib/format'
 import { isVisible, planPrice } from '@/lib/offer'
 import { IncludedVsExcluded } from '@/sections/pricing/IncludedVsExcluded'
-import { PlanTabs } from '@/sections/pricing/PlanTabs'
+import { MonthlyPlans } from '@/sections/pricing/MonthlyPlans'
 import { PoliciesList } from '@/sections/pricing/PoliciesList'
 import { PricingSteps } from '@/sections/pricing/PricingSteps'
 import { QuoteStarters, type QuoteStarter } from '@/sections/pricing/QuoteStarters'
 import { FaqSection } from '@/sections/shared/FaqSection'
 import { PageTitle } from '@/sections/shared/PageTitle'
+import { PartnerSection } from '@/sections/shared/PartnerSection'
 import { SectionNavigator } from '@/sections/shared/SectionNavigator'
 
 const c = pricingContent
@@ -59,51 +60,24 @@ const appsCard = {
 }
 
 /**
- * No fixed price list: how a quote is reached, ready-made starting quotes that open the
- * quote builder pre-filled, then the monthly plans and the terms.
+ * Ready-made starting quotes open the brief pre-filled. Website Care and Managed Software
+ * have monthly plan cards; Partner has its own discussion-led section before the terms.
  */
 export function PricingPage() {
-  const tabs = planFamilies.map((family) => ({
-    id: family.id,
-    name: family.name,
-    description: family.description,
-    note: family.note,
-    actions:
-      family.id === 'partner'
-        ? [
-            {
-              label: c.plans.partnerChoose,
-              to: '/start?partner=custom',
-              location: 'pricing-partner:custom',
-            },
-            {
-              label: c.plans.partnerDiscuss,
-              to: '/start?partner=discuss',
-              location: 'pricing-partner:discuss',
-            },
-          ]
-        : undefined,
-    plans: plans
-      .filter((p) => p.family === family.id && isVisible(p))
-      .map((p) => ({
-        id: p.id,
-        name: p.name,
-        tagline: p.tagline,
-        price: planPrice(p, l),
-        hours: p.hoursLabel
-          ? family.id === 'partner'
-            ? c.plans.reservedHours(p.hoursLabel)
-            : l.hours(p.hoursLabel)
-          : undefined,
-        includes: p.includes,
-        highlighted: p.highlighted,
-        cta: {
-          label: family.id === 'partner' ? c.plans.partnerStart : c.plans.choose,
-          to: `/start?plan=${p.id}`,
-          location: `pricing-plan:${p.id}`,
-        },
-      })),
-  }))
+  const fixedPlans = plans
+    .filter((plan) => (plan.family === 'care' || plan.family === 'managed') && isVisible(plan))
+    .map((plan) => ({
+      id: plan.id,
+      name: plan.name,
+      tagline: plan.tagline,
+      price: planPrice(plan, l),
+      includes: plan.includes,
+      cta: {
+        label: c.plans.choose,
+        to: `/start?plan=${plan.id}`,
+        location: `pricing-plan:${plan.id}`,
+      },
+    }))
 
   return (
     <>
@@ -134,14 +108,12 @@ export function PricingPage() {
         />
       </div>
       <div id="pricing-plans">
-        <PlanTabs
+        <MonthlyPlans
           tone="dark"
           eyebrow={c.plans.eyebrow}
           title={c.plans.title}
-          tabsLabel={c.plans.tabsLabel}
-          tabs={tabs}
-          recommendedLabel={c.plans.recommended}
-          footnotes={[c.plans.minTerm(policies.minimumTermMonths), policies.hostingOnRequest]}
+          plans={fixedPlans}
+          footnotes={[c.plans.boundary, c.plans.minTerm(policies.minimumTermMonths)]}
         />
       </div>
       <div id="pricing-included">
@@ -156,6 +128,7 @@ export function PricingPage() {
           labels={{ included: c.scope.includedTitle, excluded: c.scope.excludedTitle }}
         />
       </div>
+      <PartnerSection id="pricing-partner" title={c.partner.title} {...partnerSectionContent} />
       <div id="pricing-terms">
         <PoliciesList
           tone="paper"

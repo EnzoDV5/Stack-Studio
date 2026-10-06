@@ -1,6 +1,6 @@
 /**
  * Deep links into the quote builder, e.g. /start?path=build&type=ecommerce,
- * /start?plan=care-business or /start?quote=launch (a ready-made starting quote). Pure: turns
+ * /start?plan=care-essential or /start?quote=launch (a ready-made starting quote). Pure: turns
  * URL params into answers.
  */
 import type { BriefAnswers, BriefPathId, Offering, Plan, QuotePreset } from '@/types'
@@ -9,14 +9,13 @@ const PATHS: BriefPathId[] = ['build', 'existing', 'run', 'develop', 'unsure']
 
 /** Plan id → the Run/Develop answers that lead the estimator back to that plan. */
 const PLAN_ANSWERS: Record<string, Partial<BriefAnswers>> = {
-  'care-essential': { path: 'run', runType: 'website', changeFrequency: 'rarely' },
-  'care-business': { path: 'run', runType: 'website', changeFrequency: 'monthly' },
-  'care-pro': { path: 'run', runType: 'website', changeFrequency: 'weekly' },
-  'managed-app': { path: 'run', runType: 'app', changeFrequency: 'monthly' },
-  'managed-system': { path: 'run', runType: 'app', changeFrequency: 'weekly' },
-  'partner-10': { path: 'develop', hours: '10' },
-  'partner-20': { path: 'develop', hours: '20' },
-  'partner-40': { path: 'develop', hours: '40' },
+  'care-essential': { path: 'run', runType: 'website' },
+  'managed-app': { path: 'run', runType: 'app' },
+}
+const LEGACY_PLAN: Record<string, string> = {
+  'care-business': 'care-essential',
+  'care-pro': 'care-essential',
+  'managed-system': 'managed-app',
 }
 
 export interface Prefill {
@@ -63,7 +62,15 @@ export function prefillFromParams(
       stepId: 'contact',
     }
 
-  const planId = params.get('plan')
+  const requestedPlanId = params.get('plan')
+  // Old Partner package links now open the same discussion as the new Partner sections.
+  if (requestedPlanId && ['partner-10', 'partner-20', 'partner-40'].includes(requestedPlanId))
+    return {
+      answers: { path: 'develop', hours: 'discuss' },
+      name: 'a Partner discussion',
+      stepId: 'contact',
+    }
+  const planId = requestedPlanId ? (LEGACY_PLAN[requestedPlanId] ?? requestedPlanId) : null
   const plan = data.plans.find((p) => p.id === planId && p.visibility !== 'hidden')
   const planAnswers = planId ? PLAN_ANSWERS[planId] : undefined
   if (plan && planAnswers)

@@ -113,62 +113,52 @@ Every offering and plan has a `visibility`:
 
 ## 03 Run (monthly, 3-month minimum, billed in advance)
 
-Care is for websites only; Managed is for applications only.
+Care is for one website; Managed is for one standard app. Both have a single public price.
 
-| Plan                        | Price                              | Time    | Visibility           |
-| --------------------------- | ---------------------------------- | ------- | -------------------- |
-| Care Essential              | R100/month                         | 30 min  | pricing              |
-| Care Business               | R400/month                         | 2 hours | pricing, highlighted |
-| Care Pro                    | R600/month                         | 3 hours | pricing              |
-| Managed App                 | from R800/month                    | 4 hours | pricing              |
-| Managed Business System     | from R1,600/month                  | 8 hours | pricing              |
-| Mission-Critical Management | from R20,000/month                 | –       | hidden               |
-| Website Hosting only        | from R450/month                    | –       | hidden               |
-| App Hosting only            | from R1,500/month + infrastructure | –       | hidden               |
+| Plan                        | Price              | Change allowance                 | Visibility |
+| --------------------------- | ------------------ | -------------------------------- | ---------- |
+| Website Care Essential      | R700/month         | Routine upkeep only              | pricing    |
+| Managed Software            | R2,500/month       | 3 small requests, up to 1h each | pricing    |
+| Mission-Critical Management | from R20,000/month | Quoted separately                | hidden     |
+| Website Hosting only        | from R450/month    | None                             | hidden     |
+| App Hosting only            | from R1,500/month  | None                             | hidden     |
 
-- **Care Essential:** managed hosting, SSL, domain/DNS, backups, uptime monitoring,
-  dependency updates, basic security, small fixes, basic support, up to 30 min of content
-  changes.
-- **Care Business:** everything in Essential, plus better monitoring, performance checks,
-  analytics checks, staging where required, priority support and a monthly health check.
-- **Care Pro:** everything in Business, plus advanced monitoring, more frequent backups,
-  performance optimisation, backend/database checks, priority fixes and monthly reporting.
-- **Managed App:** app, backend and database monitoring, deployment management, backups,
-  dependency updates, security, bug fixes, support and infrastructure management.
-- **Managed Business System:** everything in Managed App, plus higher-priority support,
-  more monitoring, database health, server/infrastructure management, performance checks
-  and a monthly technical review.
+- **Website Care Essential:** R450 website hosting + one hour of routine business support at
+  R200/hour + R50/month for one standard domain registration or renewal up to R600/year.
+  Includes SSL, DNS, backups, uptime checks, security updates and routine fixes. Content
+  and design changes are quoted separately.
+- **Managed Software:** R1,500 app hosting + two hours of routine technical management and
+  three change requests of up to one hour each, all at R200/hour. Includes monitoring,
+  backups, security and deployments. New features and larger requests are quoted separately.
+- The fixed prices cover standard hosting for one website or app. Extra cloud capacity and
+  third-party usage are agreed before billing.
 - **Mission-Critical** is quoted on users, traffic, infrastructure, risk, response time,
   database size and integrations.
-- **Hosting-only plans** are rendered only as the line "Hosting-only available on
-  request".
-- Website Care and Managed Software are calculated from their included working hours at
-  R200/hour. Third-party infrastructure and usage remain separate where applicable.
+- **Hosting-only plans** remain available on request. They are not the public care packages.
 
 ## 04 Improve
 
 - For an existing website or app that needs updates, new pages, added features,
   integrations, UX/UI improvements, or a partial or full redesign.
 - Work is estimated at R400/hour and presented as an estimated-hours quote before it starts.
-- Once the changes are live, ongoing Website Care or Managed Software can be added at
-  R200 per included working hour.
+- Once the changes are live, Website Care or Managed Software can be added as a fixed
+  monthly bundle.
 
 ## 05 Partner (monthly, 3-month minimum, billed in advance)
 
-| Plan               | Price              | Reserved hours | Visibility           |
-| ------------------ | ------------------ | -------------- | -------------------- |
-| Partner 10         | R4,000/month       | 10             | pricing              |
-| Partner 20         | R8,000/month       | 20             | pricing, highlighted |
-| Partner 40         | R16,000/month      | 40             | pricing              |
-| Dedicated Capacity | from R50,000/month | –              | hidden               |
+| Internal plan      | Price              | Reserved hours | Visibility |
+| ------------------ | ------------------ | -------------- | ---------- |
+| Partner 10         | R4,000/month       | 10             | hidden     |
+| Partner 20         | R8,000/month       | 20             | hidden     |
+| Partner 40         | R16,000/month      | 40             | hidden     |
+| Dedicated Capacity | from R50,000/month | –              | hidden     |
 
-- **Every Partner package:** UX/UI, frontend and backend development, features, fixes,
-  integrations, technical planning and support, with priority over non-retainer work.
-- Note shown on the Partner family: "Limited to 3 partner clients at a time."
-- The 10, 20 and 40 hour plans are fixed starting packages. Every package covers the same
-  kinds of development work; the reserved monthly hours and calculated price differ.
-- Pricing also links to a custom hours brief (`/start?partner=custom`) and a discussion first
-  brief (`/start?partner=discuss`). A fixed plan link opens contact with its hours selected.
+- **Partner work:** UX/UI, frontend and backend development, new features, integrations,
+  technical planning and larger improvements. The same team learns the client's software.
+- The public Services and Pricing pages explain Partner in a separate section without prices
+  or fixed package cards. The main action opens `/start?partner=discuss` at contact; monthly
+  hours are agreed in conversation. The brief still accepts a chosen or custom amount.
+- Internal plan data remains for estimates. Old fixed plan links now open the discussion.
 
 ## Policies (Pricing page and /terms)
 
@@ -176,19 +166,20 @@ Care is for websites only; Managed is for applications only.
   before launch.
 - **Larger projects:** 30% to start, 30% at core system, 30% at feature complete, 10% at
   deployment.
-- **Retainers:** billed monthly in advance, 3-month minimum. Unused hours roll over one
-  month, then expire. Support during business hours (SAST).
+- **Monthly plans:** billed monthly in advance, 3-month minimum. Managed change requests
+  reset each month. Unused Partner hours roll over one month, then expire. Support during
+  business hours (SAST).
 - **Annual prepay (optional):** 12 months for the price of 11.
-- **Third-party costs:** cloud (AWS, Azure, Firebase, Supabase, Cloudflare), AI/API usage,
-  email, SMS and storage are billed at actual cost. The client pays the Stack plan plus
-  actual usage.
-- **Domains:** registration and renewal at cost; management is included in relevant plans.
+- **Third-party costs:** base hosting is included in the public plans. Extra cloud capacity,
+  AI/API usage, email, SMS and storage are agreed first and billed at cost.
+- **Domains:** Website Care includes one standard registration or renewal up to R600/year.
+  Extra or premium domains are billed at cost.
 - **30-day launch warranty:** every new build includes bug fixes on what Stack built. No
   new features.
-- **Maintenance is not unlimited features.**
-  - Included: bug fixes, updates, monitoring, the plan's hours.
-  - Not included: new functionality, redesigns, major integrations, new applications,
-    large content changes. These are quoted separately or taken from retainer hours.
+- **Monthly care is not unlimited work.**
+  - Website Care covers routine upkeep. Managed Software adds three small change requests.
+  - New functionality, redesigns, major integrations and work beyond the Managed allowance
+    are quoted separately or planned through Partner hours.
 - **IP:** transfers to the client on final payment.
 - **VAT:** "Prices exclude VAT where applicable." (To confirm: VAT registration status.)
 
@@ -216,8 +207,8 @@ Care is for websites only; Managed is for applications only.
   R120,000 · AI & Automation from R15,000 · Discovery from R7,500. Every estimate uses
   the R400/hour development rate.
 - **Take over:** audit from R2,500
-- **Run:** Website Care from R100/month · Managed Software from R800/month
-- **Partner:** from R4,000/month
+- **Run:** Website Care R700/month · Managed Software R2,500/month.
+- **Partner:** hours agreed in conversation; no public fixed package cards.
 - Underneath: "Need something more specific? Every project is different. Build a quick
   project brief and we'll give you a more accurate estimate. → Build my estimate"
 
@@ -228,16 +219,16 @@ Pricing page. The brief produces the project-specific estimate.
 
 Steps are data in `src/data/brief.ts`, each with a `showIf` condition. Progress counts only
 the visible steps. Deep links work, e.g. `/start?path=build&type=ecommerce` and
-`/start?plan=care-business`.
+`/start?plan=care-essential`.
 
 Step 1 asks "What do you need?" and branches:
 
 | Path                   | Steps                                                                                                                                                                     |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| A. Build something new | type → (website: pages, add-ons, languages, Care plan defaulting to Care Business or "No plan for now") / (app, software, AI: who uses it, key needs) → timeline → budget |
+| A. Build something new | type → (website: pages, add-ons, languages, Website Care or "No plan for now") / (app, software, AI: who uses it, key needs) → timeline → budget |
 | B. Something exists    | what is it → code and hosting access → situation (multi) → urgency                                                                                                        |
-| C. Keep it running     | website or app → who built it → change frequency                                                                                                                          |
-| D. Ongoing development | Partner hours per month (fixed package, custom count, or discuss first) → contact                                                                                         |
+| C. Keep it running     | website or app → who built it                                                                                                                                            |
+| D. Ongoing development | Partner hours per month (suggested amount, custom count, or discuss first) → contact                                                                                      |
 | E. Not sure            | short description                                                                                                                                                         |
 
 All paths then go contact details → POPIA consent → review → submit.
@@ -251,18 +242,18 @@ Result kinds: `range` | `discovery` | `plan` | `audit` | `consult`.
     high = low × 1.35.
   - Both are rounded to the nearest R1,000, and budget fit is kept.
   - A chosen Care plan appears as a separate monthly line.
-  - Always shows the nudge: "Most clients add Website Care from R1,250/month after launch."
+  - Shows the current Website Care monthly price after launch.
 - **A. App, software and AI types, or website low ≥ R120,000 → discovery.** "Starts with
   Discovery & Scoping from R7,500", with the offering's from price as context.
 - **B → audit.**
   - Website R2,500; app from R5,000. Mentions the takeover credit.
   - Urgency "today" adds hands-on care at R200/hour.
 - **C → plan.**
-  - Website: rarely → Care Essential, monthly → Care Business, weekly → Care Pro.
-  - App: rarely or monthly → Managed App, weekly → Managed Business System.
+  - Website → Website Care Essential at R700/month.
+  - App → Managed Software at R2,500/month.
   - Built by someone else adds "Starts with an audit and takeover."
-- **D → plan.**
-  - 10, 20 or 40 hours → the matching fixed Partner package.
+- **D → plan or consult.**
+  - 10, 20 or 40 hours → an indicative monthly amount based on those hours.
   - Custom hours → an indicative monthly amount at R400/hour.
   - Unsure of hours → consultation before choosing a monthly amount.
 - **E → consult:** discuss what is needed and recommend a starting point and hours.

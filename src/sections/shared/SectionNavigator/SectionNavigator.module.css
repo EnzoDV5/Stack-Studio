@@ -143,7 +143,6 @@
 
   .desktop .current {
     position: absolute;
-    top: -0.2rem;
     right: 3.25rem;
     display: flex;
     align-items: center;
@@ -161,7 +160,9 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
     white-space: nowrap;
+    transform: translateY(-50%);
     transition:
+      top 520ms var(--ease-out-quart),
       opacity 200ms ease,
       transform 300ms var(--ease-out-quart);
   }

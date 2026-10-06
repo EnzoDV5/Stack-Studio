@@ -84,7 +84,6 @@ export interface PlanFamilyInfo {
   description: string
   /** e.g. "Limited to 3 partner clients at a time." */
   note?: string
-  hoursLabel: string
 }
 
 export interface Rate {

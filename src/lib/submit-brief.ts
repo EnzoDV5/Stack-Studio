@@ -22,7 +22,7 @@ export interface BriefPayload {
   summary: Record<string, string>
   result: {
     kind: EstimateKind
-    /** Plain-language recommendation, e.g. "R 23 000 – R 31 000" or "Care Business". */
+    /** Plain-language recommendation, e.g. "R 23 000 – R 31 000" or "Website Care Essential". */
     recommendation: string
   }
   meta: { submittedAt: string; page: string; userAgent: string }

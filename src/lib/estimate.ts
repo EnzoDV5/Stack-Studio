@@ -233,19 +233,17 @@ function estimateExisting(answers: Partial<BriefAnswers>, data: EstimateData): E
 
 /* ---------- C. Keep it running ---------- */
 
-const RUN_PLAN: Record<'website' | 'app', Record<'rarely' | 'monthly' | 'weekly', string>> = {
-  website: { rarely: 'care-essential', monthly: 'care-business', weekly: 'care-pro' },
-  app: { rarely: 'managed-app', monthly: 'managed-app', weekly: 'managed-system' },
+const RUN_PLAN: Record<'website' | 'app', string> = {
+  website: 'care-essential',
+  app: 'managed-app',
 }
 
 function estimateRun(answers: Partial<BriefAnswers>, data: EstimateData): EstimateResult {
   const type = answers.runType === 'website' || answers.runType === 'app' ? answers.runType : null
-  const freq = answers.changeFrequency
-  if (!type || (freq !== 'rarely' && freq !== 'monthly' && freq !== 'weekly'))
-    return { kind: 'none' }
+  if (!type) return { kind: 'none' }
   return {
     kind: 'plan',
-    plans: [findPlan(data.plans, RUN_PLAN[type][freq])],
+    plans: [findPlan(data.plans, RUN_PLAN[type])],
     hourlyRate: null,
     needsAudit: answers.builtBy === 'other',
     limited: false,

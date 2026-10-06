@@ -13,10 +13,18 @@ import { BUILD_RATE_PER_HOUR } from '@/data/rates'
 describe('Partner enquiries', () => {
   const data = { offerings, plans }
 
-  it('opens a fixed package directly at contact with its hours selected', () => {
+  it('keeps old package links working by opening a discussion', () => {
     const prefill = prefillFromParams(new URLSearchParams('plan=partner-20'), data)
-    assert.deepEqual(prefill.answers, { path: 'develop', hours: '20' })
+    assert.deepEqual(prefill.answers, { path: 'develop', hours: 'discuss' })
     assert.equal(prefill.stepId, 'contact')
+  })
+
+  it('does not expose fixed Partner plans as pricing cards', () => {
+    assert.ok(
+      plans
+        .filter((plan) => plan.family === 'partner')
+        .every((plan) => plan.visibility === 'hidden'),
+    )
   })
 
   it('lets clients choose their own hours or ask to discuss them', () => {

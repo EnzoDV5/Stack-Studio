@@ -33,7 +33,7 @@ export const briefSteps: BriefStepConfig[] = [
       {
         value: 'run',
         label: 'I need someone to keep it working',
-        description: 'Hosting, updates and support each month.',
+        description: 'Website hosting and upkeep, or app care with small monthly changes.',
       }, // COPY:
       {
         value: 'develop',
@@ -106,7 +106,7 @@ export const briefSteps: BriefStepConfig[] = [
     }, // COPY:
     label: 'After launch', // COPY:
     title: 'Who looks after it after launch?', // COPY:
-    hint: 'Website Care covers hosting, security, updates and monthly changes.', // COPY:
+    hint: 'Website Care covers hosting, one standard domain and routine upkeep.', // COPY:
     showIf: WEBSITE,
   },
   {
@@ -234,7 +234,7 @@ export const briefSteps: BriefStepConfig[] = [
     field: 'runType',
     label: 'Type', // COPY:
     title: 'Is it a website or an app?', // COPY:
-    hint: 'Care plans are for websites, Managed plans for applications.', // COPY:
+    hint: 'Website Care is for sites. Managed Software is for apps and includes three small monthly changes.', // COPY:
     options: [
       { value: 'website', label: 'A website' }, // COPY:
       { value: 'app', label: 'An app or software system' }, // COPY:
@@ -254,21 +254,6 @@ export const briefSteps: BriefStepConfig[] = [
     ],
     showIf: [{ field: 'path', in: ['run'] }],
   },
-  {
-    id: 'changeFrequency',
-    kind: 'single',
-    field: 'changeFrequency',
-    label: 'Changes', // COPY:
-    title: 'How often do you need changes?', // COPY:
-    hint: 'Content edits, small fixes and tweaks.', // COPY:
-    options: [
-      { value: 'rarely', label: 'Rarely' }, // COPY:
-      { value: 'monthly', label: 'Every month' }, // COPY:
-      { value: 'weekly', label: 'Every week' }, // COPY:
-    ],
-    showIf: [{ field: 'path', in: ['run'] }],
-  },
-
   /* ---------- D. Ongoing development ---------- */
   {
     id: 'hours',
@@ -276,7 +261,7 @@ export const briefSteps: BriefStepConfig[] = [
     field: 'hours',
     label: 'Hours', // COPY:
     title: 'How many Partner hours do you need each month?', // COPY:
-    hint: 'Choose a package, enter your own number, or ask us to work it out together.', // COPY:
+    hint: 'Choose an amount, enter your own, or work it out with us.', // COPY:
     options: [
       { value: '10', label: '10 hours a month' }, // COPY:
       { value: '20', label: '20 hours a month' }, // COPY:
@@ -368,11 +353,11 @@ export const budgetRanges: BudgetRange[] = [
   { id: 'unsure', label: 'Not sure', min: null, max: null }, // COPY:
 ]
 
-/** Defaults for a fresh brief (the Care plan preselects Care Business). */
+/** Defaults for a fresh brief (Website Care is preselected for new websites). */
 export const briefDefaults = {
   pages: 5,
   languages: 1,
-  carePlan: 'care-business',
+  carePlan: 'care-essential',
 }
 
 export const briefCopy = {

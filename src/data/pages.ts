@@ -116,6 +116,11 @@ export const homeContent = {
       grow: 'I want to improve what I have.', // COPY:
       partner: 'I need a team for my software.', // COPY:
     },
+    partnerExamples: [
+      { name: 'New features' }, // COPY:
+      { name: 'Integrations' }, // COPY:
+      { name: 'Planning what comes next' }, // COPY:
+    ],
     itemsLabel: 'For example', // COPY:
     details: 'See details', // COPY:
     estimate: 'Start here', // COPY:
@@ -237,7 +242,6 @@ export const servicesContent = {
   navigation: {
     label: 'Services sections', // COPY:
     items: [
-      { id: 'services-top', label: 'Overview' }, // COPY:
       { id: 'stage-build', label: 'New website' }, // COPY:
       { id: 'apps', label: 'Apps and software' }, // COPY:
       { id: 'desktop', label: 'Desktop software' }, // COPY:
@@ -276,6 +280,9 @@ export const servicesContent = {
   },
   improve: {
     note: 'We estimate the hours and send a quote before any work starts. Once the changes are live, you can add ongoing Care.', // COPY:
+  },
+  partner: {
+    title: 'I need a team for my software.', // COPY:
   },
   /**
    * How a project runs, week by week (ProcessLine). It sits after the offer, before the next
@@ -383,22 +390,38 @@ export const servicesContent = {
   } satisfies SectionIntro,
 }
 
+/* ---------- Shared Partner section ---------- */
+export const partnerSectionContent = {
+  eyebrow: 'Partner', // COPY:
+  intro:
+    'Send requests as your software grows. We plan and build new features, design changes and integrations within monthly development hours we agree with you.', // COPY:
+  comparison: [
+    { label: 'Website Care', body: 'One website: hosting, domain and routine upkeep.' }, // COPY:
+    {
+      label: 'Managed Software',
+      body: 'One app: hosting and technical upkeep, plus three small changes a month.',
+    }, // COPY:
+    { label: 'Partner', body: 'New features and bigger changes, using agreed monthly hours.' }, // COPY:
+  ],
+  cta: { label: 'Talk about Partner', to: '/start?partner=discuss' }, // COPY:
+}
+
 /* ---------- Pricing ---------- */
 export const pricingContent = {
   hero: {
     eyebrow: 'Pricing', // COPY:
     title: 'Priced around your project.', // COPY:
     intro:
-      'Every number lives here. Packages give you a ballpark, the brief gives you an estimate for your project, and a short call turns it into a fixed quote. All prices in ZAR.', // COPY:
+      'Packages give you a ballpark. Website Care and Managed Software have fixed monthly prices; we agree Partner hours together. All prices in ZAR.', // COPY:
   } satisfies PageHeroContent,
   navigation: {
     label: 'Pricing sections', // COPY:
     items: [
-      { id: 'pricing-top', label: 'Overview' }, // COPY:
       { id: 'pricing-approach', label: 'How pricing works' }, // COPY:
       { id: 'pricing-packages', label: 'Packages' }, // COPY:
       { id: 'pricing-plans', label: 'Monthly plans' }, // COPY:
       { id: 'pricing-included', label: 'What plans cover' }, // COPY:
+      { id: 'pricing-partner', label: 'Partner' }, // COPY:
       { id: 'pricing-terms', label: 'Payment terms' }, // COPY:
       { id: 'pricing-faq', label: 'Questions' }, // COPY:
     ],
@@ -428,7 +451,7 @@ export const pricingContent = {
     intro:
       'Pick the closest one and the brief opens with it filled in, ready to adjust. Ranges are a guide; your estimate comes from the brief and your fixed quote from a short call.', // COPY:
     rangeLabel: 'Typically', // COPY:
-    monthly: (price: string) => `plus ${price} for hosting and care`, // COPY:
+    monthly: (price: string) => `plus ${price} for hosting, domain and care`, // COPY:
     start: 'Start from this one', // COPY:
     /** The last card: apps and software, which vary too much to package. */
     apps: {
@@ -448,15 +471,13 @@ export const pricingContent = {
   },
   plans: {
     eyebrow: 'Monthly plans', // COPY:
-    title: 'After launch, or for bigger systems.', // COPY:
-    tabsLabel: 'Plan types', // COPY:
-    recommended: 'Recommended', // COPY:
+    title: 'Two ways to keep it working.', // COPY:
     choose: 'Choose', // COPY:
-    partnerChoose: 'Choose your hours', // COPY:
-    partnerStart: 'Send a Partner brief', // COPY:
-    partnerDiscuss: 'Discuss the hours first', // COPY:
-    reservedHours: (label: string) => `${label} reserved each month`, // COPY:
+    boundary: 'Need bigger changes or new features? We’ll quote them, or plan them through Partner.', // COPY:
     minTerm: (n: number) => `${n}-month minimum, billed monthly in advance`, // COPY:
+  },
+  partner: {
+    title: 'A team for what comes next.', // COPY:
   },
   scope: {
     eyebrow: 'What plans cover', // COPY:

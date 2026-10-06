@@ -6,29 +6,31 @@ import type { Plan, PlanFamily, PlanFamilyInfo } from '@/types'
 import { BUILD_RATE_PER_HOUR, CARE_RATE_PER_HOUR } from './rates'
 
 const MIN_TERM = 3
+const WEBSITE_HOSTING_MONTHLY = 450
+const APP_HOSTING_MONTHLY = 1_500
+const STANDARD_DOMAIN_ALLOWANCE_YEARLY = 600
+const CARE_MANAGEMENT_HOURS = 1
+const MANAGED_MANAGEMENT_HOURS = 2
+const MANAGED_CHANGE_REQUESTS = 3
+const HOURS_PER_CHANGE_REQUEST = 1
 
 export const planFamilies: PlanFamilyInfo[] = [
   {
     id: 'care',
     name: 'Website Care', // COPY:
-    description:
-      'For websites we build or take over: hosting, monitoring, updates and changes. Included working time is calculated at R200 per hour.', // COPY:
-    hoursLabel: 'Included changes', // COPY:
+    description: 'Hosting, one standard domain and routine upkeep for your website.', // COPY:
   },
   {
     id: 'managed',
     name: 'Managed Software', // COPY:
-    description:
-      'For apps and software we build or take over: hosting, monitoring and support. Included management and support time is R200 per hour.', // COPY:
-    hoursLabel: 'Included support', // COPY:
+    description: 'Hosting and technical upkeep for your app, plus three small changes each month.', // COPY:
   },
   {
     id: 'partner',
     name: 'Partner', // COPY:
     description:
-      'Reserve the development hours you need each month at R400 per hour. Start with a 10, 20 or 40 hour package, choose your own amount, or talk it through with us first.', // COPY:
+      'An ongoing team to plan and build new features, integrations and bigger improvements. We agree the monthly hours together.', // COPY:
     note: 'Limited to 3 partner clients at a time.', // COPY:
-    hoursLabel: 'Reserved hours', // COPY:
   },
 ]
 
@@ -37,57 +39,17 @@ export const plans: Plan[] = [
   {
     id: 'care-essential',
     family: 'care',
-    name: 'Care Essential', // COPY:
-    tagline: 'The essentials, looked after.', // COPY:
-    pricePerMonth: 0.5 * CARE_RATE_PER_HOUR,
-    includedHours: 0.5,
-    hoursLabel: '30 min', // COPY:
+    name: 'Website Care Essential', // COPY:
+    tagline: 'One website, hosted and looked after.', // COPY:
+    pricePerMonth:
+      WEBSITE_HOSTING_MONTHLY +
+      CARE_MANAGEMENT_HOURS * CARE_RATE_PER_HOUR +
+      STANDARD_DOMAIN_ALLOWANCE_YEARLY / 12,
     includes: [
-      'Managed hosting and SSL', // COPY:
-      'Domain/DNS management', // COPY:
-      'Backups and uptime monitoring', // COPY:
-      'Dependency updates and basic security', // COPY:
-      'Small fixes and basic support', // COPY:
-      'Up to 30 min of content changes', // COPY:
-    ],
-    minimumTermMonths: MIN_TERM,
-    visibility: 'pricing',
-  },
-  {
-    id: 'care-business',
-    family: 'care',
-    name: 'Care Business', // COPY:
-    tagline: 'For sites that bring in the work.', // COPY:
-    pricePerMonth: 2 * CARE_RATE_PER_HOUR,
-    includedHours: 2,
-    hoursLabel: '2 hours', // COPY:
-    includes: [
-      'Everything in Essential', // COPY:
-      'Better monitoring', // COPY:
-      'Performance and analytics checks', // COPY:
-      'Staging where required', // COPY:
-      'Priority support', // COPY:
-      'Monthly health check', // COPY:
-    ],
-    minimumTermMonths: MIN_TERM,
-    highlighted: true,
-    visibility: 'pricing',
-  },
-  {
-    id: 'care-pro',
-    family: 'care',
-    name: 'Care Pro', // COPY:
-    tagline: 'For busy, business-critical sites.', // COPY:
-    pricePerMonth: 3 * CARE_RATE_PER_HOUR,
-    includedHours: 3,
-    hoursLabel: '3 hours', // COPY:
-    includes: [
-      'Everything in Business', // COPY:
-      'Advanced monitoring', // COPY:
-      'More frequent backups', // COPY:
-      'Performance optimisation', // COPY:
-      'Backend and database checks', // COPY:
-      'Priority fixes and monthly reporting', // COPY:
+      'Website hosting, SSL and DNS included', // COPY:
+      'One standard domain registration or renewal, up to R600/year', // COPY:
+      'Backups, uptime checks and security updates', // COPY:
+      'Routine fixes to keep the site running', // COPY:
     ],
     minimumTermMonths: MIN_TERM,
     visibility: 'pricing',
@@ -97,42 +59,19 @@ export const plans: Plan[] = [
   {
     id: 'managed-app',
     family: 'managed',
-    name: 'Managed App', // COPY:
-    tagline: 'Your app, kept healthy.', // COPY:
-    pricePerMonth: 4 * CARE_RATE_PER_HOUR,
-    priceIsFrom: true,
-    includedHours: 4,
-    hoursLabel: '4 hours', // COPY:
+    name: 'Managed Software', // COPY:
+    tagline: 'One app, hosted, managed and improved in small steps.', // COPY:
+    pricePerMonth:
+      APP_HOSTING_MONTHLY +
+      (MANAGED_MANAGEMENT_HOURS + MANAGED_CHANGE_REQUESTS * HOURS_PER_CHANGE_REQUEST) *
+        CARE_RATE_PER_HOUR,
+    includedHours: MANAGED_CHANGE_REQUESTS * HOURS_PER_CHANGE_REQUEST,
     includes: [
-      'App, backend and database monitoring', // COPY:
-      'Deployment management', // COPY:
-      'Backups and dependency updates', // COPY:
-      'Security', // COPY:
-      'Bug fixes and support', // COPY:
-      'Infrastructure management', // COPY:
+      'Hosting for one standard app included', // COPY:
+      'Monitoring, backups, security and deployments', // COPY:
+      `${MANAGED_CHANGE_REQUESTS} small change requests each month, up to ${HOURS_PER_CHANGE_REQUEST} hour each`, // COPY:
     ],
     minimumTermMonths: MIN_TERM,
-    visibility: 'pricing',
-  },
-  {
-    id: 'managed-system',
-    family: 'managed',
-    name: 'Managed Business System', // COPY:
-    tagline: 'For systems the business can’t run without.', // COPY:
-    pricePerMonth: 8 * CARE_RATE_PER_HOUR,
-    priceIsFrom: true,
-    includedHours: 8,
-    hoursLabel: '8 hours', // COPY:
-    includes: [
-      'Everything in Managed App', // COPY:
-      'Higher-priority support', // COPY:
-      'More monitoring and database health', // COPY:
-      'Server and infrastructure management', // COPY:
-      'Performance checks', // COPY:
-      'Monthly technical review', // COPY:
-    ],
-    minimumTermMonths: MIN_TERM,
-    highlighted: true,
     visibility: 'pricing',
   },
   {
@@ -154,7 +93,7 @@ export const plans: Plan[] = [
     family: 'hosting',
     name: 'Website Hosting', // COPY:
     tagline: 'Hosting only.', // COPY:
-    pricePerMonth: 450,
+    pricePerMonth: WEBSITE_HOSTING_MONTHLY,
     priceIsFrom: true,
     includes: [],
     minimumTermMonths: MIN_TERM,
@@ -165,7 +104,7 @@ export const plans: Plan[] = [
     family: 'hosting',
     name: 'App Hosting', // COPY:
     tagline: 'Hosting only.', // COPY:
-    pricePerMonth: 1_500,
+    pricePerMonth: APP_HOSTING_MONTHLY,
     priceIsFrom: true,
     priceSuffix: '+ infrastructure', // COPY:
     includes: [],
@@ -189,7 +128,7 @@ export const plans: Plan[] = [
       'Priority over non-retainer work', // COPY:
     ],
     minimumTermMonths: MIN_TERM,
-    visibility: 'pricing',
+    visibility: 'hidden',
   },
   {
     id: 'partner-20',
@@ -207,7 +146,7 @@ export const plans: Plan[] = [
     ],
     minimumTermMonths: MIN_TERM,
     highlighted: true,
-    visibility: 'pricing',
+    visibility: 'hidden',
   },
   {
     id: 'partner-40',
@@ -224,7 +163,7 @@ export const plans: Plan[] = [
       'Priority over non-retainer work', // COPY:
     ],
     minimumTermMonths: MIN_TERM,
-    visibility: 'pricing',
+    visibility: 'hidden',
   },
   {
     id: 'dedicated',
