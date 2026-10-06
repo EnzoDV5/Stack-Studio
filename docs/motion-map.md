@@ -86,15 +86,14 @@ No adjacent clashes.
 
 ### Pricing
 
-| #   | Section       | Tone   | Motion            | Trigger |
-| --- | ------------- | ------ | ----------------- | ------- |
-| 1   | PageTitle     | paper  | Heading compiles  | load    |
-| 2   | PricingSteps  | paper  | Static            | none    |
-| 3   | QuoteStarters | paper  | Cards rise        | enter   |
-| 4   | MonthlyPlans  | dark   | Static comparison | none    |
-| 5   | PoliciesList  | paper  | Static            | none    |
-| 6   | FaqSection    | paper  | Accordion         | click   |
-| 7   | ClosingCta    | orange | SplitReveal words | enter   |
+| #   | Section      | Tone   | Motion            | Trigger |
+| --- | ------------ | ------ | ----------------- | ------- |
+| 1   | PageTitle    | paper  | Heading compiles  | load    |
+| 2   | PricingSteps | paper  | Static            | none    |
+| 3   | MonthlyPlans | dark   | Static comparison | none    |
+| 4   | PoliciesList | paper  | Static            | none    |
+| 5   | FaqSection   | paper  | Accordion         | click   |
+| 6   | ClosingCta   | orange | SplitReveal words | enter   |
 
 ### Studio
 
@@ -143,7 +142,7 @@ below are in viewports.
 
 Trigger sequence: load + scrub · hover · enter · scrub + pin · enter · hover · enter. No two
 neighbours share a type. Openers go split · minimal · inline · stacked · split. Every section
-ends with a "go deeper" link: All services, Compare packages and prices, All work (header row
+ends with a "go deeper" link: All services, Build your estimate, All work (header row
 and last panel), See all the work, Meet the studio.
 
 PackageShowcase: five website packages (data/quotes), each with its calculated indicative range,
@@ -250,11 +249,10 @@ beside a priced list) and Grow `figures` (two rates as large figures, no image).
 own section with a short comparison and a discussion brief. Framed images and video reveal on
 scroll; loops only play while on screen.
 
-**Pricing:** PageTitle (load: compile) · PricingSteps (none) · QuoteStarters (enter:
-cards rise) · MonthlyPlans (none; three comparison cards) · PoliciesList
-(none) · FaqSection (hover) · ClosingCta (enter). Ready-made starting
-quotes show the range the estimator computes and open /start pre-filled. Openers: minimal ·
-split · inline · split · own. Everything from the plans down mounts as it approaches.
+**Work With Us:** PageTitle (load: compile) · PricingSteps (none) · MonthlyPlans
+(none; three comparison cards) · PoliciesList (none) · FaqSection (hover) ·
+ClosingCta (enter). Openers: minimal · inline · split · own. The plan cards and
+terms mount as they approach.
 
 **Studio:** PageTitle (load: compile) · StudioIntro (enter: MediaReveal) · FounderProfiles (enter:
 MediaReveal; scrub: parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · ValuesGrid

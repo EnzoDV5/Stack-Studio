@@ -35,7 +35,7 @@ const l = pricingContent.priceLabels
 const data = { offerings, plans, rates }
 
 /**
- * Services shows no prices (every number lives on /pricing). Each build service opens the brief
+ * Services shows no prices. Each build service opens the brief
  * with that service picked, so choosing one is the way in.
  */
 const withStart = (row: OfferRow): OfferRow =>
@@ -108,7 +108,7 @@ const starter = (() => {
  * Services, grouped the way people look for them: websites, apps
  * and software (the phone), desktop software (the laptop), then taking over, running, improving
  * and partnering on what exists; then how a project runs week by week and what happens once
- * you get in touch. No prices: they're on /pricing, and the brief gives the estimate.
+ * you get in touch. The brief gives project estimates; ongoing plans are on /pricing.
  */
 export function ServicesPage() {
   return (

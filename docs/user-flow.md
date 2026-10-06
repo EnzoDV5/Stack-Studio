@@ -10,7 +10,7 @@ FIND ─────────► TRUST ─────────► UNDERST
 Home hero        Featured work      /services (what,      Guided brief (/start)
 "What do you     Case studies       how it runs)          WhatsApp (fallback)
  need?"          Metrics, quotes    /pricing (every       Email (footer)
-Studio snippet                      number)
+Studio snippet                      care and Partner)
 ```
 
 ## Primary path (the flow the home page is built around)
@@ -25,14 +25,14 @@ Studio snippet                      number)
    removed: Understand (what)._
 3. **Pick a starting point.** The website packages open as disclosure rows beside a laptop
    showing sites we built (or bookings on the phone). Each row shows an indicative price range;
-   visitors compare the full options on /pricing, where they can start from a pre-filled quote. _Doubt removed: "what would mine
+   visitors open the build brief for a project estimate. _Doubt removed: "what would mine
    look like, and where do I start?"_
 4. **The work.** Every project, large, sliding past in the pinned reel, then what those
    clients say about it. _Doubt removed: Trust._
 5. **The founders.** Real people who are accountable.
 6. **Giant closing CTA** leads to `/start`. _Doubt removed: Contact._
 
-Home shows indicative package ranges and routes detailed pricing to /pricing. Every Home section ends with a "go deeper"
+Home shows indicative package ranges and routes project estimates to /start. Every Home section ends with a "go deeper"
 link, so visitors choose where to go next.
 
 ## Who answers what
@@ -41,12 +41,12 @@ link, so visitors choose where to go next.
   founders)
 - **Services:** what do you do, and how does a project run? No prices. Picking a service
   opens the brief ready for it (`/start?type=<service>` or the group's `?path=`).
-- **Pricing:** what does it cost? Packages give a ballpark and open the brief pre-filled;
-  Website Care and Managed Software cards show monthly prices. The orange Partner card
+- **Work With Us:** what ongoing support fits? Website Care and Managed Software cards show
+  monthly prices. The orange Partner card
   describes a tailored engagement and opens a brief to discuss projects and monthly hours.
 - **Start:** the real estimate for this project, then contact.
 
-The three levels of price are always in this order: **package** (ballpark, on /pricing) →
+The three levels of price are always in this order: **package** (ballpark, on Home) →
 **brief estimate** (for this project, on /start) → **fixed quote** (after a short call).
 
 ## Deeper paths
@@ -54,8 +54,8 @@ The three levels of price are always in this order: **package** (ballpark, on /p
 - **Sceptic path:** Home, then a featured case study, then `/work/:slug` (problem → approach
   → build → result, metrics), then **Start a project like this** (brief pre-filled), or Next
   project.
-- **Price-shopper path:** Header link to `/pricing`, pick the closest package (opens
-  `/start?quote=` pre-filled) or compare monthly plans, then refine it into an estimate.
+- **Ongoing support path:** Header link to `/pricing`, compare care plans or discuss a
+  Partner engagement, then confirm the scope together.
 - **Services path:** `/services`, open a service, **Start with this** (`/start?type=`),
   or read how a project runs and follow **See what it costs** to `/pricing`.
 - **Referral path:** Arrives on `/work/gc-solar` from a shared link, gets the context
@@ -72,7 +72,7 @@ The three levels of price are always in this order: **package** (ballpark, on /p
 - One question per screen, a progress bar, Back and Next, and keyboard support: Enter moves
   on, number keys pick an option, and arrow keys move within a group.
 - Deep links pre-fill it: `?path=`, `?type=<offering>`, `?plan=<plan>` and
-  `?quote=<starting quote>` (from the Pricing page).
+  `?quote=<starting quote>` (from a saved package link).
 - The live estimate panel updates with every answer and is always labelled indicative.
 - Validation runs per step with zod. Errors are announced and focus moves to them.
 - The contact step requires POPIA consent and links to `/privacy`.

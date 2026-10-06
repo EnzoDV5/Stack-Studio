@@ -1,7 +1,7 @@
 /**
  * Stack's five stages and every offering (see docs/pricing-model.md, the source of truth).
  * Client-facing prices only. Never add internal rates, costs or margins here.
- * visibility: 'pricing' = Pricing + Services pages · 'services' = Services page only
+ * visibility: 'pricing' = public offering; 'services' = Services page only
  * (Build items still show their calculated estimate) · 'hidden' = kept in data, never rendered.
  */
 import type { Offering, ServiceStage, StageId } from '@/types'
@@ -275,7 +275,7 @@ export const offerings: Offering[] = [
       'Full development estimate', // COPY:
     ],
     tiers: [{ label: 'Large systems', fromPrice: buildPrice(37.5) }], // COPY: large systems R15,000–R40,000+
-    notes: ['Required before larger builds.', 'Large systems are scoped in more depth.'], // COPY: the thresholds and prices are on /pricing and in the estimate
+    notes: ['Required before larger builds.', 'Large systems are scoped in more depth.'], // COPY: thresholds and prices are in the estimate
     visibility: 'pricing',
   },
   {

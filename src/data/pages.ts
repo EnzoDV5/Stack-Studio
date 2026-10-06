@@ -24,9 +24,9 @@ export const pageMeta = {
     path: '/services',
   },
   pricing: {
-    title: 'Pricing', // COPY:
+    title: 'Work With Us', // COPY:
     description:
-      'Starting prices for once-off website builds, changes to existing sites, and monthly care plans, so you know roughly where you stand before we talk.', // COPY:
+      'Compare Website Care, Managed Software and a tailored Partner engagement with Stack Studio. See what each option includes and how we work together.', // COPY:
     path: '/pricing',
   },
   studio: {
@@ -77,7 +77,7 @@ export const closingCtaCode = [
 /* ---------- Home ---------- */
 /**
  * Home answers "who are you, and can you do it?": what we do, the work, what clients say and
- * who we are. Only starting package ranges appear here; detailed prices live on /pricing and
+ * who we are. Starting package ranges appear here; ongoing plans live on /pricing and
  * the process is on /services. Every
  * section ends with a "go deeper" link to its full page, so visitors choose what to explore.
  */
@@ -136,8 +136,7 @@ export const homeContent = {
   },
   /**
    * The website packages (data/quotes), each shown on the laptop as a site we built that fits
-   * it, so visitors see what theirs could be. Indicative ranges match the starting quotes on
-   * /pricing, where visitors can adjust the quote in the brief.
+   * it, so visitors see what theirs could be. The brief lets visitors adjust the quote.
    */
   packages: {
     eyebrow: 'Packages', // COPY:
@@ -145,6 +144,7 @@ export const homeContent = {
     intro:
       'Five common ways to start, each shown on something we’ve built. Open a package to see what it includes and its indicative price.', // COPY:
     priceLabel: 'Typically', // COPY:
+    monthly: (price: string) => `plus ${price} for hosting, domain and care`, // COPY:
     includesLabel: 'Includes', // COPY:
     exampleLabel: 'Example', // COPY:
     caseLink: 'See the project', // COPY:
@@ -171,7 +171,7 @@ export const homeContent = {
         caption: 'Designed from a blank page, with motion built in', // COPY:
       },
     } as Record<string, { project?: string; phone?: boolean; video?: StageId; caption: string }>,
-    more: { label: 'Compare packages and prices', to: '/pricing' }, // COPY:
+    more: { label: 'Build your estimate', to: '/start?path=build' }, // COPY:
   },
   studio: {
     eyebrow: 'Studio', // COPY:
@@ -412,16 +412,15 @@ export const partnerSectionContent = {
 /* ---------- Pricing ---------- */
 export const pricingContent = {
   hero: {
-    eyebrow: 'Pricing', // COPY:
-    title: 'Priced around your project.', // COPY:
+    eyebrow: 'Work With Us', // COPY:
+    title: 'Work with us.', // COPY:
     intro:
-      'Project packages give you a ballpark. Website Care and Managed Software have monthly prices; Partner is scoped with you around the projects and hours you need. All prices in ZAR.', // COPY:
+      'Choose ongoing care for your website or software, or talk to us about a tailored partnership. See what each option covers and where to start.', // COPY:
   } satisfies PageHeroContent,
   navigation: {
-    label: 'Pricing sections', // COPY:
+    label: 'Work with us sections', // COPY:
     items: [
-      { id: 'pricing-approach', label: 'How pricing works' }, // COPY:
-      { id: 'pricing-packages', label: 'Packages' }, // COPY:
+      { id: 'pricing-approach', label: 'How it works' }, // COPY:
       { id: 'pricing-plans', label: 'Monthly plans' }, // COPY:
       { id: 'pricing-partner', label: 'Partner plan' }, // COPY:
       { id: 'pricing-terms', label: 'Payment terms' }, // COPY:
@@ -429,47 +428,23 @@ export const pricingContent = {
     ],
   },
   approach: {
-    eyebrow: 'How pricing works', // COPY:
-    title: 'From rough idea to a final price.', // COPY:
+    eyebrow: 'How it works', // COPY:
+    title: 'A clear way to get started.', // COPY:
     steps: [
       {
-        title: 'Build an estimate', // COPY:
-        body: 'Start from a package below or from scratch. Answer a few questions and see a range for your project straight away.', // COPY:
+        title: 'Tell us what you need', // COPY:
+        body: 'Choose a care plan or describe the projects you want us to create and manage.', // COPY:
       },
       {
         title: 'Talk it through', // COPY:
-        body: 'A short call to understand the business, not just the website, and what matters most.', // COPY:
+        body: 'We look at what you have, what needs attention and the hours the work may take.', // COPY:
       },
       {
-        title: 'Get a fixed quote', // COPY:
-        body: 'Scope, timeline and payment milestones in writing, agreed before any work starts.', // COPY:
+        title: 'Agree the scope', // COPY:
+        body: 'We confirm what is included, the monthly price and when work starts.', // COPY:
       },
     ],
-    cta: { label: 'Build my estimate', to: '/start' }, // COPY:
-  },
-  quotes: {
-    eyebrow: 'Starting points', // COPY:
-    title: 'Packages, for a ballpark.', // COPY:
-    intro:
-      'Pick the closest one and the brief opens with it filled in, ready to adjust. Ranges are a guide; your estimate comes from the brief and your fixed quote from a short call.', // COPY:
-    rangeLabel: 'Typically', // COPY:
-    monthly: (price: string) => `plus ${price} for hosting, domain and care`, // COPY:
-    start: 'Start from this one', // COPY:
-    /** The last card: apps and software, which vary too much to package. */
-    apps: {
-      title: 'Need an app or software?', // COPY:
-      body: 'Web apps, mobile apps and desktop tools vary by scope. These starting estimates are calculated at R400 per working hour; after scoping, we turn the hours into a fixed quote.', // COPY:
-      /** Representative software offerings whose calculated estimates appear on the card. */
-      offerings: { webApp: 'web-app', desktop: 'desktop-app', mobile: 'custom-software' },
-      prices: (webApp: string, desktop: string, mobile: string) => [
-        `Web apps from ${webApp}`, // COPY:
-        `Desktop apps from ${desktop}`, // COPY:
-        `Mobile apps from ${mobile}`, // COPY:
-      ],
-      label: 'Tell us about your app', // COPY:
-      /** Opens the brief on "What are we building?", where the app types are listed. */
-      to: '/start?path=build',
-    },
+    cta: { label: 'Tell us what you need', to: '/start' }, // COPY:
   },
   plans: {
     eyebrow: 'Monthly plans', // COPY:
@@ -516,8 +491,8 @@ export const pricingContent = {
     hours: (label: string) => `${label} included each month`, // COPY:
   },
   faq: {
-    eyebrow: 'Pricing FAQ', // COPY:
-    title: 'The money questions.', // COPY:
+    eyebrow: 'Common questions', // COPY:
+    title: 'The practical details.', // COPY:
   } satisfies SectionIntro,
 }
 

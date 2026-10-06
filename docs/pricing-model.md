@@ -197,20 +197,18 @@ Care is for one website; Managed adds one standard app and a small monthly chang
 
 **Budget ranges:** Under R20k · R20k–R40k · R40k–R75k · R75k–R150k · R150k+ · Not sure.
 
-## Public pricing summary (Pricing page)
+## Public price placement
 
-- **Build:** Business Websites from R18,000 · Custom/Immersive from R35,000 · E-commerce
+- **Build (Home and /start):** Business Websites from R18,000 · Custom/Immersive from R35,000 · E-commerce
   from R45,000 · Web Apps & MVPs from R75,000 · Custom Software & Mobile Apps from
   R120,000 · AI & Automation from R15,000 · Discovery from R7,500. Every estimate uses
   the R400/hour development rate.
-- **Take over:** audit from R2,500
-- **Run:** Website Care R700/month · Managed Software R3,600/month.
-- **Partner:** tailored quote after discussing the projects and monthly hours.
-- Underneath: "Need something more specific? Every project is different. Build a quick
-  project brief and we'll give you a more accurate estimate. → Build my estimate"
+- **Take over (/start):** audit from R2,500.
+- **Work With Us (/pricing):** Website Care R700/month · Managed Software R3,600/month ·
+  Partner tailored quote after discussing projects and monthly hours.
 
-Home shows the same calculated indicative ranges for its five starting packages as the
-Pricing page. The brief produces the project-specific estimate.
+Home shows calculated indicative ranges for its five starting packages. The brief produces
+the project-specific estimate.
 
 ## Quote builder (/start)
 

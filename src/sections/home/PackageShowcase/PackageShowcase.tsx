@@ -24,7 +24,7 @@ export interface ShowcasePackage {
   name: string
   /** Who it's for, in one line. */
   for: string
-  /** Calculated from the same starting quote as the Pricing page. */
+  /** Calculated from the same starting quote as the project brief. */
   range: string
   monthly?: string
   includes: string[]

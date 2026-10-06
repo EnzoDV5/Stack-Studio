@@ -1,7 +1,7 @@
 /**
- * Ready-made starting quotes for the Pricing page. Each is a set of quote-builder answers:
- * the page shows the range lib/estimate computes for it (so prices stay in one place), and
- * "Start from this quote" opens /start?quote=<id> with the builder pre-filled.
+ * Ready-made starting quotes for the Home package showcase. Each is a set of quote-builder
+ * answers; Home shows the range lib/estimate computes for it, and /start?quote=<id> still
+ * opens the builder pre-filled.
  * Answers must be valid for the builder (tests/quotes.test.ts checks every preset).
  */
 import type { QuotePreset } from '@/types'

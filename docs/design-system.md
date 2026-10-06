@@ -160,7 +160,6 @@ Neighbouring sections never share a trigger type, and every section's motion is 
 | Home services       | Horizontal accordion (transform + clip-path)                                                          | `PathChooser`                    |
 | Home process        | A playhead sweeps the plan on entry; hover or click a week to glide there                             | `ProcessLine`                    |
 | Client quotes       | Quote cards rise in one after the other (no images)                                                   | `ClientVoices`, `StaggerGroup`   |
-| Starting quotes     | Quote cards rise in; each opens the estimator pre-filled                                              | `QuoteStarters`, `StaggerGroup`  |
 | Case study site     | The site on a laptop: the screen swings up and grows, then the site scrolls                           | `CaseDevice`, `MacbookScroll`    |
 | Prices, metrics     | Numbers count up once on enter                                                                        | `CountUp`                        |
 | Closing band        | Code characters compile into the current-tone title once it enters                                    | `ClosingCta`, `MaskedHeading`    |

@@ -22,7 +22,7 @@ import type { PlanFamily, StageId } from '@/types'
 
 // Home answers "who are you, and can you do it?": where the visitor is (with the stack behind the
 // work), a package to start from (shown on sites we built), the work, what clients say and the
-// founders, then the closing band. Package ranges match /pricing; the week-by-week process
+// founders, then the closing band. Package ranges come from the same estimator as /start; the week-by-week process
 // lives on /services. Heavy sections mount only as they approach the viewport.
 const PathChooser = lazy(() =>
   import('@/sections/home/PathChooser').then((m) => ({ default: m.PathChooser })),
@@ -65,7 +65,7 @@ const showcasePackages: ShowcasePackage[] = quotePresets.flatMap((preset) => {
       for: preset.for,
       range: formatPriceRange(result.low, result.high, 1_000),
       monthly: result.carePlan
-        ? pricingContent.quotes.monthly(
+        ? homeContent.packages.monthly(
             `${formatPrice(result.carePlan.pricePerMonth)}${pricingContent.priceLabels.perMonth}`,
           )
         : undefined,

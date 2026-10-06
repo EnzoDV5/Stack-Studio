@@ -1,10 +1,9 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { addOns } from '@/data/addons'
-import { pricingContent } from '@/data/pages'
+import { homeContent } from '@/data/pages'
 import { plans } from '@/data/plans'
 import { getQuotePreset, quotePresets } from '@/data/quotes'
-import { BUILD_RATE_PER_HOUR } from '@/data/rates'
 import { offerings } from '@/data/services'
 import { prefillFromParams } from '@/lib/brief-prefill'
 import { estimate } from '@/lib/estimate'
@@ -37,7 +36,7 @@ describe('starting quotes', () => {
     }
   })
 
-  it('each produce an indicative range (so the Pricing page can show one)', () => {
+  it('each produce an indicative range for the Home package showcase', () => {
     for (const preset of quotePresets) {
       const result = estimate(preset.answers)
       assert.equal(result.kind, 'range', preset.id)
@@ -58,16 +57,9 @@ describe('starting quotes', () => {
     }
   })
 
-  it('shows software estimates calculated from the development rate', () => {
-    for (const id of Object.values(pricingContent.quotes.apps.offerings)) {
-      const offering = offerings.find((o) => o.id === id)
-      assert.ok(offering && offering.fromPrice > 0, id)
-      assert.equal(offering.briefCategory, 'software', id)
-      assert.ok(offering.estimatedHours, id)
-      assert.equal(offering.fromPrice, offering.estimatedHours * BUILD_RATE_PER_HOUR, id)
-    }
+  it('takes the Home package call to action into the build brief', () => {
     const prefill = prefillFromParams(
-      new URLSearchParams(pricingContent.quotes.apps.to.split('?')[1]),
+      new URLSearchParams(homeContent.packages.more.to.split('?')[1]),
       {
         offerings,
         plans,
