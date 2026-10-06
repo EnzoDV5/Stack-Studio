@@ -41,8 +41,8 @@ link, so visitors choose where to go next.
   founders)
 - **Services:** what do you do, and how does a project run? No prices. Picking a service
   opens the brief ready for it (`/start?type=<service>` or the group's `?path=`).
-- **Plans:** how do we start, and what ongoing support fits? How it works leads into a
-  comparison of Website Care, Managed Software and Partner, then detailed cards. The orange
+- **Plans:** how do we start, and what ongoing support fits? A video and three clear steps lead
+  into a selectable comparison of Website Care, Managed Software and Partner, then detailed cards. The orange
   Partner card opens a brief to discuss projects and monthly hours.
 - **Start:** the real estimate for this project, then contact.
 

@@ -407,7 +407,11 @@ export const pricingContent = {
   },
   approach: {
     eyebrow: 'How it works', // COPY:
-    title: 'A clear way to get started.', // COPY:
+    title: 'Good work starts here.', // COPY:
+    intro:
+      'Whether you need reliable care or a team deep in the work, we start by understanding what you have and where you want to go.', // COPY:
+    mediaCaption: 'A plan that moves with your work.', // COPY:
+    mediaLabel: 'Planning / Support', // COPY:
     steps: [
       {
         title: 'Find your starting point', // COPY:
@@ -426,24 +430,30 @@ export const pricingContent = {
   },
   options: {
     eyebrow: 'Your options', // COPY:
-    title: 'The right level of help.', // COPY:
+    title: 'Choose your level of support.', // COPY:
     intro:
-      'Start with reliable care for one website, add hands-on software management, or work with the same team across projects. The detail for each option is just below.', // COPY:
+      'Three ways to keep things moving, from the essentials to a team across projects. Pick one to see where it fits, then compare the full scope below.', // COPY:
     comparison: [
       {
         label: 'Website Care',
-        body: 'Hosting, a standard domain and routine upkeep for one website.',
+        short: 'One website, looked after.',
+        body: 'Reliable hosting, a standard domain and routine technical care for one website. A simple way to keep what you have healthy and online.',
+        detailLink: { label: 'See Website Care', to: '/pricing#pricing-care' },
       }, // COPY:
       {
         label: 'Managed Software',
-        body: 'Care for a website and an app, with three small change tickets each month.',
+        short: 'Your website and app, managed together.',
+        body: 'Hosting and technical care for one website and one standard app, plus three small change tickets each month for the improvements that keep coming up.',
+        detailLink: { label: 'See Managed Software', to: '/pricing#pricing-managed' },
       }, // COPY:
       {
         label: 'Partner',
-        body: 'A team to create and manage projects, including AI tools, with scope and monthly hours agreed together.',
+        short: 'One team across your projects.',
+        body: 'Work with us to plan, create and manage the projects you need, including AI tools. We agree the scope and monthly hours together.',
+        detailLink: { label: 'See Partner', to: '/pricing#pricing-partner' },
       }, // COPY:
     ],
-    cta: { label: 'Compare the plans', to: '/pricing#pricing-plans' }, // COPY:
+    cta: { label: 'Compare every detail', to: '/pricing#pricing-plans' }, // COPY:
   },
   plans: {
     eyebrow: 'Monthly plans', // COPY:

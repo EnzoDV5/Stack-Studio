@@ -88,8 +88,9 @@ brief to discuss the projects and monthly hours.
 
 ## Plans `/pricing`
 
-The page starts with How it works, then a short comparison of Website Care, Managed Software
-and Partner. Detailed cards show what each includes and excludes. Payment terms, common questions and the closing CTA
+The page starts with a How it works editorial video and three numbered steps, then an interactive
+comparison of Website Care, Managed Software and Partner. Each selection links to its detailed card,
+which shows what is included and excluded. Payment terms, common questions and the closing CTA
 follow. The Home package showcase keeps indicative project ranges and sends visitors to
 the brief for a project estimate. The existing `/pricing` URL stays in place for old links.
 

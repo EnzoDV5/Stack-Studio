@@ -1,5 +1,6 @@
 import { PageMeta } from '@/components/seo/PageMeta'
 import { faqsFor } from '@/data/faqs'
+import { serviceMedia } from '@/data/media'
 import { pageMeta, pricingContent } from '@/data/pages'
 import { plans } from '@/data/plans'
 import { policies } from '@/data/policies'
@@ -21,6 +22,7 @@ export function PricingPage() {
     .filter((plan) => (plan.family === 'care' || plan.family === 'managed') && isVisible(plan))
     .map((plan) => ({
       id: plan.id,
+      anchorId: `pricing-${plan.family}`,
       name: plan.name,
       tagline: plan.tagline,
       price: planPrice(plan, l),
@@ -53,9 +55,9 @@ export function PricingPage() {
         <PageTitle content={c.hero} />
       </div>
       <div id="pricing-how-it-works">
-        <HowItWorks {...c.approach} tone="paper" />
+        <HowItWorks {...c.approach} media={serviceMedia.partner} tone="paper" />
       </div>
-      <CareOptions id="pricing-options" {...c.options} tone="paper" />
+      <CareOptions id="pricing-options" {...c.options} tone="dark" />
       <div id="pricing-plans">
         <MonthlyPlans
           tone="dark"

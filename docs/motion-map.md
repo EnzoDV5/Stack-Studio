@@ -85,15 +85,15 @@ No adjacent clashes.
 
 ### Pricing
 
-| #   | Section      | Tone   | Motion             | Trigger |
-| --- | ------------ | ------ | ------------------ | ------- |
-| 1   | PageTitle    | paper  | Heading compiles   | load    |
-| 2   | HowItWorks   | paper  | Three static steps | none    |
-| 3   | CareOptions  | paper  | Static comparison  | none    |
-| 4   | MonthlyPlans | dark   | Static cards       | none    |
-| 5   | PoliciesList | paper  | Static             | none    |
-| 6   | FaqSection   | paper  | Accordion          | click   |
-| 7   | ClosingCta   | orange | SplitReveal words  | enter   |
+| #   | Section      | Tone   | Motion                                 | Trigger |
+| --- | ------------ | ------ | -------------------------------------- | ------- |
+| 1   | PageTitle    | paper  | Heading compiles                       | load    |
+| 2   | HowItWorks   | paper  | Video reveal and three editorial steps | enter   |
+| 3   | CareOptions  | dark   | Selectable support levels              | click   |
+| 4   | MonthlyPlans | dark   | Static cards                           | none    |
+| 5   | PoliciesList | paper  | Static                                 | none    |
+| 6   | FaqSection   | paper  | Accordion                              | click   |
+| 7   | ClosingCta   | orange | SplitReveal words                      | enter   |
 
 ### Studio
 
@@ -249,10 +249,11 @@ beside a list) and Grow `figures` (two rates as large figures, no image). The ca
 Partner comparison is on Plans. Framed images and video reveal on
 scroll; loops only play while on screen.
 
-**Plans:** PageTitle (load: compile) · HowItWorks (none) · CareOptions (none) ·
+**Plans:** PageTitle (load: compile) · HowItWorks (enter: one planning video) · CareOptions (click: select a support level) ·
 MonthlyPlans (none; three cards) · PoliciesList (none) · FaqSection (hover) ·
-ClosingCta (enter). The process steps lead into a short comparison, then the detailed
-cards. These sections share the paper tone until the cards turn dark.
+ClosingCta (enter). The process pairs an editorial headline with a video and numbered steps;
+visitors then explore each level in a dark selector before the detailed cards. The video plays
+only while visible and stays on its poster with reduced motion.
 
 **Studio:** PageTitle (load: compile) · StudioIntro (enter: MediaReveal) · FounderProfiles (enter:
 MediaReveal; scrub: parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · ValuesGrid
