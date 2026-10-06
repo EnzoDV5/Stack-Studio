@@ -86,17 +86,15 @@ No adjacent clashes.
 
 ### Pricing
 
-| #   | Section            | Tone   | Motion            | Trigger |
-| --- | ------------------ | ------ | ----------------- | ------- |
-| 1   | PageTitle          | paper  | Heading compiles  | load    |
-| 2   | PricingSteps       | paper  | Static            | none    |
-| 3   | QuoteStarters      | paper  | Cards rise        | enter   |
-| 4   | MonthlyPlans       | dark   | Static comparison | none    |
-| 5   | IncludedVsExcluded | dark   | Static            | none    |
-| 6   | PartnerSection     | white  | Heading compiles  | enter   |
-| 7   | PoliciesList       | paper  | Static            | none    |
-| 8   | FaqSection         | paper  | Accordion         | click   |
-| 9   | ClosingCta         | orange | SplitReveal words | enter   |
+| #   | Section       | Tone   | Motion            | Trigger |
+| --- | ------------- | ------ | ----------------- | ------- |
+| 1   | PageTitle     | paper  | Heading compiles  | load    |
+| 2   | PricingSteps  | paper  | Static            | none    |
+| 3   | QuoteStarters | paper  | Cards rise        | enter   |
+| 4   | MonthlyPlans  | dark   | Static comparison | none    |
+| 5   | PoliciesList  | paper  | Static            | none    |
+| 6   | FaqSection    | paper  | Accordion         | click   |
+| 7   | ClosingCta    | orange | SplitReveal words | enter   |
 
 ### Studio
 
@@ -253,10 +251,10 @@ own section with a short comparison and a discussion brief. Framed images and vi
 scroll; loops only play while on screen.
 
 **Pricing:** PageTitle (load: compile) · PricingSteps (none) · QuoteStarters (enter:
-cards rise) · MonthlyPlans (none) · IncludedVsExcluded (none) · PartnerSection (none) · PoliciesList
-(none) · FaqSection (hover) · ClosingCta (enter). No fixed price list: ready-made starting
+cards rise) · MonthlyPlans (none; three comparison cards) · PoliciesList
+(none) · FaqSection (hover) · ClosingCta (enter). Ready-made starting
 quotes show the range the estimator computes and open /start pre-filled. Openers: minimal ·
-split · inline · own · split · own. Everything from the plans down mounts as it approaches.
+split · inline · split · own. Everything from the plans down mounts as it approaches.
 
 **Studio:** PageTitle (load: compile) · StudioIntro (enter: MediaReveal) · FounderProfiles (enter:
 MediaReveal; scrub: parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · ValuesGrid

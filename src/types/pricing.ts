@@ -73,6 +73,9 @@ export interface Plan {
   /** Human label for the hours, e.g. "30 min", "20 hours". */
   hoursLabel?: string
   includes: string[]
+  excludes?: string[]
+  /** Plain-language explanation of what makes up the monthly price. */
+  priceBreakdown?: string
   minimumTermMonths: number
   highlighted?: boolean
   visibility: Visibility

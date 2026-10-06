@@ -399,9 +399,12 @@ export const partnerSectionContent = {
     { label: 'Website Care', body: 'One website: hosting, domain and routine upkeep.' }, // COPY:
     {
       label: 'Managed Software',
-      body: 'One app: hosting and technical upkeep, plus three small changes a month.',
+      body: 'One website and one app: hosting, domain and upkeep, plus three small change tickets a month.',
     }, // COPY:
-    { label: 'Partner', body: 'New features and bigger changes, using agreed monthly hours.' }, // COPY:
+    {
+      label: 'Partner',
+      body: 'Planning, management and development across projects, using reserved monthly hours. Hosting is separate.',
+    }, // COPY:
   ],
   cta: { label: 'Talk about Partner', to: '/start?partner=discuss' }, // COPY:
 }
@@ -412,7 +415,7 @@ export const pricingContent = {
     eyebrow: 'Pricing', // COPY:
     title: 'Priced around your project.', // COPY:
     intro:
-      'Packages give you a ballpark. Website Care and Managed Software have fixed monthly prices; we agree Partner hours together. All prices in ZAR.', // COPY:
+      'Project packages give you a ballpark. Monthly care starts with a website, adds software and changes, or reserves a team by the hour. All prices in ZAR.', // COPY:
   } satisfies PageHeroContent,
   navigation: {
     label: 'Pricing sections', // COPY:
@@ -420,8 +423,7 @@ export const pricingContent = {
       { id: 'pricing-approach', label: 'How pricing works' }, // COPY:
       { id: 'pricing-packages', label: 'Packages' }, // COPY:
       { id: 'pricing-plans', label: 'Monthly plans' }, // COPY:
-      { id: 'pricing-included', label: 'What plans cover' }, // COPY:
-      { id: 'pricing-partner', label: 'Partner' }, // COPY:
+      { id: 'pricing-partner', label: 'Partner plan' }, // COPY:
       { id: 'pricing-terms', label: 'Payment terms' }, // COPY:
       { id: 'pricing-faq', label: 'Questions' }, // COPY:
     ],
@@ -471,9 +473,11 @@ export const pricingContent = {
   },
   plans: {
     eyebrow: 'Monthly plans', // COPY:
-    title: 'Two ways to keep it working.', // COPY:
+    title: 'Choose the level of support you need.', // COPY:
     choose: 'Choose', // COPY:
-    boundary: 'Need bigger changes or new features? We’ll quote them, or plan them through Partner.', // COPY:
+    chooseHours: 'Choose hours', // COPY:
+    boundary:
+      'Managed tickets are for small changes of up to one hour each. Larger work is quoted at R400/hour or planned through Partner. Partner hosting, if needed: websites from R450/month; apps from R1,500/month; domains at cost.', // COPY:
     minTerm: (n: number) => `${n}-month minimum, billed monthly in advance`, // COPY:
   },
   partner: {

@@ -48,7 +48,7 @@ export const policies: Policies = {
       id: 'third-party',
       title: 'Third-party costs', // COPY:
       body: [
-        'The hosting listed in Website Care and Managed Software is included in the plan price.', // COPY:
+        'Website Care includes website hosting. Managed Software includes website and standard app hosting. Partner hosting is quoted separately.', // COPY:
         'Extra cloud capacity, AI/API usage, email, SMS and storage are agreed first and billed at cost.', // COPY:
       ],
     },
@@ -56,7 +56,7 @@ export const policies: Policies = {
       id: 'domains',
       title: 'Domains', // COPY:
       body: [
-        'Website Care includes one standard domain registration or renewal up to R600 a year. Extra or premium domains are billed at cost.', // COPY:
+        'Website Care and Managed Software each include one standard domain registration or renewal up to R600 a year. Partner, extra and premium domains are billed at cost.', // COPY:
       ],
     },
     {
@@ -75,12 +75,12 @@ export const policies: Policies = {
   maintenance: {
     title: 'What the monthly plans cover.', // COPY:
     intro:
-      'Care keeps one website running. Managed keeps one app running and includes three small change requests a month.', // COPY:
+      'Care keeps one website running. Managed covers a website and one app, plus three small change tickets a month.', // COPY:
     included: [
       'Hosting and routine updates', // COPY:
       'Backups and monitoring', // COPY:
       'Routine fixes to covered systems', // COPY:
-      'Three small changes in Managed Software', // COPY:
+      'Three small changes of up to one hour each in Managed Software', // COPY:
     ],
     excluded: [
       'Content or design changes in Website Care', // COPY:
@@ -91,7 +91,8 @@ export const policies: Policies = {
       'New applications', // COPY:
       'Large content changes', // COPY:
     ],
-    outro: 'Extra requests are quoted first. Partner is for regular features and larger changes.', // COPY:
+    outro:
+      'Extra requests are quoted first at R400/hour. Partner reserves hours for regular project work; hosting is separate.', // COPY:
   },
   vatNote: 'Prices exclude VAT where applicable.', // COPY: confirm VAT status
   hostingOnRequest: 'Hosting-only available on request.', // COPY:

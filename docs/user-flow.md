@@ -42,8 +42,8 @@ link, so visitors choose where to go next.
 - **Services:** what do you do, and how does a project run? No prices. Picking a service
   opens the brief ready for it (`/start?type=<service>` or the group's `?path=`).
 - **Pricing:** what does it cost? Packages give a ballpark and open the brief pre-filled;
-  one Website Care plan and one Managed Software plan show bundled monthly prices. Partner
-  has its own section for regular feature work and opens a brief to agree monthly hours.
+  Website Care, Managed Software and Partner cards show monthly prices and scope. Partner
+  opens a brief to choose monthly hours.
 - **Start:** the real estimate for this project, then contact.
 
 The three levels of price are always in this order: **package** (ballpark, on /pricing) →

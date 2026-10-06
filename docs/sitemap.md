@@ -79,11 +79,11 @@ marker reveals its name before jumping.
 Pricing uses the same navigator.
 
 The three ongoing options have different scopes: **Website Care** includes hosting, one
-standard domain and routine upkeep for one site; **Managed Software** includes app hosting,
-technical upkeep and three small change requests each month; **Partner** plans and builds
-larger changes and new features within monthly hours agreed together.
-Partner is a separate section on Services and Pricing, with no pricing cards. Its action opens
-a brief to discuss the work and agree monthly hours together.
+standard domain and routine upkeep for one site; **Managed Software** includes website and app hosting,
+one standard domain, technical upkeep and three small change tickets each month; **Partner** plans, manages and builds
+across projects within reserved monthly hours. Partner hosting and domains are separate.
+Partner has a third card on Pricing and a separate explanation on Services. Its pricing action opens
+a brief to choose monthly hours.
 
 ## Pricing `/pricing`
 
@@ -92,8 +92,7 @@ call turns it into a fixed quote. Compact page title, then how pricing
 works (estimate → call → fixed quote), then **starting quotes** (packages): ready-made quotes (launch,
 bookings, content and leads, online store, brand experience) showing the range the
 estimator computes, each opening `/start?quote=<id>` pre-filled, plus "Something else?"
-for everything else. Then one Website Care and one Managed Software monthly plan, what they cover, a separate
-Partner section, payment terms, the pricing
+for everything else. Then Website Care, Managed Software and Partner cards with what each includes and excludes, payment terms, the pricing
 FAQ and the closing CTA. Starting quotes live in `src/data/quotes.ts`; prices in
 `src/data/services.ts`, `plans.ts` and `addons.ts`.
 

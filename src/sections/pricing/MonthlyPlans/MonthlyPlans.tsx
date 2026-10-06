@@ -10,7 +10,7 @@ export interface MonthlyPlansProps {
   tone?: Tone
 }
 
-/** The two fixed monthly options shown together so their scope is easy to compare. */
+/** Three ongoing options shown together so their scope is easy to compare. */
 export function MonthlyPlans({
   eyebrow,
   title,
@@ -22,7 +22,7 @@ export function MonthlyPlans({
     <Section tone={tone} spacing="none" className="pt-section pb-8 md:pb-10">
       <div className="container-site">
         <SectionHeader variant="inline" eyebrow={eyebrow} title={title} />
-        <ul className="mt-10 grid gap-4 md:grid-cols-2">
+        <ul className="mt-10 grid gap-4 lg:grid-cols-3">
           {plans.map(({ id, ...plan }) => (
             <PlanCard key={id} {...plan} />
           ))}

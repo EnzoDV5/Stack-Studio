@@ -19,11 +19,12 @@ describe('Partner enquiries', () => {
     assert.equal(prefill.stepId, 'contact')
   })
 
-  it('does not expose fixed Partner plans as pricing cards', () => {
-    assert.ok(
+  it('shows one starting Partner card while keeping larger examples out of the comparison', () => {
+    assert.deepEqual(
       plans
-        .filter((plan) => plan.family === 'partner')
-        .every((plan) => plan.visibility === 'hidden'),
+        .filter((plan) => plan.family === 'partner' && plan.visibility === 'pricing')
+        .map((plan) => plan.id),
+      ['partner-10'],
     )
   })
 
@@ -43,6 +44,9 @@ describe('Partner enquiries', () => {
   })
 
   it('calculates custom hours and accepts a discussion without an estimate', () => {
+    assert.deepEqual(estimate({ path: 'develop', hours: 'custom', customHours: 9 }), {
+      kind: 'none',
+    })
     const result = estimate({ path: 'develop', hours: 'custom', customHours: 12 })
     assert.equal(result.kind, 'plan')
     if (result.kind === 'plan') {

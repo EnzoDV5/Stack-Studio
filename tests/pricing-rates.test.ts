@@ -36,7 +36,10 @@ describe('public pricing rates', () => {
     assert.equal(care.length, 1)
     assert.equal(managed.length, 1)
     assert.equal(care[0]?.pricePerMonth, 450 + CARE_RATE_PER_HOUR + 600 / 12)
-    assert.equal(managed[0]?.pricePerMonth, 1_500 + (2 + 3) * CARE_RATE_PER_HOUR)
+    assert.equal(
+      managed[0]?.pricePerMonth,
+      450 + 1_500 + 600 / 12 + 2 * CARE_RATE_PER_HOUR + 3 * BUILD_RATE_PER_HOUR,
+    )
     assert.equal(managed[0]?.includedHours, 3)
   })
 

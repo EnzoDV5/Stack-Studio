@@ -33,7 +33,7 @@ export const briefSteps: BriefStepConfig[] = [
       {
         value: 'run',
         label: 'I need someone to keep it working',
-        description: 'Website hosting and upkeep, or app care with small monthly changes.',
+        description: 'Website care, or website and app care with small monthly changes.',
       }, // COPY:
       {
         value: 'develop',
@@ -234,7 +234,7 @@ export const briefSteps: BriefStepConfig[] = [
     field: 'runType',
     label: 'Type', // COPY:
     title: 'Is it a website or an app?', // COPY:
-    hint: 'Website Care is for sites. Managed Software is for apps and includes three small monthly changes.', // COPY:
+    hint: 'Website Care covers a site. Managed Software covers a website and app, plus three small monthly changes.', // COPY:
     options: [
       { value: 'website', label: 'A website' }, // COPY:
       { value: 'app', label: 'An app or software system' }, // COPY:
@@ -275,7 +275,7 @@ export const briefSteps: BriefStepConfig[] = [
     id: 'customHours',
     kind: 'count',
     field: 'customHours',
-    min: 1,
+    min: 10,
     max: 160,
     unit: { one: 'hour a month', other: 'hours a month' }, // COPY:
     label: 'Partner hours', // COPY:

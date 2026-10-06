@@ -42,7 +42,7 @@ export const serviceStages: ServiceStage[] = [
     name: 'Keep it working', // COPY:
     line: 'Website hosting and care, or app care with three monthly changes.', // COPY:
     summary:
-      'Website Care includes hosting, a standard domain and routine upkeep. Managed Software includes app hosting, technical upkeep and three small changes each month.', // COPY:
+      'Website Care includes hosting, a standard domain and routine upkeep for one site. Managed Software adds hosting and care for one app plus three small change tickets each month.', // COPY:
     cta: { label: 'Find my plan', to: '/start?path=run' }, // COPY:
     briefPath: 'run',
   },

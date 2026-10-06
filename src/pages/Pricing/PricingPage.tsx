@@ -1,6 +1,6 @@
 import { PageMeta } from '@/components/seo/PageMeta'
 import { faqsFor } from '@/data/faqs'
-import { pageMeta, partnerSectionContent, pricingContent } from '@/data/pages'
+import { pageMeta, pricingContent } from '@/data/pages'
 import { plans } from '@/data/plans'
 import { policies } from '@/data/policies'
 import { quotePresets } from '@/data/quotes'
@@ -8,14 +8,12 @@ import { getOffering } from '@/data/services'
 import { estimate } from '@/lib/estimate'
 import { formatPrice, formatPriceRange } from '@/lib/format'
 import { isVisible, planPrice } from '@/lib/offer'
-import { IncludedVsExcluded } from '@/sections/pricing/IncludedVsExcluded'
 import { MonthlyPlans } from '@/sections/pricing/MonthlyPlans'
 import { PoliciesList } from '@/sections/pricing/PoliciesList'
 import { PricingSteps } from '@/sections/pricing/PricingSteps'
 import { QuoteStarters, type QuoteStarter } from '@/sections/pricing/QuoteStarters'
 import { FaqSection } from '@/sections/shared/FaqSection'
 import { PageTitle } from '@/sections/shared/PageTitle'
-import { PartnerSection } from '@/sections/shared/PartnerSection'
 import { SectionNavigator } from '@/sections/shared/SectionNavigator'
 
 const c = pricingContent
@@ -60,21 +58,24 @@ const appsCard = {
 }
 
 /**
- * Ready-made starting quotes open the brief pre-filled. Website Care and Managed Software
- * have monthly plan cards; Partner has its own discussion-led section before the terms.
+ * Ready-made starting quotes open the brief pre-filled. The three ongoing options sit together.
  */
 export function PricingPage() {
-  const fixedPlans = plans
-    .filter((plan) => (plan.family === 'care' || plan.family === 'managed') && isVisible(plan))
+  const monthlyPlans = plans
+    .filter((plan) => ['care', 'managed', 'partner'].includes(plan.family) && isVisible(plan))
     .map((plan) => ({
       id: plan.id,
+      anchorId: plan.family === 'partner' ? 'pricing-partner' : undefined,
       name: plan.name,
       tagline: plan.tagline,
       price: planPrice(plan, l),
+      priceBreakdown: plan.priceBreakdown,
       includes: plan.includes,
+      excludes: plan.excludes ?? [],
+      labels: { included: c.scope.includedTitle, excluded: c.scope.excludedTitle },
       cta: {
-        label: c.plans.choose,
-        to: `/start?plan=${plan.id}`,
+        label: plan.family === 'partner' ? c.plans.chooseHours : c.plans.choose,
+        to: plan.family === 'partner' ? '/start?path=develop' : `/start?plan=${plan.id}`,
         location: `pricing-plan:${plan.id}`,
       },
     }))
@@ -112,23 +113,14 @@ export function PricingPage() {
           tone="dark"
           eyebrow={c.plans.eyebrow}
           title={c.plans.title}
-          plans={fixedPlans}
-          footnotes={[c.plans.boundary, c.plans.minTerm(policies.minimumTermMonths)]}
+          plans={monthlyPlans}
+          footnotes={[
+            c.plans.boundary,
+            c.plans.minTerm(policies.minimumTermMonths),
+            policies.vatNote,
+          ]}
         />
       </div>
-      <div id="pricing-included">
-        <IncludedVsExcluded
-          tone="dark"
-          eyebrow={c.scope.eyebrow}
-          title={policies.maintenance.title}
-          intro={policies.maintenance.intro}
-          included={policies.maintenance.included}
-          excluded={policies.maintenance.excluded}
-          outro={policies.maintenance.outro}
-          labels={{ included: c.scope.includedTitle, excluded: c.scope.excludedTitle }}
-        />
-      </div>
-      <PartnerSection id="pricing-partner" title={c.partner.title} {...partnerSectionContent} />
       <div id="pricing-terms">
         <PoliciesList
           tone="paper"

@@ -259,7 +259,7 @@ function estimateDevelop(answers: Partial<BriefAnswers>, data: EstimateData): Es
       return { kind: 'consult', topic: 'partner' }
     case 'custom': {
       const hours = answers.customHours
-      if (!Number.isInteger(hours) || hours === undefined || hours < 1 || hours > 160)
+      if (!Number.isInteger(hours) || hours === undefined || hours < 10 || hours > 160)
         return { kind: 'none' }
       const base = partner('partner-10')
       return {

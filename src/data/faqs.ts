@@ -62,7 +62,7 @@ export const faqs: Faq[] = [
     category: 'pricing',
     question: 'What about hosting, cloud and AI costs?', // COPY:
     answer:
-      'Standard hosting is included in Website Care and Managed Software. Website Care also includes one standard domain up to R600 a year. Extra cloud capacity, AI/API usage, email and SMS are agreed first and billed at cost.', // COPY:
+      'Website Care includes one website; Managed Software includes one website and one standard app. Both include a standard domain up to R600 a year. Partner hours exclude hosting and domains; we quote those separately. Extra cloud capacity, AI/API usage, email and SMS are agreed first and billed at cost.', // COPY:
   },
   {
     id: 'vat',
