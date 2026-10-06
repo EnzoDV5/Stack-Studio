@@ -39,11 +39,11 @@ link, so visitors choose where to go next.
 
 - **Home:** who are you, and can you do it? (stages and the stack, packages, work, clients,
   founders)
-- **Services:** how do we start, what do you do, and how does a project run? No prices. Picking a service
+- **Services:** what do you do, and how does a project run? No prices. Picking a service
   opens the brief ready for it (`/start?type=<service>` or the group's `?path=`).
-- **Work With Us:** what ongoing support fits? Website Care and Managed Software cards show
-  monthly prices. The orange Partner card
-  describes a tailored engagement and opens a brief to discuss projects and monthly hours.
+- **Plans:** how do we start, and what ongoing support fits? How it works leads into a
+  comparison of Website Care, Managed Software and Partner, then detailed cards. The orange
+  Partner card opens a brief to discuss projects and monthly hours.
 - **Start:** the real estimate for this project, then contact.
 
 The three levels of price are always in this order: **package** (ballpark, on Home) →

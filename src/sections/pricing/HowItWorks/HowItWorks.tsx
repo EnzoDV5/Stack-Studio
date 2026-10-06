@@ -13,11 +13,16 @@ export interface HowItWorksProps {
   tone?: Tone
 }
 
-/** The first Services section: from a client's need to an agreed scope. */
+/** Introduces the plan choice, conversation and agreed scope. */
 export function HowItWorks({ eyebrow, title, steps, cta, tone = 'paper' }: HowItWorksProps) {
   const headingId = useId()
   return (
-    <Section tone={tone} className="pt-10" aria-labelledby={headingId}>
+    <Section
+      tone={tone}
+      spacing="none"
+      className="pt-10 pb-12 md:pt-16 md:pb-16"
+      aria-labelledby={headingId}
+    >
       <div className="container-site">
         <SectionHeader
           id={headingId}
@@ -25,14 +30,7 @@ export function HowItWorks({ eyebrow, title, steps, cta, tone = 'paper' }: HowIt
           eyebrow={eyebrow}
           title={title}
           aside={
-            <Button
-              to={cta.to}
-              withArrow
-              analytics={{
-                event: 'Start project click',
-                props: { location: 'services-how-it-works' },
-              }}
-            >
+            <Button to={cta.to} withArrow>
               {cta.label}
             </Button>
           }

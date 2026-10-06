@@ -204,7 +204,7 @@ Care is for one website; Managed adds one standard app and a small monthly chang
   R120,000 · AI & Automation from R15,000 · Discovery from R7,500. Every estimate uses
   the R400/hour development rate.
 - **Take over (/start):** audit from R2,500.
-- **Work With Us (/pricing):** Website Care R700/month · Managed Software R3,600/month ·
+- **Plans (/pricing):** Website Care R700/month · Managed Software R3,600/month ·
   Partner tailored quote after discussing projects and monthly hours.
 
 Home shows calculated indicative ranges for its five starting packages. The brief produces

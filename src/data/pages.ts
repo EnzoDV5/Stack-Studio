@@ -24,9 +24,9 @@ export const pageMeta = {
     path: '/services',
   },
   pricing: {
-    title: 'Work With Us', // COPY:
+    title: 'Care Plans & Partnership', // COPY:
     description:
-      'Compare Website Care, Managed Software and a tailored Partner engagement with Stack Studio. See what each option includes and how we work together.', // COPY:
+      'Compare Website Care, Managed Software and a tailored Partner engagement with Stack Studio. See how each works, what is included and what it costs.', // COPY:
     path: '/pricing',
   },
   studio: {
@@ -242,37 +242,16 @@ export const servicesContent = {
   navigation: {
     label: 'Services sections', // COPY:
     items: [
-      { id: 'services-how-it-works', label: 'How it works' }, // COPY:
       { id: 'stage-build', label: 'New website' }, // COPY:
       { id: 'apps', label: 'Apps and software' }, // COPY:
       { id: 'desktop', label: 'Desktop software' }, // COPY:
       { id: 'stage-takeover', label: 'Fix or move it' }, // COPY:
       { id: 'stage-run', label: 'Keep it working' }, // COPY:
       { id: 'stage-grow', label: 'Make it better' }, // COPY:
-      { id: 'stage-partner', label: 'Software team' }, // COPY:
       { id: 'process', label: 'How we work' }, // COPY:
       { id: 'next-steps', label: 'Next steps' }, // COPY:
       { id: 'services-faq', label: 'Questions' }, // COPY:
     ],
-  },
-  approach: {
-    eyebrow: 'How it works', // COPY:
-    title: 'A clear way to get started.', // COPY:
-    steps: [
-      {
-        title: 'Tell us what you need', // COPY:
-        body: 'Tell us what you want to build, fix or ask us to manage.', // COPY:
-      },
-      {
-        title: 'Talk it through', // COPY:
-        body: 'We look at what you have, what needs attention and the work involved.', // COPY:
-      },
-      {
-        title: 'Agree the scope', // COPY:
-        body: 'We confirm what is included, the price, timeline and start date.', // COPY:
-      },
-    ],
-    cta: { label: 'Tell us what you need', to: '/start' }, // COPY:
   },
   /** The Build stage's website offerings, shown as their own group. */
   websites: {
@@ -300,9 +279,6 @@ export const servicesContent = {
   },
   improve: {
     note: 'We estimate the hours and send a quote before any work starts. Once the changes are live, you can add ongoing Care.', // COPY:
-  },
-  partner: {
-    title: 'I need a team for my software.', // COPY:
   },
   /**
    * How a project runs, week by week (ProcessLine). It sits after the offer, before the next
@@ -410,41 +386,64 @@ export const servicesContent = {
   } satisfies SectionIntro,
 }
 
-/* ---------- Shared Partner section ---------- */
-export const partnerSectionContent = {
-  eyebrow: 'Partner', // COPY:
-  intro:
-    'Bring us a project or an ongoing need. We can create and manage an AI tool, build a product, or look after several projects. We agree the work and monthly hours together.', // COPY:
-  comparison: [
-    { label: 'Website Care', body: 'One website: hosting, domain and routine upkeep.' }, // COPY:
-    {
-      label: 'Managed Software',
-      body: 'One website and one app: hosting, domain and upkeep, plus three small change tickets a month.',
-    }, // COPY:
-    {
-      label: 'Partner',
-      body: 'A team to create and manage projects, including AI tools, with scope and monthly hours agreed together.',
-    }, // COPY:
-  ],
-  cta: { label: 'Talk about Partner', to: '/start?partner=discuss' }, // COPY:
-}
-
 /* ---------- Pricing ---------- */
 export const pricingContent = {
   hero: {
-    eyebrow: 'Work With Us', // COPY:
-    title: 'Work with us.', // COPY:
+    eyebrow: 'Plans', // COPY:
+    title: 'Care plans & partnership.', // COPY:
     intro:
-      'Choose ongoing care for your website or software, or talk to us about a tailored partnership. See what each option covers and where to start.', // COPY:
+      'Keep your website running, manage your software, or work with us as your ongoing team. Find the level of support that fits.', // COPY:
   } satisfies PageHeroContent,
   navigation: {
-    label: 'Work with us sections', // COPY:
+    label: 'Plans sections', // COPY:
     items: [
+      { id: 'pricing-how-it-works', label: 'How it works' }, // COPY:
+      { id: 'pricing-options', label: 'Your options' }, // COPY:
       { id: 'pricing-plans', label: 'Monthly plans' }, // COPY:
       { id: 'pricing-partner', label: 'Partner plan' }, // COPY:
       { id: 'pricing-terms', label: 'Payment terms' }, // COPY:
       { id: 'pricing-faq', label: 'Questions' }, // COPY:
     ],
+  },
+  approach: {
+    eyebrow: 'How it works', // COPY:
+    title: 'A clear way to get started.', // COPY:
+    steps: [
+      {
+        title: 'Find your starting point', // COPY:
+        body: 'See which level of support fits your website, software or upcoming projects.', // COPY:
+      },
+      {
+        title: 'Talk it through', // COPY:
+        body: 'We check what is live, what needs attention and how much help you need each month.', // COPY:
+      },
+      {
+        title: 'Agree the scope', // COPY:
+        body: 'We confirm what is covered, the monthly price and how requests will be handled.', // COPY:
+      },
+    ],
+    cta: { label: 'Explore your options', to: '/pricing#pricing-options' }, // COPY:
+  },
+  options: {
+    eyebrow: 'Your options', // COPY:
+    title: 'The right level of help.', // COPY:
+    intro:
+      'Start with reliable care for one website, add hands-on software management, or work with the same team across projects. The detail for each option is just below.', // COPY:
+    comparison: [
+      {
+        label: 'Website Care',
+        body: 'Hosting, a standard domain and routine upkeep for one website.',
+      }, // COPY:
+      {
+        label: 'Managed Software',
+        body: 'Care for a website and an app, with three small change tickets each month.',
+      }, // COPY:
+      {
+        label: 'Partner',
+        body: 'A team to create and manage projects, including AI tools, with scope and monthly hours agreed together.',
+      }, // COPY:
+    ],
+    cta: { label: 'Compare the plans', to: '/pricing#pricing-plans' }, // COPY:
   },
   plans: {
     eyebrow: 'Monthly plans', // COPY:
@@ -469,9 +468,6 @@ export const pricingContent = {
     boundary:
       'Managed tickets are for small changes of up to one hour each. Larger work is quoted separately or scoped through Partner.', // COPY:
     minTerm: (n: number) => `${n}-month minimum, billed monthly in advance`, // COPY:
-  },
-  partner: {
-    title: 'A team for what comes next.', // COPY:
   },
   scope: {
     eyebrow: 'What plans cover', // COPY:

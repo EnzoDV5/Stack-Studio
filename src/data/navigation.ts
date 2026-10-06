@@ -3,7 +3,7 @@ import type { CtaLink, NavItem } from '@/types'
 export const primaryNav: NavItem[] = [
   { label: 'Work', to: '/work', description: 'Case studies and proof' }, // COPY:
   { label: 'Services', to: '/services', description: 'What we build, and how' }, // COPY:
-  { label: 'Work With Us', to: '/pricing', description: 'Care plans and partnership' }, // COPY:
+  { label: 'Plans', to: '/pricing', description: 'Website care, managed software and Partner' }, // COPY:
   { label: 'Studio', to: '/studio', description: 'The founders and how we work' }, // COPY:
 ]
 

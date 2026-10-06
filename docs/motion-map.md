@@ -72,28 +72,28 @@ Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whol
 | #   | Section         | Tone   | Motion                                        | Trigger |
 | --- | --------------- | ------ | --------------------------------------------- | ------- |
 | 1   | PageTitle       | paper  | Static                                        | none    |
-| 2   | HowItWorks      | paper  | Three static steps                            | none    |
-| 3   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns | none    |
-| 4   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)      | scrub   |
-| 5   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)        | enter   |
-| 6   | StageExplorer   | paper  | Take over, Run, Grow                          | none    |
-| 7   | PartnerSection  | white  | Ongoing team and service comparison           | none    |
-| 8   | ProcessLine     | dark   | Timeline enters and responds to hover         | enter   |
-| 9   | NextSteps       | dark   | Four step cards deal out of a pile into a row | scrub   |
-| 10  | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
-| 11  | ClosingCta      | orange | SplitReveal words                             | enter   |
+| 2   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns | none    |
+| 3   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)      | scrub   |
+| 4   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)        | enter   |
+| 5   | StageExplorer   | paper  | Take over, Run, Grow                          | none    |
+| 6   | ProcessLine     | dark   | Timeline enters and responds to hover         | enter   |
+| 7   | NextSteps       | dark   | Four step cards deal out of a pile into a row | scrub   |
+| 8   | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
+| 9   | ClosingCta      | orange | SplitReveal words                             | enter   |
 
 No adjacent clashes.
 
 ### Pricing
 
-| #   | Section      | Tone   | Motion            | Trigger |
-| --- | ------------ | ------ | ----------------- | ------- |
-| 1   | PageTitle    | paper  | Heading compiles  | load    |
-| 2   | MonthlyPlans | dark   | Static comparison | none    |
-| 3   | PoliciesList | paper  | Static            | none    |
-| 4   | FaqSection   | paper  | Accordion         | click   |
-| 5   | ClosingCta   | orange | SplitReveal words | enter   |
+| #   | Section      | Tone   | Motion             | Trigger |
+| --- | ------------ | ------ | ------------------ | ------- |
+| 1   | PageTitle    | paper  | Heading compiles   | load    |
+| 2   | HowItWorks   | paper  | Three static steps | none    |
+| 3   | CareOptions  | paper  | Static comparison  | none    |
+| 4   | MonthlyPlans | dark   | Static cards       | none    |
+| 5   | PoliciesList | paper  | Static             | none    |
+| 6   | FaqSection   | paper  | Accordion          | click   |
+| 7   | ClosingCta   | orange | SplitReveal words  | enter   |
 
 ### Studio
 
@@ -216,7 +216,7 @@ reveals before its Parallax drift.
 
 **Services:** ServicesHero (load: compile) · StageExplorer (MediaReveal on framed images and video: 01 Websites) · AppShowcase (scrub: phone turn, 02 Apps and software) ·
 DesktopShowcase (scrub: the laptop opens, 03 Desktop software) · StageExplorer (MediaReveal on framed media: 04 Take
-over, 05 Run, 06 Grow) · PartnerSection (07 Partner, separate from plan tiers) · ProcessLine (enter + hover: how a project runs, week by
+over, 05 Run, 06 Grow) · ProcessLine (enter + hover: how a project runs, week by
 week) · NextSteps (scrub: the step cards deal out) ·
 FaqSection (hover) · ClosingCta (enter). The page groups the offer the way
 visitors look for it; the five stages stay the model elsewhere. Build splits into websites (the
@@ -245,13 +245,14 @@ at 85% to its centre at 42%, 72 evenly spaced frames, cross-faded) the lid lifts
 the display wakes on an illustrative stock and orders app and it turns to face the copy. Each group has
 its own layout, picked for what it sells (`StageBlock layout`): Websites `feature` (the
 intro beside an image, then dropdowns), Take over `cards`, Run `split` (image column
-beside a priced list) and Grow `figures` (two rates as large figures, no image). Partner has its
-own section with a short comparison and a discussion brief. Framed images and video reveal on
+beside a list) and Grow `figures` (two rates as large figures, no image). The care and
+Partner comparison is on Plans. Framed images and video reveal on
 scroll; loops only play while on screen.
 
-**Work With Us:** PageTitle (load: compile) · MonthlyPlans (none; three comparison
-cards) · PoliciesList (none) · FaqSection (hover) · ClosingCta (enter). The plan
-cards and terms mount as they approach.
+**Plans:** PageTitle (load: compile) · HowItWorks (none) · CareOptions (none) ·
+MonthlyPlans (none; three cards) · PoliciesList (none) · FaqSection (hover) ·
+ClosingCta (enter). The process steps lead into a short comparison, then the detailed
+cards. These sections share the paper tone until the cards turn dark.
 
 **Studio:** PageTitle (load: compile) · StudioIntro (enter: MediaReveal) · FounderProfiles (enter:
 MediaReveal; scrub: parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · ValuesGrid

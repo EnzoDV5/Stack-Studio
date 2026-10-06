@@ -3,9 +3,8 @@ import { Button } from '@/components/ui/Button'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
 import type { CtaLink } from '@/types'
 
-export interface PartnerSectionProps {
+export interface CareOptionsProps {
   id: string
-  index?: number
   title: string
   eyebrow: string
   intro: string
@@ -14,25 +13,29 @@ export interface PartnerSectionProps {
   tone?: Tone
 }
 
-/** A conversation-led Partner section, separate from the monthly care plan cards. */
-export function PartnerSection({
+/** Explains the three levels before their detailed plan cards. */
+export function CareOptions({
   id,
-  index,
   title,
   eyebrow,
   intro,
   comparison,
   cta,
-  tone = 'white',
-}: PartnerSectionProps) {
+  tone = 'paper',
+}: CareOptionsProps) {
   const headingId = `${id}-heading`
 
   return (
-    <Section id={id} tone={tone} aria-labelledby={headingId}>
+    <Section
+      id={id}
+      tone={tone}
+      spacing="none"
+      className="pt-8 pb-section md:pt-12"
+      aria-labelledby={headingId}
+    >
       <div className="container-site">
         <SectionHeader
           id={headingId}
-          index={index}
           variant="split"
           eyebrow={eyebrow}
           title={title}
@@ -50,11 +53,7 @@ export function PartnerSection({
           ))}
         </dl>
         <div className="mt-8">
-          <Button
-            to={cta.to}
-            withArrow
-            analytics={{ event: 'Start project click', props: { location: id } }}
-          >
+          <Button to={cta.to} withArrow>
             {cta.label}
           </Button>
         </div>

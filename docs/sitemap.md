@@ -5,19 +5,19 @@ Section numbers are the eyebrow labels shown on the page (`01 · WORK`). Tone is
 background used for rhythm: `dark` (ink #0A0A0A), `paper` (#F4F0EA) or `orange` (the one
 closing CTA band per page).
 
-| Route         | Page         | Main doubt it removes                | Secondary actions                   |
-| ------------- | ------------ | ------------------------------------ | ----------------------------------- |
-| `/`           | Home         | Find: who are you?                   | Pick a stage, see the work          |
-| `/work`       | Work         | Trust: can you actually do this?     | Filter projects, open a case study  |
-| `/work/:slug` | Case study   | Trust: proof, in detail              | Visit the live site, next project   |
-| `/services`   | Services     | Understand: what do I get, how?      | Start with a service, see pricing   |
-| `/pricing`    | Work With Us | Understand ongoing options and terms | Compare care plans, discuss Partner |
-| `/studio`     | Studio       | Find and Trust: who is behind it?    | Meet the founders                   |
-| `/start`      | Start        | Contact: how do I start?             | WhatsApp, email                     |
-| `/privacy`    | Privacy      | POPIA: what happens to my data?      | Back to the brief                   |
-| `*`           | 404          | Recovery                             | Home, Start a project               |
+| Route         | Page       | Main doubt it removes                | Secondary actions                   |
+| ------------- | ---------- | ------------------------------------ | ----------------------------------- |
+| `/`           | Home       | Find: who are you?                   | Pick a stage, see the work          |
+| `/work`       | Work       | Trust: can you actually do this?     | Filter projects, open a case study  |
+| `/work/:slug` | Case study | Trust: proof, in detail              | Visit the live site, next project   |
+| `/services`   | Services   | Understand: what do I get, how?      | Start with a service, see pricing   |
+| `/pricing`    | Plans      | Understand ongoing options and terms | Compare care plans, discuss Partner |
+| `/studio`     | Studio     | Find and Trust: who is behind it?    | Meet the founders                   |
+| `/start`      | Start      | Contact: how do I start?             | WhatsApp, email                     |
+| `/privacy`    | Privacy    | POPIA: what happens to my data?      | Back to the brief                   |
+| `*`           | 404        | Recovery                             | Home, Start a project               |
 
-Global chrome on every route: skip link, header (logo, Work, Services, Work With Us, Studio,
+Global chrome on every route: skip link, header (logo, Work, Services, Plans, Studio,
 **Start a project** button), full-screen mobile menu, footer (big CTA, email, WhatsApp,
 Instagram, LinkedIn, privacy link).
 
@@ -64,9 +64,9 @@ Seeded with GC Solar, MPG Foundation and one clearly labelled sample project.
 ## Services `/services`
 
 What we do, how a project runs and how to start. **No prices**: project estimates open in /start, and ongoing plans live on /pricing. Compact page
-title, then How it works as the first content section, followed by 01 new websites,
+title, then 01 new websites,
 02 apps and software (the phone), 03 desktop software (the laptop), then 04 fixing or moving
-an existing site or app, 05 ongoing care, 06 improvements, 07 a monthly software team. Every build service
+an existing site or app, 05 ongoing care and 06 improvements. Every build service
 opens to a **Start with this** link (`/start?type=<id>`) and every group ends with a button
 that opens the brief on its path. Then how a project runs (the week-by-week timeline, ending
 with **See what it costs** → /pricing), what happens once you get in touch (brief → reply →
@@ -82,13 +82,14 @@ The three ongoing options have different scopes: **Website Care** includes hosti
 standard domain and routine upkeep for one site; **Managed Software** includes website and app hosting,
 one standard domain, technical upkeep and three small change tickets each month; **Partner** plans, manages and builds
 across projects within reserved monthly hours. Partner hosting and domains are separate.
-Partner has an orange third card on Work With Us without a fixed price and a separate explanation
-on Services. Its pricing action opens a brief to discuss the projects and monthly hours.
+Partner has an orange third card on Plans without a fixed price. A comparison above the
+cards explains Partner alongside Website Care and Managed Software. Its action opens a
+brief to discuss the projects and monthly hours.
 
-## Work With Us `/pricing`
+## Plans `/pricing`
 
-The page compares Website Care, Managed Software and Partner
-with what each includes and excludes. Payment terms, common questions and the closing CTA
+The page starts with How it works, then a short comparison of Website Care, Managed Software
+and Partner. Detailed cards show what each includes and excludes. Payment terms, common questions and the closing CTA
 follow. The Home package showcase keeps indicative project ranges and sends visitors to
 the brief for a project estimate. The existing `/pricing` URL stays in place for old links.
 

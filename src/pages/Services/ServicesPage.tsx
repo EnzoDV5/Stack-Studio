@@ -1,13 +1,7 @@
 import { PageMeta } from '@/components/seo/PageMeta'
 import { faqsFor } from '@/data/faqs'
 import { media, serviceMedia } from '@/data/media'
-import {
-  homeContent,
-  pageMeta,
-  partnerSectionContent,
-  pricingContent,
-  servicesContent,
-} from '@/data/pages'
+import { homeContent, pageMeta, pricingContent, servicesContent } from '@/data/pages'
 import { plans } from '@/data/plans'
 import { policies } from '@/data/policies'
 import { rates } from '@/data/rates'
@@ -20,14 +14,12 @@ import { formatPrice, formatPriceRange } from '@/lib/format'
 import { stageRows, type OfferRow } from '@/lib/offer'
 import { AppShowcase } from '@/sections/services/AppShowcase'
 import { DesktopShowcase } from '@/sections/services/DesktopShowcase'
-import { HowItWorks } from '@/sections/services/HowItWorks'
 import { NextSteps } from '@/sections/services/NextSteps'
 import { ProcessLine } from '@/sections/services/ProcessLine'
 import { ServicesHero } from '@/sections/services/ServicesHero'
 import type { StageLayout } from '@/sections/services/StageBlock'
 import { StageExplorer, type StageExplorerStage } from '@/sections/services/StageExplorer'
 import { FaqSection } from '@/sections/shared/FaqSection'
-import { PartnerSection } from '@/sections/shared/PartnerSection'
 import { SectionNavigator } from '@/sections/shared/SectionNavigator'
 import type { StageId } from '@/types'
 
@@ -78,7 +70,7 @@ const websites: StageExplorerStage = {
   layout: 'feature',
 }
 
-// After launch: take over, run and improve (04–06). Partner has its own section below.
+// After launch: take over, run and improve (04–06). The care and Partner comparison is on /pricing.
 const afterLaunch: StageExplorerStage[] = serviceStages
   .filter((stage) => stage.id !== 'build' && stage.id !== 'partner')
   .map((stage, i) => ({
@@ -106,9 +98,9 @@ const starter = (() => {
 })()
 
 /**
- * Services opens with how to start, then groups work the way people look for it: websites, apps
- * and software (the phone), desktop software (the laptop), then taking over, running, improving
- * and partnering on what exists; then how a project runs week by week and what happens once
+ * Services groups work the way people look for it: websites, apps
+ * and software (the phone), desktop software (the laptop), then taking over, running and improving
+ * what exists; then how a project runs week by week and what happens once
  * you get in touch. The brief gives project estimates; ongoing plans are on /pricing.
  */
 export function ServicesPage() {
@@ -118,9 +110,6 @@ export function ServicesPage() {
       <SectionNavigator {...c.navigation} />
       <div id="services-top">
         <ServicesHero content={c.hero} />
-      </div>
-      <div id="services-how-it-works">
-        <HowItWorks {...c.approach} tone="paper" />
       </div>
       <StageExplorer className="pt-4 md:pt-8" stages={[websites]} labels={c.labels} />
       {/* The phone turn is scrubbed; the laptop after it plays once (an enter), so the two
@@ -148,12 +137,6 @@ export function ServicesPage() {
         laptop={media.desktop.laptop}
       />
       <StageExplorer stages={afterLaunch} labels={c.labels} />
-      <PartnerSection
-        id="stage-partner"
-        index={7}
-        title={c.partner.title}
-        {...partnerSectionContent}
-      />
       {/* How a project runs, then how to start one: the plan plays on entry, and the step
           cards after it deal out on scroll, so the two never share a trigger. */}
       <ProcessLine
