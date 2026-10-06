@@ -113,7 +113,7 @@ export function estimate(
     case 'run':
       return estimateRun(answers, data)
     case 'develop':
-      return estimateDevelop(answers, data)
+      return estimateDevelop(answers)
     case 'unsure':
       return { kind: 'consult' }
     default:
@@ -252,66 +252,21 @@ function estimateRun(answers: Partial<BriefAnswers>, data: EstimateData): Estima
 
 /* ---------- D. Ongoing development ---------- */
 
-function estimateDevelop(answers: Partial<BriefAnswers>, data: EstimateData): EstimateResult {
-  const partner = (id: string) => findPlan(data.plans, id)
+function estimateDevelop(answers: Partial<BriefAnswers>): EstimateResult {
   switch (answers.hours) {
     case 'discuss':
       return { kind: 'consult', topic: 'partner' }
     case 'custom': {
       const hours = answers.customHours
-      if (!Number.isInteger(hours) || hours === undefined || hours < 10 || hours > 160)
+      if (!Number.isInteger(hours) || hours === undefined || hours < 1 || hours > 160)
         return { kind: 'none' }
-      const base = partner('partner-10')
-      return {
-        kind: 'plan',
-        plans: [
-          {
-            ...base,
-            id: 'partner-custom',
-            name: 'Custom Partner hours',
-            includedHours: hours,
-            hoursLabel: `${hours} ${hours === 1 ? 'hour' : 'hours'}`,
-            pricePerMonth: hours * findRate(data.rates, 'feature').pricePerHour,
-            highlighted: false,
-          },
-        ],
-        hourlyRate: null,
-        needsAudit: false,
-        limited: hours >= 40,
-      }
+      return { kind: 'consult', topic: 'partner' }
     }
     case 'few':
-      return {
-        kind: 'plan',
-        plans: [partner('partner-10')],
-        hourlyRate: findRate(data.rates, 'feature'),
-        needsAudit: false,
-        limited: false,
-      }
     case '10':
-      return {
-        kind: 'plan',
-        plans: [partner('partner-10')],
-        hourlyRate: null,
-        needsAudit: false,
-        limited: false,
-      }
     case '20':
-      return {
-        kind: 'plan',
-        plans: [partner('partner-20')],
-        hourlyRate: null,
-        needsAudit: false,
-        limited: false,
-      }
     case '40':
-      return {
-        kind: 'plan',
-        plans: [partner('partner-40')],
-        hourlyRate: null,
-        needsAudit: false,
-        limited: true,
-      }
+      return { kind: 'consult', topic: 'partner' }
     default:
       return { kind: 'none' }
   }

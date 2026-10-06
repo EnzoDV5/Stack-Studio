@@ -394,7 +394,7 @@ export const servicesContent = {
 export const partnerSectionContent = {
   eyebrow: 'Partner', // COPY:
   intro:
-    'Send requests as your software grows. We plan and build new features, design changes and integrations within monthly development hours we agree with you.', // COPY:
+    'Bring us a project or an ongoing need. We can create and manage an AI tool, build a product, or look after several projects. We agree the work and monthly hours together.', // COPY:
   comparison: [
     { label: 'Website Care', body: 'One website: hosting, domain and routine upkeep.' }, // COPY:
     {
@@ -403,7 +403,7 @@ export const partnerSectionContent = {
     }, // COPY:
     {
       label: 'Partner',
-      body: 'Planning, management and development across projects, using reserved monthly hours. Hosting is separate.',
+      body: 'A team to create and manage projects, including AI tools, with scope and monthly hours agreed together.',
     }, // COPY:
   ],
   cta: { label: 'Talk about Partner', to: '/start?partner=discuss' }, // COPY:
@@ -415,7 +415,7 @@ export const pricingContent = {
     eyebrow: 'Pricing', // COPY:
     title: 'Priced around your project.', // COPY:
     intro:
-      'Project packages give you a ballpark. Monthly care starts with a website, adds software and changes, or reserves a team by the hour. All prices in ZAR.', // COPY:
+      'Project packages give you a ballpark. Website Care and Managed Software have monthly prices; Partner is scoped with you around the projects and hours you need. All prices in ZAR.', // COPY:
   } satisfies PageHeroContent,
   navigation: {
     label: 'Pricing sections', // COPY:
@@ -475,9 +475,24 @@ export const pricingContent = {
     eyebrow: 'Monthly plans', // COPY:
     title: 'Choose the level of support you need.', // COPY:
     choose: 'Choose', // COPY:
-    chooseHours: 'Choose hours', // COPY:
+    partner: {
+      name: 'Partner', // COPY:
+      tagline: 'A team to create and manage the projects you need.', // COPY:
+      price: 'Tailored quote', // COPY:
+      includes: [
+        'Agree the projects and monthly hours together', // COPY:
+        'Create and manage an AI tool, website or software product', // COPY:
+        'Planning, design, development and ongoing improvements', // COPY:
+        'One team across new and existing projects', // COPY:
+      ],
+      excludes: [
+        'Hosting, domains and third-party usage unless agreed', // COPY:
+        'Work outside the agreed scope and hours', // COPY:
+      ],
+      cta: { label: 'Discuss Partner', to: '/start?partner=discuss' }, // COPY:
+    },
     boundary:
-      'Managed tickets are for small changes of up to one hour each. Larger work is quoted at R400/hour or planned through Partner. Partner hosting, if needed: websites from R450/month; apps from R1,500/month; domains at cost.', // COPY:
+      'Managed tickets are for small changes of up to one hour each. Larger work is quoted separately or scoped through Partner.', // COPY:
     minTerm: (n: number) => `${n}-month minimum, billed monthly in advance`, // COPY:
   },
   partner: {

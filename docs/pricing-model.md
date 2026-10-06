@@ -113,7 +113,7 @@ Every offering and plan has a `visibility`:
 
 ## 03 Run (monthly, 3-month minimum, billed in advance)
 
-Care is for one website; Managed adds one standard app and a small monthly change allowance. Both have a single public price. Partner appears beside them as a starting 10-hour retainer; clients can choose more hours.
+Care is for one website; Managed adds one standard app and a small monthly change allowance. Both have a single public price. Partner appears beside them as a conversation-led option with a tailored quote.
 
 | Plan                        | Price              | Change allowance                | Visibility |
 | --------------------------- | ------------------ | ------------------------------- | ---------- |
@@ -146,23 +146,15 @@ Care is for one website; Managed adds one standard app and a small monthly chang
 - Once the changes are live, Website Care or Managed Software can be added as a fixed
   monthly bundle.
 
-## 05 Partner (monthly, 3-month minimum, billed in advance)
+## 05 Partner (tailored monthly quote)
 
-| Internal plan      | Price              | Reserved hours | Visibility |
-| ------------------ | ------------------ | -------------- | ---------- |
-| Partner 10         | from R4,000/month  | 10             | pricing    |
-| Partner 20         | R8,000/month       | 20             | hidden     |
-| Partner 40         | R16,000/month      | 40             | hidden     |
-| Dedicated Capacity | from R50,000/month | –              | hidden     |
-
-- **Partner work:** planning and management, UX/UI, frontend and backend development, new
-  features, integrations and larger improvements across projects. The same team learns the
-  client's work. Hours are R400 each with a 10-hour monthly minimum. Hours above the agreed
-  amount are quoted first. Hosting, domains and third-party fees are separate: website
-  hosting from R450/month, app hosting from R1,500/month, domains at cost.
-- Pricing shows Partner as the third monthly card. Its action opens `/start?path=develop`
-  so clients can select 10, 20, 40 or custom hours. Services explains Partner separately.
-- Internal plan data remains for estimates. Old fixed plan links now open the discussion.
+- **Partner work:** planning, design, development and ongoing management across projects.
+  This can include creating and managing an AI tool, building software, or managing several
+  existing products. The projects, scope, monthly hours and price are agreed in conversation.
+- Pricing shows an orange Partner card without a numeric price. Its action opens
+  `/start?partner=discuss`. The brief also lets clients offer an estimate of the hours they
+  need, but it does not calculate a Partner price. Old fixed plan links open the discussion.
+- Hosting, domains and third-party usage are included only when agreed in the tailored scope.
 
 ## Policies (Pricing page and /terms)
 
@@ -213,7 +205,7 @@ Care is for one website; Managed adds one standard app and a small monthly chang
   the R400/hour development rate.
 - **Take over:** audit from R2,500
 - **Run:** Website Care R700/month · Managed Software R3,600/month.
-- **Partner:** from R4,000/month for 10 hours; more hours chosen in the brief.
+- **Partner:** tailored quote after discussing the projects and monthly hours.
 - Underneath: "Need something more specific? Every project is different. Build a quick
   project brief and we'll give you a more accurate estimate. → Build my estimate"
 
@@ -233,7 +225,7 @@ Step 1 asks "What do you need?" and branches:
 | A. Build something new | type → (website: pages, add-ons, languages, Website Care or "No plan for now") / (app, software, AI: who uses it, key needs) → timeline → budget |
 | B. Something exists    | what is it → code and hosting access → situation (multi) → urgency                                                                               |
 | C. Keep it running     | website or app → who built it                                                                                                                    |
-| D. Ongoing development | Partner hours per month (suggested amount, custom count, or discuss first) → contact                                                             |
+| D. Ongoing development | Estimated Partner hours or discuss first → contact                                                                                               |
 | E. Not sure            | short description                                                                                                                                |
 
 All paths then go contact details → POPIA consent → review → submit.
@@ -257,9 +249,7 @@ Result kinds: `range` | `discovery` | `plan` | `audit` | `consult`.
   - Website → Website Care Essential at R700/month.
   - App → Managed Software at R3,600/month.
   - Built by someone else adds "Starts with an audit and takeover."
-- **D → plan or consult.**
-  - 10, 20 or 40 hours → an indicative monthly amount based on those hours.
-  - Custom hours → an indicative monthly amount at R400/hour.
-  - Unsure of hours → consultation before choosing a monthly amount.
+- **D → consult.** Any proposed hours are planning input; the projects and monthly price
+  are agreed in conversation.
 - **E → consult:** discuss what is needed and recommend a starting point and hours.
 - Always shows: "Indicative estimate. Final quote after a short call."

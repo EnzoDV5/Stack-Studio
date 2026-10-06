@@ -61,24 +61,33 @@ const appsCard = {
  * Ready-made starting quotes open the brief pre-filled. The three ongoing options sit together.
  */
 export function PricingPage() {
-  const monthlyPlans = plans
-    .filter((plan) => ['care', 'managed', 'partner'].includes(plan.family) && isVisible(plan))
+  const fixedPlans = plans
+    .filter((plan) => (plan.family === 'care' || plan.family === 'managed') && isVisible(plan))
     .map((plan) => ({
       id: plan.id,
-      anchorId: plan.family === 'partner' ? 'pricing-partner' : undefined,
       name: plan.name,
       tagline: plan.tagline,
       price: planPrice(plan, l),
-      priceBreakdown: plan.priceBreakdown,
       includes: plan.includes,
       excludes: plan.excludes ?? [],
       labels: { included: c.scope.includedTitle, excluded: c.scope.excludedTitle },
       cta: {
-        label: plan.family === 'partner' ? c.plans.chooseHours : c.plans.choose,
-        to: plan.family === 'partner' ? '/start?path=develop' : `/start?plan=${plan.id}`,
+        label: c.plans.choose,
+        to: `/start?plan=${plan.id}`,
         location: `pricing-plan:${plan.id}`,
       },
     }))
+  const monthlyPlans = [
+    ...fixedPlans,
+    {
+      id: 'partner',
+      anchorId: 'pricing-partner',
+      accent: true,
+      ...c.plans.partner,
+      labels: { included: c.scope.includedTitle, excluded: c.scope.excludedTitle },
+      cta: { ...c.plans.partner.cta, location: 'pricing-plan:partner' },
+    },
+  ]
 
   return (
     <>

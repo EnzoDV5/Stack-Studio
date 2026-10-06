@@ -8,7 +8,6 @@ import { emptyAnswers } from '@/lib/brief-reducer'
 import { visibleSteps } from '@/lib/brief-steps'
 import { validateBrief } from '@/lib/brief-schema'
 import { estimate } from '@/lib/estimate'
-import { BUILD_RATE_PER_HOUR } from '@/data/rates'
 
 describe('Partner enquiries', () => {
   const data = { offerings, plans }
@@ -19,13 +18,8 @@ describe('Partner enquiries', () => {
     assert.equal(prefill.stepId, 'contact')
   })
 
-  it('shows one starting Partner card while keeping larger examples out of the comparison', () => {
-    assert.deepEqual(
-      plans
-        .filter((plan) => plan.family === 'partner' && plan.visibility === 'pricing')
-        .map((plan) => plan.id),
-      ['partner-10'],
-    )
+  it('keeps Partner out of fixed-price plan data', () => {
+    assert.equal(plans.filter((plan) => plan.family === 'partner').length, 0)
   })
 
   it('lets clients choose their own hours or ask to discuss them', () => {
@@ -43,16 +37,13 @@ describe('Partner enquiries', () => {
     )
   })
 
-  it('calculates custom hours and accepts a discussion without an estimate', () => {
-    assert.deepEqual(estimate({ path: 'develop', hours: 'custom', customHours: 9 }), {
+  it('uses a consultation for proposed hours without calculating a fixed price', () => {
+    assert.deepEqual(estimate({ path: 'develop', hours: 'custom', customHours: 0 }), {
       kind: 'none',
     })
     const result = estimate({ path: 'develop', hours: 'custom', customHours: 12 })
-    assert.equal(result.kind, 'plan')
-    if (result.kind === 'plan') {
-      assert.equal(result.plans[0]?.includedHours, 12)
-      assert.equal(result.plans[0]?.pricePerMonth, 12 * BUILD_RATE_PER_HOUR)
-    }
+    assert.deepEqual(result, { kind: 'consult', topic: 'partner' })
+    assert.deepEqual(estimate({ path: 'develop', hours: '10' }), result)
     assert.deepEqual(estimate({ path: 'develop', hours: 'discuss' }), {
       kind: 'consult',
       topic: 'partner',

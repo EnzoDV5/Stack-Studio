@@ -260,14 +260,11 @@ export const briefSteps: BriefStepConfig[] = [
     kind: 'single',
     field: 'hours',
     label: 'Hours', // COPY:
-    title: 'How many Partner hours do you need each month?', // COPY:
-    hint: 'Choose an amount, enter your own, or work it out with us.', // COPY:
+    title: 'Do you have an idea of the hours you need each month?', // COPY:
+    hint: 'An estimate is helpful, but we’ll work out the right scope with you.', // COPY:
     options: [
-      { value: '10', label: '10 hours a month' }, // COPY:
-      { value: '20', label: '20 hours a month' }, // COPY:
-      { value: '40', label: '40 hours a month' }, // COPY:
-      { value: 'custom', label: 'A different number of hours' }, // COPY:
-      { value: 'discuss', label: 'Let’s discuss the hours first' }, // COPY:
+      { value: 'custom', label: 'I have an estimate' }, // COPY:
+      { value: 'discuss', label: 'Let’s work it out together' }, // COPY:
     ],
     showIf: [{ field: 'path', in: ['develop'] }],
   },
@@ -275,12 +272,12 @@ export const briefSteps: BriefStepConfig[] = [
     id: 'customHours',
     kind: 'count',
     field: 'customHours',
-    min: 10,
+    min: 1,
     max: 160,
     unit: { one: 'hour a month', other: 'hours a month' }, // COPY:
     label: 'Partner hours', // COPY:
     title: 'How many hours a month should we reserve?', // COPY:
-    hint: 'We’ll calculate an indicative monthly amount at the Partner hourly rate.', // COPY:
+    hint: 'This helps us plan capacity. We’ll agree the scope and monthly quote with you.', // COPY:
     showIf: [
       { field: 'path', in: ['develop'] },
       { field: 'hours', in: ['custom'] },
@@ -463,7 +460,8 @@ export const briefCopy = {
     consult: {
       label: 'Next step', // COPY:
       body: 'We’ll suggest the right starting point after a short call.', // COPY:
-      partnerBody: 'We’ll discuss your plans and agree on the right number of Partner hours.', // COPY:
+      partnerBody:
+        'We’ll review the projects and proposed hours with you, then agree a tailored monthly quote.', // COPY:
     },
     budgetFit: {
       unknown: '',

@@ -82,8 +82,8 @@ The three ongoing options have different scopes: **Website Care** includes hosti
 standard domain and routine upkeep for one site; **Managed Software** includes website and app hosting,
 one standard domain, technical upkeep and three small change tickets each month; **Partner** plans, manages and builds
 across projects within reserved monthly hours. Partner hosting and domains are separate.
-Partner has a third card on Pricing and a separate explanation on Services. Its pricing action opens
-a brief to choose monthly hours.
+Partner has an orange third card on Pricing without a fixed price and a separate explanation
+on Services. Its pricing action opens a brief to discuss the projects and monthly hours.
 
 ## Pricing `/pricing`
 
