@@ -12,8 +12,8 @@ export interface ProcessStep {
   title: string
   duration: string
   /**
-   * Where the step sits on the Home timeline: 1-based, inclusive column indexes into
-   * `homeContent.process.columns` in data/pages.ts (weeks, then "after launch").
+   * Where the step sits on the process timeline (Services): 1-based, inclusive column indexes into
+   * `servicesContent.process.columns` in data/pages.ts (weeks, then "after launch").
    */
   span: { from: number; to: number }
   summary: string

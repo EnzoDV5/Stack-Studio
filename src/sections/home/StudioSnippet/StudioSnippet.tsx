@@ -1,6 +1,7 @@
 import { useId } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
 import { Image } from '@/components/media/Image'
+import { MediaReveal } from '@/components/media/MediaReveal'
 import { Parallax } from '@/components/motion/Parallax'
 import { TextLink } from '@/components/ui/TextLink'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
@@ -19,8 +20,7 @@ export interface StudioSnippetProps {
 
 /**
  * The two founders, one line each, in about one viewport. Signature motion: the
- * portraits drift gently inside their frames toward the pointer (hover parallax). Pointer,
- * not scroll: the closing band right after this section already scrubs.
+ * portraits reveal on entry, then drift gently inside their frames toward the pointer.
  */
 export function StudioSnippet({
   index,
@@ -47,11 +47,11 @@ export function StudioSnippet({
         <ul data-parallax-area="" className="mt-14 grid gap-10 md:grid-cols-2 lg:mt-16">
           {founders.map((founder) => (
             <li key={founder.id} className="grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-6">
-              <div className="relative aspect-4/5 overflow-hidden rounded-sm bg-tone-surface">
+              <MediaReveal className="aspect-4/5 rounded-sm bg-tone-surface">
                 <Parallax trigger="pointer" amount={8} className="absolute -inset-[6%]">
                   <Image image={founder.portrait} sizes="(min-width: 768px) 20vw, 40vw" />
                 </Parallax>
-              </div>
+              </MediaReveal>
               <div className="flex flex-col justify-end">
                 <p className="text-heading-lg">{founder.name}</p>
                 <p className="mt-2 eyebrow text-accent">{founder.role}</p>

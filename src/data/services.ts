@@ -19,51 +19,51 @@ export const serviceStages: ServiceStage[] = [
   {
     id: 'build',
     index: 1,
-    name: 'Build', // COPY:
-    line: 'We create it.', // COPY:
+    name: 'Something new', // COPY:
+    line: 'A website, app or tool, built for you.', // COPY:
     summary:
       'Websites, web apps, custom software and AI features, designed and developed in-house from first sketch to deployment.', // COPY:
-    cta: { label: 'Start a build', to: '/start?path=build' }, // COPY:
+    cta: { label: 'Tell us what you need', to: '/start?path=build' }, // COPY:
     briefPath: 'build',
   },
   {
     id: 'takeover',
     index: 2,
-    name: 'Take over', // COPY:
-    line: 'Already built? We’ll take it from here.', // COPY:
+    name: 'Help with what I have', // COPY:
+    line: 'We can fix your site or app and take care of it.', // COPY:
     summary:
       'Developer gone, site slow or nobody has the passwords? We audit what you have, move it somewhere safe and take responsibility for it.', // COPY:
-    cta: { label: 'Hand it over', to: '/start?path=existing' }, // COPY:
+    cta: { label: 'Tell us what needs help', to: '/start?path=existing' }, // COPY:
     briefPath: 'existing',
   },
   {
     id: 'run',
     index: 3,
-    name: 'Run', // COPY:
-    line: 'We keep it working.', // COPY:
+    name: 'Keep it working', // COPY:
+    line: 'Hosting, updates and support each month.', // COPY:
     summary:
-      'Monthly Care for websites and Managed plans for applications: hosting, monitoring, backups, updates and fixes, handled.', // COPY:
+      'For the websites and apps we build or take over: Care for websites and Managed plans for apps, covering hosting, monitoring, backups, updates and fixes.', // COPY:
     cta: { label: 'Find my plan', to: '/start?path=run' }, // COPY:
     briefPath: 'run',
   },
   {
     id: 'grow',
     index: 4,
-    name: 'Improve', // COPY:
-    line: 'Update, extend or redesign what you already have.', // COPY:
+    name: 'Make it better', // COPY:
+    line: 'New features, a redesign or smaller fixes.', // COPY:
     summary:
-      'We quote changes to an existing website or app from estimated working hours at R400/hour, then offer ongoing Care at R200/hour after launch.', // COPY:
-    cta: { label: 'Quote my changes', to: '/start?path=develop' }, // COPY:
-    briefPath: 'develop',
+      'We estimate the hours for changes to an existing website or app and quote them before work starts, then offer ongoing Care after launch.', // COPY:
+    cta: { label: 'Tell us what to improve', to: '/start?path=existing' }, // COPY:
+    briefPath: 'existing',
   },
   {
     id: 'partner',
     index: 5,
-    name: 'Partner', // COPY:
-    line: 'We become part of your development capability.', // COPY:
+    name: 'A software team', // COPY:
+    line: 'A team and monthly hours for your software.', // COPY:
     summary:
-      'Reserved monthly hours with a team that knows your systems: design, development, integrations and planning.', // COPY:
-    cta: { label: 'Talk about partnering', to: '/start?path=develop' }, // COPY:
+      'Reserved monthly hours for companies with large or business-critical systems: managing, developing, integrating and planning, with a team that knows your software.', // COPY:
+    cta: { label: 'Talk about your software', to: '/start?path=develop' }, // COPY:
     briefPath: 'develop',
   },
 ]
@@ -275,7 +275,7 @@ export const offerings: Offering[] = [
       'Full development estimate', // COPY:
     ],
     tiers: [{ label: 'Large systems', fromPrice: buildPrice(37.5) }], // COPY: large systems R15,000–R40,000+
-    notes: ['Required before any build of R120,000+.', 'Large systems: R15,000–R40,000+.'], // COPY:
+    notes: ['Required before larger builds.', 'Large systems are scoped in more depth.'], // COPY: the thresholds and prices are on /pricing and in the estimate
     visibility: 'pricing',
   },
   {

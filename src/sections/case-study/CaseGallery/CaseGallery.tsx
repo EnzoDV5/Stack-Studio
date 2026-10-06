@@ -1,5 +1,6 @@
 import { Section, type Tone } from '@/components/layout/Section'
 import { Image } from '@/components/media/Image'
+import { MediaReveal } from '@/components/media/MediaReveal'
 import { Parallax } from '@/components/motion/Parallax'
 import { cn } from '@/lib/cn'
 import type { GalleryItem } from '@/types'
@@ -10,7 +11,7 @@ export interface CaseGalleryProps {
   tone?: Tone
 }
 
-/** Full and half-width images, each drifting gently inside its frame on scroll (parallax). */
+/** Full and half-width images reveal on entry, then drift gently inside their frames. */
 export function CaseGallery({ label, items, tone = 'dark' }: CaseGalleryProps) {
   return (
     <Section tone={tone} aria-label={label}>
@@ -18,9 +19,9 @@ export function CaseGallery({ label, items, tone = 'dark' }: CaseGalleryProps) {
         {items.map((item) => (
           <li key={item.src} className={cn(item.span === 'full' && 'md:col-span-2')}>
             <figure>
-              <div
+              <MediaReveal
                 className={cn(
-                  'relative overflow-hidden bg-ink-700',
+                  'rounded-lg bg-ink-700',
                   item.span === 'full' ? 'aspect-video' : 'aspect-4/5',
                 )}
               >
@@ -30,7 +31,7 @@ export function CaseGallery({ label, items, tone = 'dark' }: CaseGalleryProps) {
                     sizes={item.span === 'full' ? '100vw' : '(min-width: 768px) 50vw, 100vw'}
                   />
                 </Parallax>
-              </div>
+              </MediaReveal>
               {item.caption && (
                 <figcaption className="mt-4 eyebrow text-muted">{item.caption}</figcaption>
               )}

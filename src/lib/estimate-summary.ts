@@ -9,6 +9,7 @@ import { planPrice, ratePrice, type PriceLabels } from './offer'
 export interface SummaryCopy {
   discovery: (price: string) => string
   consult: string
+  partnerConsult?: string
 }
 
 export function summarizeResult(result: EstimateResult, l: PriceLabels, copy: SummaryCopy): string {
@@ -28,6 +29,6 @@ export function summarizeResult(result: EstimateResult, l: PriceLabels, copy: Su
       return parts.join(' / ')
     }
     case 'consult':
-      return copy.consult
+      return result.topic === 'partner' ? (copy.partnerConsult ?? copy.consult) : copy.consult
   }
 }

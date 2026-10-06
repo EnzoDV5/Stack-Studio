@@ -7,6 +7,8 @@ export interface AccordionItem {
   id: string
   title: ReactNode
   content: ReactNode
+  /** Called when this row opens, for sections with media tied to the open item. */
+  onOpen?: () => void
   /** Right-aligned meta next to the title, e.g. a price or duration. */
   meta?: ReactNode
 }
@@ -57,7 +59,10 @@ export function Accordion({
                 className={styles.trigger}
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                onClick={() => toggle(item.id)}
+                onClick={() => {
+                  if (!isOpen) item.onOpen?.()
+                  toggle(item.id)
+                }}
               >
                 {numbered && (
                   <span className="w-8 shrink-0 eyebrow text-accent">{pad2(i + 1)}</span>

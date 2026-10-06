@@ -49,10 +49,29 @@ export function prefillFromParams(
     }
   }
 
+  const partner = params.get('partner')
+  if (partner === 'custom')
+    return {
+      answers: { path: 'develop', hours: 'custom' },
+      name: 'Partner hours',
+      stepId: 'customHours',
+    }
+  if (partner === 'discuss')
+    return {
+      answers: { path: 'develop', hours: 'discuss' },
+      name: 'a Partner discussion',
+      stepId: 'contact',
+    }
+
   const planId = params.get('plan')
   const plan = data.plans.find((p) => p.id === planId && p.visibility !== 'hidden')
   const planAnswers = planId ? PLAN_ANSWERS[planId] : undefined
-  if (plan && planAnswers) return { answers: planAnswers, name: plan.name }
+  if (plan && planAnswers)
+    return {
+      answers: planAnswers,
+      name: plan.name,
+      ...(plan.family === 'partner' ? { stepId: 'contact' } : {}),
+    }
 
   const path = params.get('path')
   if (PATHS.includes(path as BriefPathId)) return { answers: { path: path as BriefPathId } }

@@ -1,29 +1,41 @@
 import { PageMeta } from '@/components/seo/PageMeta'
 import { faqsFor } from '@/data/faqs'
 import { media, serviceMedia } from '@/data/media'
-import { pageMeta, pricingContent, servicesContent } from '@/data/pages'
+import { homeContent, pageMeta, pricingContent, servicesContent } from '@/data/pages'
 import { planFamilies, plans } from '@/data/plans'
 import { policies } from '@/data/policies'
 import { rates } from '@/data/rates'
 import { getQuotePreset } from '@/data/quotes'
 import { offerings, serviceStages } from '@/data/services'
+import { processSteps } from '@/data/process'
 import { site } from '@/data/site'
 import { estimate } from '@/lib/estimate'
 import { formatPrice, formatPriceRange } from '@/lib/format'
-import { stageRows } from '@/lib/offer'
+import { stageRows, type OfferRow } from '@/lib/offer'
 import { AppShowcase } from '@/sections/services/AppShowcase'
 import { DesktopShowcase } from '@/sections/services/DesktopShowcase'
 import { NextSteps } from '@/sections/services/NextSteps'
-import { ServiceIndex } from '@/sections/services/ServiceIndex'
+import { ProcessLine } from '@/sections/services/ProcessLine'
+import { ServicesHero } from '@/sections/services/ServicesHero'
 import type { StageLayout } from '@/sections/services/StageBlock'
 import { StageExplorer, type StageExplorerStage } from '@/sections/services/StageExplorer'
 import { FaqSection } from '@/sections/shared/FaqSection'
-import { PageTitle } from '@/sections/shared/PageTitle'
+import { SectionNavigator } from '@/sections/shared/SectionNavigator'
 import type { StageId } from '@/types'
 
 const c = servicesContent
 const l = pricingContent.priceLabels
 const data = { offerings, plans, rates }
+
+/**
+ * Services shows no prices (every number lives on /pricing). Each build service opens the brief
+ * with that service picked, so choosing one is the way in.
+ */
+const withStart = (row: OfferRow): OfferRow =>
+  offerings.some((o) => o.id === row.id && o.briefCategory)
+    ? { ...row, start: { label: c.labels.start, to: `/start?type=${row.id}` } }
+    : row
+const rowsFor = (stage: StageId) => stageRows(stage, data, l, { prices: false }).map(withStart)
 
 /** Each group laid out for what it sells; no two share a layout. */
 const layouts: Record<Exclude<StageId, 'build'>, StageLayout> = {
@@ -42,7 +54,7 @@ const notes: Partial<Record<StageId, string[]>> = {
 // Build splits in three, the way visitors look for it: websites (the offerings the brief files
 // under 'website'), desktop software (listed in servicesContent, with the laptop) and apps and
 // software (the rest, with the phone).
-const buildRows = stageRows('build', data, l)
+const buildRows = rowsFor('build')
 const isWebsite = (id: string) => offerings.find((o) => o.id === id)?.briefCategory === 'website'
 const desktopIds: readonly string[] = c.desktop.offerings
 const websiteRows = buildRows.filter((row) => isWebsite(row.id))
@@ -66,9 +78,9 @@ const afterLaunch: StageExplorerStage[] = serviceStages
   .map((stage, i) => ({
     id: `stage-${stage.id}`,
     index: i + 4,
-    name: stage.name,
+    name: homeContent.paths.prompts[stage.id],
     line: stage.line,
-    rows: stageRows(stage.id, data, l),
+    rows: rowsFor(stage.id),
     notes: notes[stage.id],
     cta: stage.cta,
     media: stage.id === 'grow' ? undefined : serviceMedia[stage.id],
@@ -88,21 +100,20 @@ const starter = (() => {
 })()
 
 /**
- * Services, grouped the way people look for them: a "What do you need?" index, websites, apps
+ * Services, grouped the way people look for them: websites, apps
  * and software (the phone), desktop software (the laptop), then taking over, running, improving
- * and partnering on what exists, then what happens once you get in touch.
+ * and partnering on what exists; then how a project runs week by week and what happens once
+ * you get in touch. No prices: they're on /pricing, and the brief gives the estimate.
  */
 export function ServicesPage() {
   return (
     <>
       <PageMeta {...pageMeta.services} />
-      <PageTitle content={c.hero} />
-      <StageExplorer
-        className="pt-8"
-        lead={<ServiceIndex label={c.index.label} items={c.index.items} />}
-        stages={[websites]}
-        labels={c.labels}
-      />
+      <SectionNavigator {...c.navigation} />
+      <div id="services-top">
+        <ServicesHero content={c.hero} />
+      </div>
+      <StageExplorer className="pt-4 md:pt-8" stages={[websites]} labels={c.labels} />
       {/* The phone turn is scrubbed; the laptop after it plays once (an enter), so the two
           device sections never share a trigger. */}
       <AppShowcase
@@ -128,7 +139,19 @@ export function ServicesPage() {
         laptop={media.desktop.laptop}
       />
       <StageExplorer stages={afterLaunch} labels={c.labels} />
-      {/* What happens after getting in touch (the week-by-week process is on Home). */}
+      {/* How a project runs, then how to start one: the plan plays on entry, and the step
+          cards after it deal out on scroll, so the two never share a trigger. */}
+      <ProcessLine
+        id="process"
+        eyebrow={c.process.eyebrow}
+        title={c.process.title}
+        steps={processSteps}
+        stepLabel={c.process.stepLabel}
+        nowLabel={c.process.nowLabel}
+        overview={c.process.overview}
+        columns={c.process.columns}
+        more={c.process.more}
+      />
       <NextSteps
         eyebrow={c.nextSteps.eyebrow}
         title={c.nextSteps.title}
@@ -139,7 +162,9 @@ export function ServicesPage() {
         quote={{ ...c.nextSteps.quote, total: starter.total }}
         cta={c.nextSteps.cta}
       />
-      <FaqSection tone="dark" intro={c.faq} faqs={faqsFor('general', 'services', 'process')} />
+      <div id="services-faq">
+        <FaqSection tone="dark" intro={c.faq} faqs={faqsFor('general', 'services', 'process')} />
+      </div>
     </>
   )
 }

@@ -201,6 +201,7 @@ export function BriefFlow({
   const recommendation = summarizeResult(result, priceLabels, {
     discovery: copy.estimate.discovery.required,
     consult: copy.estimate.consult.body,
+    partnerConsult: copy.estimate.consult.partnerBody,
   })
 
   const submit = async () => {

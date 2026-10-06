@@ -201,7 +201,7 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
    cards (FadeUp was removed).
 4. **At most one pinned section per page.** Home: WorkReel. Services: none. Case
    study: CaseDevice (the MacBook scroll).
-5. **Scroll budget:** Home stays about 11 viewports on desktop, footer included (11.05 at
+5. **Scroll budget:** Home stays about 11 viewports on desktop, footer included (10.14 at
    1440×900). The WorkReel pin is `reel.shrinkScroll` + `reel.panelScroll` × (panels − 1)
    viewports.
 6. **Only animate transform, opacity and clip-path** (no width, flex, letter-spacing or
@@ -210,6 +210,9 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
 7. **Vary the openers**: neighbouring sections never use the same `SectionHeader` variant.
 8. **Every Home section ends with a "go deeper" link** (`<TextLink arrow>`) to its page or
    anchor.
+9. **Prices live on /pricing only.** Home routes, Services explains (services open the brief
+   with `/start?type=`; `stageRows(..., { prices: false })`), Pricing holds every number,
+   and the brief gives the real estimate.
 
 - **Tone flow:** `ToneController` (app shell) makes `[data-tone]` sections transparent
   (`html.tone-flow`) and switches `--page-*` colours in one short fade (`tone.switch`)

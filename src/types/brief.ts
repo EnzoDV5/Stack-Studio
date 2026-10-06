@@ -38,6 +38,7 @@ export interface BriefAnswers {
   // D. Develop
   workKinds: string[]
   hours: string | null
+  customHours: number
   // E. Unsure
   description: string
   // All paths
@@ -60,7 +61,7 @@ export type ChoiceField =
   | 'changeFrequency'
   | 'hours'
 export type MultiField = 'addOns' | 'needs' | 'situation' | 'workKinds'
-export type CountField = 'pages' | 'languages'
+export type CountField = 'pages' | 'languages' | 'customHours'
 export type TextField = 'description'
 
 export interface BriefOption {

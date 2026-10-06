@@ -1,4 +1,6 @@
 import { Accordion } from '@/components/ui/Accordion'
+import { TextLink } from '@/components/ui/TextLink'
+import { trackEvent } from '@/lib/analytics'
 import type { OfferRow } from '@/lib/offer'
 
 export interface OfferAccordionProps {
@@ -13,8 +15,8 @@ export interface OfferAccordionProps {
 }
 
 /**
- * Offerings as dropdowns: name and price on the row; open one for a line on what it is, its
- * notes and the main things it includes.
+ * Offerings as dropdowns: name (and price, where one is given) on the row; open one for a line
+ * on what it is, its notes, the main things it includes and a link that starts the brief with it.
  */
 export function OfferAccordion({
   rows,
@@ -35,7 +37,7 @@ export function OfferAccordion({
         content: (
           <div className="grid gap-6 md:grid-cols-2 md:gap-8">
             <div>
-              <p className="numeric text-heading-md sm:hidden">{row.price}</p>
+              {row.price && <p className="numeric text-heading-md sm:hidden">{row.price}</p>}
               <p className="mt-2 sm:mt-0">{row.summary}</p>
               {row.notes.length > 0 && (
                 <ul className="mt-3 space-y-1 text-small text-muted">
@@ -43,6 +45,18 @@ export function OfferAccordion({
                     <li key={note}>{note}</li>
                   ))}
                 </ul>
+              )}
+              {row.start && (
+                <TextLink
+                  to={row.start.to}
+                  arrow
+                  className="mt-5 inline-flex"
+                  onClick={() =>
+                    trackEvent('Start project click', { location: `services-offering:${row.id}` })
+                  }
+                >
+                  {row.start.label}
+                </TextLink>
               )}
             </div>
             {row.includes.length > 0 && (

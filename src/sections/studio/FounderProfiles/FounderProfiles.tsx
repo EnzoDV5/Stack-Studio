@@ -1,6 +1,7 @@
 import { useId } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
 import { Image } from '@/components/media/Image'
+import { MediaReveal } from '@/components/media/MediaReveal'
 import { Parallax } from '@/components/motion/Parallax'
 import { Tag } from '@/components/ui/Tag'
 import { TextLink } from '@/components/ui/TextLink'
@@ -14,7 +15,7 @@ export interface FounderProfilesProps {
   tone?: Tone
 }
 
-/** Founder cards: portrait (gentle parallax), name, role, bio and focus areas. */
+/** Founder cards: portraits reveal on entry, then drift gently on scroll. */
 export function FounderProfiles({
   intro,
   founders,
@@ -38,14 +39,14 @@ export function FounderProfiles({
               key={founder.id}
               className="grid gap-6 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-8 xl:grid-cols-[12rem_minmax(0,1fr)]"
             >
-              <div className="relative aspect-4/5 w-40 overflow-hidden rounded-sm bg-ink-700 sm:w-auto">
+              <MediaReveal className="aspect-4/5 w-40 rounded-sm bg-ink-700 sm:w-auto">
                 <Parallax amount={12} className="absolute inset-x-0 top-[-7%] h-[114%]">
                   <Image
                     image={founder.portrait}
                     sizes="(min-width: 1280px) 12rem, (min-width: 640px) 10rem, 10rem"
                   />
                 </Parallax>
-              </div>
+              </MediaReveal>
               <div className="min-w-0">
                 <h3 className="text-heading-xl">{founder.name}</h3>
                 <p className="mt-2 eyebrow text-accent">{founder.role}</p>

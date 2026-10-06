@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 import { Section, type Tone } from '@/components/layout/Section'
 import { Image } from '@/components/media/Image'
+import { MediaReveal } from '@/components/media/MediaReveal'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Heading } from '@/components/ui/Heading'
 import { MagneticButton } from '@/components/ui/MagneticButton'
@@ -48,13 +49,13 @@ export function CaseOutro({ cta, next, nextLabel, cursorLabel, tone = 'dark' }: 
             data-cursor-label={cursorLabel}
           >
             <p className="mb-6 eyebrow text-muted">{nextLabel} →</p>
-            <div className="aspect-video overflow-hidden bg-ink-700">
+            <MediaReveal className="aspect-video rounded-lg bg-ink-700">
               <Image
                 image={next.thumbnail}
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="group-hover:scale-[1.04]"
               />
-            </div>
+            </MediaReveal>
             <p className="mt-6 text-display-lg transition-colors group-hover:text-orange">
               {next.name}
             </p>

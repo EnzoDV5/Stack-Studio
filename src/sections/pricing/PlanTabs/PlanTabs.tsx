@@ -1,6 +1,8 @@
 import { useId, useRef, useState, type KeyboardEvent } from 'react'
 import { flushSync } from 'react-dom'
 import { Section, type Tone } from '@/components/layout/Section'
+import { Button } from '@/components/ui/Button'
+import { TextLink } from '@/components/ui/TextLink'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
 import { Flip, gsap, useGSAP } from '@/lib/gsap'
@@ -14,6 +16,7 @@ export interface PlanTab {
   description: string
   /** e.g. "Limited to 3 partner clients at a time." */
   note?: string
+  actions?: { label: string; to: string; location: string }[]
   plans: (Omit<PlanCardProps, 'recommendedLabel'> & { id: string })[]
 }
 
@@ -141,6 +144,30 @@ export function PlanTabs({
             className="mt-10"
           >
             <p className="max-w-[56ch] text-body-lg text-muted">{tab.description}</p>
+            {tab.actions && (
+              <div className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-4">
+                {tab.actions.map((action, i) =>
+                  i === 0 ? (
+                    <Button
+                      key={action.to}
+                      to={action.to}
+                      size="sm"
+                      withArrow
+                      analytics={{
+                        event: 'Start project click',
+                        props: { location: action.location },
+                      }}
+                    >
+                      {action.label}
+                    </Button>
+                  ) : (
+                    <TextLink key={action.to} to={action.to} arrow>
+                      {action.label}
+                    </TextLink>
+                  ),
+                )}
+              </div>
+            )}
             <ul
               className={cn(
                 'mt-8 grid gap-4 md:grid-cols-2',

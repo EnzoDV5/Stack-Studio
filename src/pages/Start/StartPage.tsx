@@ -20,7 +20,7 @@ const partnerNote = planFamilies.find((f) => f.id === 'partner')?.note
 
 /**
  * /start: the quote builder. Deep links pre-fill it (?path=, ?type=<offering>, ?plan=<plan>,
- * ?quote=<starting quote>)
+ * ?quote=<starting quote>, ?partner=custom|discuss)
  * on top of any draft saved in this tab, then it resumes at the first open step.
  */
 export function StartPage() {
@@ -33,7 +33,7 @@ export function StartPage() {
     const answers: BriefAnswers =
       prefill.answers.path && prefill.answers.path !== base.path
         ? { ...emptyAnswers, contact: base.contact, ...prefill.answers }
-        : { ...base, ...prefill.answers }
+        : { ...emptyAnswers, ...base, ...prefill.answers }
     const stepId = prefill.stepId ?? firstOpenStepId(briefSteps, answers, defaultEstimateData)
     return { answers, stepId, prefillName: prefill.name }
   })
@@ -53,9 +53,7 @@ export function StartPage() {
           initialStepId={initial.stepId}
           prefillName={initial.prefillName}
           privacyHref="/privacy"
-          whatsapp={
-            whatsapp ? { href: whatsapp, label: briefCopy.aside.whatsappLabel } : undefined
-          }
+          whatsapp={whatsapp ? { href: whatsapp, label: briefCopy.aside.whatsappLabel } : undefined}
           email={site.email}
         />
       </Section>

@@ -191,7 +191,10 @@ export function EstimatePanel({
             ))}
             <Notes
               items={[
-                primary?.hoursLabel && copy.plan.hours(primary.hoursLabel),
+                primary?.hoursLabel &&
+                  (primary.family === 'partner'
+                    ? copy.plan.reservedHours(primary.hoursLabel)
+                    : copy.plan.hours(primary.hoursLabel)),
                 primary && copy.plan.minTerm(primary.minimumTermMonths),
                 result.needsAudit && copy.plan.needsAudit,
                 result.limited && partnerNote,
@@ -205,7 +208,9 @@ export function EstimatePanel({
         return (
           <>
             <p className="eyebrow text-muted">{copy.consult.label}</p>
-            <p className="mt-2 text-heading-md">{copy.consult.body}</p>
+            <p className="mt-2 text-heading-md">
+              {result.topic === 'partner' ? copy.consult.partnerBody : copy.consult.body}
+            </p>
           </>
         )
     }

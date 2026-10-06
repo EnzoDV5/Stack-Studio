@@ -2,7 +2,7 @@
  * Pure helpers that turn offerings, plans and rates into display rows and price labels.
  * Callers pass data and copy in (pages read src/data; sections just render the rows).
  */
-import type { Offering, Plan, PlanFamily, Rate, StageId } from '@/types'
+import type { CtaLink, Offering, Plan, PlanFamily, Rate, StageId } from '@/types'
 import { formatPrice } from './format'
 
 export interface PriceLabels {
@@ -18,11 +18,14 @@ export interface PriceLabels {
 export interface OfferRow {
   id: string
   name: string
-  price: string
+  /** Left out where prices aren't shown (Services: every number lives on Pricing). */
+  price?: string
   summary: string
   includes: string[]
   examples: string[]
   notes: string[]
+  /** Opens the brief pre-filled for this offering (set by the page, e.g. `/start?type=…`). */
+  start?: CtaLink
 }
 
 export interface OfferData {
@@ -49,20 +52,20 @@ export function ratePrice(rate: Rate, l: PriceLabels): string {
   return `${formatPrice(rate.pricePerHour)}${l.perHour}`
 }
 
-function offeringRow(o: Offering, l: PriceLabels): OfferRow {
+function offeringRow(o: Offering, l: PriceLabels, prices: boolean): OfferRow {
   const estimateNotes =
-    o.stage === 'build' && o.estimatedHours
+    prices && o.stage === 'build' && o.estimatedHours
       ? [
           `Estimated from ${o.estimatedHours} working hours at ${formatPrice(o.fromPrice / o.estimatedHours)}${l.perHour}.`,
         ]
       : []
-  const tierNotes = (o.tiers ?? []).map(
-    (t) => `${t.label}: ${l.from.toLowerCase()} ${formatPrice(t.fromPrice)}`,
-  )
+  const tierNotes = prices
+    ? (o.tiers ?? []).map((t) => `${t.label}: ${l.from.toLowerCase()} ${formatPrice(t.fromPrice)}`)
+    : []
   return {
     id: o.id,
     name: o.name,
-    price: offeringPrice(o, l),
+    price: prices ? offeringPrice(o, l) : undefined,
     summary: o.summary,
     includes: o.includes,
     examples: o.examples ?? [],
@@ -70,11 +73,11 @@ function offeringRow(o: Offering, l: PriceLabels): OfferRow {
   }
 }
 
-function planRow(p: Plan, l: PriceLabels): OfferRow {
+function planRow(p: Plan, l: PriceLabels, prices: boolean): OfferRow {
   return {
     id: p.id,
     name: p.name,
-    price: planPrice(p, l),
+    price: prices ? planPrice(p, l) : undefined,
     summary: p.tagline,
     includes: p.includes,
     examples: [],
@@ -82,11 +85,11 @@ function planRow(p: Plan, l: PriceLabels): OfferRow {
   }
 }
 
-function rateRow(r: Rate, l: PriceLabels): OfferRow {
+function rateRow(r: Rate, l: PriceLabels, prices: boolean): OfferRow {
   return {
     id: r.id,
     name: r.name,
-    price: ratePrice(r, l),
+    price: prices ? ratePrice(r, l) : undefined,
     summary: r.description,
     includes: [],
     examples: r.examples ?? [],
@@ -94,12 +97,15 @@ function rateRow(r: Rate, l: PriceLabels): OfferRow {
   }
 }
 
-/** Every visible row for a stage: offerings (Build, Take over), plans (Run, Partner) or rates (Grow). */
+/**
+ * Every visible row for a stage: offerings (Build, Take over), plans (Run, Partner) or rates (Grow).
+ * `prices: false` leaves out the price and the notes that only restate it.
+ */
 export function stageRows(
   stage: StageId,
   data: OfferData,
   l: PriceLabels,
-  { pricedOnly = false }: { pricedOnly?: boolean } = {},
+  { pricedOnly = false, prices = true }: { pricedOnly?: boolean; prices?: boolean } = {},
 ): OfferRow[] {
   const shown = (o: Offering) => isVisible(o) && (!pricedOnly || o.visibility === 'pricing')
   switch (stage) {
@@ -107,17 +113,17 @@ export function stageRows(
     case 'takeover':
       return data.offerings
         .filter((o) => o.stage === stage && shown(o))
-        .map((o) => offeringRow(o, l))
+        .map((o) => offeringRow(o, l, prices))
     case 'run':
       return data.plans
         .filter((p) => (p.family === 'care' || p.family === 'managed') && isVisible(p))
-        .map((p) => planRow(p, l))
+        .map((p) => planRow(p, l, prices))
     case 'grow':
-      return data.rates.filter((r) => r.id === 'feature').map((r) => rateRow(r, l))
+      return data.rates.filter((r) => r.id === 'feature').map((r) => rateRow(r, l, prices))
     case 'partner':
       return data.plans
         .filter((p) => p.family === 'partner' && isVisible(p))
-        .map((p) => planRow(p, l))
+        .map((p) => planRow(p, l, prices))
   }
 }
 

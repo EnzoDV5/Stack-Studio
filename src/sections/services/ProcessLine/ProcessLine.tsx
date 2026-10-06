@@ -25,7 +25,6 @@ import {
   type Span,
 } from '@/lib/process-timeline'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
-import { TechnologyMarquee, type TechnologyMarqueeProps } from '@/sections/shared/TechnologyMarquee'
 import type { CtaLink, ProcessStep, TimelineColumn } from '@/types'
 import styles from './ProcessLine.module.css'
 
@@ -46,8 +45,8 @@ export interface ProcessLineProps {
   columns: TimelineColumn[]
   /** "Go deeper" link to the full process. */
   more: CtaLink
-  /** The tools behind the work, as one slow row under the plan. */
-  technologies?: Omit<TechnologyMarqueeProps, 'tone'>
+  /** Anchor for "go deeper" links, e.g. "process". */
+  id?: string
   tone?: Tone
 }
 
@@ -73,9 +72,9 @@ interface Parts {
  * there, drawing or retracting the bars up to it, a soft band follows the column and the
  * readout beside the plan rolls to that week (until that first hover it shows an overview,
  * so the entrance sweep doesn't flick it through every week); clicking a week (or its label, or the arrow
- * keys) keeps it there. The technology strip runs underneath (ambient). This is the site's one
- * week-by-week process; /services explains what happens after getting in touch instead
- * (NextSteps). Reduced motion: the whole plan, static.
+ * keys) keeps it there. (The technology strip is on Home, under "What do you need?"). This is the site's one
+ * week-by-week process, on /services; NextSteps after it explains what happens after getting in
+ * touch. Reduced motion: the whole plan, static.
  */
 export function ProcessLine({
   index,
@@ -87,7 +86,7 @@ export function ProcessLine({
   overview,
   columns,
   more,
-  technologies,
+  id,
   tone = 'dark',
 }: ProcessLineProps) {
   const headingId = useId()
@@ -341,7 +340,7 @@ export function ProcessLine({
     )
 
   return (
-    <Section tone={tone} spacing="sm" aria-labelledby={headingId}>
+    <Section id={id} tone={tone} spacing="sm" aria-labelledby={headingId}>
       <div className="container-site">
         <SectionHeader
           id={headingId}
@@ -600,12 +599,6 @@ export function ProcessLine({
           </TextLink>
         </div>
       </div>
-
-      {technologies && (
-        <div className="mt-section-sm">
-          <TechnologyMarquee {...technologies} tone={tone} />
-        </div>
-      )}
     </Section>
   )
 }

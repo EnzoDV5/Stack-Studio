@@ -149,29 +149,29 @@ a long settle.
 Neighbouring sections never share a trigger type, and every section's motion is listed in
 `docs/motion-map.md` (with the page-flow rules). Signature ideas in use:
 
-| Where               | Idea                                                                        | Component                        |
-| ------------------- | --------------------------------------------------------------------------- | -------------------------------- |
-| First visit         | Mark and counter preloader, under 1.5s, once per session                    | `Preloader`                      |
-| Route change        | Orange then ink panel wipe, scroll reset (or jump to `#hash`)               | `PageTransition`                 |
-| Whole page          | Page colours switch to each section's tone in one short fade                | `ToneController`                 |
-| Section headings    | Code characters compile into the title once, on a timer, when it enters     | `SectionHeader`, `MaskedHeading` |
-| Home hero           | Masked line rise over the showreel; a huge Stack mark fills the right side  | `HomeHero`, `SplitReveal`        |
-| Home work           | Full-bleed media shrinks into a card, then a pinned sideways reel           | `WorkReel`                       |
-| Home services       | Horizontal accordion (transform + clip-path)                                | `PathChooser`                    |
-| Home process        | A playhead sweeps the plan on entry; hover or click a week to glide there   | `ProcessLine`                    |
-| Client quotes       | Quote cards rise in one after the other (no images)                         | `ClientVoices`, `StaggerGroup`   |
-| Starting quotes     | Quote cards rise in; each opens the estimator pre-filled                    | `QuoteStarters`, `StaggerGroup`  |
-| Case study site     | The site on a laptop: the screen swings up and grows, then the site scrolls | `CaseDevice`, `MacbookScroll`    |
-| Prices, metrics     | Numbers count up once on enter                                              | `CountUp`                        |
-| Closing band        | Code characters compile into the current-tone title once it enters          | `ClosingCta`, `MaskedHeading`    |
-| Work media          | Clip-path mask opens while the image settles; Flip on filter                | `MediaReveal`, `WorkGrid`        |
-| Work cards          | Hover video preview (desktop)                                               | `ProjectMedia`                   |
-| Services, FAQs      | Expanding rows; each service stage has its own layout                       | `Accordion`, `StageBlock`        |
-| Services next steps | Step cards (mini interfaces) deal out of a pile into a row on scroll        | `NextSteps`                      |
-| Plan tabs           | Cards Flip into the slot they replace                                       | `PlanTabs`                       |
-| Portraits, images   | Gentle parallax (scroll, or pointer on Home)                                | `Parallax`                       |
-| Technologies        | CSS marquee, hover pause and pause control                                  | `TechnologyMarquee`, `Marquee`   |
-| Chrome              | Header hides on scroll and follows the page tone; cursor; magnetic CTAs     | `Header`, `Cursor`               |
+| Where               | Idea                                                                                                  | Component                        |
+| ------------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------- |
+| First visit         | Mark and counter preloader, under 1.5s, once per session                                              | `Preloader`                      |
+| Route change        | Orange then ink panel wipe, scroll reset (or jump to `#hash`)                                         | `PageTransition`                 |
+| Whole page          | Page colours switch to each section's tone in one short fade                                          | `ToneController`                 |
+| Section headings    | Code characters compile into the title once, on a timer, when it enters                               | `SectionHeader`, `MaskedHeading` |
+| Home hero           | Masked line rise over the showreel; a huge Stack mark fills the right side                            | `HomeHero`, `SplitReveal`        |
+| Home work           | Full-bleed media shrinks into a card, then a pinned sideways reel                                     | `WorkReel`                       |
+| Home services       | Horizontal accordion (transform + clip-path)                                                          | `PathChooser`                    |
+| Home process        | A playhead sweeps the plan on entry; hover or click a week to glide there                             | `ProcessLine`                    |
+| Client quotes       | Quote cards rise in one after the other (no images)                                                   | `ClientVoices`, `StaggerGroup`   |
+| Starting quotes     | Quote cards rise in; each opens the estimator pre-filled                                              | `QuoteStarters`, `StaggerGroup`  |
+| Case study site     | The site on a laptop: the screen swings up and grows, then the site scrolls                           | `CaseDevice`, `MacbookScroll`    |
+| Prices, metrics     | Numbers count up once on enter                                                                        | `CountUp`                        |
+| Closing band        | Code characters compile into the current-tone title once it enters                                    | `ClosingCta`, `MaskedHeading`    |
+| Framed media        | Rounded images and video open with a clip mask as their contents settle; Work filters also Flip cards | `MediaReveal`, `WorkGrid`        |
+| Work cards          | Hover video preview (desktop)                                                                         | `ProjectMedia`                   |
+| Services, FAQs      | Expanding rows; each service stage has its own layout                                                 | `Accordion`, `StageBlock`        |
+| Services next steps | Step cards (mini interfaces) deal out of a pile into a row on scroll                                  | `NextSteps`                      |
+| Plan tabs           | Cards Flip into the slot they replace                                                                 | `PlanTabs`                       |
+| Portraits, images   | Gentle parallax (scroll, or pointer on Home)                                                          | `Parallax`                       |
+| Technologies        | CSS marquee, hover pause and pause control                                                            | `TechnologyMarquee`, `Marquee`   |
+| Chrome              | Header hides on scroll and follows the page tone; cursor; magnetic CTAs                               | `Header`, `Cursor`               |
 
 **Reduced motion** (`prefers-reduced-motion: reduce`): Lenis is not created (native
 scroll), there's no preloader, no page wipe (instant swap plus scroll reset), no text

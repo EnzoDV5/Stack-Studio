@@ -26,6 +26,7 @@ export const emptyAnswers: BriefAnswers = {
   changeFrequency: null,
   workKinds: [],
   hours: null,
+  customHours: 12,
   description: '',
   contact: { name: '', email: '', phone: '', company: '', message: '' },
   consent: false,

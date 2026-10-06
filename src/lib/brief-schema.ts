@@ -91,8 +91,9 @@ const runSchema = z.object({
 
 const developSchema = z.object({
   path: z.literal('develop'),
-  workKinds: many(1),
+  workKinds: z.array(z.string()),
   hours: choice(),
+  customHours: z.number().check(z.int(), z.gte(1), z.lte(160)),
   ...finalStep,
 })
 

@@ -2,7 +2,7 @@
  * Page-level copy: meta tags, heroes, section headings and CTAs for every route.
  * Sections receive these as props; nothing is hardcoded in components.
  */
-import type { CtaContent, PageHeroContent, PageMetaContent, SectionIntro } from '@/types'
+import type { CtaContent, PageHeroContent, PageMetaContent, SectionIntro, StageId } from '@/types'
 
 export const pageMeta = {
   home: {
@@ -20,7 +20,7 @@ export const pageMeta = {
   services: {
     title: 'Services', // COPY:
     description:
-      'Brand-led websites, motion and interaction, digital products, and hosting and care. What we build and how a project runs.', // COPY:
+      'Websites, apps and software, taking over what you already have, and looking after it once it’s live. What we do, how a project runs and how to start.', // COPY:
     path: '/services',
   },
   pricing: {
@@ -76,8 +76,10 @@ export const closingCtaCode = [
 
 /* ---------- Home ---------- */
 /**
- * Home is a fast summary of everything, work first. Every section ends with a "go deeper"
- * link to its full page, so visitors choose what to explore.
+ * Home answers "who are you, and can you do it?": what we do, the work, what clients say and
+ * who we are. Only starting package ranges appear here; detailed prices live on /pricing and
+ * the process is on /services. Every
+ * section ends with a "go deeper" link to its full page, so visitors choose what to explore.
  */
 export const homeContent = {
   hero: {
@@ -105,47 +107,19 @@ export const homeContent = {
   paths: {
     eyebrow: 'Services', // COPY:
     title: 'What do you need?', // COPY:
-    intro:
-      'New build, rescue job or a team on call: choose the one that sounds like you and see where it starts.', // COPY:
+    intro: 'Pick the one that sounds like you.', // COPY:
     /** The self-select line for each stage, in the visitor's words. */
     prompts: {
       build: 'I need something new.', // COPY:
-      takeover: 'I have something that needs fixing or a new home.', // COPY:
-      run: 'Keep my site or app running.', // COPY:
-      grow: 'Improve what I have.', // COPY:
-      partner: 'I need a development team every month.', // COPY:
+      takeover: 'My site or app needs fixing or a new home.', // COPY:
+      run: 'I need someone to keep it working.', // COPY:
+      grow: 'I want to improve what I have.', // COPY:
+      partner: 'I need a team for my software.', // COPY:
     },
-    itemsLabel: 'Starting points', // COPY:
+    itemsLabel: 'For example', // COPY:
     details: 'See details', // COPY:
-    estimate: 'Get an estimate', // COPY:
+    estimate: 'Start here', // COPY:
     more: { label: 'All services', to: '/services' }, // COPY:
-  },
-  process: {
-    eyebrow: 'Process', // COPY:
-    title: 'How a project runs.', // COPY:
-    stepLabel: 'Step', // COPY:
-    nowLabel: 'Where we are', // COPY:
-    /** Shown beside the plan until the visitor points at a week. */
-    overview: {
-      label: 'Typical timeline', // COPY:
-      title: 'Around six weeks to launch', // COPY:
-      text: 'This is a typical website project, not a fixed deadline. Scope, content and feedback can make it shorter or longer, and we confirm the schedule in your quote.', // COPY:
-      hint: {
-        pointer: 'Hover a week to see what happens in it.', // COPY:
-        touch: 'Tap a week to see what happens in it.', // COPY:
-      },
-    },
-    /** Timeline columns. Step spans in data/process.ts index into this list. */
-    columns: [
-      { label: 'Week 1', short: 'W1' }, // COPY:
-      { label: 'Week 2', short: 'W2' }, // COPY:
-      { label: 'Week 3', short: 'W3' }, // COPY:
-      { label: 'Week 4', short: 'W4' }, // COPY:
-      { label: 'Week 5', short: 'W5' }, // COPY:
-      { label: 'Week 6', short: 'W6' }, // COPY:
-      { label: 'After launch', short: '+' }, // COPY:
-    ],
-    more: { label: 'The full process', to: '/services#next-steps' }, // COPY:
   },
   clients: {
     eyebrow: 'Clients', // COPY:
@@ -155,27 +129,44 @@ export const homeContent = {
     caseLink: (company: string) => `See the ${company} project`, // COPY:
     more: { label: 'See all the work', to: '/work' }, // COPY:
   },
-  pricing: {
-    eyebrow: 'Pricing', // COPY:
-    title: 'Know where you stand before we talk.', // COPY:
+  /**
+   * The website packages (data/quotes), each shown on the laptop as a site we built that fits
+   * it, so visitors see what theirs could be. Indicative ranges match the starting quotes on
+   * /pricing, where visitors can adjust the quote in the brief.
+   */
+  packages: {
+    eyebrow: 'Packages', // COPY:
+    title: 'Pick a starting point.', // COPY:
     intro:
-      'Every project is different, so treat these as starting points rather than a price list.', // COPY:
-    /** Snapshot figures: label + where the number comes from (resolved on the Home page). */
-    items: [
-      { label: 'Websites', source: { offering: 'business-website' }, note: 'Once-off build' }, // COPY:
-      {
-        label: 'Care',
-        source: { planFamily: 'care' as const },
-        note: 'Hosting, security and changes',
-      }, // COPY:
-      {
-        label: 'Partner',
-        source: { planFamily: 'partner' as const },
-        note: 'Reserved monthly hours',
-      }, // COPY:
-    ],
-    more: { label: 'See all pricing', to: '/pricing' }, // COPY:
-    estimateCta: { label: 'Build my estimate', to: '/start' }, // COPY:
+      'Five common ways to start, each shown on something we’ve built. Open a package to see what it includes and its indicative price.', // COPY:
+    priceLabel: 'Typically', // COPY:
+    includesLabel: 'Includes', // COPY:
+    exampleLabel: 'Example', // COPY:
+    caseLink: 'See the project', // COPY:
+    /** What the laptop (or phone) shows for each package (ids from data/quotes). */
+    examples: {
+      launch: {
+        project: 'gc-solar',
+        caption: 'GC Solar: a new site for a solar installer', // COPY:
+      },
+      bookings: {
+        phone: true,
+        caption: 'Bookings, on your phone: an illustrative booking app', // COPY:
+      },
+      growth: {
+        project: 'mpg-foundation',
+        caption: 'MPG Foundation: stories, projects and donations', // COPY:
+      },
+      store: {
+        project: 'salon-friend',
+        caption: 'Salon Friend: a catalogue customers can shop', // COPY:
+      },
+      brand: {
+        video: 'grow',
+        caption: 'Designed from a blank page, with motion built in', // COPY:
+      },
+    } as Record<string, { project?: string; phone?: boolean; video?: StageId; caption: string }>,
+    more: { label: 'Compare packages and prices', to: '/pricing' }, // COPY:
   },
   studio: {
     eyebrow: 'Studio', // COPY:
@@ -240,37 +231,35 @@ export const caseStudyContent = {
 export const servicesContent = {
   hero: {
     eyebrow: 'Services', // COPY:
-    title: 'Build, take over, run, improve, partner.', // COPY:
-    intro:
-      'Starting something new or need someone to take over what you already have? Stack handles both, and stays on to keep it working and improving.', // COPY:
+    title: 'What do you need?', // COPY:
+    intro: 'Something new, something to fix, or a team to keep it going? Start here.', // COPY:
   } satisfies PageHeroContent,
-  /**
-   * The Services page groups the offer the way visitors think about it: websites, apps, then
-   * what happens to something that already exists. The stages (data/services) stay the model.
-   */
-  index: {
-    label: 'What do you need?', // COPY:
+  navigation: {
+    label: 'Services sections', // COPY:
     items: [
-      { to: '#stage-build', name: 'A website', line: 'A new site that wins you work.' }, // COPY:
-      { to: '#apps', name: 'An app or software', line: 'Portals, bookings, mobile and desktop.' }, // COPY:
-      {
-        to: '#stage-grow',
-        name: 'Changes to my website',
-        line: 'Updates, features or a redesign.',
-      }, // COPY:
-      { to: '#stage-run', name: 'Ongoing care', line: 'Hosting, updates and a team on call.' }, // COPY:
+      { id: 'services-top', label: 'Overview' }, // COPY:
+      { id: 'stage-build', label: 'New website' }, // COPY:
+      { id: 'apps', label: 'Apps and software' }, // COPY:
+      { id: 'desktop', label: 'Desktop software' }, // COPY:
+      { id: 'stage-takeover', label: 'Fix or move it' }, // COPY:
+      { id: 'stage-run', label: 'Keep it working' }, // COPY:
+      { id: 'stage-grow', label: 'Make it better' }, // COPY:
+      { id: 'stage-partner', label: 'Software team' }, // COPY:
+      { id: 'process', label: 'How we work' }, // COPY:
+      { id: 'next-steps', label: 'Next steps' }, // COPY:
+      { id: 'services-faq', label: 'Questions' }, // COPY:
     ],
   },
   /** The Build stage's website offerings, shown as their own group. */
   websites: {
-    name: 'Websites', // COPY:
-    line: 'Designed from scratch, built to win you work.', // COPY:
+    name: 'I need a new website.', // COPY:
+    line: 'A website built around your business.', // COPY:
     cta: { label: 'Start a website', to: '/start?path=build' }, // COPY:
   },
   /** The Build stage's apps and software, with the phone turn (dark, between the groups). */
   apps: {
     eyebrow: 'Apps and software', // COPY:
-    title: 'When a website isn’t enough.', // COPY:
+    title: 'I need an app or software.', // COPY:
     intro:
       'Booking systems, client portals, dashboards and mobile apps: the software your business runs on.', // COPY:
     cta: { label: 'Tell us about your app', to: '/start?path=build' }, // COPY:
@@ -278,7 +267,7 @@ export const servicesContent = {
   /** Desktop software and the systems behind it, with the laptop (dark, after the apps). */
   desktop: {
     eyebrow: 'Desktop software', // COPY:
-    title: 'Software for the desk.', // COPY:
+    title: 'I need software for my team.', // COPY:
     intro:
       'Windows and macOS tools for the work your team does every day, online or offline, and the systems that keep them in sync.', // COPY:
     /** Build offerings shown here instead of under apps (ids in data/services). */
@@ -286,11 +275,42 @@ export const servicesContent = {
     cta: { label: 'Tell us about your software', to: '/start?path=build' }, // COPY:
   },
   improve: {
-    note: 'We quote the estimated hours before work starts. Once the changes are live, you can add ongoing Care at R200 per working hour.', // COPY:
+    note: 'We estimate the hours and send a quote before any work starts. Once the changes are live, you can add ongoing Care.', // COPY:
+  },
+  /**
+   * How a project runs, week by week (ProcessLine). It sits after the offer, before the next
+   * steps, and hands price questions to /pricing.
+   */
+  process: {
+    eyebrow: 'Process', // COPY:
+    title: 'How a project runs.', // COPY:
+    stepLabel: 'Step', // COPY:
+    nowLabel: 'Where we are', // COPY:
+    /** Shown beside the plan until the visitor points at a week. */
+    overview: {
+      label: 'Typical timeline', // COPY:
+      title: 'Around six weeks to launch', // COPY:
+      text: 'This is a typical website project, not a fixed deadline. Scope, content and feedback can make it shorter or longer, and we confirm the schedule in your quote.', // COPY:
+      hint: {
+        pointer: 'Hover a week to see what happens in it.', // COPY:
+        touch: 'Tap a week to see what happens in it.', // COPY:
+      },
+    },
+    /** Timeline columns. Step spans in data/process.ts index into this list. */
+    columns: [
+      { label: 'Week 1', short: 'W1' }, // COPY:
+      { label: 'Week 2', short: 'W2' }, // COPY:
+      { label: 'Week 3', short: 'W3' }, // COPY:
+      { label: 'Week 4', short: 'W4' }, // COPY:
+      { label: 'Week 5', short: 'W5' }, // COPY:
+      { label: 'Week 6', short: 'W6' }, // COPY:
+      { label: 'After launch', short: '+' }, // COPY:
+    ],
+    more: { label: 'See what it costs', to: '/pricing' }, // COPY:
   },
   /**
    * What happens after someone gets in touch, from the brief to a start date: the last doubt
-   * before contact. (How a project runs week by week is on Home, in the process plan.)
+   * before contact, right after the week-by-week plan above it.
    */
   nextSteps: {
     eyebrow: 'Next steps', // COPY:
@@ -354,6 +374,8 @@ export const servicesContent = {
   },
   labels: {
     includes: 'Includes', // COPY:
+    /** Inside each build service: opens the brief with that service picked. */
+    start: 'Start with this', // COPY:
   },
   faq: {
     eyebrow: 'FAQ', // COPY:
@@ -367,15 +389,27 @@ export const pricingContent = {
     eyebrow: 'Pricing', // COPY:
     title: 'Priced around your project.', // COPY:
     intro:
-      'There’s no one-size price list, because no two projects are alike. Build an estimate in two minutes, or start from one of the examples below and adjust it. All prices in ZAR.', // COPY:
+      'Every number lives here. Packages give you a ballpark, the brief gives you an estimate for your project, and a short call turns it into a fixed quote. All prices in ZAR.', // COPY:
   } satisfies PageHeroContent,
+  navigation: {
+    label: 'Pricing sections', // COPY:
+    items: [
+      { id: 'pricing-top', label: 'Overview' }, // COPY:
+      { id: 'pricing-approach', label: 'How pricing works' }, // COPY:
+      { id: 'pricing-packages', label: 'Packages' }, // COPY:
+      { id: 'pricing-plans', label: 'Monthly plans' }, // COPY:
+      { id: 'pricing-included', label: 'What plans cover' }, // COPY:
+      { id: 'pricing-terms', label: 'Payment terms' }, // COPY:
+      { id: 'pricing-faq', label: 'Questions' }, // COPY:
+    ],
+  },
   approach: {
     eyebrow: 'How pricing works', // COPY:
     title: 'From rough idea to a final price.', // COPY:
     steps: [
       {
         title: 'Build an estimate', // COPY:
-        body: 'Answer a few questions about what you need and see an indicative range straight away.', // COPY:
+        body: 'Start from a package below or from scratch. Answer a few questions and see a range for your project straight away.', // COPY:
       },
       {
         title: 'Talk it through', // COPY:
@@ -390,9 +424,9 @@ export const pricingContent = {
   },
   quotes: {
     eyebrow: 'Starting points', // COPY:
-    title: 'Website packages and what they cost.', // COPY:
+    title: 'Packages, for a ballpark.', // COPY:
     intro:
-      'Pick the closest one and adjust it in the estimate builder. Ranges are a guide; your fixed quote follows a short call.', // COPY:
+      'Pick the closest one and the brief opens with it filled in, ready to adjust. Ranges are a guide; your estimate comes from the brief and your fixed quote from a short call.', // COPY:
     rangeLabel: 'Typically', // COPY:
     monthly: (price: string) => `plus ${price} for hosting and care`, // COPY:
     start: 'Start from this one', // COPY:
@@ -414,10 +448,14 @@ export const pricingContent = {
   },
   plans: {
     eyebrow: 'Monthly plans', // COPY:
-    title: 'Keep it running. Keep it improving.', // COPY:
+    title: 'After launch, or for bigger systems.', // COPY:
     tabsLabel: 'Plan types', // COPY:
     recommended: 'Recommended', // COPY:
     choose: 'Choose', // COPY:
+    partnerChoose: 'Choose your hours', // COPY:
+    partnerStart: 'Send a Partner brief', // COPY:
+    partnerDiscuss: 'Discuss the hours first', // COPY:
+    reservedHours: (label: string) => `${label} reserved each month`, // COPY:
     minTerm: (n: number) => `${n}-month minimum, billed monthly in advance`, // COPY:
   },
   scope: {

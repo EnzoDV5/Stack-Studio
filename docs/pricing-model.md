@@ -162,13 +162,13 @@ Care is for websites only; Managed is for applications only.
 | Partner 40         | R16,000/month      | 40             | pricing              |
 | Dedicated Capacity | from R50,000/month | –              | hidden               |
 
-- **Partner 10:** UX/UI, frontend, backend, small integrations, improvements, technical
-  support, monthly planning, priority over non-retainer work.
-- **Partner 20:** adds database work, API integrations, new features, automation,
-  technical planning and priority support.
-- **Partner 40:** adds product development, infrastructure, monthly roadmap planning and
-  priority development.
+- **Every Partner package:** UX/UI, frontend and backend development, features, fixes,
+  integrations, technical planning and support, with priority over non-retainer work.
 - Note shown on the Partner family: "Limited to 3 partner clients at a time."
+- The 10, 20 and 40 hour plans are fixed starting packages. Every package covers the same
+  kinds of development work; the reserved monthly hours and calculated price differ.
+- Pricing also links to a custom hours brief (`/start?partner=custom`) and a discussion first
+  brief (`/start?partner=discuss`). A fixed plan link opens contact with its hours selected.
 
 ## Policies (Pricing page and /terms)
 
@@ -221,7 +221,8 @@ Care is for websites only; Managed is for applications only.
 - Underneath: "Need something more specific? Every project is different. Build a quick
   project brief and we'll give you a more accurate estimate. → Build my estimate"
 
-Home teaser: "Websites from R18,000 · Care from R100/month · Partner from R4,000/month".
+Home shows the same calculated indicative ranges for its five starting packages as the
+Pricing page. The brief produces the project-specific estimate.
 
 ## Quote builder (/start)
 
@@ -236,7 +237,7 @@ Step 1 asks "What do you need?" and branches:
 | A. Build something new | type → (website: pages, add-ons, languages, Care plan defaulting to Care Business or "No plan for now") / (app, software, AI: who uses it, key needs) → timeline → budget |
 | B. Something exists    | what is it → code and hosting access → situation (multi) → urgency                                                                                                        |
 | C. Keep it running     | website or app → who built it → change frequency                                                                                                                          |
-| D. Ongoing development | kind of work (multi) → hours per month                                                                                                                                    |
+| D. Ongoing development | Partner hours per month (fixed package, custom count, or discuss first) → contact                                                                                         |
 | E. Not sure            | short description                                                                                                                                                         |
 
 All paths then go contact details → POPIA consent → review → submit.
@@ -261,7 +262,8 @@ Result kinds: `range` | `discovery` | `plan` | `audit` | `consult`.
   - App: rarely or monthly → Managed App, weekly → Managed Business System.
   - Built by someone else adds "Starts with an audit and takeover."
 - **D → plan.**
-  - A few → ad-hoc R400/hour or Partner 10.
-  - About 10 → Partner 10; about 20 → Partner 20; 40+ → Partner 40 (limited spots).
-- **E → consult:** "We'll suggest the right starting point after a short call."
+  - 10, 20 or 40 hours → the matching fixed Partner package.
+  - Custom hours → an indicative monthly amount at R400/hour.
+  - Unsure of hours → consultation before choosing a monthly amount.
+- **E → consult:** discuss what is needed and recommend a starting point and hours.
 - Always shows: "Indicative estimate. Final quote after a short call."

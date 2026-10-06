@@ -155,6 +155,29 @@ function deviceFrames(
 }
 
 /**
+ * One frame of a device sequence as a still image (e.g. the phone's last frame, facing the
+ * viewer), at the sequence's widths.
+ */
+function deviceStill(
+  device: keyof typeof deviceMotion,
+  id: string,
+  frame: number,
+  alt: string,
+): ImageAsset {
+  const { widths, aspect } = deviceMotion[device]
+  const url = (w: number) =>
+    `/media/${device}/${id}/frame-${String(frame).padStart(2, '0')}-${w}.webp`
+  const [largest] = widths
+  return {
+    src: url(largest),
+    srcSet: widths.map((w) => `${url(w)} ${w}w`).join(', '),
+    width: largest,
+    height: Math.round(largest / aspect),
+    alt,
+  }
+}
+
+/**
  * A service stage's looping clip: 1920×1080 with a 1280×720 rendition (the player picks the
  * one that is sharp at the slot's size) and its first frame as a WebP poster at three widths.
  * Encoded by scripts/services-media (sources and licences: public/media/services/README.md).
@@ -222,6 +245,13 @@ export const media = {
   // The Services device sections, with illustrative apps (not clients'), designed in
   // scripts/devices/screens: a bookings app on the phone, a stock and orders tool on the laptop.
   apps: {
+    /** The phone's last frame, facing the viewer (Home packages: the bookings package). */
+    phoneStill: deviceStill(
+      'phone',
+      'app',
+      deviceMotion.phone.frames - 1,
+      'An orange iPhone showing a bookings app with today’s appointments and weekly takings',
+    ), // COPY: alt
     phone: deviceFrames(
       'phone',
       'app',

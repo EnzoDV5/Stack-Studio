@@ -28,7 +28,7 @@ Trigger types:
 | 4   | ServiceShowcase   | dark   | SectionHeader (stacked)  | Flip stage/rail swap on click                    | hover (click) |
 | 5   | ProcessPinned     | paper  | stacked (custom, sticky) | Sticky column, active step, 160vh+               | pin           |
 | 6   | PricingTeaser     | dark   | SectionHeader (stacked)  | StaggerGroup rise on 3 cards                     | enter         |
-| 7   | StudioSnippet     | paper  | stacked (custom)         | Parallax portraits                               | scrub         |
+| 6   | StudioSnippet     | paper  | stacked (custom)         | Parallax portraits                               | scrub         |
 | 8   | Testimonial       | paper  | eyebrow                  | SplitReveal lines on the quote                   | enter         |
 | 9   | ClosingCta        | orange | eyebrow                  | SplitReveal words on the title                   | enter         |
 
@@ -124,31 +124,46 @@ Clash: the success heading uses SplitReveal on a page whose title does not.
 
 ### Home
 
-Order, as a story: what the visitor needs, how Stack works, indicative pricing, proof,
-client voices and the founders, then the closing band. Measured on the preview build: 11.05 viewports tall at
-1440×900 (footer included), 10.79 at 390×844. Heights below are in viewports.
+Order, as a story: what the visitor needs (with the stack behind the work), a package to start
+from (shown on sites we built with indicative price ranges), proof, client voices and the
+founders, then the closing band. Detailed prices live on /pricing and the week-by-week process
+is on /services.
+Measured on the preview build: 10.14 viewports tall at 1440×900 (footer included). Heights
+below are in viewports.
 
-| #   | Section                | Tone   | Opener                | Signature motion                                                                                                                    | Trigger       | Height |
-| --- | ---------------------- | ------ | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------ |
-| 1   | HomeHero               | dark   | own                   | Statement line-reveal (1 of Home's 2 type moments); the Stack mark sinks with the scroll, behind the next section                   | load + scrub  | 1.00   |
-| 2   | PathChooser            | dark   | SectionHeader split   | Horizontal accordion (transform + clip-path, GSAP); rows on mobile. No scroll motion                                                | hover         | 1.22   |
-| 3   | ProcessLine            | dark   | SectionHeader minimal | On entry the steps slide in and a playhead sweeps the plan once, drawing the bars; then hovering or clicking a week glides it there | enter + hover | ~1.1   |
-| 4   | PricingSnapshot        | paper  | SectionHeader stacked | Three figures count up once, mid-screen                                                                                             | enter         | 1.05   |
-| 5   | WorkReel               | paper  | SectionHeader inline  | Arrives full-bleed; pins (the page's only pin), shrinks into a card, then travels sideways                                          | scrub + pin   | 2.85   |
-| 6   | ClientVoices           | paper  | SectionHeader stacked | The quote cards rise in one after the other                                                                                         | enter         | ~1.0   |
-| 7   | StudioSnippet          | paper  | SectionHeader split   | Portraits drift toward the pointer (hover parallax)                                                                                 | hover         | 0.92   |
-| 8   | ClosingCta (app shell) | orange | eyebrow               | Code characters compile into the readable ink title, once, on a timer when the band enters                                          | enter         | ~0.9   |
-| —   | Footer (chrome)        | ink    | —                     | None. Not part of the tone flow, so the band above stays orange                                                                     | none          | 0.76   |
+| #   | Section                | Tone   | Opener                | Signature motion                                                                                                           | Trigger       | Height |
+| --- | ---------------------- | ------ | --------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------- | ------ |
+| 1   | HomeHero               | dark   | own                   | Statement line-reveal (1 of Home's 2 type moments); the Stack mark sinks with the scroll, behind the next section          | load + scrub  | 1.00   |
+| 2   | PathChooser            | dark   | SectionHeader split   | Horizontal accordion (transform + clip-path, GSAP); rows on mobile. The large technology strip closes it (ambient marquee) | hover         | ~1.5   |
+| 3   | PackageShowcase        | dark   | SectionHeader minimal | The laptop's lid opens once as it comes on screen; the chosen package's example site then scrolls inside the screen        | enter         | ~1.4   |
+| 4   | WorkReel               | paper  | SectionHeader inline  | Arrives full-bleed; pins (the page's only pin), shrinks into a card, then travels sideways                                 | scrub + pin   | 2.85   |
+| 5   | ClientVoices           | paper  | SectionHeader stacked | The quote cards rise in one after the other                                                                                | enter         | ~1.0   |
+| 7   | StudioSnippet          | paper  | SectionHeader split   | Portraits reveal on scroll, then drift toward the pointer                                                                  | enter + hover | 0.92   |
+| 7   | ClosingCta (app shell) | orange | eyebrow               | Code characters compile into the readable ink title, once, on a timer when the band enters                                 | enter         | ~0.9   |
+| —   | Footer (chrome)        | ink    | —                     | None. Not part of the tone flow, so the band above stays orange                                                            | none          | 0.76   |
 
-Trigger sequence: load + scrub · hover · enter + hover · enter · scrub + pin · enter · hover · enter. No
-two neighbours share a type. Openers go inline · stacked · split · minimal · stacked · split.
-Every section ends with a "go deeper" link: All work (header row and last panel), See all
-the work, All services, The full process, See all pricing, Meet the studio.
+Trigger sequence: load + scrub · hover · enter · scrub + pin · enter · hover · enter. No two
+neighbours share a type. Openers go split · minimal · inline · stacked · split. Every section
+ends with a "go deeper" link: All services, Compare packages and prices, All work (header row
+and last panel), See all the work, Meet the studio.
+
+PackageShowcase: five website packages (data/quotes), each with its calculated indicative range,
+as disclosure rows beside a laptop (the CSS MacBook
+from the case study, front-facing, not pinned). Each package shows something real on the
+screen: GC Solar (launch), MPG Foundation (content and leads) and Salon Friend (store) as
+full-page captures that scroll slowly inside the screen while on view (ambient, transform
+only), the Improve clip for the brand package, and for bookings the laptop recedes behind the
+phone (the Services phone's last frame). Screen swaps and the phone transition are CSS crossfades. Its
+signature motion is the lid opening once on entry (`packageShowcase.start`, over
+`duration.slow`), not a scrub, because the pinned, scrubbed WorkReel comes straight after it.
+Reduced motion: the laptop open, sites at their top, no video. The technology strip ("The
+stack behind the work") runs along the bottom of PathChooser at its large size (bigger logos and
+names), full width, so the section ends on it.
 
 **Tone chapters.** Neighbouring sections share a tone, so the page colour changes rarely:
-Home dark → paper (work, clients) → dark (paths, process) → paper (pricing, studio), then
-the solid orange band (3 changes, was 7). Case study: dark → paper → dark (2). Services:
-paper → dark (1). Pricing: paper → dark (plans, scope) → paper (2). Studio: paper → dark →
+Home dark (hero, paths, packages) → paper (work, clients, studio), then the solid
+orange band (1 change). Case study: dark → paper → dark (2). Services: paper → dark → paper → dark (the
+device showcases, then next steps and the FAQ). Pricing: paper → dark (plans, scope) → paper (2). Studio: paper → dark →
 paper (2). Sections shorter than `tone.minSection` (0.9 viewport) never take over the page
 colour, and `solid` sections (the orange band) paint themselves.
 
@@ -176,40 +191,43 @@ opening (DesktopShowcase) are neighbours and both scrubbed: the studio asked for
 to follow the scroll. They read as a pair rather than a repeat: mirrored layouts (phone right,
 laptop left), different devices and different motions (a spin, a lid opening). StudioSnippet's parallax is pointer-driven, not scroll-driven,
 so Home's last two sections read hover · enter. `Parallax trigger="scroll"` is still the
-default elsewhere. ProcessLine plays on entry and is then driven by hover and clicks (people
-couldn't read a week while it followed the scroll). The readout beside it shows an overview
-until the first hover, click or arrow key, so the entrance sweep doesn't flick it through
-every week. It shares a trigger with both
-neighbours (PathChooser's hover, PricingSnapshot's count-up); the plan's own sweep and the
-count-up are far enough apart on the page not to read as a repeat. On /work the closing band's compile follows the WorkGrid's `enter` reveals. The
+default elsewhere. ProcessLine (on /services) plays on entry and is then driven by hover and
+clicks (people couldn't read a week while it followed the scroll). The readout beside it shows
+an overview until the first hover, click or arrow key, so the entrance sweep doesn't flick it
+through every week. It sits between the static StageExplorer groups and the scrubbed
+NextSteps, so it shares a trigger with neither neighbour. On /work the closing band's compile follows the WorkGrid's `enter` reveals. The
 titles used to scrub with the scroll, which felt jittery, and a card grid and one title
 are different enough not to read as a repeat.
 
 ### Other pages
 
-**Work:** PageTitle (load: compile) · WorkGrid (enter: MediaReveal clip per card, Flip on filter
+**Work:** PageTitle (load: compile) · WorkGrid (enter: MediaReveal clip per rounded card, Flip on filter
 change) · ClosingCta (enter). One filter per project (`?filter=<slug>`); a filter change
 Flips the cards that stay into place instead of re-running a rise.
 
 **Case study:** PageTitle (load: compile) · CaseMeta (none) · CaseDevice (scrub + pin: the page's
-one pin) · CaseNarrative (none) · CaseGallery (scrub: parallax) · CaseMetrics (enter:
-CountUp) · Testimonial (none) · CaseOutro (hover) · ClosingCta (enter). CaseDevice shows the
+one pin) · CaseNarrative (none) · CaseGallery (enter: MediaReveal; scrub: parallax) · CaseMetrics (enter:
+CountUp) · Testimonial (none) · CaseOutro (enter: MediaReveal; hover: next project) · ClosingCta (enter). CaseDevice shows the
 project's live site on a laptop (`MacbookScroll`, a GSAP port of the Aceternity "MacBook
 scroll"). The lid and keyboard deck are two planes hinged on one edge under a shared
 perspective (no preserve-3d scene), so they stay joined: the laptop starts open, seen from
 above; the deck folds away as the lid comes upright and the laptop grows until the screen
 fills the view; then a full-page capture of the real site scrolls inside the screen, top to
-bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is static; the gallery uses Parallax.
+bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is static; the gallery
+reveals before its Parallax drift.
 
-**Services:** PageTitle (load: compile) · StageExplorer (none: the "What do you need?"
-index and 01 Websites) · AppShowcase (scrub: phone turn, 02 Apps and software) ·
-DesktopShowcase (scrub: the laptop opens, 03 Desktop software) · StageExplorer (none: 04 Take
-over, 05 Run, 06 Grow, 07 Partner) · NextSteps (scrub: the step cards deal out) ·
+**Services:** ServicesHero (load: compile) · StageExplorer (MediaReveal on framed images and video: 01 Websites) · AppShowcase (scrub: phone turn, 02 Apps and software) ·
+DesktopShowcase (scrub: the laptop opens, 03 Desktop software) · StageExplorer (MediaReveal on framed media: 04 Take
+over, 05 Run, 06 Grow, 07 Partner) · ProcessLine (enter + hover: how a project runs, week by
+week) · NextSteps (scrub: the step cards deal out) ·
 FaqSection (hover) · ClosingCta (enter). The page groups the offer the way
 visitors look for it; the five stages stay the model elsewhere. Build splits into websites (the
 offerings the brief files under 'website'), desktop software (listed in `servicesContent`,
-beside the laptop) and apps (the rest, beside the phone), so nothing repeats. No sticky nav: the index is a row of jump cards at the top. NextSteps replaces the old pinned
-process (Home already shows how a project runs, week by week): what happens once someone
+beside the laptop) and apps (the rest, beside the phone), so nothing repeats. A transparent,
+viewport-height section rail follows progress and shows the current section title. Each marker
+reveals its own label on hover or focus; on phones it becomes a menu. No prices on the page (they live on
+/pricing); each build service's dropdown opens the brief with it picked (`/start?type=<id>`).
+ProcessLine shows how a project runs, then NextSteps shows what happens once someone
 gets in touch, shown rather than told, in the studio's real order: the brief (with a real
 estimate from the "Launch website" starting quote) lands in the inbox, we reply by email with
 times to meet, we meet in person or online, then the fixed quote (with its warranty, staging and
@@ -229,7 +247,8 @@ the display wakes on an illustrative stock and orders app and it turns to face t
 its own layout, picked for what it sells (`StageBlock layout`): Websites `feature` (the
 intro beside an image, then dropdowns), Take over `cards`, Run `split` (image column
 beside a priced list), Grow `figures` (two rates as large figures, no image) and Partner
-`tiers`. Each intro is a name and one line (no paragraph). Loops only play while on screen.
+`tiers`. Each intro is a name and one line (no paragraph). Framed images and video reveal on
+scroll; loops only play while on screen.
 
 **Pricing:** PageTitle (load: compile) · PricingSteps (none) · QuoteStarters (enter:
 cards rise) · PlanTabs (hover: Flip card swap) · IncludedVsExcluded (none) · PoliciesList
@@ -237,8 +256,8 @@ cards rise) · PlanTabs (hover: Flip card swap) · IncludedVsExcluded (none) · 
 quotes show the range the estimator computes and open /start pre-filled. Openers: minimal ·
 split · inline · own · split · own. Everything from the plans down mounts as it approaches.
 
-**Studio:** PageTitle (load: compile) · StudioIntro (enter: MediaReveal) · FounderProfiles (scrub:
-parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · ValuesGrid
+**Studio:** PageTitle (load: compile) · StudioIntro (enter: MediaReveal) · FounderProfiles (enter:
+MediaReveal; scrub: parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · ValuesGrid
 "Values" (none) · Testimonial (none) · ClosingCta (enter).
 Openers: split · stacked · inline.
 

@@ -61,7 +61,12 @@ export function ProjectCard({
         onFocus={() => setHovering(true)}
         onBlur={() => setHovering(false)}
       >
-        <div className={cn(variant === 'feature' ? 'aspect-4/3 lg:aspect-16/11' : 'aspect-4/3')}>
+        <div
+          className={cn(
+            'overflow-hidden rounded-lg',
+            variant === 'feature' ? 'aspect-4/3 lg:aspect-16/11' : 'aspect-4/3',
+          )}
+        >
           {reveal ? <MediaReveal className="size-full">{media}</MediaReveal> : media}
         </div>
 

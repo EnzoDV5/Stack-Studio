@@ -7,37 +7,57 @@ easy. Every page has one main action: **Start a project**.
 FIND ─────────► TRUST ─────────► UNDERSTAND ─────────► CONTACT
 "Who are you?"   "Can you do it?"  "What do I get,       "How do I start?"
                                     what does it cost?"
-Home hero        Featured work      Services rows         Guided brief (/start)
-Technology strip Case studies       Pricing teaser        WhatsApp (fallback)
-Studio snippet   Metrics, quotes    /services, /pricing   Email (footer)
+Home hero        Featured work      /services (what,      Guided brief (/start)
+"What do you     Case studies       how it runs)          WhatsApp (fallback)
+ need?"          Metrics, quotes    /pricing (every       Email (footer)
+Studio snippet                      number)
 ```
 
 ## Primary path (the flow the home page is built around)
 
 1. **Land on Home.** A short preloader (once per session) opens onto a big statement over
    the showreel ("Build it. Run it. Grow it.") with the Stack mark filling the right side,
-   and the CTA is visible within 1 second. The work follows straight after. _Doubt removed: Find._
-2. **Scroll.** The showreel gives way to the work reel: every project, large, sliding past,
-   then what those clients say about it. Hovering previews the work in motion. _Doubt
-   removed: Trust._
-3. **Choose a path.** "Where are you at?" lets visitors pick their stage (build, take over,
-   run, grow, partner) and jump to its details or an estimate. The process line shows how
-   a project runs and what it's built with. _Doubt removed: Understand (what)._
-4. **Pricing**: three "from" figures and the estimator; the Pricing page offers ready-made
-   starting quotes that open the estimator pre-filled. _Doubt removed: Understand (cost)._
+   and the CTA is visible within 1 second. _Doubt removed: Find._
+2. **Choose a path.** "What do you need?" lets visitors choose in their own words:
+   something new, a site or app that needs fixing or moving, ongoing care, improvements,
+   or a software team. The same prompts lead to details on /services or straight into
+   the matching brief. The stack behind the work runs along its bottom. _Doubt
+   removed: Understand (what)._
+3. **Pick a starting point.** The website packages open as disclosure rows beside a laptop
+   showing sites we built (or bookings on the phone). Each row shows an indicative price range;
+   visitors compare the full options on /pricing, where they can start from a pre-filled quote. _Doubt removed: "what would mine
+   look like, and where do I start?"_
+4. **The work.** Every project, large, sliding past in the pinned reel, then what those
+   clients say about it. _Doubt removed: Trust._
 5. **The founders.** Real people who are accountable.
 6. **Giant closing CTA** leads to `/start`. _Doubt removed: Contact._
 
-Every Home section ends with a "go deeper" link, so Home works as a summary and visitors
-choose where to go next.
+Home shows indicative package ranges and routes detailed pricing to /pricing. Every Home section ends with a "go deeper"
+link, so visitors choose where to go next.
+
+## Who answers what
+
+- **Home:** who are you, and can you do it? (stages and the stack, packages, work, clients,
+  founders)
+- **Services:** what do you do, and how does a project run? No prices. Picking a service
+  opens the brief ready for it (`/start?type=<service>` or the group's `?path=`).
+- **Pricing:** what does it cost? Every number lives here. Packages give a ballpark and
+  open the brief pre-filled; monthly plans (Care, Managed, Partner); Partner can use a fixed
+  hour package, choose a different amount, or ask to discuss the hours first; terms.
+- **Start:** the real estimate for this project, then contact.
+
+The three levels of price are always in this order: **package** (ballpark, on /pricing) →
+**brief estimate** (for this project, on /start) → **fixed quote** (after a short call).
 
 ## Deeper paths
 
 - **Sceptic path:** Home, then a featured case study, then `/work/:slug` (problem → approach
   → build → result, metrics), then **Start a project like this** (brief pre-filled), or Next
   project.
-- **Price-shopper path:** Header link to `/pricing`, compare build and monthly plans, then
-  "Get an estimate", which opens `/start` with the live estimate.
+- **Price-shopper path:** Header link to `/pricing`, pick the closest package (opens
+  `/start?quote=` pre-filled) or compare monthly plans, then refine it into an estimate.
+- **Services path:** `/services`, open a service, **Start with this** (`/start?type=`),
+  or read how a project runs and follow **See what it costs** to `/pricing`.
 - **Referral path:** Arrives on `/work/gc-solar` from a shared link, gets the context
   straight away, sees the next project, then the footer CTA.
 - **Mobile, WhatsApp-first path:** Mobile menu, then the WhatsApp button (footer or `/start`).

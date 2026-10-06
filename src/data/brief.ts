@@ -22,23 +22,23 @@ export const briefSteps: BriefStepConfig[] = [
     options: [
       {
         value: 'build',
-        label: 'Build something new',
-        description: 'A website, web app, software or AI feature.',
+        label: 'I need something new',
+        description: 'A website, app or software.',
       }, // COPY:
       {
         value: 'existing',
-        label: 'Something already exists',
-        description: 'Take it over, fix it or improve it.',
+        label: 'I need help with what I have',
+        description: 'Fix, move or improve an existing site or app.',
       }, // COPY:
       {
         value: 'run',
-        label: 'Keep my site or app running',
-        description: 'Hosting, care and management every month.',
+        label: 'I need someone to keep it working',
+        description: 'Hosting, updates and support each month.',
       }, // COPY:
       {
         value: 'develop',
-        label: 'Ongoing development',
-        description: 'A team for regular features and improvements.',
+        label: 'I need a team for my software',
+        description: 'Choose monthly hours or discuss them with us.',
       }, // COPY:
       {
         value: 'unsure',
@@ -271,37 +271,35 @@ export const briefSteps: BriefStepConfig[] = [
 
   /* ---------- D. Ongoing development ---------- */
   {
-    id: 'workKinds',
-    kind: 'multi',
-    field: 'workKinds',
-    min: 1,
-    label: 'Work', // COPY:
-    title: 'What kind of work?', // COPY:
-    hint: 'Choose all that apply.', // COPY:
-    options: [
-      { value: 'ux', label: 'UX/UI' }, // COPY:
-      { value: 'frontend', label: 'Frontend' }, // COPY:
-      { value: 'backend', label: 'Backend' }, // COPY:
-      { value: 'integrations', label: 'Integrations' }, // COPY:
-      { value: 'ai', label: 'AI' }, // COPY:
-      { value: 'infrastructure', label: 'Infrastructure' }, // COPY:
-    ],
-    showIf: [{ field: 'path', in: ['develop'] }],
-  },
-  {
     id: 'hours',
     kind: 'single',
     field: 'hours',
     label: 'Hours', // COPY:
-    title: 'Roughly how many hours a month?', // COPY:
-    hint: 'A guess is fine. You can change it month to month.', // COPY:
+    title: 'How many Partner hours do you need each month?', // COPY:
+    hint: 'Choose a package, enter your own number, or ask us to work it out together.', // COPY:
     options: [
-      { value: 'few', label: 'A few' }, // COPY:
-      { value: '10', label: 'About 10' }, // COPY:
-      { value: '20', label: 'About 20' }, // COPY:
-      { value: '40', label: '40 or more' }, // COPY:
+      { value: '10', label: '10 hours a month' }, // COPY:
+      { value: '20', label: '20 hours a month' }, // COPY:
+      { value: '40', label: '40 hours a month' }, // COPY:
+      { value: 'custom', label: 'A different number of hours' }, // COPY:
+      { value: 'discuss', label: 'Let’s discuss the hours first' }, // COPY:
     ],
     showIf: [{ field: 'path', in: ['develop'] }],
+  },
+  {
+    id: 'customHours',
+    kind: 'count',
+    field: 'customHours',
+    min: 1,
+    max: 160,
+    unit: { one: 'hour a month', other: 'hours a month' }, // COPY:
+    label: 'Partner hours', // COPY:
+    title: 'How many hours a month should we reserve?', // COPY:
+    hint: 'We’ll calculate an indicative monthly amount at the Partner hourly rate.', // COPY:
+    showIf: [
+      { field: 'path', in: ['develop'] },
+      { field: 'hours', in: ['custom'] },
+    ],
   },
 
   /* ---------- E. Not sure ---------- */
@@ -475,10 +473,12 @@ export const briefCopy = {
       needsAudit: 'Starts with an audit and takeover.', // COPY:
       minTerm: (n: number) => `${n}-month minimum, billed monthly in advance.`, // COPY:
       hours: (label: string) => `${label} included each month`, // COPY:
+      reservedHours: (label: string) => `${label} reserved each month`, // COPY:
     },
     consult: {
       label: 'Next step', // COPY:
       body: 'We’ll suggest the right starting point after a short call.', // COPY:
+      partnerBody: 'We’ll discuss your plans and agree on the right number of Partner hours.', // COPY:
     },
     budgetFit: {
       unknown: '',

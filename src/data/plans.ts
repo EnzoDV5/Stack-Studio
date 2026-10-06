@@ -11,20 +11,22 @@ export const planFamilies: PlanFamilyInfo[] = [
   {
     id: 'care',
     name: 'Website Care', // COPY:
-    description: 'For websites. Included working time is calculated at R200 per hour.', // COPY:
+    description:
+      'For websites we build or take over: hosting, monitoring, updates and changes. Included working time is calculated at R200 per hour.', // COPY:
     hoursLabel: 'Included changes', // COPY:
   },
   {
     id: 'managed',
     name: 'Managed Software', // COPY:
-    description: 'For applications. Included management and support time is R200 per hour.', // COPY:
+    description:
+      'For apps and software we build or take over: hosting, monitoring and support. Included management and support time is R200 per hour.', // COPY:
     hoursLabel: 'Included support', // COPY:
   },
   {
     id: 'partner',
     name: 'Partner', // COPY:
     description:
-      'Reserved software-development hours at R400 per hour with a team that knows your systems.', // COPY:
+      'Reserve the development hours you need each month at R400 per hour. Start with a 10, 20 or 40 hour package, choose your own amount, or talk it through with us first.', // COPY:
     note: 'Limited to 3 partner clients at a time.', // COPY:
     hoursLabel: 'Reserved hours', // COPY:
   },
@@ -176,15 +178,14 @@ export const plans: Plan[] = [
     id: 'partner-10',
     family: 'partner',
     name: 'Partner 10', // COPY:
-    tagline: 'A steady development partner.', // COPY:
+    tagline: 'Ten reserved development hours each month.', // COPY:
     pricePerMonth: 10 * BUILD_RATE_PER_HOUR,
     includedHours: 10,
     hoursLabel: '10 hours', // COPY:
     includes: [
-      'UX/UI, frontend and backend', // COPY:
-      'Small integrations and improvements', // COPY:
-      'Technical support', // COPY:
-      'Monthly planning', // COPY:
+      'UX/UI, frontend and backend development', // COPY:
+      'Features, fixes and integrations', // COPY:
+      'Technical planning and support', // COPY:
       'Priority over non-retainer work', // COPY:
     ],
     minimumTermMonths: MIN_TERM,
@@ -194,16 +195,15 @@ export const plans: Plan[] = [
     id: 'partner-20',
     family: 'partner',
     name: 'Partner 20', // COPY:
-    tagline: 'Your part-time product team.', // COPY:
+    tagline: 'Twenty reserved development hours each month.', // COPY:
     pricePerMonth: 20 * BUILD_RATE_PER_HOUR,
     includedHours: 20,
     hoursLabel: '20 hours', // COPY:
     includes: [
-      'Everything in Partner 10', // COPY:
-      'Database work and API integrations', // COPY:
-      'New features and automation', // COPY:
-      'Technical planning', // COPY:
-      'Priority support', // COPY:
+      'UX/UI, frontend and backend development', // COPY:
+      'Features, fixes and integrations', // COPY:
+      'Technical planning and support', // COPY:
+      'Priority over non-retainer work', // COPY:
     ],
     minimumTermMonths: MIN_TERM,
     highlighted: true,
@@ -213,16 +213,15 @@ export const plans: Plan[] = [
     id: 'partner-40',
     family: 'partner',
     name: 'Partner 40', // COPY:
-    tagline: 'A development capability, on tap.', // COPY:
+    tagline: 'Forty reserved development hours each month.', // COPY:
     pricePerMonth: 40 * BUILD_RATE_PER_HOUR,
     includedHours: 40,
     hoursLabel: '40 hours', // COPY:
     includes: [
-      'Everything in Partner 20', // COPY:
-      'Product development', // COPY:
-      'Infrastructure', // COPY:
-      'Monthly roadmap planning', // COPY:
-      'Priority development', // COPY:
+      'UX/UI, frontend and backend development', // COPY:
+      'Features, fixes and integrations', // COPY:
+      'Technical planning and support', // COPY:
+      'Priority over non-retainer work', // COPY:
     ],
     minimumTermMonths: MIN_TERM,
     visibility: 'pricing',

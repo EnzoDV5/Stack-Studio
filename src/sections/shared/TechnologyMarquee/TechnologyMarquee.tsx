@@ -1,6 +1,7 @@
 import { useId, useState } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
 import { Marquee } from '@/components/ui/Marquee'
+import { cn } from '@/lib/cn'
 import { marquee } from '@/lib/motion-tokens'
 import type { Technology } from '@/types/technology'
 import styles from './TechnologyMarquee.module.css'
@@ -10,6 +11,8 @@ export interface TechnologyMarqueeProps {
   pauseLabel: string
   resumeLabel: string
   rows: readonly (readonly Technology[])[]
+  /** 'large': bigger logos and names, for a strip that stands on its own (Home). */
+  size?: 'default' | 'large'
   tone?: Tone
 }
 
@@ -18,6 +21,7 @@ export function TechnologyMarquee({
   pauseLabel,
   resumeLabel,
   rows,
+  size = 'default',
   tone = 'dark',
 }: TechnologyMarqueeProps) {
   const headingId = useId()
@@ -28,7 +32,7 @@ export function TechnologyMarquee({
     <Section
       tone={tone}
       spacing="none"
-      className="border-y border-tone py-10"
+      className={cn('border-y border-tone', size === 'large' ? 'py-12 md:py-14' : 'py-10')}
       aria-labelledby={headingId}
     >
       <div className="container-site mb-6 flex items-center justify-between gap-3">
@@ -48,7 +52,7 @@ export function TechnologyMarquee({
           </svg>
         </button>
       </div>
-      <div id={rowsId} className={styles.rows}>
+      <div id={rowsId} className={cn(styles.rows, size === 'large' && styles.large)}>
         {rows
           .filter((row) => row.length > 0)
           .map((row, index) => (
@@ -56,14 +60,17 @@ export function TechnologyMarquee({
               key={index}
               reverse={index % 2 === 1}
               duration={Math.max(marquee.loopSeconds, row.length * marquee.technologyItemSeconds)}
-              gap="clamp(2rem, 4vw, 4rem)"
+              gap={size === 'large' ? 'clamp(2.5rem, 5vw, 5rem)' : 'clamp(2rem, 4vw, 4rem)'}
               paused={paused}
               pauseOnHover={false}
             >
               {row.map((technology) => (
                 <span
                   key={technology.id}
-                  className="flex h-8 shrink-0 items-center gap-3 text-body font-medium whitespace-nowrap transition-colors hover:text-accent"
+                  className={cn(
+                    'flex shrink-0 items-center font-medium whitespace-nowrap transition-colors hover:text-accent',
+                    size === 'large' ? 'h-12 gap-4 text-heading-md' : 'h-8 gap-3 text-body',
+                  )}
                   title={`${technology.name}: ${technology.description}`}
                 >
                   {technology.logo && (

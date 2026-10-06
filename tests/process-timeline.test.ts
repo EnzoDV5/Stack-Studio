@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { processSteps } from '@/data/process'
-import { homeContent } from '@/data/pages'
+import { servicesContent } from '@/data/pages'
 import {
   barReveal,
   barTiming,
@@ -12,7 +12,7 @@ import {
   stepsAt,
 } from '@/lib/process-timeline'
 
-const count = homeContent.process.columns.length
+const count = servicesContent.process.columns.length
 const spans = processSteps.map((step) => step.span)
 
 describe('process timeline', () => {

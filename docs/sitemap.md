@@ -5,17 +5,17 @@ Section numbers are the eyebrow labels shown on the page (`01 · WORK`). Tone is
 background used for rhythm: `dark` (ink #0A0A0A), `paper` (#F4F0EA) or `orange` (the one
 closing CTA band per page).
 
-| Route         | Page       | Main doubt it removes             | Secondary actions                        |
-| ------------- | ---------- | --------------------------------- | ---------------------------------------- |
-| `/`           | Home       | Find: who are you?                | See the work, see pricing                |
-| `/work`       | Work       | Trust: can you actually do this?  | Filter projects, open a case study       |
-| `/work/:slug` | Case study | Trust: proof, in detail           | Visit the live site, next project        |
-| `/services`   | Services   | Understand: what do I get?        | Read the FAQ, see pricing                |
-| `/pricing`    | Pricing    | Understand: what does it cost?    | Compare build and monthly plans, add-ons |
-| `/studio`     | Studio     | Find and Trust: who is behind it? | Meet the founders                        |
-| `/start`      | Start      | Contact: how do I start?          | WhatsApp, email                          |
-| `/privacy`    | Privacy    | POPIA: what happens to my data?   | Back to the brief                        |
-| `*`           | 404        | Recovery                          | Home, Start a project                    |
+| Route         | Page       | Main doubt it removes             | Secondary actions                   |
+| ------------- | ---------- | --------------------------------- | ----------------------------------- |
+| `/`           | Home       | Find: who are you?                | Pick a stage, see the work          |
+| `/work`       | Work       | Trust: can you actually do this?  | Filter projects, open a case study  |
+| `/work/:slug` | Case study | Trust: proof, in detail           | Visit the live site, next project   |
+| `/services`   | Services   | Understand: what do I get, how?   | Start with a service, see pricing   |
+| `/pricing`    | Pricing    | Understand: what does it cost?    | Start from a package, compare plans |
+| `/studio`     | Studio     | Find and Trust: who is behind it? | Meet the founders                   |
+| `/start`      | Start      | Contact: how do I start?          | WhatsApp, email                     |
+| `/privacy`    | Privacy    | POPIA: what happens to my data?   | Back to the brief                   |
+| `*`           | 404        | Recovery                          | Home, Start a project               |
 
 Global chrome on every route: skip link, header (logo, Work, Services, Pricing, Studio,
 **Start a project** button), full-screen mobile menu, footer (big CTA, email, WhatsApp,
@@ -23,20 +23,20 @@ Instagram, LinkedIn, privacy link).
 
 ## Home `/`
 
-Home is a fast summary of everything, told in order: what visitors need, how Stack works,
-what it costs, proof, client feedback and who we are. Each section ends with a "go deeper" link so
-visitors choose where to go. About 11 viewports on desktop.
+Home answers "who are you, and can you do it?": what visitors need (and the stack behind the
+work), a package to start from, proof, client feedback and who we are. The package rows show
+indicative ranges; detailed prices live on /pricing. The week-by-week process is on /services. Each section ends with a "go deeper"
+link so visitors choose where to go. About 10 viewports on desktop.
 
-| #   | Section           | Tone   | Purpose                                                                               |
-| --- | ----------------- | ------ | ------------------------------------------------------------------------------------- |
-| —   | Hero              | dark   | Statement over the showreel, the Stack mark large on the right, **Start a project**   |
-| 01  | Where are you at? | dark   | The five stages as a self-select router: key prices, See details, Get an estimate     |
-| 02  | Process           | dark   | The six steps along one line, then the technologies strip → /services#process         |
-| 03  | Pricing           | paper  | Three "from" figures (website, care, partner), VAT note, Build my estimate → /pricing |
-| 04  | Selected work     | paper  | Pinned sideways reel with each client logo beside its project name                    |
-| 05  | Clients           | paper  | Quotes linked to each project → /work                                                 |
-| 06  | Studio            | paper  | The two founders, one line each → /studio                                             |
-| —   | Closing CTA       | orange | Headline with moving code inside its letterforms, **Start a project**                 |
+| #   | Section           | Tone   | Purpose                                                                                                |
+| --- | ----------------- | ------ | ------------------------------------------------------------------------------------------------------ |
+| —   | Hero              | dark   | Statement over the showreel, the Stack mark large on the right, **Start a project**                    |
+| 01  | What do you need? | dark   | The five stages as a self-select router (no prices), then the large technology strip along its bottom  |
+| 02  | Packages          | dark   | Website packages with indicative ranges in disclosure rows beside a laptop; compare options → /pricing |
+| 03  | Selected work     | paper  | Pinned sideways reel with each client logo beside its project name                                     |
+| 04  | Clients           | paper  | Quotes linked to each project → /work                                                                  |
+| 05  | Studio            | paper  | The two founders, one line each → /studio                                                              |
+| —   | Closing CTA       | orange | Headline with moving code inside its letterforms, **Start a project**                                  |
 
 ## Work `/work`
 
@@ -63,14 +63,31 @@ Seeded with GC Solar, MPG Foundation and one clearly labelled sample project.
 
 ## Services `/services`
 
-Compact page title, service details (what it is, deliverables, typical timeline, "from" price, a
-**Start with this** link that pre-fills the brief), the pinned process section, an FAQ
-accordion, then the closing CTA.
+What we do, how a project runs and how to start. **No prices**: every number lives on /pricing. Compact page
+title, then 01 new websites,
+02 apps and software (the phone), 03 desktop software (the laptop), then 04 fixing or moving
+an existing site or app, 05 ongoing care, 06 improvements, 07 a monthly software team. Every build service
+opens to a **Start with this** link (`/start?type=<id>`) and every group ends with a button
+that opens the brief on its path. Then how a project runs (the week-by-week timeline, ending
+with **See what it costs** → /pricing), what happens once you get in touch (brief → reply →
+meeting → fixed quote), the FAQ and the closing CTA.
+
+A transparent, viewport-height section rail stays at the side on desktop and becomes a section
+menu on phones. Its connected markers show reading progress, the current section name stays
+visible, and hovering or focusing another marker reveals its name before jumping.
+Pricing uses the same navigator.
+
+Ongoing care and a software team answer different needs: **Care** for websites and **Managed**
+for apps look after what we built or took over (hosting, monitoring, updates); **Partner** is reserved
+monthly hours for larger businesses with large or business-critical software.
+Partner has fixed 10, 20 and 40 hour starting packages, plus direct briefs for custom hours
+and for clients who want to discuss the monthly amount first.
 
 ## Pricing `/pricing`
 
-No fixed price list: quotes are built on `/start`. Compact page title, then how pricing works
-(estimate → call → fixed quote), then **starting quotes**: ready-made quotes (launch,
+Every number lives here. Packages give a ballpark, the brief gives an estimate for the actual
+project, and a short call turns it into a fixed quote. Compact page title, then how pricing
+works (estimate → call → fixed quote), then **starting quotes** (packages): ready-made quotes (launch,
 bookings, content and leads, online store, brand experience) showing the range the
 estimator computes, each opening `/start?quote=<id>` pre-filled, plus "Something else?"
 for everything else. Then the monthly plans, what plans cover, payment terms, the pricing

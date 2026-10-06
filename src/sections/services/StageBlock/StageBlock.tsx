@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react'
 import { ServiceMedia } from '@/components/media/ServiceMedia'
+import { MediaReveal } from '@/components/media/MediaReveal'
 import { Button } from '@/components/ui/Button'
 import { Heading } from '@/components/ui/Heading'
 import { cn } from '@/lib/cn'
@@ -63,9 +64,9 @@ export function StageBlock({
 
   const image = (className: string, sizes: string) =>
     media && (
-      <div className={cn('relative overflow-hidden rounded-lg bg-tone-surface', className)}>
+      <MediaReveal className={cn('relative rounded-lg bg-tone-surface', className)}>
         <ServiceMedia item={media} active paused={false} sizes={sizes} />
-      </div>
+      </MediaReveal>
     )
 
   const bullets = (items: string[]) => (
@@ -88,7 +89,7 @@ export function StageBlock({
           <li key={row.id} className="flex flex-col gap-4 rounded-lg border border-tone p-6">
             <div>
               <h3 className="text-heading-md">{row.name}</h3>
-              <p className="mt-2 numeric text-small text-accent">{row.price}</p>
+              {row.price && <p className="mt-2 numeric text-small text-accent">{row.price}</p>}
             </div>
             <p className="text-small text-muted">{row.summary}</p>
             {row.notes.length > 0 && (
@@ -104,7 +105,9 @@ export function StageBlock({
         {rows.map((row) => (
           <li key={row.id} className="grid gap-2 py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-x-8">
             <h3 className="text-heading-md">{row.name}</h3>
-            <p className="numeric text-small sm:row-span-2 sm:pt-1 sm:text-right">{row.price}</p>
+            {row.price && (
+              <p className="numeric text-small sm:row-span-2 sm:pt-1 sm:text-right">{row.price}</p>
+            )}
             <p className="text-small text-muted">
               {row.summary}
               {row.notes.length > 0 && ` · ${row.notes.join(' · ')}`}
@@ -119,7 +122,7 @@ export function StageBlock({
         {rows.map((row) => (
           <li key={row.id} className="py-8 md:py-10">
             <h3 className="text-heading-lg">{row.name}</h3>
-            <p className="mt-4 numeric text-display-lg text-accent">{row.price}</p>
+            {row.price && <p className="mt-4 numeric text-display-lg text-accent">{row.price}</p>}
             <p className="mt-4 max-w-[56ch] text-body-lg text-muted">{row.summary}</p>
             {row.examples.length > 0 && (
               <ul className="mt-8 grid gap-x-8 gap-y-3 border-t border-tone pt-6 text-small sm:grid-cols-2">
@@ -144,7 +147,7 @@ export function StageBlock({
         {rows.map((row) => (
           <li key={row.id} className="flex flex-col gap-4 bg-(--tone-bg) p-6 md:p-7">
             <h3 className="text-heading-lg">{row.name}</h3>
-            <p className="numeric text-heading-lg">{row.price}</p>
+            {row.price && <p className="numeric text-heading-lg">{row.price}</p>}
             {row.notes.length > 0 && <p className="eyebrow text-muted">{row.notes.join(' ')}</p>}
             {row.includes.length > 0 && bullets(row.includes.slice(0, 3))}
           </li>
@@ -184,7 +187,7 @@ export function StageBlock({
     <section id={id} aria-labelledby={headingId} className="pt-12 pb-16 first:pt-0 md:pb-20">
       {layout === 'feature' && (
         <>
-          <div className="grid gap-10 md:grid-cols-2 md:items-end">
+          <div className="grid gap-10 md:grid-cols-2 md:items-center">
             {intro}
             {image('aspect-4/3', '(min-width: 768px) 45vw, 100vw')}
           </div>

@@ -1,4 +1,3 @@
-import { DeferredSection } from '@/components/layout/DeferredSection'
 import { PageMeta } from '@/components/seo/PageMeta'
 import { faqsFor } from '@/data/faqs'
 import { pageMeta, pricingContent } from '@/data/pages'
@@ -16,6 +15,7 @@ import { PricingSteps } from '@/sections/pricing/PricingSteps'
 import { QuoteStarters, type QuoteStarter } from '@/sections/pricing/QuoteStarters'
 import { FaqSection } from '@/sections/shared/FaqSection'
 import { PageTitle } from '@/sections/shared/PageTitle'
+import { SectionNavigator } from '@/sections/shared/SectionNavigator'
 
 const c = pricingContent
 const l = c.priceLabels
@@ -68,6 +68,21 @@ export function PricingPage() {
     name: family.name,
     description: family.description,
     note: family.note,
+    actions:
+      family.id === 'partner'
+        ? [
+            {
+              label: c.plans.partnerChoose,
+              to: '/start?partner=custom',
+              location: 'pricing-partner:custom',
+            },
+            {
+              label: c.plans.partnerDiscuss,
+              to: '/start?partner=discuss',
+              location: 'pricing-partner:discuss',
+            },
+          ]
+        : undefined,
     plans: plans
       .filter((p) => p.family === family.id && isVisible(p))
       .map((p) => ({
@@ -75,11 +90,15 @@ export function PricingPage() {
         name: p.name,
         tagline: p.tagline,
         price: planPrice(p, l),
-        hours: p.hoursLabel ? l.hours(p.hoursLabel) : undefined,
+        hours: p.hoursLabel
+          ? family.id === 'partner'
+            ? c.plans.reservedHours(p.hoursLabel)
+            : l.hours(p.hoursLabel)
+          : undefined,
         includes: p.includes,
         highlighted: p.highlighted,
         cta: {
-          label: c.plans.choose,
+          label: family.id === 'partner' ? c.plans.partnerStart : c.plans.choose,
           to: `/start?plan=${p.id}`,
           location: `pricing-plan:${p.id}`,
         },
@@ -89,26 +108,32 @@ export function PricingPage() {
   return (
     <>
       <PageMeta {...pageMeta.pricing} />
-      <PageTitle content={c.hero} />
-      <PricingSteps
-        tone="paper"
-        eyebrow={c.approach.eyebrow}
-        title={c.approach.title}
-        steps={c.approach.steps}
-        cta={c.approach.cta}
-      />
-      <QuoteStarters
-        tone="paper"
-        eyebrow={c.quotes.eyebrow}
-        title={c.quotes.title}
-        intro={c.quotes.intro}
-        quotes={starters}
-        rangeLabel={c.quotes.rangeLabel}
-        custom={appsCard}
-        notes={[policies.vatNote]}
-      />
-      {/* Below the fold: mounted as it approaches, so the first render stays light. */}
-      <DeferredSection minHeight="120vh">
+      <SectionNavigator {...c.navigation} />
+      <div id="pricing-top">
+        <PageTitle content={c.hero} />
+      </div>
+      <div id="pricing-approach">
+        <PricingSteps
+          tone="paper"
+          eyebrow={c.approach.eyebrow}
+          title={c.approach.title}
+          steps={c.approach.steps}
+          cta={c.approach.cta}
+        />
+      </div>
+      <div id="pricing-packages">
+        <QuoteStarters
+          tone="paper"
+          eyebrow={c.quotes.eyebrow}
+          title={c.quotes.title}
+          intro={c.quotes.intro}
+          quotes={starters}
+          rangeLabel={c.quotes.rangeLabel}
+          custom={appsCard}
+          notes={[policies.vatNote]}
+        />
+      </div>
+      <div id="pricing-plans">
         <PlanTabs
           tone="dark"
           eyebrow={c.plans.eyebrow}
@@ -118,6 +143,8 @@ export function PricingPage() {
           recommendedLabel={c.plans.recommended}
           footnotes={[c.plans.minTerm(policies.minimumTermMonths), policies.hostingOnRequest]}
         />
+      </div>
+      <div id="pricing-included">
         <IncludedVsExcluded
           tone="dark"
           eyebrow={c.scope.eyebrow}
@@ -128,6 +155,8 @@ export function PricingPage() {
           outro={policies.maintenance.outro}
           labels={{ included: c.scope.includedTitle, excluded: c.scope.excludedTitle }}
         />
+      </div>
+      <div id="pricing-terms">
         <PoliciesList
           tone="paper"
           eyebrow={c.policies.eyebrow}
@@ -137,8 +166,10 @@ export function PricingPage() {
           items={policies.items}
           vatNote={policies.vatNote}
         />
+      </div>
+      <div id="pricing-faq">
         <FaqSection tone="paper" intro={c.faq} faqs={faqsFor('pricing')} />
-      </DeferredSection>
+      </div>
     </>
   )
 }

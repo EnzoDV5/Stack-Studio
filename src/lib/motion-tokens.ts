@@ -237,6 +237,22 @@ export const stepsDeal = {
 } as const
 
 /**
+ * PackageShowcase (Home): the laptop's lid opens once as it comes on screen (an enter, over
+ * duration.slow; transforms only), then the chosen package's example site scrolls slowly inside
+ * the screen while it's on screen.
+ */
+export const packageShowcase = {
+  /** The lid opens with the laptop well on screen, so it's seen in full. */
+  start: 'top 70%',
+  /** Starting angle of the lid (negative = its top tips toward the viewer, nearly shut). */
+  lidFrom: -72,
+  /** Seconds per screen height while a site scrolls inside the laptop (there and back). */
+  secondsPerScreen: 3.5,
+  /** Pause at the top and bottom of the site before it turns back. */
+  hold: 1.2,
+} as const
+
+/**
  * HomeHero: the Stack mark sinks as the page scrolls (scrubbed), slower than the page, so it
  * seems to follow the visitor down and slips off the bottom of the hero, behind the next
  * section.

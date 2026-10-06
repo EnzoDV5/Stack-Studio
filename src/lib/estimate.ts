@@ -95,7 +95,7 @@ export type EstimateResult =
       needsAudit: boolean
       limited: boolean
     }
-  | { kind: 'consult' }
+  | { kind: 'consult'; topic?: 'partner' }
 
 export type EstimateKind = EstimateResult['kind']
 
@@ -257,6 +257,31 @@ function estimateRun(answers: Partial<BriefAnswers>, data: EstimateData): Estima
 function estimateDevelop(answers: Partial<BriefAnswers>, data: EstimateData): EstimateResult {
   const partner = (id: string) => findPlan(data.plans, id)
   switch (answers.hours) {
+    case 'discuss':
+      return { kind: 'consult', topic: 'partner' }
+    case 'custom': {
+      const hours = answers.customHours
+      if (!Number.isInteger(hours) || hours === undefined || hours < 1 || hours > 160)
+        return { kind: 'none' }
+      const base = partner('partner-10')
+      return {
+        kind: 'plan',
+        plans: [
+          {
+            ...base,
+            id: 'partner-custom',
+            name: 'Custom Partner hours',
+            includedHours: hours,
+            hoursLabel: `${hours} ${hours === 1 ? 'hour' : 'hours'}`,
+            pricePerMonth: hours * findRate(data.rates, 'feature').pricePerHour,
+            highlighted: false,
+          },
+        ],
+        hourlyRate: null,
+        needsAudit: false,
+        limited: hours >= 40,
+      }
+    }
     case 'few':
       return {
         kind: 'plan',

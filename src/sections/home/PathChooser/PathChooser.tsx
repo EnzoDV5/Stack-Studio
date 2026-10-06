@@ -12,6 +12,7 @@ import { gsap, useGSAP } from '@/lib/gsap'
 import { duration, ease } from '@/lib/motion-tokens'
 import { accordionLayout, nextIndex } from '@/lib/path-layout'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
+import { TechnologyMarquee, type TechnologyMarqueeProps } from '@/sections/shared/TechnologyMarquee'
 import type { CtaLink } from '@/types'
 import type { ServiceMediaItem } from '@/types/service-media'
 
@@ -22,8 +23,8 @@ export interface PathStage {
   /** The self-select line in the visitor's words, e.g. "I need something new." */
   prompt: string
   line: string
-  /** 2–3 key offerings with their from-prices. */
-  items: { name: string; price: string }[]
+  /** 2–3 key offerings, as examples (and their from-prices, where a page shows them). */
+  items: { name: string; price?: string }[]
   /** /services#stage-… */
   details: CtaLink
   /** /start?path=… */
@@ -40,6 +41,8 @@ export interface PathChooserProps {
   labels: { items: string }
   /** "Go deeper" link under the panels. */
   more: CtaLink
+  /** The stack behind the work: a large logo strip along the bottom of the section. */
+  technologies?: Omit<TechnologyMarqueeProps, 'tone' | 'size'>
   tone?: Tone
 }
 
@@ -61,6 +64,7 @@ export function PathChooser({
   stages,
   labels,
   more,
+  technologies,
   tone = 'dark',
 }: PathChooserProps) {
   const headingId = useId()
@@ -133,7 +137,7 @@ export function PathChooser({
                 className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 py-2.5 text-small"
               >
                 <span>{item.name}</span>
-                <span className="shrink-0 numeric text-muted">{item.price}</span>
+                {item.price && <span className="shrink-0 numeric text-muted">{item.price}</span>}
               </li>
             ))}
           </ul>
@@ -156,7 +160,7 @@ export function PathChooser({
   )
 
   return (
-    <Section tone={tone} aria-labelledby={headingId}>
+    <Section tone={tone} aria-labelledby={headingId} className={cn(technologies && 'pb-0')}>
       <div className="container-site">
         <SectionHeader
           id={headingId}
@@ -237,14 +241,7 @@ export function PathChooser({
             defaultOpen={stages[0] ? [stages[0].id] : []}
             items={stages.map((stage) => ({
               id: stage.id,
-              title: (
-                <>
-                  <span className="block">{stage.name}</span>
-                  <span className="mt-1 block text-small font-normal text-muted">
-                    {stage.prompt}
-                  </span>
-                </>
-              ),
+              title: stage.prompt,
               content: (
                 <div>
                   <div className="relative mb-6 aspect-video overflow-hidden rounded-md">
@@ -269,6 +266,12 @@ export function PathChooser({
           </TextLink>
         </div>
       </div>
+
+      {technologies && (
+        <div className="mt-14 lg:mt-16">
+          <TechnologyMarquee {...technologies} tone={tone} size="large" />
+        </div>
+      )}
     </Section>
   )
 }
