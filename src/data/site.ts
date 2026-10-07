@@ -6,7 +6,7 @@ export const site: SiteConfig = {
   shortName: 'Stack',
   tagline: 'Brand-led websites, built to convert.', // COPY:
   description:
-    'Stack Studio is a founder-led web studio in Centurion, South Africa, building brand-led, cinematic websites and digital products for businesses of every kind.', // COPY:
+    'Stack Studio is a web studio in Centurion, South Africa, building brand-led, cinematic websites and digital products for businesses of every kind.', // COPY:
   url: 'https://stackstudio.co.za', // COPY: confirm production domain
   locale: 'en-ZA',
   email: 'hello@stackstudio.co.za', // COPY: placeholder email
