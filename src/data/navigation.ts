@@ -3,12 +3,6 @@ import type { CtaLink, NavItem } from '@/types'
 export const primaryNav: NavItem[] = [
   { label: 'Work', to: '/work', description: 'Case studies and proof' }, // COPY:
   { label: 'Services', to: '/services', description: 'What we build and look after' }, // COPY:
-  /** The plans sit in Services (Hosting and care). Anchor links never show as active. */
-  {
-    label: 'Pricing', // COPY:
-    to: '/services#plans',
-    description: 'Website Care, Managed Software and Partner', // COPY:
-  },
   { label: 'Process', to: '/process', description: 'How a project runs, start to finish' }, // COPY:
   { label: 'Studio', to: '/studio', description: 'The founders and how we work' }, // COPY:
 ]

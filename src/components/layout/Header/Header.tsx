@@ -67,19 +67,13 @@ export function Header({ nav, cta, homeLabel, menuLabel, menuOpenLabel, menu }: 
           </Link>
 
           <nav aria-label={menuLabel} className="hidden md:block">
-            <ul className="flex items-center gap-6 lg:gap-8">
+            <ul className="flex items-center gap-8">
               {nav.map((item) => (
                 <li key={item.to}>
-                  {/* An anchor link (Pricing → /services#plans) shares its page's path, so only
-                      the page's own link shows as active. */}
                   <NavLink
                     to={item.to}
                     className={({ isActive }) =>
-                      cn(
-                        styles.navLink,
-                        'text-small',
-                        isActive && !item.to.includes('#') && styles.active,
-                      )
+                      cn(styles.navLink, 'text-small', isActive && styles.active)
                     }
                   >
                     {item.label}

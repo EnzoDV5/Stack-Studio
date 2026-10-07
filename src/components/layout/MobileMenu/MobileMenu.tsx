@@ -123,9 +123,7 @@ export function MobileMenu({
                   to={item.to}
                   onClick={onClose}
                   data-menu-item=""
-                  className={({ isActive }) =>
-                    cn(styles.link, isActive && !item.to.includes('#') && styles.active)
-                  }
+                  className={({ isActive }) => cn(styles.link, isActive && styles.active)}
                 >
                   <span className={cn(styles.label, 'text-display-lg')}>{item.label}</span>
                   <span className={styles.index}>{pad2(i + 1)}</span>

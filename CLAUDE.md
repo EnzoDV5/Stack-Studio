@@ -213,8 +213,8 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
 9. **Services is what we offer, Process is how we work.** Home routes with indicative package
    ranges. Services shows no project prices (services open the brief with `/start?type=`;
    `stageRows(..., { prices: false })`); its 05 Hosting and care group is the monthly plan
-   cards, the only place plan prices appear (`/services#plans`, which the header's Pricing
-   link and the old `/pricing` URL point to). Process (`/process`) has the next steps, the
+   cards, the only place plan prices appear (`/services#plans`, which the old
+   `/pricing` URL redirects to). Process (`/process`) has the next steps, the
    week-by-week timeline, payment terms and how care runs. The brief gives the real estimate.
 
 - **Tone flow:** `ToneController` (app shell) makes `[data-tone]` sections transparent

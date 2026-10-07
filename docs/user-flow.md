@@ -56,7 +56,7 @@ The three levels of price are always in this order: **package** (ballpark, on Ho
 - **Sceptic path:** Home, then a featured case study, then `/work/:slug` (problem → approach
   → build → result, metrics), then **Start a project like this** (brief pre-filled), or Next
   project.
-- **Ongoing support path:** Header link Pricing (`/services#plans`), compare care plans or
+- **Ongoing support path:** Services, Hosting and care (`/services#plans`), compare care plans or
   discuss a Partner engagement, then confirm the scope together. **How care works** leads to
   the care steps on `/process#care`.
 - **Services path:** `/services`, open a service, **Start with this** (`/start?type=`),

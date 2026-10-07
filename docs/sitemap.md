@@ -18,7 +18,7 @@ closing CTA band per page).
 | `/privacy`    | Privacy    | POPIA: what happens to my data?      | Back to the brief                   |
 | `*`           | 404        | Recovery                             | Home, Start a project               |
 
-Global chrome on every route: skip link, header (logo, Work, Services, Pricing → `/services#plans`,
+Global chrome on every route: skip link, header (logo, Work, Services,
 Process, Studio, **Start a project** button), full-screen mobile menu, footer (big CTA, email, WhatsApp,
 Instagram, LinkedIn, privacy link).
 
