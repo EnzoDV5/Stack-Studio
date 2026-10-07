@@ -238,19 +238,16 @@ export const stepsDeal = {
 } as const
 
 /**
- * PackageShowcase (Home): the laptop's lid opens once as it comes on screen (an enter, over
- * duration.slow; transforms only), then the chosen package's example site scrolls slowly inside
- * the screen while it's on screen.
+ * ProcessSnippet (Home, from md): the orange line fills the rail above the four steps as the
+ * list scrolls up through the view (scrubbed; transform and opacity only), lighting each step's
+ * marker as it passes.
  */
-export const packageShowcase = {
-  /** The lid opens with the laptop well on screen, so it's seen in full. */
-  start: 'top 70%',
-  /** Starting angle of the lid (negative = its top tips toward the viewer, nearly shut). */
-  lidFrom: -72,
-  /** Seconds per screen height while a site scrolls inside the laptop (there and back). */
-  secondsPerScreen: 3.5,
-  /** Pause at the top and bottom of the site before it turns back. */
-  hold: 1.2,
+export const processRail = {
+  /** Starts as the steps come up past this line… */
+  start: 'top 80%',
+  /** …and the line is full once they're a little above the middle. */
+  end: 'top 35%',
+  scrub: 1,
 } as const
 
 /**

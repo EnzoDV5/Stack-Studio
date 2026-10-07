@@ -201,7 +201,7 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
    cards (FadeUp was removed).
 4. **At most one pinned section per page.** Home: WorkReel. Services and Process: none.
    Case study: CaseDevice (the MacBook scroll).
-5. **Scroll budget:** Home stays about 11 viewports on desktop, footer included (10.14 at
+5. **Scroll budget:** Home stays about 10 viewports on desktop, footer included (9.73 at
    1440×900). The WorkReel pin is `reel.shrinkScroll` + `reel.panelScroll` × (panels − 1)
    viewports.
 6. **Only animate transform, opacity and clip-path** (no width, flex, letter-spacing or
@@ -210,8 +210,8 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
 7. **Vary the openers**: neighbouring sections never use the same `SectionHeader` variant.
 8. **Every Home section ends with a "go deeper" link** (`<TextLink arrow>`) to its page or
    anchor.
-9. **Services is what we offer, Process is how we work.** Home routes with indicative package
-   ranges. Services shows no project prices (services open the brief with `/start?type=`;
+9. **Services is what we offer, Process is how we work.** Home is a short summary of the
+   whole site with no prices: one stop per page, each with its "go deeper" link. Services shows no project prices (services open the brief with `/start?type=`;
    `stageRows(..., { prices: false })`); its 05 Hosting and care group is the monthly plan
    cards, the only place plan prices appear (`/services#plans`, which the old
    `/pricing` URL redirects to). Process (`/process`) has the next steps, the

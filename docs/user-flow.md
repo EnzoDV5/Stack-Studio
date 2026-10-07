@@ -24,22 +24,20 @@ Studio snippet                      runs, how you pay)
    straight into the matching brief; the care path opens the monthly plans on /services#plans instead. The stack behind the work runs along its
    bottom. _Doubt
    removed: Understand (what)._
-3. **Pick a starting point.** The website packages open as disclosure rows beside a laptop
-   showing sites we built (or bookings on the phone). Each row shows an indicative price range;
-   visitors open the build brief for a project estimate. _Doubt removed: "what would mine
-   look like, and where do I start?"_
-4. **The work.** Every project, large, sliding past in the pinned reel, then what those
+3. **The work.** Every project, large, sliding past in the pinned reel, then what those
    clients say about it. _Doubt removed: Trust._
+4. **How it works.** Four short steps, from the brief to ongoing care. _Doubt removed:
+   "what happens if I get in touch?"_
 5. **The founders.** Real people who are accountable.
 6. **Giant closing CTA** leads to `/start`. _Doubt removed: Contact._
 
-Home shows indicative package ranges and routes project estimates to /start. Every Home section ends with a "go deeper"
-link, so visitors choose where to go next.
+Home is a summary: no prices and no detail. Every Home section ends with a "go deeper" link to
+the page that does the talking, so visitors choose where to go next.
 
 ## Who answers what
 
-- **Home:** who are you, and can you do it? (stages and the stack, packages, work, clients,
-  founders)
+- **Home:** who are you, and can you do it? A summary of the whole site (stages and the
+  stack, work, clients, process, founders), each linking to its page.
 - **Services:** what do you offer, and what support fits? No project prices. Picking a service
   opens the brief ready for it (`/start?type=<service>` or the group's `?path=`). Hosting and
   care is the plan cards (Website Care, Managed Software and Partner, with their prices); the
@@ -48,8 +46,8 @@ link, so visitors choose where to go next.
   week by week, how payments work, then how care runs after launch.
 - **Start:** the real estimate for this project, then contact.
 
-The three levels of price are always in this order: **package** (ballpark, on Home) →
-**brief estimate** (for this project, on /start) → **fixed quote** (after a short call).
+Prices come in this order: the **plan prices** (on /services#plans) and the **brief estimate**
+(for this project, on /start) → **fixed quote** (after a short call). Home shows none.
 
 ## Deeper paths
 

@@ -2,7 +2,7 @@
  * Page-level copy: meta tags, heroes, section headings and CTAs for every route.
  * Sections receive these as props; nothing is hardcoded in components.
  */
-import type { CtaContent, PageHeroContent, PageMetaContent, SectionIntro, StageId } from '@/types'
+import type { CtaContent, PageHeroContent, PageMetaContent, SectionIntro } from '@/types'
 
 export const pageMeta = {
   home: {
@@ -76,10 +76,9 @@ export const closingCtaCode = [
 
 /* ---------- Home ---------- */
 /**
- * Home answers "who are you, and can you do it?": what we do, the work, what clients say and
- * who we are. Starting package ranges appear here; the monthly plans live on /services#plans
- * and the process on /process. Every
- * section ends with a "go deeper" link to its full page, so visitors choose what to explore.
+ * Home is a short summary of the whole site: what we do (Services), the work and what clients
+ * say (Work), how we work (Process) and who we are (Studio). No prices and no detail: every
+ * section ends with a "go deeper" link to the page that does the talking.
  */
 export const homeContent = {
   hero: {
@@ -142,44 +141,33 @@ export const homeContent = {
     caseLink: (company: string) => `See the ${company} project`, // COPY:
     more: { label: 'See all the work', to: '/work' }, // COPY:
   },
-  /**
-   * The website packages (data/quotes), each shown on the laptop as a site we built that fits
-   * it, so visitors see what theirs could be. The brief lets visitors adjust the quote.
-   */
-  packages: {
-    eyebrow: 'Packages', // COPY:
-    title: 'Pick a starting point.', // COPY:
-    intro:
-      'Five common ways to start, each shown on something we’ve built. Open a package to see what it includes and its indicative price.', // COPY:
-    priceLabel: 'Typically', // COPY:
-    monthly: (price: string) => `plus ${price} for hosting, domain and care`, // COPY:
-    includesLabel: 'Includes', // COPY:
-    exampleLabel: 'Example', // COPY:
-    caseLink: 'See the project', // COPY:
-    /** What the laptop (or phone) shows for each package (ids from data/quotes). */
-    examples: {
-      launch: {
-        project: 'gc-solar',
-        caption: 'GC Solar: a new site for a solar installer', // COPY:
+  /** How we work in four short steps; /process has the detail. */
+  process: {
+    eyebrow: 'Process', // COPY:
+    title: 'From first message to looked after.', // COPY:
+    steps: [
+      {
+        title: 'Tell us what you need', // COPY:
+        body: 'A short brief with a rough estimate before you send it.', // COPY:
+        when: 'About two minutes', // COPY:
       },
-      bookings: {
-        phone: true,
-        caption: 'Bookings, on your phone: an illustrative booking app', // COPY:
+      {
+        title: 'Meet and agree a fixed quote', // COPY:
+        body: 'We talk it through, then put the scope, timeline and payments in writing.', // COPY:
+        when: 'After we meet', // COPY:
       },
-      growth: {
-        project: 'mpg-foundation',
-        caption: 'MPG Foundation: stories, projects and donations', // COPY:
+      {
+        title: 'We design and build it', // COPY:
+        body: 'You follow along on a staging link from week one, then we launch.', // COPY:
+        when: 'Around six weeks', // COPY:
       },
-      store: {
-        project: 'salon-friend',
-        caption: 'Salon Friend: a catalogue customers can shop', // COPY:
+      {
+        title: 'We keep it running', // COPY:
+        body: 'Hosting, updates and fixes on a monthly plan, if you want one.', // COPY:
+        when: 'Every month', // COPY:
       },
-      brand: {
-        video: 'grow',
-        caption: 'Designed from a blank page, with motion built in', // COPY:
-      },
-    } as Record<string, { project?: string; phone?: boolean; video?: StageId; caption: string }>,
-    more: { label: 'Build your estimate', to: '/start?path=build' }, // COPY:
+    ],
+    more: { label: 'See how we work', to: '/process' }, // COPY:
   },
   studio: {
     eyebrow: 'Studio', // COPY:

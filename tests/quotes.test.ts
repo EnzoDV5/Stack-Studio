@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { addOns } from '@/data/addons'
-import { homeContent } from '@/data/pages'
 import { plans } from '@/data/plans'
 import { getQuotePreset, quotePresets } from '@/data/quotes'
 import { offerings } from '@/data/services'
@@ -55,17 +54,6 @@ describe('starting quotes', () => {
       assert.equal(prefill.name, preset.name)
       assert.deepEqual(estimate(prefill.answers), estimate(preset.answers))
     }
-  })
-
-  it('takes the Home package call to action into the build brief', () => {
-    const prefill = prefillFromParams(
-      new URLSearchParams(homeContent.packages.more.to.split('?')[1]),
-      {
-        offerings,
-        plans,
-      },
-    )
-    assert.equal(prefill.answers.path, 'build')
   })
 
   it('ignore unknown ids', () => {

@@ -24,18 +24,18 @@ Instagram, LinkedIn, privacy link).
 
 ## Home `/`
 
-Home answers "who are you, and can you do it?": what visitors need (and the stack behind the
-work), a package to start from, proof, client feedback and who we are. The package rows show
-indicative ranges; care plans live on /services#plans and project estimates open in /start. The week-by-week process is on /process. Each section ends with a "go deeper"
-link so visitors choose where to go. About 10 viewports on desktop.
+Home is a short summary of the whole site, one stop per page: what visitors need (and the
+stack behind the work), proof, client feedback, how we work and who we are. No prices and no
+detail: the other pages do the talking, and each section ends with a "go deeper" link to its
+page. About 10 viewports on desktop.
 
 | #   | Section           | Tone   | Purpose                                                                                                                                                                |
 | --- | ----------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | —   | Hero              | dark   | Statement over the showreel, the Stack mark large on the right, **Start a project**                                                                                    |
 | 01  | What do you need? | dark   | Four paths as a self-select router (no prices; fixing joins improving, a new home joins care, which opens the plans), then the large technology strip along its bottom |
-| 02  | Packages          | dark   | Website packages with indicative ranges in disclosure rows beside a laptop; build an estimate → /start                                                                 |
-| 03  | Selected work     | paper  | Pinned sideways reel with each client logo beside its project name                                                                                                     |
-| 04  | Clients           | paper  | Quotes linked to each project → /work                                                                                                                                  |
+| 02  | Selected work     | paper  | Pinned sideways reel with each client logo beside its project name → /work                                                                                             |
+| 03  | Clients           | paper  | Quotes linked to each project → /work                                                                                                                                  |
+| 04  | Process           | paper  | Four steps, one line each, from the brief to ongoing care → /process                                                                                                   |
 | 05  | Studio            | paper  | The two founders, one line each → /studio                                                                                                                              |
 | —   | Closing CTA       | orange | Headline with moving code inside its letterforms, **Start a project**                                                                                                  |
 
