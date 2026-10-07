@@ -112,32 +112,17 @@ export const homeContent = {
     prompts: {
       build: 'I need something new.', // COPY:
       takeover: 'My site or app needs fixing or a new home.', // COPY:
-      run: 'I need someone to keep it working.', // COPY:
-      grow: 'I want to improve what I have.', // COPY:
+      run: 'I need a new home and someone to keep it working.', // COPY:
+      grow: 'I want to fix or improve what I have.', // COPY:
       partner: 'I need a team for my software.', // COPY:
     },
-    /**
-     * Home folds Take over into its neighbours: fixing is quoted by the hour like any
-     * improvement, and a new home means moving onto a care plan.
-     */
-    merged: {
-      grow: {
-        name: 'Fix or improve it', // COPY:
-        prompt: 'I want to fix or improve what I have.', // COPY:
-        line: 'Fixes, new features and redesigns, estimated in hours and quoted before we start.', // COPY:
-        examples: [
-          { name: 'Fixes and repairs' }, // COPY:
-          { name: 'New features and integrations' }, // COPY:
-          { name: 'Redesigns and UX improvements' }, // COPY:
-        ],
-      },
-      run: {
-        name: 'Keep it working', // COPY:
-        prompt: 'I need a new home and someone to keep it working.', // COPY:
-        line: 'We move your site or app onto a care plan with hosting, updates and routine fixes every month.', // COPY:
-      },
-    },
-    /** "Keep it working" opens the monthly plans instead of the brief. */
+    /** Home's examples for "Fix or improve it" (fixing is quoted by the hour like any change). */
+    fixExamples: [
+      { name: 'Fixes and repairs' }, // COPY:
+      { name: 'New features and integrations' }, // COPY:
+      { name: 'Redesigns and UX improvements' }, // COPY:
+    ],
+    /** "Hosting and care" opens the monthly plans instead of the brief (Home and Services). */
     plans: { label: 'See the plans', to: '/pricing#pricing-plans' }, // COPY:
     partnerExamples: [
       { name: 'New features' }, // COPY:
@@ -268,9 +253,8 @@ export const servicesContent = {
       { id: 'stage-build', label: 'New website' }, // COPY:
       { id: 'apps', label: 'Apps and software' }, // COPY:
       { id: 'desktop', label: 'Desktop software' }, // COPY:
-      { id: 'stage-takeover', label: 'Fix or move it' }, // COPY:
-      { id: 'stage-run', label: 'Keep it working' }, // COPY:
-      { id: 'stage-grow', label: 'Make it better' }, // COPY:
+      { id: 'stage-grow', label: 'Fix or improve it' }, // COPY:
+      { id: 'stage-run', label: 'Hosting and care' }, // COPY:
       { id: 'process', label: 'How we work' }, // COPY:
       { id: 'next-steps', label: 'Next steps' }, // COPY:
       { id: 'services-faq', label: 'Questions' }, // COPY:

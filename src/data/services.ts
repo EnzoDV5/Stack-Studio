@@ -39,21 +39,21 @@ export const serviceStages: ServiceStage[] = [
   {
     id: 'run',
     index: 3,
-    name: 'Keep it working', // COPY:
-    line: 'Website hosting and care, or app care with three monthly changes.', // COPY:
+    name: 'Hosting and care', // COPY:
+    line: 'We move your site or app onto a care plan with hosting, updates and routine fixes every month.', // COPY:
     summary:
-      'Website Care includes hosting, a standard domain and routine upkeep for one site. Managed Software adds hosting and care for one app plus three small change tickets each month.', // COPY:
+      'We audit what you have and move it to us, then Website Care keeps one site hosted and maintained. Managed Software adds hosting and care for one app plus three small change tickets each month.', // COPY:
     cta: { label: 'Find my plan', to: '/start?path=run' }, // COPY:
     briefPath: 'run',
   },
   {
     id: 'grow',
     index: 4,
-    name: 'Make it better', // COPY:
-    line: 'New features, a redesign or smaller fixes.', // COPY:
+    name: 'Fix or improve it', // COPY:
+    line: 'Fixes, new features and redesigns, estimated in hours and quoted before we start.', // COPY:
     summary:
-      'We estimate the hours for changes to an existing website or app and quote them before work starts, then offer ongoing Care after launch.', // COPY:
-    cta: { label: 'Tell us what to improve', to: '/start?path=existing' }, // COPY:
+      'We estimate the hours for fixes and changes to an existing website or app and quote them before work starts, then offer ongoing Care after launch.', // COPY:
+    cta: { label: 'Tell us what to fix or improve', to: '/start?path=existing' }, // COPY:
     briefPath: 'existing',
   },
   {

@@ -17,7 +17,6 @@ import { DesktopShowcase } from '@/sections/services/DesktopShowcase'
 import { NextSteps } from '@/sections/services/NextSteps'
 import { ProcessLine } from '@/sections/services/ProcessLine'
 import { ServicesHero } from '@/sections/services/ServicesHero'
-import type { StageLayout } from '@/sections/services/StageBlock'
 import { StageExplorer, type StageExplorerStage } from '@/sections/services/StageExplorer'
 import { FaqSection } from '@/sections/shared/FaqSection'
 import { SectionNavigator } from '@/sections/shared/SectionNavigator'
@@ -37,17 +36,7 @@ const withStart = (row: OfferRow): OfferRow =>
     : row
 const rowsFor = (stage: StageId) => stageRows(stage, data, l, { prices: false }).map(withStart)
 
-/** Each group laid out for what it sells; no two share a layout. */
-const layouts: Record<Exclude<StageId, 'build' | 'partner'>, StageLayout> = {
-  takeover: 'cards',
-  run: 'split',
-  grow: 'figures',
-}
-
-const notes: Partial<Record<StageId, string[]>> = {
-  run: [policies.hostingOnRequest],
-  grow: [c.improve.note],
-}
+const stage = (id: StageId) => serviceStages.find((s) => s.id === id)
 
 // Build splits in three, the way visitors look for it: websites (the offerings the brief files
 // under 'website'), desktop software (listed in servicesContent, with the laptop) and apps and
@@ -70,20 +59,42 @@ const websites: StageExplorerStage = {
   layout: 'feature',
 }
 
-// After launch: take over, run and improve (04–06). The care and Partner comparison is on /pricing.
-const afterLaunch: StageExplorerStage[] = serviceStages
-  .filter((stage) => stage.id !== 'build' && stage.id !== 'partner')
-  .map((stage, i) => ({
-    id: `stage-${stage.id}`,
-    index: i + 4,
-    name: homeContent.paths.prompts[stage.id],
-    line: stage.line,
-    rows: rowsFor(stage.id),
-    notes: notes[stage.id],
-    cta: stage.cta,
-    media: stage.id === 'grow' ? undefined : serviceMedia[stage.id],
-    layout: layouts[stage.id as Exclude<StageId, 'build' | 'partner'>],
-  }))
+// After launch (04–05), as on Home. Take over is folded into its neighbours: fixing is quoted by
+// the hour like any improvement, and a new home (audit, then takeover) leads onto a care plan,
+// so that group opens the plans on /pricing. Each group has its own layout.
+const grow = stage('grow')
+const run = stage('run')
+const afterLaunch: StageExplorerStage[] = [
+  ...(grow
+    ? [
+        {
+          id: 'stage-grow',
+          index: 4,
+          name: homeContent.paths.prompts.grow,
+          line: grow.line,
+          rows: rowsFor('grow'),
+          notes: [c.improve.note],
+          cta: grow.cta,
+          layout: 'figures' as const,
+        },
+      ]
+    : []),
+  ...(run
+    ? [
+        {
+          id: 'stage-run',
+          index: 5,
+          name: homeContent.paths.prompts.run,
+          line: run.line,
+          rows: [...rowsFor('takeover'), ...rowsFor('run')],
+          notes: [policies.hostingOnRequest],
+          cta: homeContent.paths.plans,
+          media: serviceMedia.run,
+          layout: 'split' as const,
+        },
+      ]
+    : []),
+]
 
 // The next-steps cards show real numbers: the "Launch website" starting quote's estimate range
 // (as the brief shows it) and a fixed total inside it.
@@ -99,8 +110,8 @@ const starter = (() => {
 
 /**
  * Services groups work the way people look for it: websites, apps
- * and software (the phone), desktop software (the laptop), then taking over, running and improving
- * what exists; then how a project runs week by week and what happens once
+ * and software (the phone), desktop software (the laptop), then fixing or improving what exists
+ * and hosting and care; then how a project runs week by week and what happens once
  * you get in touch. The brief gives project estimates; ongoing plans are on /pricing.
  */
 export function ServicesPage() {

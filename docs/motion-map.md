@@ -75,7 +75,7 @@ Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whol
 | 2   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns | none    |
 | 3   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)      | scrub   |
 | 4   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)        | enter   |
-| 5   | StageExplorer   | paper  | Take over, Run, Grow                          | none    |
+| 5   | StageExplorer   | paper  | Fix or improve, Hosting and care              | none    |
 | 6   | ProcessLine     | dark   | Timeline enters and responds to hover         | enter   |
 | 7   | NextSteps       | dark   | Four step cards deal out of a pile into a row | scrub   |
 | 8   | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
@@ -243,8 +243,9 @@ the copy and offerings on the right. As it scrolls through the view (`laptopTurn
 at 85% to its centre at 42%, 72 evenly spaced frames, cross-faded) the lid lifts from shut,
 the display wakes on an illustrative stock and orders app and it turns to face the copy. Each group has
 its own layout, picked for what it sells (`StageBlock layout`): Websites `feature` (the
-intro beside an image, then dropdowns), Take over `cards`, Run `split` (image column
-beside a list) and Grow `figures` (two rates as large figures, no image). The care and
+intro beside an image, then dropdowns), Fix or improve `figures` (the hourly rate as a large
+figure, no image) and Hosting and care `split` (image column beside the audits, takeovers
+and plans). The care and
 Partner comparison is on Plans. Framed images and video reveal on
 scroll; loops only play while on screen.
 

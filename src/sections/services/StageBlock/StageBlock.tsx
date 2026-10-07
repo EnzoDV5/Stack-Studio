@@ -14,7 +14,7 @@ import type { ServiceMediaItem } from '@/types/service-media'
  * How a group is laid out, chosen for what it sells so the page doesn't repeat itself:
  * - `feature`: the intro beside a wide image, then the offerings as dropdowns.
  * - `cards`: intro and a banner image, then the offerings side by side as cards.
- * - `split`: the image in its own column beside a compact priced list (plans).
+ * - `split`: the image in its own column beside a compact list (takeover and plans).
  * - `figures`: the intro and CTA beside a large hourly quote and examples.
  * Give every group a different layout.
  */
@@ -96,7 +96,7 @@ export function StageBlock({
             {row.price && (
               <p className="numeric text-small sm:row-span-2 sm:pt-1 sm:text-right">{row.price}</p>
             )}
-            <p className="text-small text-muted">
+            <p className="text-small text-muted sm:col-start-1">
               {row.summary}
               {row.notes.length > 0 && ` · ${row.notes.join(' · ')}`}
             </p>
@@ -148,7 +148,11 @@ export function StageBlock({
         to={cta.to}
         withArrow
         className={nested ? 'mt-8' : 'mt-10'}
-        analytics={{ event: 'Start project click', props: { location: `services-stage:${id}` } }}
+        analytics={
+          cta.to.startsWith('/start')
+            ? { event: 'Start project click', props: { location: `services-stage:${id}` } }
+            : undefined
+        }
       >
         {cta.label}
       </Button>
