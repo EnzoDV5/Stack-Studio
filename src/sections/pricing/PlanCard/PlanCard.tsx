@@ -41,7 +41,7 @@ export function PlanCard({
       )}
     >
       {mark && (
-        <StackMark className="pointer-events-none absolute -right-8 -bottom-24 -z-10 w-60 text-orange-deep opacity-50 md:w-72 lg:w-64 xl:w-72" />
+        <StackMark className="pointer-events-none absolute -right-8 -bottom-24 -z-10 w-48 text-ink sm:w-60 md:w-72 lg:-bottom-12 lg:w-40 xl:-bottom-24 xl:w-60" />
       )}
       <h3 className="text-heading-lg">{name}</h3>
       <p className={cn('mt-1 text-small', accent ? 'text-ink/80' : 'text-muted')}>{tagline}</p>
@@ -70,7 +70,14 @@ export function PlanCard({
         >
           {labels.excluded}
         </h4>
-        <ul className={cn('mt-3 space-y-2 text-small', accent ? 'text-ink/80' : 'text-muted')}>
+        <ul
+          className={cn(
+            'mt-3 space-y-2 text-small',
+            accent ? 'text-ink/80' : 'text-muted',
+            // Wrap before the stack mark so no line runs over it.
+            mark && 'max-w-[60%] md:max-w-[55%] lg:max-w-[62%] xl:max-w-[55%]',
+          )}
+        >
           {excludes.map((item) => (
             <li key={item} className="flex gap-3">
               <span aria-hidden="true" className="shrink-0">

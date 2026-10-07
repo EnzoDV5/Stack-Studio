@@ -12,8 +12,8 @@ function layer(y: number) {
 }
 
 /**
- * Decorative stack illustration: a code-bracket diamond over three isometric layers that
- * fade with depth, drawn in currentColor. Inside a `group` parent the brackets lift and the
+ * Decorative stack illustration: a code-bracket diamond over three isometric layers, drawn
+ * solid in currentColor. Inside a `group` parent the brackets lift and the
  * layers spread apart on hover or focus (not with reduced motion).
  */
 export function StackMark({ className }: StackMarkProps) {
@@ -44,7 +44,6 @@ export function StackMark({ className }: StackMarkProps) {
       />
       <path
         d={layer(98)}
-        opacity="0.7"
         className={cn(
           move,
           'motion-safe:group-focus-within:translate-y-1.5 motion-safe:group-hover:translate-y-1.5',
@@ -52,7 +51,6 @@ export function StackMark({ className }: StackMarkProps) {
       />
       <path
         d={layer(120)}
-        opacity="0.42"
         className={cn(
           move,
           'motion-safe:group-focus-within:translate-y-2.5 motion-safe:group-hover:translate-y-2.5',
