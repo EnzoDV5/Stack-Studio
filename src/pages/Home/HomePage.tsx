@@ -85,17 +85,17 @@ const stageNames = Object.fromEntries(serviceStages.map((s) => [s.id, s.name])) 
 >
 
 /**
- * Home's four paths. Fixing and improving both start from what the visitor already has, so
- * the takeover path also covers Grow (both open the brief's `existing` path); Services keeps
- * the five stages apart.
+ * Home's four paths. Take over is folded into its neighbours: fixing joins Grow (quoted by the
+ * hour through the brief's `existing` path) and a new home joins Run (a care plan, so it opens
+ * the plans). Services keeps the five stages apart.
  */
-const homePaths = ['build', 'takeover', 'run', 'partner'] as const
+const homePaths = ['build', 'grow', 'run', 'partner'] as const
 
 /** Home keeps each path short: 2–3 example offerings or plan families, without prices. */
 function stageItems(stage: StageId) {
   switch (stage) {
-    case 'takeover':
-      return homeContent.paths.existing.examples
+    case 'grow':
+      return homeContent.paths.merged.grow.examples
     case 'run':
       return [familyItem('care'), familyItem('managed')]
     case 'partner':
@@ -132,14 +132,14 @@ export function HomePage() {
           stages={homePaths.flatMap((id, i) => {
             const stage = serviceStages.find((s) => s.id === id)
             if (!stage) return []
-            const existing = id === 'takeover' ? paths.existing : undefined
+            const merged = id === 'grow' || id === 'run' ? paths.merged[id] : undefined
             return [
               {
                 id,
                 index: i + 1,
-                name: existing?.name ?? stage.name,
-                prompt: existing?.prompt ?? paths.prompts[id],
-                line: existing?.line ?? stage.line,
+                name: merged?.name ?? stage.name,
+                prompt: merged?.prompt ?? paths.prompts[id],
+                line: merged?.line ?? stage.line,
                 items: stageItems(id),
                 details: { label: paths.details, to: `/services#stage-${id}` },
                 estimate:

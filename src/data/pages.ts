@@ -116,16 +116,26 @@ export const homeContent = {
       grow: 'I want to improve what I have.', // COPY:
       partner: 'I need a team for my software.', // COPY:
     },
-    /** Fixing, moving and improving an existing site or app share one path on Home. */
-    existing: {
-      name: 'Fix or improve it', // COPY:
-      prompt: 'I want to fix or improve what I have.', // COPY:
-      line: 'We fix, move or improve your site or app, then look after it.', // COPY:
-      examples: [
-        { name: 'Audits and fixes' }, // COPY:
-        { name: 'A safe new home for your site or app' }, // COPY:
-        { name: 'New features and redesigns' }, // COPY:
-      ],
+    /**
+     * Home folds Take over into its neighbours: fixing is quoted by the hour like any
+     * improvement, and a new home means moving onto a care plan.
+     */
+    merged: {
+      grow: {
+        name: 'Fix or improve it', // COPY:
+        prompt: 'I want to fix or improve what I have.', // COPY:
+        line: 'Fixes, new features and redesigns, estimated in hours and quoted before we start.', // COPY:
+        examples: [
+          { name: 'Fixes and repairs' }, // COPY:
+          { name: 'New features and integrations' }, // COPY:
+          { name: 'Redesigns and UX improvements' }, // COPY:
+        ],
+      },
+      run: {
+        name: 'Keep it working', // COPY:
+        prompt: 'I need a new home and someone to keep it working.', // COPY:
+        line: 'We move your site or app onto a care plan with hosting, updates and routine fixes every month.', // COPY:
+      },
     },
     /** "Keep it working" opens the monthly plans instead of the brief. */
     plans: { label: 'See the plans', to: '/pricing#pricing-plans' }, // COPY:
