@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/Button'
+import { StackMark } from '@/components/ui/StackMark'
 import { cn } from '@/lib/cn'
 
 export interface PlanCardProps {
@@ -13,6 +14,8 @@ export interface PlanCardProps {
   excludes: string[]
   labels: { included: string; excluded: string }
   cta: { label: string; to: string; location: string }
+  /** Show the stack illustration in the bottom-right corner. */
+  mark?: boolean
 }
 
 /** One monthly plan: name, price, hours, what's included and a pre-filled CTA. */
@@ -27,12 +30,13 @@ export function PlanCard({
   excludes,
   labels,
   cta,
+  mark = false,
 }: PlanCardProps) {
   return (
     <li
       id={anchorId}
       className={cn(
-        'relative flex flex-col rounded-lg border p-6 md:p-7',
+        'group relative flex flex-col rounded-lg border p-6 md:p-7',
         accent ? 'border-orange bg-orange text-ink' : 'border-tone',
       )}
     >
@@ -74,17 +78,21 @@ export function PlanCard({
           ))}
         </ul>
       </div>
-      <Button
-        to={cta.to}
-        variant={accent ? 'inverse' : 'secondary'}
-        size="sm"
-        withArrow
-        className="mt-8 self-start"
-        aria-label={`${cta.label} ${name}`}
-        analytics={{ event: 'Start project click', props: { location: cta.location } }}
-      >
-        {cta.label}
-      </Button>
+      <div className="mt-8 flex items-end justify-between gap-6">
+        <Button
+          to={cta.to}
+          variant={accent ? 'inverse' : 'secondary'}
+          size="sm"
+          withArrow
+          aria-label={`${cta.label} ${name}`}
+          analytics={{ event: 'Start project click', props: { location: cta.location } }}
+        >
+          {cta.label}
+        </Button>
+        {mark && (
+          <StackMark className="-mr-1 -mb-1 w-32 shrink-0 text-ink sm:w-40 lg:w-36 xl:w-44" />
+        )}
+      </div>
     </li>
   )
 }

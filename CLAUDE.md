@@ -48,7 +48,7 @@ src/
   sections/     grouped per page (home/, work/, case-study/, services/, pricing/, studio/, start/) + shared/
   components/
     ui/         Button, MagneticButton, Eyebrow, Heading, Container, Tag, Accordion, Marquee, TextLink, Divider,
-                Logo, WhatsAppButton
+                Logo, StackMark, WhatsAppButton
     layout/     Header, Footer, MobileMenu, PageTransition, Preloader, Cursor, GridOverlay, GrainOverlay,
                 Section, SkipLink, DeferredSection, ToneController
     media/      Image, Video, MediaReveal, ServiceMedia, MacbookScroll, ClientLogo, ImageSequence

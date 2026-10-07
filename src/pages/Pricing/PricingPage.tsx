@@ -40,6 +40,7 @@ export function PricingPage() {
       id: 'partner',
       anchorId: 'pricing-partner',
       accent: true,
+      mark: true,
       ...c.plans.partner,
       labels: { included: c.scope.includedTitle, excluded: c.scope.excludedTitle },
       cta: { ...c.plans.partner.cta, location: 'pricing-plan:partner' },
