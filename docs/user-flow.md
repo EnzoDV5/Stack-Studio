@@ -4,13 +4,12 @@ The site's job is to remove four moments of doubt, in order, and then make the f
 easy. Every page has one main action: **Start a project**.
 
 ```
-FIND ─────────► TRUST ─────────► UNDERSTAND ─────────► CONTACT
-"Who are you?"   "Can you do it?"  "What do I get,       "How do I start?"
-                                    what does it cost?"
-Home hero        Featured work      /services (what we    Guided brief (/start)
-"What do you     Case studies       offer, plan prices)   WhatsApp (fallback)
- need?"          Metrics, quotes    /process (how it      Email (footer)
-Studio snippet                      runs, how you pay)
+FIND ─────────► UNDERSTAND ─────────► TRUST ─────────► CONTACT
+"Who are you?"   "What do you do?"    "Can you do it?"  "How do I start?"
+Home hero        Needs and services  Featured work      Guided brief (/start)
+"What do you     Process summary     Case studies       WhatsApp (fallback)
+ need?"          /services, /process Client voices      Email (footer)
+Studio snippet
 ```
 
 ## Primary path (the flow the home page is built around)
@@ -24,20 +23,22 @@ Studio snippet                      runs, how you pay)
    straight into the matching brief; the care path opens the monthly plans on /services#plans instead. The stack behind the work runs along its
    bottom. _Doubt
    removed: Understand (what)._
-3. **The work.** Every project, large, sliding past in the pinned reel, then what those
-   clients say about it. _Doubt removed: Trust._
-4. **How it works.** Four short steps, from the brief to ongoing care. _Doubt removed:
-   "what happens if I get in touch?"_
-5. **The founders.** Real people who are accountable.
-6. **Giant closing CTA** leads to `/start`. _Doubt removed: Contact._
+3. **Understand the offer.** Four concise service rows explain the work behind those needs
+   and link to the right part of /services. _Doubt removed: Understand (what)._
+4. **See how it works.** A vertical four-step journey shows the brief, fixed quote, build and
+   ongoing care, then links to /process for the details. _Doubt removed: Understand (how)._
+5. **The work.** Every project slides past in the pinned reel, followed by what its clients
+   say about it. _Doubt removed: Trust._
+6. **The founders.** Real people who are accountable.
+7. **Giant closing CTA** leads to `/start`. _Doubt removed: Contact._
 
 Home is a summary: no prices and no detail. Every Home section ends with a "go deeper" link to
 the page that does the talking, so visitors choose where to go next.
 
 ## Who answers what
 
-- **Home:** who are you, and can you do it? A summary of the whole site (stages and the
-  stack, work, clients, process, founders), each linking to its page.
+- **Home:** who are you, what do you do, how does it run and can you do it? A summary of the
+  whole site (needs, services, process, work, clients, founders), each linking to its page.
 - **Services:** what do you offer, and what support fits? No project prices. Picking a service
   opens the brief ready for it (`/start?type=<service>` or the group's `?path=`). Hosting and
   care is the plan cards (Website Care, Managed Software and Partner, with their prices); the

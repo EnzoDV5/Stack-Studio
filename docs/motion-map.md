@@ -121,39 +121,28 @@ Clash: the success heading uses SplitReveal on a page whose title does not.
 
 ### Home
 
-Home is a short summary of the whole site, one stop per page, as a story: what the visitor
-needs (Services, with the stack behind the work), proof and client voices (Work), how we work
-(Process) and the founders (Studio), then the closing band. No prices and no detail: each
-section ends with a link to the page that has it.
-Measured on the preview build: 9.73 viewports tall at 1440×900 (footer included). Heights
-below are in viewports.
+Home leads with the visitor's need, then shows the services and the way a project runs before
+the work, client voices and founders. It stays a summary; full offer and process detail live
+on their pages.
 
-| #   | Section                | Tone   | Opener                | Signature motion                                                                                                           | Trigger       | Height |
-| --- | ---------------------- | ------ | --------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------- | ------ |
-| 1   | HomeHero               | dark   | own                   | Statement line-reveal (1 of Home's 2 type moments); the Stack mark sinks with the scroll, behind the next section          | load + scrub  | 1.00   |
-| 2   | PathChooser            | dark   | SectionHeader split   | Horizontal accordion (transform + clip-path, GSAP); rows on mobile. The large technology strip closes it (ambient marquee) | hover         | ~1.55  |
-| 3   | WorkReel               | paper  | SectionHeader inline  | Arrives full-bleed; pins (the page's only pin), shrinks into a card, then travels sideways                                 | scrub + pin   | 2.85   |
-| 4   | ClientVoices           | paper  | SectionHeader stacked | The quote cards rise in one after the other                                                                                | enter         | ~1.25  |
-| 5   | ProcessSnippet         | paper  | SectionHeader inline  | An orange line fills the rail above the four steps, lighting each marker as it passes (from md)                            | scrub         | 0.99   |
-| 6   | StudioSnippet          | paper  | SectionHeader split   | Portraits reveal on scroll, then drift toward the pointer                                                                  | enter + hover | 0.92   |
-| 7   | ClosingCta (app shell) | orange | eyebrow               | Code characters compile into the readable ink title, once, on a timer when the band enters                                 | enter         | ~0.9   |
-| —   | Footer (chrome)        | ink    | —                     | None. Not part of the tone flow, so the band above stays orange                                                            | none          | 0.76   |
+| #   | Section                | Tone   | Opener                | Signature motion                                                | Trigger      |
+| --- | ---------------------- | ------ | --------------------- | --------------------------------------------------------------- | ------------ |
+| 1   | HomeHero               | dark   | own                   | Statement line reveal and showreel                              | load + scrub |
+| 2   | PathChooser            | dark   | SectionHeader split   | Horizontal accordion; technology marquee along the bottom       | hover        |
+| 3   | ServicesSnippet        | paper  | SectionHeader stacked | Static editorial service rows                                   | none         |
+| 4   | ProcessSnippet         | dark   | SectionHeader minimal | Vertical rail and markers reveal as the steps enter             | enter        |
+| 5   | WorkReel               | paper  | SectionHeader inline  | Full-bleed entrance, then the page's only pin and sideways reel | scrub + pin  |
+| 6   | ClientVoices           | paper  | SectionHeader stacked | Quote cards rise in sequence                                    | enter        |
+| 7   | StudioSnippet          | paper  | SectionHeader split   | Portraits drift toward the pointer                              | hover        |
+| 8   | ClosingCta (app shell) | orange | eyebrow               | Code compiles into the title on entry                           | enter        |
 
-Trigger sequence: load + scrub · hover · scrub + pin · enter · scrub · enter + hover · enter. No
-two neighbours share a type. Openers go split · inline · stacked · inline · split. Every section
-ends with a "go deeper" link: All services, All work (header row and last panel), See all the
-work, See how we work, Meet the studio.
-
-ProcessSnippet: four steps, one line each (brief, meeting and fixed quote, build, care), with
-how long each takes; /process has the detail. The rail fill is scrubbed (`processRail`: list
-top at 80% to 35%; transform and opacity only). Phones and reduced motion: the rail is hidden
-or full and every marker lit. The technology strip ("The stack behind the work") runs along the
-bottom of PathChooser at its large size (bigger logos and names), full width, so the section
-ends on it.
+ProcessSnippet keeps the summary to four steps. The vertical rail and markers reveal once
+on entry using transform and opacity. With reduced motion, the complete timeline is visible.
+Each chapter has a link to its full page. The technology strip remains below PathChooser.
 
 **Tone chapters.** Neighbouring sections share a tone, so the page colour changes rarely:
-Home dark (hero, paths) → paper (work, clients, process, studio), then the solid
-orange band (1 change). Case study: dark → paper → dark (2). Services: paper → dark → paper → dark (the
+Home dark (hero, paths) → paper (services) → dark (process) → paper (work, clients, studio),
+then the solid orange band. Case study: dark → paper → dark (2). Services: paper → dark → paper → dark (the
 device showcases, then fix or improve and the plans, then the FAQ). Process: paper → dark (next
 steps, timeline) → paper (terms, care, FAQ) (2). Studio: paper → dark →
 paper (2). Sections shorter than `tone.minSection` (0.9 viewport) never take over the page
@@ -164,7 +153,7 @@ switches the page colours (`--page-bg`, `--page-fg`, muted, border, accent, grid
 marker, focus) when a section's top crosses the middle of the viewport (`tone.line`): one
 short ease-out fade (`tone.switch`, 0.45s) straight from the old tone to the new one. The
 colour never follows the scroll position, so there are no lingering in-between colours and
-never a mix of three tones. Measured on Home: seven switches of about 0.4s each. A re-measure
+never a mix of three tones. A re-measure
 while the page is still (a lazy route arriving) lands instantly. Only the sections on screen
 and `body`'s own background are written each frame, because a colour variable on `<html>`
 would restyle the whole page; `<html>` gets them only on re-measure. Sections
@@ -284,9 +273,9 @@ These are also in CLAUDE.md. Check every change against them and update the tabl
    whole sections. `StaggerGroup` is used only for the client quote cards and the starting quote cards; FadeUp was removed.
 4. **At most one pinned section per page.** Home: WorkReel. Services and Process: none.
    Case study: CaseDevice.
-5. **Scroll budget:** Home is about 10 viewports tall on desktop, footer included (9.73 since
-   the packages made way for a short process summary). The WorkReel pin
-   is `reel.shrinkScroll` + `reel.panelScroll` × (panels − 1) viewports.
+5. **Scroll budget:** Home can run longer to give the service and process summaries room while
+   keeping detailed offer and timeline content on their own pages. The WorkReel pin is
+   `reel.shrinkScroll` + `reel.panelScroll` × (panels − 1) viewports.
 6. **Only animate transform, opacity and clip-path.** Turn will-change on while something
    moves and off afterwards. Videos play only while visible and needed: the hero's active
    layer, hovered previews and the open service panel.

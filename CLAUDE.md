@@ -2,7 +2,7 @@
 
 Production marketing site for **Stack Studio**, a two-person web studio in Centurion, South
 Africa (founders Enzo De Vittorio and Armand Naudé). The site removes four doubts in order
-(**Find → Trust → Understand → Contact**) and every page pushes toward one action:
+(**Find → Understand → Trust → Contact**) and every page pushes toward one action:
 **Start a project** (`/start`). Read `docs/user-flow.md`, `docs/sitemap.md`,
 `docs/design-system.md` and `docs/motion-map.md` before changing structure, flow, visuals or
 motion.
@@ -201,9 +201,9 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
    cards (FadeUp was removed).
 4. **At most one pinned section per page.** Home: WorkReel. Services and Process: none.
    Case study: CaseDevice (the MacBook scroll).
-5. **Scroll budget:** Home stays about 10 viewports on desktop, footer included (9.73 at
-   1440×900). The WorkReel pin is `reel.shrinkScroll` + `reel.panelScroll` × (panels − 1)
-   viewports.
+5. **Scroll budget:** Home can run longer to make room for the service and process summaries,
+   while leaving detailed offer and timeline content to their own pages. The WorkReel pin is
+   `reel.shrinkScroll` + `reel.panelScroll` × (panels − 1) viewports.
 6. **Only animate transform, opacity and clip-path** (no width, flex, letter-spacing or
    stroke offsets). Toggle will-change on while moving and off after. Videos play only when
    visible and needed.

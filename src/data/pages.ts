@@ -76,9 +76,9 @@ export const closingCtaCode = [
 
 /* ---------- Home ---------- */
 /**
- * Home is a short summary of the whole site: what we do (Services), the work and what clients
- * say (Work), how we work (Process) and who we are (Studio). No prices and no detail: every
- * section ends with a "go deeper" link to the page that does the talking.
+ * Home follows the visitor's need with the offer and process, then the work and what clients
+ * say, and finally the people behind it. No prices or full detail: every chapter links to
+ * the page that does the talking.
  */
 export const homeContent = {
   hero: {
@@ -104,7 +104,7 @@ export const homeContent = {
     },
   },
   paths: {
-    eyebrow: 'Services', // COPY:
+    eyebrow: 'Find your fit', // COPY:
     title: 'What do you need?', // COPY:
     intro: 'Pick the one that sounds like you.', // COPY:
     /** The self-select line for each stage, in the visitor's words (also the Services headings). */
@@ -133,6 +133,42 @@ export const homeContent = {
     estimate: 'Start here', // COPY:
     more: { label: 'All services', to: '/services' }, // COPY:
   },
+  services: {
+    eyebrow: 'What we do', // COPY:
+    title: 'The right work for where you are.', // COPY:
+    intro:
+      'From a new digital home to the team that keeps it moving, we shape the work around what your business needs now.', // COPY:
+    items: [
+      {
+        title: 'Websites with a purpose', // COPY:
+        description:
+          'A distinctive site that makes your business clear and turns visits into enquiries.', // COPY:
+        examples: 'Business websites · immersive experiences', // COPY:
+        link: { label: 'Explore websites', to: '/services#stage-build' }, // COPY:
+      },
+      {
+        title: 'Apps and custom software', // COPY:
+        description:
+          'Useful digital tools built around the way your people and customers actually work.', // COPY:
+        examples: 'Web apps · desktop tools · integrations', // COPY:
+        link: { label: 'Explore software', to: '/services#apps' }, // COPY:
+      },
+      {
+        title: 'Fixes and improvements', // COPY:
+        description: 'Make the site or app you already have faster, clearer and more capable.', // COPY:
+        examples: 'Repairs · redesigns · new features', // COPY:
+        link: { label: 'Explore improvements', to: '/services#stage-grow' }, // COPY:
+      },
+      {
+        title: 'Hosting and ongoing care', // COPY:
+        description:
+          'A reliable home, regular upkeep and a team to call when something needs attention.', // COPY:
+        examples: 'Website Care · Managed Software · Partner', // COPY:
+        link: { label: 'Explore care', to: '/services#plans' }, // COPY:
+      },
+    ],
+    more: { label: 'See all services', to: '/services' }, // COPY:
+  },
   clients: {
     eyebrow: 'Clients', // COPY:
     title: 'What clients say.', // COPY:
@@ -145,6 +181,8 @@ export const homeContent = {
   process: {
     eyebrow: 'Process', // COPY:
     title: 'From first message to looked after.', // COPY:
+    intro: 'A clear path, real conversations and no disappearing act after launch.', // COPY:
+    countLabel: 'steps from idea to ongoing care', // COPY:
     steps: [
       {
         title: 'Tell us what you need', // COPY:

@@ -238,19 +238,6 @@ export const stepsDeal = {
 } as const
 
 /**
- * ProcessSnippet (Home, from md): the orange line fills the rail above the four steps as the
- * list scrolls up through the view (scrubbed; transform and opacity only), lighting each step's
- * marker as it passes.
- */
-export const processRail = {
-  /** Starts as the steps come up past this line… */
-  start: 'top 80%',
-  /** …and the line is full once they're a little above the middle. */
-  end: 'top 35%',
-  scrub: 1,
-} as const
-
-/**
  * HomeHero: the Stack mark sinks as the page scrolls (scrubbed), slower than the page, so it
  * seems to follow the visitor down and slips off the bottom of the hero, behind the next
  * section.

@@ -16,10 +16,9 @@ import { HomeHero } from '@/sections/home/HomeHero'
 import { WorkReel } from '@/sections/home/WorkReel'
 import type { PlanFamily, StageId } from '@/types'
 
-// Home is a short summary of the whole site, one stop per page: what we do (with the stack behind
-// the work), the work and what clients say, how we work, and the founders, then the closing band.
-// No prices or detail: each section links to the page that has it. Heavy sections mount only as
-// they approach the viewport.
+// Home moves from the visitor's need to the offer and process, then proves the work with
+// projects, client voices and the founders. Each chapter points to its full page. Heavy
+// sections mount only as they approach the viewport.
 const PathChooser = lazy(() =>
   import('@/sections/home/PathChooser').then((m) => ({ default: m.PathChooser })),
 )
@@ -28,6 +27,9 @@ const ClientVoices = lazy(() =>
 )
 const ProcessSnippet = lazy(() =>
   import('@/sections/home/ProcessSnippet').then((m) => ({ default: m.ProcessSnippet })),
+)
+const ServicesSnippet = lazy(() =>
+  import('@/sections/home/ServicesSnippet').then((m) => ({ default: m.ServicesSnippet })),
 )
 const StudioSnippet = lazy(() =>
   import('@/sections/home/StudioSnippet').then((m) => ({ default: m.StudioSnippet })),
@@ -69,7 +71,7 @@ function stageItems(stage: StageId) {
 }
 
 export function HomePage() {
-  const { hero, work, clients, paths, process, studio } = homeContent
+  const { hero, work, clients, paths, services, process, studio } = homeContent
 
   return (
     <>
@@ -113,8 +115,16 @@ export function HomePage() {
         />
       </DeferredSection>
 
+      <DeferredSection minHeight="170vh">
+        <ServicesSnippet index={2} {...services} />
+      </DeferredSection>
+
+      <DeferredSection minHeight="170vh">
+        <ProcessSnippet index={3} {...process} />
+      </DeferredSection>
+
       <WorkReel
-        index={2}
+        index={4}
         eyebrow={work.eyebrow}
         title={work.title}
         projects={projects}
@@ -133,7 +143,7 @@ export function HomePage() {
 
       <DeferredSection minHeight="90vh">
         <ClientVoices
-          index={3}
+          index={5}
           tone="paper"
           eyebrow={clients.eyebrow}
           title={clients.title}
@@ -154,20 +164,9 @@ export function HomePage() {
         />
       </DeferredSection>
 
-      <DeferredSection minHeight="80vh">
-        <ProcessSnippet
-          index={4}
-          tone="paper"
-          eyebrow={process.eyebrow}
-          title={process.title}
-          steps={process.steps}
-          more={process.more}
-        />
-      </DeferredSection>
-
       <DeferredSection minHeight="95vh">
         <StudioSnippet
-          index={5}
+          index={6}
           tone="paper"
           eyebrow={studio.eyebrow}
           title={studio.title}

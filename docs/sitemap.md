@@ -24,19 +24,19 @@ Instagram, LinkedIn, privacy link).
 
 ## Home `/`
 
-Home is a short summary of the whole site, one stop per page: what visitors need (and the
-stack behind the work), proof, client feedback, how we work and who we are. No prices and no
-detail: the other pages do the talking, and each section ends with a "go deeper" link to its
-page. About 10 viewports on desktop.
+Home is a guided summary of the whole site: what visitors need, what we offer, how a project
+runs, proof, client feedback and the people behind the work. No prices or full service and
+process detail: the other pages do the talking. Each chapter links to its full page.
 
 | #   | Section           | Tone   | Purpose                                                                                                                                                                |
 | --- | ----------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | —   | Hero              | dark   | Statement over the showreel, the Stack mark large on the right, **Start a project**                                                                                    |
 | 01  | What do you need? | dark   | Four paths as a self-select router (no prices; fixing joins improving, a new home joins care, which opens the plans), then the large technology strip along its bottom |
-| 02  | Selected work     | paper  | Pinned sideways reel with each client logo beside its project name → /work                                                                                             |
-| 03  | Clients           | paper  | Quotes linked to each project → /work                                                                                                                                  |
-| 04  | Process           | paper  | Four steps, one line each, from the brief to ongoing care → /process                                                                                                   |
-| 05  | Studio            | paper  | The two founders, one line each → /studio                                                                                                                              |
+| 02  | What we do        | paper  | Four editorial service rows linking to the relevant detail on /services                                                                                                |
+| 03  | Process           | dark   | A vertical journey from brief through build to ongoing care → /process                                                                                                 |
+| 04  | Selected work     | paper  | Pinned sideways reel with each client logo beside its project name → /work                                                                                             |
+| 05  | Clients           | paper  | Quotes linked to each project → /work                                                                                                                                  |
+| 06  | Studio            | paper  | The two founders, one line each → /studio                                                                                                                              |
 | —   | Closing CTA       | orange | Headline with moving code inside its letterforms, **Start a project**                                                                                                  |
 
 ## Work `/work`
