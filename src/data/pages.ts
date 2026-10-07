@@ -398,7 +398,6 @@ export const pricingContent = {
     label: 'Plans sections', // COPY:
     items: [
       { id: 'pricing-how-it-works', label: 'How it works' }, // COPY:
-      { id: 'pricing-options', label: 'Your options' }, // COPY:
       { id: 'pricing-plans', label: 'Monthly plans' }, // COPY:
       { id: 'pricing-partner', label: 'Partner plan' }, // COPY:
       { id: 'pricing-terms', label: 'Payment terms' }, // COPY:
@@ -407,53 +406,26 @@ export const pricingContent = {
   },
   approach: {
     eyebrow: 'How it works', // COPY:
-    title: 'Good work starts here.', // COPY:
+    title: 'Care that runs in the background.', // COPY:
     intro:
-      'Whether you need reliable care or a team deep in the work, we start by understanding what you have and where you want to go.', // COPY:
-    mediaCaption: 'A plan that moves with your work.', // COPY:
-    mediaLabel: 'Planning / Support', // COPY:
+      'Once you’re on a plan, we look after the technical side of your website or software month after month, so you can get on with running your business.', // COPY:
+    mediaCaption: 'Looked after, every month.', // COPY:
+    mediaLabel: 'Hosting / Care', // COPY:
     steps: [
       {
-        title: 'Find your starting point', // COPY:
-        body: 'See which level of support fits your website, software or upcoming projects.', // COPY:
+        title: 'We take it over', // COPY:
+        body: 'We move your hosting, domain and access across, check what is live and set up backups and uptime checks.', // COPY:
       },
       {
-        title: 'Talk it through', // COPY:
-        body: 'We check what is live, what needs attention and how much help you need each month.', // COPY:
+        title: 'We keep it healthy', // COPY:
+        body: 'Every month we run security updates, watch uptime and use your included care hours on fixes, without you having to ask.', // COPY:
       },
       {
-        title: 'Agree the scope', // COPY:
-        body: 'We confirm what is covered, the monthly price and how requests will be handled.', // COPY:
+        title: 'You ask, we handle it', // COPY:
+        body: 'Send a request when something needs attention. What your plan covers, we handle; anything beyond it is quoted before we start.', // COPY:
       },
     ],
-    cta: { label: 'Explore your options', to: '/pricing#pricing-options' }, // COPY:
-  },
-  options: {
-    eyebrow: 'Your options', // COPY:
-    title: 'Choose your level of support.', // COPY:
-    intro:
-      'Three ways to keep things moving, from the essentials to a team across projects. Pick one to see where it fits, then compare the full scope below.', // COPY:
-    comparison: [
-      {
-        label: 'Website Care',
-        short: 'One website, looked after.',
-        body: 'Reliable hosting, a standard domain and routine technical care for one website. A simple way to keep what you have healthy and online.',
-        detailLink: { label: 'See Website Care', to: '/pricing#pricing-care' },
-      }, // COPY:
-      {
-        label: 'Managed Software',
-        short: 'Your website and app, managed together.',
-        body: 'Hosting and technical care for one website and one standard app, plus three small change tickets each month for the improvements that keep coming up.',
-        detailLink: { label: 'See Managed Software', to: '/pricing#pricing-managed' },
-      }, // COPY:
-      {
-        label: 'Partner',
-        short: 'One team across your projects.',
-        body: 'Work with us to plan, create and manage the projects you need, including AI tools. We agree the scope and monthly hours together.',
-        detailLink: { label: 'See Partner', to: '/pricing#pricing-partner' },
-      }, // COPY:
-    ],
-    cta: { label: 'Compare every detail', to: '/pricing#pricing-plans' }, // COPY:
+    cta: { label: 'Compare the plans', to: '/pricing#pricing-plans' }, // COPY:
   },
   plans: {
     eyebrow: 'Monthly plans', // COPY:

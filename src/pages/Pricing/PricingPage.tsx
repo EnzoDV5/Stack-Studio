@@ -5,7 +5,6 @@ import { pageMeta, pricingContent } from '@/data/pages'
 import { plans } from '@/data/plans'
 import { policies } from '@/data/policies'
 import { isVisible, planPrice } from '@/lib/offer'
-import { CareOptions } from '@/sections/pricing/CareOptions'
 import { HowItWorks } from '@/sections/pricing/HowItWorks'
 import { MonthlyPlans } from '@/sections/pricing/MonthlyPlans'
 import { PoliciesList } from '@/sections/pricing/PoliciesList'
@@ -16,7 +15,7 @@ import { SectionNavigator } from '@/sections/shared/SectionNavigator'
 const c = pricingContent
 const l = c.priceLabels
 
-/** How the relationship starts, the three support options, then prices and terms. */
+/** How ongoing care works, then the plans, terms and questions. */
 export function PricingPage() {
   const fixedPlans = plans
     .filter((plan) => (plan.family === 'care' || plan.family === 'managed') && isVisible(plan))
@@ -57,7 +56,6 @@ export function PricingPage() {
       <div id="pricing-how-it-works">
         <HowItWorks {...c.approach} media={serviceMedia.partner} tone="paper" />
       </div>
-      <CareOptions id="pricing-options" {...c.options} tone="dark" />
       <div id="pricing-plans">
         <MonthlyPlans
           tone="dark"

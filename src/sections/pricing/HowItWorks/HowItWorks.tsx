@@ -20,7 +20,7 @@ export interface HowItWorksProps {
   tone?: Tone
 }
 
-/** An editorial introduction to the relationship, with a video and a clear three-step path. */
+/** An editorial explanation of how ongoing care works, with a video and three numbered steps. */
 export function HowItWorks({
   eyebrow,
   title,
