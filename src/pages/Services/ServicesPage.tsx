@@ -5,17 +5,11 @@ import { homeContent, pageMeta, pricingContent, servicesContent } from '@/data/p
 import { plans } from '@/data/plans'
 import { policies } from '@/data/policies'
 import { rates } from '@/data/rates'
-import { getQuotePreset } from '@/data/quotes'
 import { offerings, serviceStages } from '@/data/services'
-import { processSteps } from '@/data/process'
-import { site } from '@/data/site'
-import { estimate } from '@/lib/estimate'
-import { formatPrice, formatPriceRange } from '@/lib/format'
-import { stageRows, type OfferRow } from '@/lib/offer'
+import { isVisible, planPrice, stageRows, type OfferRow } from '@/lib/offer'
 import { AppShowcase } from '@/sections/services/AppShowcase'
 import { DesktopShowcase } from '@/sections/services/DesktopShowcase'
-import { NextSteps } from '@/sections/services/NextSteps'
-import { ProcessLine } from '@/sections/services/ProcessLine'
+import { MonthlyPlans } from '@/sections/services/MonthlyPlans'
 import { ServicesHero } from '@/sections/services/ServicesHero'
 import { StageExplorer, type StageExplorerStage } from '@/sections/services/StageExplorer'
 import { FaqSection } from '@/sections/shared/FaqSection'
@@ -27,8 +21,9 @@ const l = pricingContent.priceLabels
 const data = { offerings, plans, rates }
 
 /**
- * Services shows no prices. Each build service opens the brief
- * with that service picked, so choosing one is the way in.
+ * Services shows no project prices (the brief gives the estimate). Each build service opens the
+ * brief with that service picked, so choosing one is the way in. The monthly plans, in Hosting
+ * and care, are the one place their prices appear.
  */
 const withStart = (row: OfferRow): OfferRow =>
   offerings.some((o) => o.id === row.id && o.briefCategory)
@@ -59,70 +54,59 @@ const websites: StageExplorerStage = {
   layout: 'feature',
 }
 
-/** Partner has no plan rows (its card on /pricing is built from copy), so it is listed from that. */
-const partnerRow: OfferRow = {
-  id: 'partner',
-  name: pricingContent.plans.partner.name,
-  summary: pricingContent.plans.partner.tagline,
-  includes: [],
-  examples: [],
-  notes: [],
-}
-
-// After launch (04–05), as on Home. Take over is folded into its neighbours: fixing is quoted by
-// the hour like any improvement, and a new home means a care plan, so that group lists only the
-// plans (care, managed and Partner) and opens them on /pricing. Each group has its own layout.
+// 04 Fix or improve, as on Home. Fixing is quoted by the hour like any improvement.
 const grow = stage('grow')
-const run = stage('run')
-const afterLaunch: StageExplorerStage[] = [
-  ...(grow
-    ? [
-        {
-          id: 'stage-grow',
-          index: 4,
-          name: homeContent.paths.prompts.grow,
-          line: grow.line,
-          rows: rowsFor('grow'),
-          notes: [c.improve.note],
-          cta: grow.cta,
-          layout: 'figures' as const,
-        },
-      ]
-    : []),
-  ...(run
-    ? [
-        {
-          id: 'stage-run',
-          index: 5,
-          name: homeContent.paths.prompts.run,
-          line: run.line,
-          rows: [...rowsFor('run'), partnerRow],
-          notes: [policies.hostingOnRequest],
-          cta: homeContent.paths.plans,
-          media: serviceMedia.run,
-          layout: 'split' as const,
-        },
-      ]
-    : []),
+const improve: StageExplorerStage[] = grow
+  ? [
+      {
+        id: 'stage-grow',
+        index: 4,
+        name: homeContent.paths.prompts.grow,
+        line: grow.line,
+        rows: rowsFor('grow'),
+        notes: [c.improve.note],
+        cta: grow.cta,
+        layout: 'figures',
+      },
+    ]
+  : []
+
+// 05 Hosting and care: a new home means a care plan, so the group is the plan cards themselves
+// (Website Care, Managed Software, then Partner, which is built from copy and has no fixed price).
+const p = pricingContent.plans
+const scopeLabels = {
+  included: pricingContent.scope.includedTitle,
+  excluded: pricingContent.scope.excludedTitle,
+}
+const monthlyPlans = [
+  ...plans
+    .filter((plan) => (plan.family === 'care' || plan.family === 'managed') && isVisible(plan))
+    .map((plan) => ({
+      id: plan.id,
+      anchorId: `plan-${plan.family}`,
+      name: plan.name,
+      tagline: plan.tagline,
+      price: planPrice(plan, l),
+      includes: plan.includes,
+      excludes: plan.excludes ?? [],
+      labels: scopeLabels,
+      cta: { label: p.choose, to: `/start?plan=${plan.id}`, location: `services-plan:${plan.id}` },
+    })),
+  {
+    id: 'partner',
+    anchorId: 'plan-partner',
+    accent: true,
+    mark: true,
+    ...p.partner,
+    labels: scopeLabels,
+    cta: { ...p.partner.cta, location: 'services-plan:partner' },
+  },
 ]
 
-// The next-steps cards show real numbers: the "Launch website" starting quote's estimate range
-// (as the brief shows it) and a fixed total inside it.
-const starter = (() => {
-  const preset = getQuotePreset('launch')
-  const result = preset ? estimate(preset.answers) : undefined
-  if (!result || result.kind !== 'range') return { estimate: '', total: '' }
-  return {
-    estimate: formatPriceRange(result.low, result.high, 1_000),
-    total: formatPrice(Math.round((result.low + result.high) / 2 / 1_000) * 1_000),
-  }
-})()
-
 /**
- * Services groups work the way people look for it: websites, apps
- * and software (the phone), desktop software (the laptop), then fixing or improving what exists
- * and hosting and care; then how a project runs week by week and what happens once
- * you get in touch. The brief gives project estimates; ongoing plans are on /pricing.
+ * Services is what we offer, grouped the way people look for it: websites, apps and software
+ * (the phone), desktop software (the laptop), fixing or improving what exists, and hosting and
+ * care (the monthly plans, with prices). How a project runs is on /process.
  */
 export function ServicesPage() {
   return (
@@ -157,32 +141,25 @@ export function ServicesPage() {
         cta={c.desktop.cta}
         laptop={media.desktop.laptop}
       />
-      <StageExplorer stages={afterLaunch} labels={c.labels} />
-      {/* How a project runs, then how to start one: the plan plays on entry, and the step
-          cards after it deal out on scroll, so the two never share a trigger. */}
-      <ProcessLine
-        id="process"
-        eyebrow={c.process.eyebrow}
-        title={c.process.title}
-        steps={processSteps}
-        stepLabel={c.process.stepLabel}
-        nowLabel={c.process.nowLabel}
-        overview={c.process.overview}
-        columns={c.process.columns}
-        more={c.process.more}
-      />
-      <NextSteps
-        eyebrow={c.nextSteps.eyebrow}
-        title={c.nextSteps.title}
-        intro={c.nextSteps.intro}
-        brief={{ ...c.nextSteps.brief, estimate: starter.estimate }}
-        reply={{ ...c.nextSteps.reply, email: site.email }}
-        meeting={c.nextSteps.meeting}
-        quote={{ ...c.nextSteps.quote, total: starter.total }}
-        cta={c.nextSteps.cta}
+      {/* The after-launch chapter (paper): fix or improve, then the plans. */}
+      <StageExplorer stages={improve} labels={c.labels} />
+      <MonthlyPlans
+        id="plans"
+        index={5}
+        tone="paper"
+        eyebrow={c.plans.eyebrow}
+        title={homeContent.paths.prompts.run}
+        more={c.plans.more}
+        plans={monthlyPlans}
+        footnotes={[
+          p.boundary,
+          p.minTerm(policies.minimumTermMonths),
+          policies.hostingOnRequest,
+          policies.vatNote,
+        ]}
       />
       <div id="services-faq">
-        <FaqSection tone="dark" intro={c.faq} faqs={faqsFor('general', 'services', 'process')} />
+        <FaqSection tone="dark" intro={c.faq} faqs={faqsFor('general', 'services', 'plans')} />
       </div>
     </>
   )

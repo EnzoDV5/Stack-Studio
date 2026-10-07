@@ -1,5 +1,5 @@
 import { Fragment, useMemo } from 'react'
-import { useRoutes, type Location } from 'react-router'
+import { Navigate, useRoutes, type Location } from 'react-router'
 import { appRoutes } from '../routes'
 
 export interface AppRoutesProps {
@@ -8,7 +8,14 @@ export interface AppRoutesProps {
 }
 
 export function AppRoutes({ location }: AppRoutesProps) {
-  const routes = useMemo(() => appRoutes.map(({ path, Page }) => ({ path, element: <Page /> })), [])
+  const routes = useMemo(
+    () =>
+      appRoutes.map(({ path, Page, redirect }) => ({
+        path,
+        element: Page ? <Page /> : <Navigate to={redirect} replace />,
+      })),
+    [],
+  )
   const element = useRoutes(routes, location)
   // Remount per pathname (e.g. /work/a → /work/b) so split text and ScrollTriggers start fresh.
   return <Fragment key={location.pathname}>{element}</Fragment>

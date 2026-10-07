@@ -20,14 +20,14 @@ export const pageMeta = {
   services: {
     title: 'Services', // COPY:
     description:
-      'Websites, apps and software, taking over what you already have, and looking after it once it’s live. What we do, how a project runs and how to start.', // COPY:
+      'Websites, apps and software, fixing or improving what you already have, and hosting and care once it’s live: Website Care, Managed Software and Partner, with what each costs.', // COPY:
     path: '/services',
   },
-  pricing: {
-    title: 'Care Plans & Partnership', // COPY:
+  process: {
+    title: 'Process', // COPY:
     description:
-      'Compare Website Care, Managed Software and a tailored Partner engagement with Stack Studio. See how each works, what is included and what it costs.', // COPY:
-    path: '/pricing',
+      'How a Stack Studio project runs: what happens once you get in touch, the build week by week, how payments work and how we look after your site once it’s live.', // COPY:
+    path: '/process',
   },
   studio: {
     title: 'Studio', // COPY:
@@ -77,8 +77,8 @@ export const closingCtaCode = [
 /* ---------- Home ---------- */
 /**
  * Home answers "who are you, and can you do it?": what we do, the work, what clients say and
- * who we are. Starting package ranges appear here; ongoing plans live on /pricing and
- * the process is on /services. Every
+ * who we are. Starting package ranges appear here; the monthly plans live on /services#plans
+ * and the process on /process. Every
  * section ends with a "go deeper" link to its full page, so visitors choose what to explore.
  */
 export const homeContent = {
@@ -123,7 +123,7 @@ export const homeContent = {
       { name: 'Redesigns and UX improvements' }, // COPY:
     ],
     /** "Hosting and care" opens the monthly plans instead of the brief (Home and Services). */
-    plans: { label: 'See the plans', to: '/pricing#pricing-plans' }, // COPY:
+    plans: { label: 'See the plans', to: '/services#plans' }, // COPY:
     partnerExamples: [
       { name: 'New features' }, // COPY:
       { name: 'Integrations' }, // COPY:
@@ -254,9 +254,7 @@ export const servicesContent = {
       { id: 'apps', label: 'Apps and software' }, // COPY:
       { id: 'desktop', label: 'Desktop software' }, // COPY:
       { id: 'stage-grow', label: 'Fix or improve it' }, // COPY:
-      { id: 'stage-run', label: 'Hosting and care' }, // COPY:
-      { id: 'process', label: 'How we work' }, // COPY:
-      { id: 'next-steps', label: 'Next steps' }, // COPY:
+      { id: 'plans', label: 'Hosting and care' }, // COPY:
       { id: 'services-faq', label: 'Questions' }, // COPY:
     ],
   },
@@ -288,11 +286,49 @@ export const servicesContent = {
     note: 'We estimate the hours and send a quote before any work starts. Once the changes are live, you can add ongoing Care.', // COPY:
   },
   /**
-   * How a project runs, week by week (ProcessLine). It sits after the offer, before the next
-   * steps, and hands price questions to /pricing.
+   * 05 Hosting and care: the monthly plans with their prices (the plan cards come from
+   * pricingContent.plans; the title is Home's "Hosting and care" prompt).
    */
-  process: {
+  plans: {
+    eyebrow: 'Hosting and care', // COPY:
+    more: { label: 'How care works', to: '/process#care' }, // COPY:
+  },
+  labels: {
+    includes: 'Includes', // COPY:
+    /** Inside each build service: opens the brief with that service picked. */
+    start: 'Start with this', // COPY:
+  },
+  faq: {
+    eyebrow: 'FAQ', // COPY:
+    title: 'Questions, answered.', // COPY:
+  } satisfies SectionIntro,
+}
+
+/* ---------- Process ---------- */
+/**
+ * How working with us runs, in order: getting in touch, the build week by week, how you pay,
+ * then how care runs once it's live. What we offer (and the plan prices) is on /services.
+ */
+export const processContent = {
+  hero: {
     eyebrow: 'Process', // COPY:
+    title: 'How we work, start to finish.', // COPY:
+    intro:
+      'What happens once you get in touch, how a project runs week by week, how you pay, and how we look after it once it’s live.', // COPY:
+  } satisfies PageHeroContent,
+  navigation: {
+    label: 'Process sections', // COPY:
+    items: [
+      { id: 'next-steps', label: 'Getting started' }, // COPY:
+      { id: 'timeline', label: 'Week by week' }, // COPY:
+      { id: 'terms', label: 'Payment terms' }, // COPY:
+      { id: 'care', label: 'After launch' }, // COPY:
+      { id: 'process-faq', label: 'Questions' }, // COPY:
+    ],
+  },
+  /** How a project runs, week by week (ProcessLine), after the next steps. */
+  process: {
+    eyebrow: 'Week by week', // COPY:
     title: 'How a project runs.', // COPY:
     stepLabel: 'Step', // COPY:
     nowLabel: 'Where we are', // COPY:
@@ -316,21 +352,21 @@ export const servicesContent = {
       { label: 'Week 6', short: 'W6' }, // COPY:
       { label: 'After launch', short: '+' }, // COPY:
     ],
-    more: { label: 'See what it costs', to: '/pricing' }, // COPY:
+    more: { label: 'See what we build', to: '/services' }, // COPY:
   },
   /**
    * What happens after someone gets in touch, from the brief to a start date: the last doubt
-   * before contact, right after the week-by-week plan above it.
+   * before contact, so it opens the page.
    */
   nextSteps: {
-    eyebrow: 'Next steps', // COPY:
+    eyebrow: 'Getting started', // COPY:
     title: 'From first message to kick-off.', // COPY:
     intro: 'No long sales process. This is exactly what happens once you get in touch.', // COPY:
     /**
      * The real flow, each step shown as a small interface of what the visitor sees: the brief
      * (it arrives in our inbox), our email reply, the meeting (in person or online) and the fixed
      * quote that follows it. Illustrative: no real names. Prices come from the pricing data (the
-     * "Launch website" starting quote) and the address from data/site, on the Services page.
+     * "Launch website" starting quote) and the address from data/site, on the Process page.
      */
     brief: {
       title: 'Send us your brief', // COPY:
@@ -382,37 +418,9 @@ export const servicesContent = {
     },
     cta: { label: 'Start the brief', to: '/start' }, // COPY:
   },
-  labels: {
-    includes: 'Includes', // COPY:
-    /** Inside each build service: opens the brief with that service picked. */
-    start: 'Start with this', // COPY:
-  },
-  faq: {
-    eyebrow: 'FAQ', // COPY:
-    title: 'Questions, answered.', // COPY:
-  } satisfies SectionIntro,
-}
-
-/* ---------- Pricing ---------- */
-export const pricingContent = {
-  hero: {
-    eyebrow: 'Plans', // COPY:
-    title: 'Care plans & partnership.', // COPY:
-    intro:
-      'Keep your website running, manage your software, or work with us as your ongoing team. Find the level of support that fits.', // COPY:
-  } satisfies PageHeroContent,
-  navigation: {
-    label: 'Plans sections', // COPY:
-    items: [
-      { id: 'pricing-how-it-works', label: 'How it works' }, // COPY:
-      { id: 'pricing-plans', label: 'Monthly plans' }, // COPY:
-      { id: 'pricing-partner', label: 'Partner plan' }, // COPY:
-      { id: 'pricing-terms', label: 'Payment terms' }, // COPY:
-      { id: 'pricing-faq', label: 'Questions' }, // COPY:
-    ],
-  },
-  approach: {
-    eyebrow: 'How it works', // COPY:
+  /** After launch (CareSteps): how care runs month to month, then over to the plans. */
+  care: {
+    eyebrow: 'After launch', // COPY:
     title: 'Care that runs in the background.', // COPY:
     intro:
       'Once you’re on a plan, we look after the technical side of your website or software month after month, so you can get on with running your business.', // COPY:
@@ -432,11 +440,26 @@ export const pricingContent = {
         body: 'Send a request when something needs attention. What your plan covers, we handle; anything beyond it is quoted before we start.', // COPY:
       },
     ],
-    cta: { label: 'Compare the plans', to: '/pricing#pricing-plans' }, // COPY:
+    cta: { label: 'Compare the plans', to: '/services#plans' }, // COPY:
   },
+  /** How a project is paid for and what it comes with. The plans' own terms sit with the plans. */
+  terms: {
+    eyebrow: 'How we bill', // COPY:
+    title: 'How you pay, and what you get.', // COPY:
+    scheduleLabel: 'Payment schedule', // COPY:
+    /** Policies shown here (ids in data/policies). */
+    policies: ['warranty', 'ip'],
+  },
+  faq: {
+    eyebrow: 'Common questions', // COPY:
+    title: 'The practical details.', // COPY:
+  } satisfies SectionIntro,
+}
+
+/* ---------- Pricing ---------- */
+/** The monthly plans (shown in Services, Hosting and care) and the price labels used site-wide. */
+export const pricingContent = {
   plans: {
-    eyebrow: 'Monthly plans', // COPY:
-    title: 'Choose the level of support you need.', // COPY:
     choose: 'Choose', // COPY:
     partner: {
       name: 'Partner', // COPY:
@@ -463,11 +486,6 @@ export const pricingContent = {
     includedTitle: 'Included', // COPY:
     excludedTitle: 'Not included', // COPY:
   },
-  policies: {
-    eyebrow: 'How we bill', // COPY:
-    title: 'Payment terms and policies.', // COPY:
-    scheduleLabel: 'Payment schedule', // COPY:
-  },
   priceLabels: {
     from: 'From', // COPY:
     perMonth: '/month', // COPY:
@@ -475,10 +493,6 @@ export const pricingContent = {
     quoted: 'Quoted per project', // COPY:
     hours: (label: string) => `${label} included each month`, // COPY:
   },
-  faq: {
-    eyebrow: 'Common questions', // COPY:
-    title: 'The practical details.', // COPY:
-  } satisfies SectionIntro,
 }
 
 /* ---------- Studio ---------- */

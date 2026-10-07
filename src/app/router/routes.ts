@@ -8,10 +8,10 @@ import { HomePage as Home } from '@/pages/Home'
  * preloadRoute() while the wipe covers the screen, so the next chunk is usually ready
  * before it's needed.
  */
-interface AppRoute {
-  path: string
-  Page: PreloadableComponent<ComponentType>
-}
+type AppRoute =
+  | { path: string; Page: PreloadableComponent<ComponentType>; redirect?: never }
+  /** An old URL that now lives elsewhere (public/.htaccess sends the same 301 on the server). */
+  | { path: string; redirect: string; Page?: never }
 
 // Home is the front door (and the LCP page), so it ships in the main bundle; the rest are lazy.
 const HomePage = eagerPage(Home)
@@ -27,9 +27,9 @@ const ServicesPage = lazyPage(
   () => import('@/pages/Services'),
   (m) => m.ServicesPage,
 )
-const PricingPage = lazyPage(
-  () => import('@/pages/Pricing'),
-  (m) => m.PricingPage,
+const ProcessPage = lazyPage(
+  () => import('@/pages/Process'),
+  (m) => m.ProcessPage,
 )
 const StudioPage = lazyPage(
   () => import('@/pages/Studio'),
@@ -53,7 +53,9 @@ export const appRoutes: AppRoute[] = [
   { path: '/work', Page: WorkPage },
   { path: '/work/:slug', Page: CaseStudyPage },
   { path: '/services', Page: ServicesPage },
-  { path: '/pricing', Page: PricingPage },
+  { path: '/process', Page: ProcessPage },
+  // The plans moved into Services (Hosting and care).
+  { path: '/pricing', redirect: '/services#plans' },
   { path: '/studio', Page: StudioPage },
   { path: '/start', Page: StartPage },
   { path: '/privacy', Page: PrivacyPage },
@@ -64,5 +66,6 @@ export function preloadRoute(pathname: string): Promise<unknown> {
   const route =
     appRoutes.find((r) => r.path !== '*' && matchPath(r.path, pathname) !== null) ??
     appRoutes[appRoutes.length - 1]
-  return route ? route.Page.preload() : Promise.resolve()
+  if (route?.redirect) return preloadRoute(route.redirect.split('#')[0] ?? '/')
+  return route?.Page ? route.Page.preload() : Promise.resolve()
 }

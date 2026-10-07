@@ -44,8 +44,8 @@ node scripts/services-media/encode.mjs   # encode the service stage videos (need
 ```
 src/
   app/          App, router (routes.tsx, AppRoutes), providers (AppProviders, LenisProvider, IntroProvider)
-  pages/        one folder per route: Home, Work, CaseStudy, Services, Pricing, Studio, Start, Privacy, NotFound
-  sections/     grouped per page (home/, work/, case-study/, services/, pricing/, studio/, start/) + shared/
+  pages/        one folder per route: Home, Work, CaseStudy, Services, Process, Studio, Start, Privacy, NotFound
+  sections/     grouped per page (home/, work/, case-study/, services/, process/, studio/, start/) + shared/
   components/
     ui/         Button, MagneticButton, Eyebrow, Heading, Container, Tag, Accordion, Marquee, TextLink, Divider,
                 Logo, StackMark, WhatsAppButton
@@ -199,8 +199,8 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
 3. **Staggered rises are only for groups of cards or list items**, never headers or whole
    sections. `StaggerGroup` is used only for the client quote cards and the starting quote
    cards (FadeUp was removed).
-4. **At most one pinned section per page.** Home: WorkReel. Services: none. Case
-   study: CaseDevice (the MacBook scroll).
+4. **At most one pinned section per page.** Home: WorkReel. Services and Process: none.
+   Case study: CaseDevice (the MacBook scroll).
 5. **Scroll budget:** Home stays about 11 viewports on desktop, footer included (10.14 at
    1440×900). The WorkReel pin is `reel.shrinkScroll` + `reel.panelScroll` × (panels − 1)
    viewports.
@@ -210,9 +210,12 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
 7. **Vary the openers**: neighbouring sections never use the same `SectionHeader` variant.
 8. **Every Home section ends with a "go deeper" link** (`<TextLink arrow>`) to its page or
    anchor.
-9. **Prices live on /pricing only.** Home routes, Services explains (services open the brief
-   with `/start?type=`; `stageRows(..., { prices: false })`), Pricing holds every number,
-   and the brief gives the real estimate.
+9. **Services is what we offer, Process is how we work.** Home routes with indicative package
+   ranges. Services shows no project prices (services open the brief with `/start?type=`;
+   `stageRows(..., { prices: false })`); its 05 Hosting and care group is the monthly plan
+   cards, the only place plan prices appear (`/services#plans`, which the header's Pricing
+   link and the old `/pricing` URL point to). Process (`/process`) has the next steps, the
+   week-by-week timeline, payment terms and how care runs. The brief gives the real estimate.
 
 - **Tone flow:** `ToneController` (app shell) makes `[data-tone]` sections transparent
   (`html.tone-flow`) and switches `--page-*` colours in one short fade (`tone.switch`)

@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
 import { MediaReveal } from '@/components/media/MediaReveal'
 import { ServiceMedia } from '@/components/media/ServiceMedia'
@@ -8,7 +9,7 @@ import { pad2 } from '@/lib/format'
 import type { CtaLink } from '@/types'
 import type { ServiceMediaItem } from '@/types/service-media'
 
-export interface HowItWorksProps {
+export interface CareStepsProps {
   eyebrow: string
   title: string
   intro: string
@@ -20,8 +21,8 @@ export interface HowItWorksProps {
   tone?: Tone
 }
 
-/** An editorial explanation of how ongoing care works, with a video and three numbered steps. */
-export function HowItWorks({
+/** How care runs once a site is live (on /process): an editorial video and three numbered steps. */
+export function CareSteps({
   eyebrow,
   title,
   intro,
@@ -31,8 +32,8 @@ export function HowItWorks({
   steps,
   cta,
   tone = 'paper',
-}: HowItWorksProps) {
-  const headingId = 'pricing-how-it-works-heading'
+}: CareStepsProps) {
+  const headingId = useId()
 
   return (
     <Section

@@ -15,7 +15,7 @@ export interface PoliciesListProps {
   tone?: Tone
 }
 
-/** Payment schedules as milestone bars, then the commercial policies. Used on Pricing and /terms. */
+/** Payment schedules as milestone bars, then the commercial policies. Used on /process. */
 export function PoliciesList({
   eyebrow,
   title,

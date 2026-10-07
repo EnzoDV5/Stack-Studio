@@ -123,8 +123,8 @@ Clash: the success heading uses SplitReveal on a page whose title does not.
 
 Order, as a story: what the visitor needs (with the stack behind the work), a package to start
 from (shown on sites we built with indicative price ranges), proof, client voices and the
-founders, then the closing band. Detailed prices live on /pricing and the week-by-week process
-is on /services.
+founders, then the closing band. The plan prices live on /services#plans and the week-by-week
+process is on /process.
 Measured on the preview build: 10.14 viewports tall at 1440×900 (footer included). Heights
 below are in viewports.
 
@@ -160,7 +160,8 @@ names), full width, so the section ends on it.
 **Tone chapters.** Neighbouring sections share a tone, so the page colour changes rarely:
 Home dark (hero, paths, packages) → paper (work, clients, studio), then the solid
 orange band (1 change). Case study: dark → paper → dark (2). Services: paper → dark → paper → dark (the
-device showcases, then next steps and the FAQ). Pricing: paper → dark (plans, scope) → paper (2). Studio: paper → dark →
+device showcases, then fix or improve and the plans, then the FAQ). Process: paper → dark (next
+steps, timeline) → paper (terms, care, FAQ) (2). Studio: paper → dark →
 paper (2). Sections shorter than `tone.minSection` (0.9 viewport) never take over the page
 colour, and `solid` sections (the orange band) paint themselves.
 
@@ -188,11 +189,11 @@ opening (DesktopShowcase) are neighbours and both scrubbed: the studio asked for
 to follow the scroll. They read as a pair rather than a repeat: mirrored layouts (phone right,
 laptop left), different devices and different motions (a spin, a lid opening). StudioSnippet's parallax is pointer-driven, not scroll-driven,
 so Home's last two sections read hover · enter. `Parallax trigger="scroll"` is still the
-default elsewhere. ProcessLine (on /services) plays on entry and is then driven by hover and
+default elsewhere. ProcessLine (on /process) plays on entry and is then driven by hover and
 clicks (people couldn't read a week while it followed the scroll). The readout beside it shows
 an overview until the first hover, click or arrow key, so the entrance sweep doesn't flick it
-through every week. It sits between the static StageExplorer groups and the scrubbed
-NextSteps, so it shares a trigger with neither neighbour. On /work the closing band's compile follows the WorkGrid's `enter` reveals. The
+through every week. It sits between the scrubbed NextSteps and the static PoliciesList, so it
+shares a trigger with neither neighbour. On /work the closing band's compile follows the WorkGrid's `enter` reveals. The
 titles used to scrub with the scroll, which felt jittery, and a card grid and one title
 are different enough not to read as a repeat.
 
@@ -214,25 +215,18 @@ bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is st
 reveals before its Parallax drift.
 
 **Services:** ServicesHero (load: compile) · StageExplorer (MediaReveal on framed images and video: 01 Websites) · AppShowcase (scrub: phone turn, 02 Apps and software) ·
-DesktopShowcase (scrub: the laptop opens, 03 Desktop software) · StageExplorer (MediaReveal on framed media: 04 Take
-over, 05 Run, 06 Grow) · ProcessLine (enter + hover: how a project runs, week by
-week) · NextSteps (scrub: the step cards deal out) ·
-FaqSection (hover) · ClosingCta (enter). The page groups the offer the way
+DesktopShowcase (scrub: the laptop opens, 03 Desktop software) · StageExplorer (none: 04 Fix or
+improve) · MonthlyPlans (hover: the Partner card's stack mark spreads its layers, 05 Hosting and
+care) · FaqSection (click) · ClosingCta (enter). The page groups the offer the way
 visitors look for it; the five stages stay the model elsewhere. Build splits into websites (the
 offerings the brief files under 'website'), desktop software (listed in `servicesContent`,
 beside the laptop) and apps (the rest, beside the phone), so nothing repeats. A transparent,
 viewport-height section rail follows progress and moves the current title beside its marker. The
 page introduction is outside the count. Each marker
-reveals its own label on hover or focus; on phones it becomes a menu. No prices on the page (they live on
-/pricing); each build service's dropdown opens the brief with it picked (`/start?type=<id>`).
-ProcessLine shows how a project runs, then NextSteps shows what happens once someone
-gets in touch, shown rather than told, in the studio's real order: the brief (with a real
-estimate from the "Launch website" starting quote) lands in the inbox, we reply by email with
-times to meet, we meet in person or online, then the fixed quote (with its warranty, staging and
-ownership ticks). Four cards side by side (one row from xl, two by two below), each with the step above its
-small interface; the interfaces line up across the row (subgrid). On desktop they start as a loose, tilted pile in the middle and deal out
-into their row as the section scrolls in (`stepsDeal`, transforms only); on phones and with
-reduced motion they sit in order. AppShowcase ("Apps and software") is where apps get their own moment, since most
+reveals its own label on hover or focus; on phones it becomes a menu. No project prices on the page (the brief
+gives the estimate); each build service's dropdown opens the brief with it picked
+(`/start?type=<id>`). The plan cards in Hosting and care are the one place plan prices appear.
+AppShowcase ("Apps and software") is where apps get their own moment, since most
 client work is websites: an orange iPhone 17 Pro spins on its upright axis from its back, through its side, to
 face the visitor with an illustrative bookings app on screen, scrubbed as it scrolls up
 through the view (`phoneTurn`: phone top at 92% to its centre at 50%, 80 evenly spaced frames, cross-faded, eased by `phoneTurn.ease`). It isn't pinned
@@ -244,15 +238,23 @@ at 85% to its centre at 42%, 72 evenly spaced frames, cross-faded) the lid lifts
 the display wakes on an illustrative stock and orders app and it turns to face the copy. Each group has
 its own layout, picked for what it sells (`StageBlock layout`): Websites `feature` (the
 intro beside an image, then dropdowns), Fix or improve `figures` (the hourly rate as a large
-figure, no image) and Hosting and care `split` (image column beside the
-plans: Website Care, Managed Software and Partner). The care and
-Partner comparison is on Plans. Framed images and video reveal on
+figure, no image). Hosting and care is the MonthlyPlans cards (Website Care, Managed Software
+and Partner). Framed images and video reveal on
 scroll; loops only play while on screen.
 
-**Plans:** PageTitle (load: compile) · HowItWorks (enter: one care video) ·
-MonthlyPlans (hover: the Partner card's stack mark spreads its layers) · PoliciesList (none) · FaqSection (hover) ·
-ClosingCta (enter). How it works pairs an editorial headline with a video and three numbered
-steps on how ongoing care runs, then leads straight into the detailed cards. The video plays
+**Process:** PageTitle (load: compile) · NextSteps (scrub: the step cards deal out) ·
+ProcessLine (enter + hover: how a project runs, week by week) · PoliciesList (none) ·
+CareSteps (enter: one care video) · FaqSection (click) · ClosingCta (enter). Openers: split ·
+minimal · split · own · own. NextSteps shows what happens once someone gets in touch, shown
+rather than told, in the studio's real order: the brief (with a real
+estimate from the "Launch website" starting quote) lands in the inbox, we reply by email with
+times to meet, we meet in person or online, then the fixed quote (with its warranty, staging and
+ownership ticks). Four cards side by side (one row from xl, two by two below), each with the step above its
+small interface; the interfaces line up across the row (subgrid). On desktop they start as a loose, tilted pile in the middle and deal out
+into their row as the section scrolls in (`stepsDeal`, transforms only). The section opens the
+page, already on screen, so its start is clamped to the top and the pile is whole on arrival; on phones and with
+reduced motion they sit in order. CareSteps (on /process) pairs an editorial headline with a video and three numbered steps
+on how ongoing care runs, then links to the plans on /services. The video plays
 only while visible and stays on its poster with reduced motion.
 
 **Studio:** PageTitle (load: compile) · StudioIntro (enter: MediaReveal) · FounderProfiles (enter:

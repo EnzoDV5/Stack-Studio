@@ -7,10 +7,10 @@ easy. Every page has one main action: **Start a project**.
 FIND ─────────► TRUST ─────────► UNDERSTAND ─────────► CONTACT
 "Who are you?"   "Can you do it?"  "What do I get,       "How do I start?"
                                     what does it cost?"
-Home hero        Featured work      /services (what,      Guided brief (/start)
-"What do you     Case studies       how it runs)          WhatsApp (fallback)
- need?"          Metrics, quotes    /pricing (every       Email (footer)
-Studio snippet                      care and Partner)
+Home hero        Featured work      /services (what we    Guided brief (/start)
+"What do you     Case studies       offer, plan prices)   WhatsApp (fallback)
+ need?"          Metrics, quotes    /process (how it      Email (footer)
+Studio snippet                      runs, how you pay)
 ```
 
 ## Primary path (the flow the home page is built around)
@@ -21,7 +21,7 @@ Studio snippet                      care and Partner)
 2. **Choose a path.** "What do you need?" lets visitors choose in their own words:
    something new, fixing or improving what they have (quoted by the hour), a new home and
    ongoing care (a care plan), or a software team. Each leads to details on /services or
-   straight into the matching brief; the care path opens the monthly plans on /pricing instead. The stack behind the work runs along its
+   straight into the matching brief; the care path opens the monthly plans on /services#plans instead. The stack behind the work runs along its
    bottom. _Doubt
    removed: Understand (what)._
 3. **Pick a starting point.** The website packages open as disclosure rows beside a laptop
@@ -40,11 +40,12 @@ link, so visitors choose where to go next.
 
 - **Home:** who are you, and can you do it? (stages and the stack, packages, work, clients,
   founders)
-- **Services:** what do you do, and how does a project run? No prices. Picking a service
-  opens the brief ready for it (`/start?type=<service>` or the group's `?path=`).
-- **Plans:** how does ongoing care work, and what support fits? A video and three clear steps
-  explain how care runs, then detailed cards compare Website Care, Managed Software and Partner. The orange
-  Partner card opens a brief to discuss projects and monthly hours.
+- **Services:** what do you offer, and what support fits? No project prices. Picking a service
+  opens the brief ready for it (`/start?type=<service>` or the group's `?path=`). Hosting and
+  care is the plan cards (Website Care, Managed Software and Partner, with their prices); the
+  orange Partner card opens a brief to discuss projects and monthly hours.
+- **Process:** how does working with you run? What happens once you get in touch, the build
+  week by week, how payments work, then how care runs after launch.
 - **Start:** the real estimate for this project, then contact.
 
 The three levels of price are always in this order: **package** (ballpark, on Home) →
@@ -55,10 +56,14 @@ The three levels of price are always in this order: **package** (ballpark, on Ho
 - **Sceptic path:** Home, then a featured case study, then `/work/:slug` (problem → approach
   → build → result, metrics), then **Start a project like this** (brief pre-filled), or Next
   project.
-- **Ongoing support path:** Header link to `/pricing`, compare care plans or discuss a
-  Partner engagement, then confirm the scope together.
+- **Ongoing support path:** Header link Pricing (`/services#plans`), compare care plans or
+  discuss a Partner engagement, then confirm the scope together. **How care works** leads to
+  the care steps on `/process#care`.
 - **Services path:** `/services`, open a service, **Start with this** (`/start?type=`),
-  or read how a project runs and follow **See what it costs** to `/pricing`.
+  or compare the plans at the end of the page.
+- **Process path:** Header link to `/process`: the next steps (**Start the brief**), the
+  week-by-week plan, payment terms, then how care runs (**Compare the plans** →
+  `/services#plans`).
 - **Referral path:** Arrives on `/work/gc-solar` from a shared link, gets the context
   straight away, sees the next project, then the footer CTA.
 - **Mobile, WhatsApp-first path:** Mobile menu, then the WhatsApp button (footer or `/start`).

@@ -20,7 +20,7 @@ export interface ProcessStep {
   points: string[]
 }
 
-export type FaqCategory = 'general' | 'services' | 'pricing' | 'process'
+export type FaqCategory = 'general' | 'services' | 'plans' | 'process'
 
 export interface Faq {
   id: string

@@ -37,52 +37,31 @@ export const faqs: Faq[] = [
       'No. We add useful AI features to the systems we build or the ones you already use: search, assistants, document analysis, automations. AI/API usage is billed separately at actual cost.', // COPY:
   },
   {
-    id: 'payment',
-    category: 'pricing',
-    question: 'How do payments work?', // COPY:
-    answer:
-      'Projects under R50,000: 50% to start, 30% at the design/development milestone and 20% before launch. Larger projects: 30% to start, 30% at core system, 30% at feature complete and 10% at deployment.', // COPY:
-  },
-  {
     id: 'minimum',
-    category: 'pricing',
+    category: 'plans',
     question: 'Is there a minimum term on monthly plans?', // COPY:
     answer:
       'Yes: three months, billed monthly in advance. After that you can stay month to month. Paying annually gets you 12 months for the price of 11.', // COPY:
   },
   {
     id: 'rollover',
-    category: 'pricing',
+    category: 'plans',
     question: 'Do unused changes or hours roll over?', // COPY:
     answer:
       'Managed Software’s three change requests reset each month. Unused Partner hours roll over once, then expire. Support runs during business hours (SAST).', // COPY:
   },
   {
     id: 'third-party',
-    category: 'pricing',
+    category: 'plans',
     question: 'What about hosting, cloud and AI costs?', // COPY:
     answer:
       'Website Care includes one website; Managed Software includes one website and one standard app. Both include a standard domain up to R600 a year. Partner hours exclude hosting and domains; we quote those separately. Extra cloud capacity, AI/API usage, email and SMS are agreed first and billed at cost.', // COPY:
   },
   {
     id: 'vat',
-    category: 'pricing',
+    category: 'plans',
     question: 'Do your prices include VAT?', // COPY:
     answer: 'Prices exclude VAT where applicable.', // COPY: confirm VAT status
-  },
-  {
-    id: 'ownership',
-    category: 'pricing',
-    question: 'Who owns the website or software?', // COPY:
-    answer:
-      'You do. Intellectual property transfers to you on final payment, and you can move it anywhere you like.', // COPY:
-  },
-  {
-    id: 'warranty',
-    category: 'pricing',
-    question: 'What if something breaks after launch?', // COPY:
-    answer:
-      'Every new build includes a 30-day launch warranty: we fix bugs in what we built, free. New features aren’t included; those are quoted separately or covered by retainer hours.', // COPY:
   },
   {
     id: 'timeline',
@@ -97,6 +76,27 @@ export const faqs: Faq[] = [
     question: 'Why do larger builds start with Discovery?', // COPY:
     answer:
       'Software is only as good as its plan. Discovery & Scoping (from R7,500) maps users, features, data and integrations into a buildable plan and a real estimate. It’s required before any build of R120,000+.', // COPY:
+  },
+  {
+    id: 'payment',
+    category: 'process',
+    question: 'How do payments work?', // COPY:
+    answer:
+      'Projects under R50,000: 50% to start, 30% at the design/development milestone and 20% before launch. Larger projects: 30% to start, 30% at core system, 30% at feature complete and 10% at deployment.', // COPY:
+  },
+  {
+    id: 'ownership',
+    category: 'process',
+    question: 'Who owns the website or software?', // COPY:
+    answer:
+      'You do. Intellectual property transfers to you on final payment, and you can move it anywhere you like.', // COPY:
+  },
+  {
+    id: 'warranty',
+    category: 'process',
+    question: 'What if something breaks after launch?', // COPY:
+    answer:
+      'Every new build includes a 30-day launch warranty: we fix bugs in what we built, free. New features aren’t included; those are quoted separately or covered by retainer hours.', // COPY:
   },
   {
     id: 'after',

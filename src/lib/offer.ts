@@ -18,7 +18,7 @@ export interface PriceLabels {
 export interface OfferRow {
   id: string
   name: string
-  /** Left out where prices aren't shown (Services: every number lives on Pricing). */
+  /** Left out where prices aren't shown (Services: projects are priced in the brief). */
   price?: string
   summary: string
   includes: string[]

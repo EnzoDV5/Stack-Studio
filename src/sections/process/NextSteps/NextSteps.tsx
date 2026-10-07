@@ -183,12 +183,7 @@ export function NextSteps({
   )
 
   return (
-    <Section
-      id="next-steps"
-      tone={tone}
-      aria-labelledby={headingId}
-      className="overflow-hidden"
-    >
+    <Section id="next-steps" tone={tone} aria-labelledby={headingId} className="overflow-hidden">
       <div className="container-site">
         <SectionHeader
           id={headingId}
@@ -352,7 +347,7 @@ export function NextSteps({
           to={cta.to}
           withArrow
           className="mt-12"
-          analytics={{ event: 'Start project click', props: { location: 'services-next-steps' } }}
+          analytics={{ event: 'Start project click', props: { location: 'process-next-steps' } }}
         >
           {cta.label}
         </Button>

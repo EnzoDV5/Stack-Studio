@@ -10,22 +10,23 @@ closing CTA band per page).
 | `/`           | Home       | Find: who are you?                   | Pick a stage, see the work          |
 | `/work`       | Work       | Trust: can you actually do this?     | Filter projects, open a case study  |
 | `/work/:slug` | Case study | Trust: proof, in detail              | Visit the live site, next project   |
-| `/services`   | Services   | Understand: what do I get, how?      | Start with a service, see pricing   |
-| `/pricing`    | Plans      | Understand ongoing options and terms | Compare care plans, discuss Partner |
+| `/services`   | Services   | Understand: what do I get, for what? | Start with a service, choose a plan |
+| `/process`    | Process    | Understand: how does it run?         | Start the brief, compare the plans  |
+| `/pricing`    | (redirect) | Old links → `/services#plans` (301)  | —                                   |
 | `/studio`     | Studio     | Find and Trust: who is behind it?    | Meet the founders                   |
 | `/start`      | Start      | Contact: how do I start?             | WhatsApp, email                     |
 | `/privacy`    | Privacy    | POPIA: what happens to my data?      | Back to the brief                   |
 | `*`           | 404        | Recovery                             | Home, Start a project               |
 
-Global chrome on every route: skip link, header (logo, Work, Services, Plans, Studio,
-**Start a project** button), full-screen mobile menu, footer (big CTA, email, WhatsApp,
+Global chrome on every route: skip link, header (logo, Work, Services, Pricing → `/services#plans`,
+Process, Studio, **Start a project** button), full-screen mobile menu, footer (big CTA, email, WhatsApp,
 Instagram, LinkedIn, privacy link).
 
 ## Home `/`
 
 Home answers "who are you, and can you do it?": what visitors need (and the stack behind the
 work), a package to start from, proof, client feedback and who we are. The package rows show
-indicative ranges; care plans live on /pricing and project estimates open in /start. The week-by-week process is on /services. Each section ends with a "go deeper"
+indicative ranges; care plans live on /services#plans and project estimates open in /start. The week-by-week process is on /process. Each section ends with a "go deeper"
 link so visitors choose where to go. About 10 viewports on desktop.
 
 | #   | Section           | Tone   | Purpose                                                                                                                                                                |
@@ -63,38 +64,35 @@ Seeded with GC Solar, MPG Foundation and one clearly labelled sample project.
 
 ## Services `/services`
 
-What we do, how a project runs and how to start. **No prices**: project estimates open in /start, and ongoing plans live on /pricing. Compact page
-title, then 01 new websites,
-02 apps and software (the phone), 03 desktop software (the laptop), then 04 fixing or improving
-an existing site or app (quoted by the hour) and 05 hosting and care (the plans only:
-Website Care, Managed Software and Partner). Every build service opens to a **Start with this** link (`/start?type=<id>`) and
-every group ends with a button that opens the brief on its path, except hosting and care,
-which opens the monthly plans on /pricing. Then how a project runs (the week-by-week timeline, ending
-with **See what it costs** → /pricing), what happens once you get in touch (brief → reply →
-meeting → fixed quote), the FAQ and the closing CTA.
+What we offer. **No project prices** (project estimates open in /start); the monthly plans are
+the one place prices appear. Compact page title, then 01 new websites, 02 apps and software
+(the phone), 03 desktop software (the laptop), 04 fixing or improving an existing site or app
+(quoted by the hour) and 05 hosting and care: the plan cards themselves (`#plans`), with
+**How care works** → /process#care beside the title. Every build service opens to a
+**Start with this** link (`/start?type=<id>`) and every group ends with a button that opens
+the brief on its path. Then the FAQ (general, services and plan questions) and the closing CTA.
 
 A transparent, viewport-height section rail stays at the side on desktop and becomes a section
 menu on phones. The page title sits outside the count. Its connected markers show reading
 progress, and the current section name animates beside its marker. Hovering or focusing another
-marker reveals its name before jumping.
-Pricing uses the same navigator.
+marker reveals its name before jumping. Process uses the same navigator.
 
 The three ongoing options have different scopes: **Website Care** includes hosting, one
 standard domain and routine upkeep for one site; **Managed Software** includes website and app hosting,
 one standard domain, technical upkeep and three small change tickets each month; **Partner** plans, manages and builds
 across projects within reserved monthly hours. Partner hosting and domains are separate.
-Partner has an orange third card on Plans without a fixed price. A comparison above the
-cards explains Partner alongside Website Care and Managed Software. Its action opens a
-brief to discuss the projects and monthly hours.
+Partner is the orange third card without a fixed price. Its action opens a brief to discuss
+the projects and monthly hours.
 
-## Plans `/pricing`
+## Process `/process`
 
-The page starts with How it works: an editorial video and three numbered steps on how ongoing
-care runs (we take it over, keep it healthy each month, and handle your requests). The detailed
-cards for Website Care, Managed Software and Partner follow, each showing what is included and
-excluded. Payment terms, common questions and the closing CTA
-follow. The Home package showcase keeps indicative project ranges and sends visitors to
-the brief for a project estimate. The existing `/pricing` URL stays in place for old links.
+How working with us runs, in the order it happens: what happens once you get in touch (brief →
+reply → meeting → fixed quote, **Start the brief**), how a project runs week by week (the
+timeline), payment terms (the milestone schedules, launch warranty and ownership), then after
+launch: an editorial video and three numbered steps on how care runs (we take it over, keep it
+healthy each month, and handle your requests), with **Compare the plans** → /services#plans.
+Then the process FAQ and the closing CTA. The old `/pricing` URL redirects to
+`/services#plans` (in the app and as a 301 in `public/.htaccess`).
 
 ## Studio `/studio`
 

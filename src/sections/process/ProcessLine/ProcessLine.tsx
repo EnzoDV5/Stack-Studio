@@ -73,8 +73,8 @@ interface Parts {
  * readout beside the plan rolls to that week (until that first hover it shows an overview,
  * so the entrance sweep doesn't flick it through every week); clicking a week (or its label, or the arrow
  * keys) keeps it there. (The technology strip is on Home, under "What do you need?"). This is the site's one
- * week-by-week process, on /services; NextSteps after it explains what happens after getting in
- * touch. Reduced motion: the whole plan, static.
+ * week-by-week process, on /process, after NextSteps (what happens once you get in touch).
+ * Reduced motion: the whole plan, static.
  */
 export function ProcessLine({
   index,

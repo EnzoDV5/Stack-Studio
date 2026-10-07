@@ -217,12 +217,13 @@ export const laptopTurn = {
 } as const
 
 /**
- * NextSteps (Services, desktop): the four step cards start as a loose, overlapping pile in the
+ * NextSteps (Process, desktop): the four step cards start as a loose, overlapping pile in the
  * middle and deal out into their row as the section scrolls into view (scrubbed;
- * transforms only).
+ * transforms only). It opens the page, already on screen, so the start is clamped to the top:
+ * the pile is whole on arrival and deals out over the first scroll.
  */
 export const stepsDeal = {
-  start: 'top 80%',
+  start: 'clamp(top 80%)',
   end: 'center 55%',
   scrub: 1,
   /** Where each card sits in the pile: its tilt (degrees) and a little vertical scatter (px). */

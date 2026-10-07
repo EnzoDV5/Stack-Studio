@@ -1,5 +1,6 @@
 /**
- * Commercial policies, rendered on the Pricing page and /terms (see docs/pricing-model.md).
+ * Commercial policies: payment schedules and project terms on /process, plan terms beside the
+ * plans on /services (see docs/pricing-model.md).
  */
 import type { Policies } from '@/types'
 
