@@ -52,8 +52,8 @@ export interface PackageShowcaseProps {
 /**
  * The website packages, each shown on a laptop as something we've built that fits it: a new
  * business site, a content-rich site, a store (real client sites, scrolling inside the screen),
- * a brand build (a studio clip on the screen), or bookings on a phone that steps in front of the
- * laptop. Opening a package reveals what it includes and swaps the example on the device.
+ * a brand build (a studio clip on the screen), or bookings on a phone that takes the
+ * laptop's place. Opening a package reveals what it includes and swaps the example on the device.
  * Each row shows the indicative range calculated from its starting quote.
  * Signature motion (enter, once): the laptop's lid opens as it comes on screen. Then the chosen
  * site scrolls slowly inside the screen while it's on screen (ambient).
@@ -197,7 +197,7 @@ export function PackageShowcase({
             />
           </div>
 
-          {/* The device: the laptop, and the phone that steps in front of it for bookings. */}
+          {/* The device: the laptop, and the phone that replaces it for bookings. */}
           <div
             ref={stageRef}
             className="min-w-0 lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:self-center"
@@ -206,7 +206,7 @@ export function PackageShowcase({
               <div
                 className={cn(
                   'transition-[opacity,scale] duration-(--duration-fast) ease-(--ease-out-expo) motion-reduce:transition-none',
-                  showPhone && 'scale-[0.88] opacity-40',
+                  showPhone && 'scale-[0.88] opacity-0',
                 )}
                 aria-hidden={showPhone}
                 style={{ perspective: '110em', perspectiveOrigin: '50% 100%' }}
@@ -263,7 +263,7 @@ export function PackageShowcase({
                 </div>
               </div>
 
-              {/* The phone steps in front for bookings. */}
+              {/* The phone replaces the laptop for bookings. */}
               <div
                 className={cn(
                   'pointer-events-none absolute inset-y-0 left-1/2 flex w-[50%] -translate-x-1/2 items-center transition-[opacity,translate,scale] duration-(--duration-fast) ease-(--ease-out-expo) motion-reduce:transition-none',
