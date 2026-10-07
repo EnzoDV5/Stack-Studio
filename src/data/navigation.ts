@@ -1,6 +1,7 @@
 import type { CtaLink, NavItem } from '@/types'
 
 export const primaryNav: NavItem[] = [
+  { label: 'Home', to: '/', description: 'Back to the start' }, // COPY:
   { label: 'Work', to: '/work', description: 'Case studies and proof' }, // COPY:
   { label: 'Services', to: '/services', description: 'What we build and look after' }, // COPY:
   { label: 'Process', to: '/process', description: 'How a project runs, start to finish' }, // COPY:
@@ -10,7 +11,6 @@ export const primaryNav: NavItem[] = [
 export const primaryCta: CtaLink = { label: 'Start a project', to: '/start' } // COPY:
 
 export const footerNav: NavItem[] = [
-  { label: 'Home', to: '/' }, // COPY:
   ...primaryNav,
   { label: 'Start a project', to: '/start' }, // COPY:
 ]

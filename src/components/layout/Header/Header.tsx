@@ -67,7 +67,7 @@ export function Header({ nav, cta, homeLabel, menuLabel, menuOpenLabel, menu }: 
           </Link>
 
           <nav aria-label={menuLabel} className="hidden md:block">
-            <ul className="flex items-center gap-8">
+            <ul className="flex items-center gap-6 lg:gap-8">
               {nav.map((item) => (
                 <li key={item.to}>
                   <NavLink
