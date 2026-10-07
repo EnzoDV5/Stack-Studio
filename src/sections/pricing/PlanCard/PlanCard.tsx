@@ -14,7 +14,7 @@ export interface PlanCardProps {
   excludes: string[]
   labels: { included: string; excluded: string }
   cta: { label: string; to: string; location: string }
-  /** Show the stack illustration in the bottom-right corner. */
+  /** Show the stack illustration behind the content, running off the bottom-right corner. */
   mark?: boolean
 }
 
@@ -36,10 +36,13 @@ export function PlanCard({
     <li
       id={anchorId}
       className={cn(
-        'group relative flex flex-col rounded-lg border p-6 md:p-7',
+        'group relative isolate flex flex-col overflow-hidden rounded-lg border p-6 md:p-7',
         accent ? 'border-orange bg-orange text-ink' : 'border-tone',
       )}
     >
+      {mark && (
+        <StackMark className="pointer-events-none absolute -right-8 -bottom-24 -z-10 w-60 text-orange-deep opacity-50 md:w-72 lg:w-64 xl:w-72" />
+      )}
       <h3 className="text-heading-lg">{name}</h3>
       <p className={cn('mt-1 text-small', accent ? 'text-ink/80' : 'text-muted')}>{tagline}</p>
       <p className="mt-7 numeric text-heading-xl">{price}</p>
@@ -78,21 +81,17 @@ export function PlanCard({
           ))}
         </ul>
       </div>
-      <div className="mt-8 flex items-end justify-between gap-6">
-        <Button
-          to={cta.to}
-          variant={accent ? 'inverse' : 'secondary'}
-          size="sm"
-          withArrow
-          aria-label={`${cta.label} ${name}`}
-          analytics={{ event: 'Start project click', props: { location: cta.location } }}
-        >
-          {cta.label}
-        </Button>
-        {mark && (
-          <StackMark className="-mr-1 -mb-1 w-32 shrink-0 text-ink sm:w-40 lg:w-36 xl:w-44" />
-        )}
-      </div>
+      <Button
+        to={cta.to}
+        variant={accent ? 'inverse' : 'secondary'}
+        size="sm"
+        withArrow
+        className="mt-8 self-start"
+        aria-label={`${cta.label} ${name}`}
+        analytics={{ event: 'Start project click', props: { location: cta.location } }}
+      >
+        {cta.label}
+      </Button>
     </li>
   )
 }
