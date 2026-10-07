@@ -108,7 +108,7 @@ export const homeContent = {
     eyebrow: 'Services', // COPY:
     title: 'What do you need?', // COPY:
     intro: 'Pick the one that sounds like you.', // COPY:
-    /** The self-select line for each stage, in the visitor's words. */
+    /** The self-select line for each stage, in the visitor's words (also the Services headings). */
     prompts: {
       build: 'I need something new.', // COPY:
       takeover: 'My site or app needs fixing or a new home.', // COPY:
@@ -116,6 +116,19 @@ export const homeContent = {
       grow: 'I want to improve what I have.', // COPY:
       partner: 'I need a team for my software.', // COPY:
     },
+    /** Fixing, moving and improving an existing site or app share one path on Home. */
+    existing: {
+      name: 'Fix or improve it', // COPY:
+      prompt: 'I want to fix or improve what I have.', // COPY:
+      line: 'We fix, move or improve your site or app, then look after it.', // COPY:
+      examples: [
+        { name: 'Audits and fixes' }, // COPY:
+        { name: 'A safe new home for your site or app' }, // COPY:
+        { name: 'New features and redesigns' }, // COPY:
+      ],
+    },
+    /** "Keep it working" opens the monthly plans instead of the brief. */
+    plans: { label: 'See the plans', to: '/pricing#pricing-plans' }, // COPY:
     partnerExamples: [
       { name: 'New features' }, // COPY:
       { name: 'Integrations' }, // COPY:

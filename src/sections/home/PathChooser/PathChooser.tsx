@@ -27,7 +27,7 @@ export interface PathStage {
   items: { name: string; price?: string }[]
   /** /services#stage-… */
   details: CtaLink
-  /** /start?path=… */
+  /** The primary button: /start?path=…, or another page (e.g. the plans). */
   estimate: CtaLink
   media: ServiceMediaItem
 }
@@ -50,7 +50,7 @@ export interface PathChooserProps {
 const COLLAPSED_REM = 5.5
 
 /**
- * "What do you need?": the five stages as a self-select router. Signature motion is
+ * "What do you need?": the visitor's paths as a self-select router. Signature motion is
  * interaction only, no scroll animation. Desktop: horizontal accordion panels; the
  * hovered or focused one opens (panels slide with transform and uncover with clip-path,
  * GSAP-driven). Arrow keys move between panels, Enter opens one, and each trigger reports
@@ -148,7 +148,11 @@ export function PathChooser({
           to={stage.estimate.to}
           size="sm"
           withArrow
-          analytics={{ event: 'Start project click', props: { location: `home-path:${stage.id}` } }}
+          analytics={
+            stage.estimate.to.startsWith('/start')
+              ? { event: 'Start project click', props: { location: `home-path:${stage.id}` } }
+              : undefined
+          }
         >
           {stage.estimate.label}
         </Button>

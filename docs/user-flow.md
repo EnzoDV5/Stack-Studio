@@ -19,9 +19,10 @@ Studio snippet                      care and Partner)
    the showreel ("Build it. Run it. Grow it.") with the Stack mark filling the right side,
    and the CTA is visible within 1 second. _Doubt removed: Find._
 2. **Choose a path.** "What do you need?" lets visitors choose in their own words:
-   something new, a site or app that needs fixing or moving, ongoing care, improvements,
-   or a software team. The same prompts lead to details on /services or straight into
-   the matching brief. The stack behind the work runs along its bottom. _Doubt
+   something new, fixing or improving what they have, ongoing care, or a software team.
+   Each leads to details on /services or straight into the matching brief; ongoing care
+   opens the monthly plans on /pricing instead. The stack behind the work runs along its
+   bottom. _Doubt
    removed: Understand (what)._
 3. **Pick a starting point.** The website packages open as disclosure rows beside a laptop
    showing sites we built (or bookings on the phone). Each row shows an indicative price range;

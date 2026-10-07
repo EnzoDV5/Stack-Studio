@@ -84,16 +84,25 @@ const stageNames = Object.fromEntries(serviceStages.map((s) => [s.id, s.name])) 
   string
 >
 
-/** Home keeps each stage short: 2–3 example offerings or plan families, without prices. */
+/**
+ * Home's four paths. Fixing and improving both start from what the visitor already has, so
+ * the takeover path also covers Grow (both open the brief's `existing` path); Services keeps
+ * the five stages apart.
+ */
+const homePaths = ['build', 'takeover', 'run', 'partner'] as const
+
+/** Home keeps each path short: 2–3 example offerings or plan families, without prices. */
 function stageItems(stage: StageId) {
   switch (stage) {
+    case 'takeover':
+      return homeContent.paths.existing.examples
     case 'run':
       return [familyItem('care'), familyItem('managed')]
     case 'partner':
       return homeContent.paths.partnerExamples
     default:
       return stageRows(stage, { offerings, plans, rates }, pricingContent.priceLabels, {
-        pricedOnly: stage !== 'takeover',
+        pricedOnly: true,
         prices: false,
       })
         .slice(0, 3)
@@ -120,20 +129,30 @@ export function HomePage() {
           labels={{ items: paths.itemsLabel }}
           more={paths.more}
           technologies={{ ...technologyContent, rows: [technologies] }}
-          stages={serviceStages.map((stage) => ({
-            id: stage.id,
-            index: stage.index,
-            name: stage.name,
-            prompt: paths.prompts[stage.id],
-            line: stage.line,
-            items: stageItems(stage.id),
-            details: { label: paths.details, to: `/services#stage-${stage.id}` },
-            estimate: {
-              label: paths.estimate,
-              to: stage.id === 'partner' ? stage.cta.to : `/start?path=${stage.briefPath}`,
-            },
-            media: serviceMedia[stage.id],
-          }))}
+          stages={homePaths.flatMap((id, i) => {
+            const stage = serviceStages.find((s) => s.id === id)
+            if (!stage) return []
+            const existing = id === 'takeover' ? paths.existing : undefined
+            return [
+              {
+                id,
+                index: i + 1,
+                name: existing?.name ?? stage.name,
+                prompt: existing?.prompt ?? paths.prompts[id],
+                line: existing?.line ?? stage.line,
+                items: stageItems(id),
+                details: { label: paths.details, to: `/services#stage-${id}` },
+                estimate:
+                  id === 'run'
+                    ? paths.plans
+                    : {
+                        label: paths.estimate,
+                        to: id === 'partner' ? stage.cta.to : `/start?path=${stage.briefPath}`,
+                      },
+                media: serviceMedia[id],
+              },
+            ]
+          })}
         />
       </DeferredSection>
 
