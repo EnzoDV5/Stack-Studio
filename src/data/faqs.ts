@@ -6,7 +6,7 @@ export const faqs: Faq[] = [
     category: 'general',
     question: 'Who will I actually be working with?', // COPY:
     answer:
-      'A small, founder-led team. We’re involved in every project, from the first call to launch and beyond, so you always know who is looking after your work.', // COPY:
+      'Enzo and Armand, the two people who started Stack. We’re involved in every project, from the first call to launch and beyond, so you always know who is looking after your work.', // COPY:
   },
   {
     id: 'where',
