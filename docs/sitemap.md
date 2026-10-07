@@ -66,8 +66,8 @@ Seeded with GC Solar, MPG Foundation and one clearly labelled sample project.
 What we do, how a project runs and how to start. **No prices**: project estimates open in /start, and ongoing plans live on /pricing. Compact page
 title, then 01 new websites,
 02 apps and software (the phone), 03 desktop software (the laptop), then 04 fixing or improving
-an existing site or app (quoted by the hour) and 05 hosting and care (audit and takeover onto a
-care plan). Every build service opens to a **Start with this** link (`/start?type=<id>`) and
+an existing site or app (quoted by the hour) and 05 hosting and care (the plans only:
+Website Care, Managed Software and Partner). Every build service opens to a **Start with this** link (`/start?type=<id>`) and
 every group ends with a button that opens the brief on its path, except hosting and care,
 which opens the monthly plans on /pricing. Then how a project runs (the week-by-week timeline, ending
 with **See what it costs** → /pricing), what happens once you get in touch (brief → reply →

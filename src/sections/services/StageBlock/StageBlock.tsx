@@ -14,7 +14,7 @@ import type { ServiceMediaItem } from '@/types/service-media'
  * How a group is laid out, chosen for what it sells so the page doesn't repeat itself:
  * - `feature`: the intro beside a wide image, then the offerings as dropdowns.
  * - `cards`: intro and a banner image, then the offerings side by side as cards.
- * - `split`: the image in its own column beside a compact list (takeover and plans).
+ * - `split`: the image in its own column beside a compact list (plans).
  * - `figures`: the intro and CTA beside a large hourly quote and examples.
  * Give every group a different layout.
  */

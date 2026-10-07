@@ -59,9 +59,19 @@ const websites: StageExplorerStage = {
   layout: 'feature',
 }
 
+/** Partner has no plan rows (its card on /pricing is built from copy), so it is listed from that. */
+const partnerRow: OfferRow = {
+  id: 'partner',
+  name: pricingContent.plans.partner.name,
+  summary: pricingContent.plans.partner.tagline,
+  includes: [],
+  examples: [],
+  notes: [],
+}
+
 // After launch (04–05), as on Home. Take over is folded into its neighbours: fixing is quoted by
-// the hour like any improvement, and a new home (audit, then takeover) leads onto a care plan,
-// so that group opens the plans on /pricing. Each group has its own layout.
+// the hour like any improvement, and a new home means a care plan, so that group lists only the
+// plans (care, managed and Partner) and opens them on /pricing. Each group has its own layout.
 const grow = stage('grow')
 const run = stage('run')
 const afterLaunch: StageExplorerStage[] = [
@@ -86,7 +96,7 @@ const afterLaunch: StageExplorerStage[] = [
           index: 5,
           name: homeContent.paths.prompts.run,
           line: run.line,
-          rows: [...rowsFor('takeover'), ...rowsFor('run')],
+          rows: [...rowsFor('run'), partnerRow],
           notes: [policies.hostingOnRequest],
           cta: homeContent.paths.plans,
           media: serviceMedia.run,

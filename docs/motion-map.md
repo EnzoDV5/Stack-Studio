@@ -244,8 +244,8 @@ at 85% to its centre at 42%, 72 evenly spaced frames, cross-faded) the lid lifts
 the display wakes on an illustrative stock and orders app and it turns to face the copy. Each group has
 its own layout, picked for what it sells (`StageBlock layout`): Websites `feature` (the
 intro beside an image, then dropdowns), Fix or improve `figures` (the hourly rate as a large
-figure, no image) and Hosting and care `split` (image column beside the audits, takeovers
-and plans). The care and
+figure, no image) and Hosting and care `split` (image column beside the
+plans: Website Care, Managed Software and Partner). The care and
 Partner comparison is on Plans. Framed images and video reveal on
 scroll; loops only play while on screen.
 

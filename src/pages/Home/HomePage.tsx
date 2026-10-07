@@ -97,7 +97,7 @@ function stageItems(stage: StageId) {
     case 'grow':
       return homeContent.paths.fixExamples
     case 'run':
-      return [familyItem('care'), familyItem('managed')]
+      return [familyItem('care'), familyItem('managed'), familyItem('partner')]
     case 'partner':
       return homeContent.paths.partnerExamples
     default:
