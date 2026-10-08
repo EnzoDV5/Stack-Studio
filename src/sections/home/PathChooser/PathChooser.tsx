@@ -34,7 +34,8 @@ export interface PathStage {
 
 export interface PathChooserProps {
   index?: number
-  eyebrow: string
+  /** Optional small label above the title. */
+  eyebrow?: string
   title: string
   intro: string
   stages: PathStage[]

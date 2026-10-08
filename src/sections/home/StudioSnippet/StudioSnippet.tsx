@@ -8,7 +8,8 @@ import type { CtaLink, Founder } from '@/types'
 
 export interface StudioSnippetProps {
   index?: number
-  eyebrow: string
+  /** Optional small label above the title. */
+  eyebrow?: string
   title: string
   intro: string
   founders: Pick<Founder, 'id' | 'name' | 'role' | 'line' | 'portrait'>[]

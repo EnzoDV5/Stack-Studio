@@ -17,7 +17,8 @@ export interface ClientVoice {
 
 export interface ClientVoicesProps {
   index?: number
-  eyebrow: string
+  /** Optional small label above the title. */
+  eyebrow?: string
   title: string
   voices: ClientVoice[]
   /** "Go deeper" link after the quotes. */

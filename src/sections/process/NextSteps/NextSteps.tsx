@@ -298,7 +298,7 @@ export function NextSteps({
               <p className="mt-3 text-small text-muted">{meeting.note}</p>
               <div className="mt-auto flex items-center justify-between pt-4">
                 <div className="flex -space-x-2">
-                  <span className="grid size-8 place-items-center rounded-pill border-2 border-(--tone-bg) bg-paper text-small font-bold text-ink">
+                  <span className="grid size-8 place-items-center rounded-pill border-2 border-(--tone-bg) bg-(--tone-fg) text-small font-bold text-(--tone-bg)">
                     Y
                   </span>
                   <Avatar className="border-2 border-(--tone-bg)" />

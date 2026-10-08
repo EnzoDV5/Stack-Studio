@@ -27,16 +27,14 @@ export function StudioPage() {
         linkedinLabel={studioContent.linkedinLabel}
       />
       <ValuesGrid
-        intro={studioContent.howWeWork}
+        intro={{ ...studioContent.howWeWork, eyebrow: undefined }}
         items={principles}
-        index={1}
         image={media.studio.detail}
         tone="dark"
       />
       <ValuesGrid
-        intro={studioContent.values}
+        intro={{ ...studioContent.values, eyebrow: undefined }}
         items={values}
-        index={2}
         headerVariant="inline"
         tone="paper"
       />

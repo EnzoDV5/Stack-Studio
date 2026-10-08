@@ -24,7 +24,8 @@ export interface ChapterFlowItem {
 
 export interface ChapterFlowProps {
   index?: number
-  eyebrow: string
+  /** Optional small label above the title. */
+  eyebrow?: string
   title: string
   items: ChapterFlowItem[]
   more: CtaLink[]
@@ -385,10 +386,12 @@ export function ChapterFlow({ index, eyebrow, title, items, more, tone }: Chapte
     <Section tone={tone} spacing="sm" aria-labelledby={headingId} className={styles.section}>
       <div className="container-site">
         <header className={styles.header}>
-          <div className={styles.headerMeta}>
-            {index !== undefined && <span>{pad2(index)} /</span>}
-            <span>{eyebrow}</span>
-          </div>
+          {eyebrow && (
+            <div className={styles.headerMeta}>
+              {index !== undefined && <span>{pad2(index)} /</span>}
+              <span>{eyebrow}</span>
+            </div>
+          )}
           <h2 id={headingId} className={styles.heading}>
             {title}
           </h2>

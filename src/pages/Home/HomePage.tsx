@@ -104,9 +104,7 @@ export function HomePage() {
 
       <DeferredSection minHeight="110vh">
         <PathChooser
-          index={1}
           tone="dark"
-          eyebrow={paths.eyebrow}
           title={paths.title}
           intro={paths.intro}
           labels={{ items: paths.itemsLabel }}
@@ -139,12 +137,10 @@ export function HomePage() {
       </DeferredSection>
 
       <DeferredSection minHeight="430vh">
-        <ChapterFlow index={2} tone="paper" {...chapterFlow} items={chapters} />
+        <ChapterFlow tone="paper" {...chapterFlow} eyebrow={undefined} items={chapters} />
       </DeferredSection>
 
       <WorkReel
-        index={3}
-        eyebrow={work.eyebrow}
         title={work.title}
         projects={projects}
         clients={clientList}
@@ -163,9 +159,7 @@ export function HomePage() {
 
       <DeferredSection minHeight="90vh">
         <ClientVoices
-          index={4}
           tone="paper"
-          eyebrow={clients.eyebrow}
           title={clients.title}
           more={clients.more}
           voices={testimonials.map((t) => {
@@ -186,9 +180,7 @@ export function HomePage() {
 
       <DeferredSection minHeight="95vh">
         <StudioSnippet
-          index={5}
           tone="paper"
-          eyebrow={studio.eyebrow}
           title={studio.title}
           intro={studio.intro}
           founders={founders}

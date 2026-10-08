@@ -47,8 +47,10 @@ export function ProcessPage() {
         <PageTitle content={c.hero} />
       </div>
       {/* The step cards deal out on scroll, then the plan plays on entry, so the two never
-          share a trigger. */}
+          share a trigger. The title and next steps share one light chapter; the page turns
+          dark at the week-by-week timeline. */}
       <NextSteps
+        tone="paper"
         eyebrow={c.nextSteps.eyebrow}
         title={c.nextSteps.title}
         intro={c.nextSteps.intro}

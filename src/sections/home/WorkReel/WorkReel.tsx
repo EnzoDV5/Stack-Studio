@@ -25,7 +25,8 @@ export interface WorkReelLabels {
 
 export interface WorkReelProps {
   index?: number
-  eyebrow: string
+  /** Optional small label above the title. */
+  eyebrow?: string
   title: string
   projects: Project[]
   clients: Client[]

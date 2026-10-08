@@ -8,7 +8,8 @@ import { SectionHeader, type SectionHeaderVariant } from '@/sections/shared/Sect
 import type { ImageAsset, SectionIntro, ValueItem } from '@/types'
 
 export interface ValuesGridProps {
-  intro: SectionIntro
+  /** The small eyebrow label is optional. */
+  intro: Omit<SectionIntro, 'eyebrow'> & { eyebrow?: string }
   items: ValueItem[]
   index?: number
   /** Opener style; neighbouring sections must differ. */
