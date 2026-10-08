@@ -1,28 +1,74 @@
+import type { MouseEvent } from 'react'
 import { Section } from '@/components/layout/Section'
 import { MaskedHeading } from '@/components/motion/MaskedHeading'
 import { Eyebrow } from '@/components/ui/Eyebrow'
-import type { PageHeroContent } from '@/types'
+import { scrollToElement } from '@/lib/lenis'
+import type { SectionNavigatorItem } from '@/sections/shared/SectionNavigator'
+import type { ImageAsset } from '@/types'
+import styles from './ServicesHero.module.css'
 
-/** A clearer opening for Services, with the question as the main visual. */
-export function ServicesHero({ content }: { content: PageHeroContent }) {
+export interface ServicesHeroItem extends SectionNavigatorItem {
+  /** A decorative icon for the section (the label names it). */
+  icon?: ImageAsset
+}
+
+/** A direct route to each Services section. */
+export function ServicesHero({
+  content,
+  items,
+}: {
+  content: { eyebrow: string; title: string }
+  items: ServicesHeroItem[]
+}) {
+  const jump = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
+    const target = document.getElementById(id)
+    if (!target) return
+    event.preventDefault()
+    scrollToElement(target)
+    history.replaceState(null, '', `#${id}`)
+  }
+
   return (
     <div className="bg-ink pt-(--spacing-header)">
-      <Section as="header" tone="paper" solid spacing="none" className="py-8 md:pt-12 md:pb-10">
-        <div className="container-site grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(17rem,22rem)] lg:items-end lg:gap-14">
-          <div>
-            <Eyebrow label={content.eyebrow} className="mb-4" />
-            <MaskedHeading
-              as="h1"
-              trigger="intro"
-              text={content.title}
-              className="max-w-[32ch] font-display text-heading-xl"
-            />
-          </div>
-          {content.intro && (
-            <p className="border-l-2 border-orange pl-5 text-body text-muted lg:mb-1">
-              {content.intro}
-            </p>
-          )}
+      <Section as="header" tone="paper" solid spacing="none" className={styles.section}>
+        <div className="container-site">
+          <Eyebrow label={content.eyebrow} className={styles.eyebrow} />
+          <MaskedHeading
+            as="h1"
+            trigger="intro"
+            text={content.title}
+            className="mb-6 max-w-[32ch] font-display text-heading-xl md:mb-10"
+          />
+          <nav aria-label="Jump to a Services section">
+            <ol className={styles.grid}>
+              {items.map((item) => (
+                <li key={item.id} className={styles.cell}>
+                  <a
+                    href={`#${item.id}`}
+                    onClick={(event) => jump(event, item.id)}
+                    className={styles.link}
+                  >
+                    {item.icon && (
+                      <img
+                        src={item.icon.src}
+                        srcSet={item.icon.srcSet}
+                        sizes="(min-width: 640px) 4.5rem, 3.5rem"
+                        width={item.icon.width}
+                        height={item.icon.height}
+                        alt=""
+                        decoding="async"
+                        className={styles.icon}
+                      />
+                    )}
+                    <span className={styles.label}>{item.label}</span>
+                    <span className={styles.arrow} aria-hidden="true">
+                      ↘
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
         </div>
       </Section>
     </div>

@@ -58,6 +58,18 @@ function mockup(project: string, name: string, shape: MockupShape, alt: string):
   }
 }
 
+/** A square Services icon in /public/media/services/icons (192 and 96 px WebP). */
+function serviceIcon(id: string): ImageAsset {
+  const url = (w: number) => `/media/services/icons/${id}-${w}.webp`
+  return {
+    src: url(192),
+    srcSet: `${url(96)} 96w, ${url(192)} 192w`,
+    width: 192,
+    height: 192,
+    alt: '',
+  }
+}
+
 /**
  * A client's logo for dark backgrounds (transparent WebP in /public/logos/clients). Logos drawn
  * for light backgrounds use their generated -on-dark file (scripts/mockups/logos.mjs).
@@ -217,6 +229,34 @@ export const media = {
       'showreel.mp4',
       'Stack Studio showreel: a montage of websites we have designed and built', // COPY:
     ),
+    startToFinish: {
+      src: '/Illustrations/StartToFinish.svg',
+      alt: 'Illustration of a team collaborating on a website', // COPY:
+      width: 1448,
+      height: 1086,
+    },
+  },
+
+  services: {
+    fixOrImprove: {
+      src: '/Illustrations/FixOrImprove.svg',
+      alt: 'A designer rearranging website components, with symbols for improvements and growth',
+      width: 1672,
+      height: 941,
+    },
+    /**
+     * The quick-pick icons at the top of Services, keyed by the section they jump to. Encoded
+     * from the sources in public/Icons by scripts/icons/encode.mjs. Decorative (the label
+     * names each section), so no alt.
+     */
+    icons: {
+      'stage-build': serviceIcon('new-website'),
+      apps: serviceIcon('apps'),
+      desktop: serviceIcon('desktop'),
+      'stage-grow': serviceIcon('fix-or-improve'),
+      plans: serviceIcon('hosting-and-care'),
+      'services-faq': serviceIcon('questions'),
+    } as Record<string, ImageAsset>,
   },
 
   // The Services device sections, with illustrative apps (not clients'), designed in

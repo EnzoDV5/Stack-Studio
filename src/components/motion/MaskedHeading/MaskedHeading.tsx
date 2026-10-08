@@ -22,7 +22,10 @@ export interface MaskedHeadingProps {
    * preloader or page wipe has lifted (page titles at the top of a page).
    */
   trigger?: 'scroll' | 'intro'
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'p'
+  /** Turn readable text back into code before replacing this heading. */
+  recode?: boolean
+  onRecodeComplete?: () => void
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span'
   id?: string
   className?: string
 }
@@ -37,6 +40,8 @@ export function MaskedHeading({
   text,
   codeLines = defaultCode,
   trigger = 'scroll',
+  recode = false,
+  onRecodeComplete,
   as: Tag = 'h2',
   id,
   className,
@@ -57,7 +62,11 @@ export function MaskedHeading({
   useGSAP(
     () => {
       const root = rootRef.current
-      if (!root || reducedMotion) return
+      if (!root) return
+      if (reducedMotion) {
+        if (recode) onRecodeComplete?.()
+        return
+      }
 
       const code = codeRefs.current.slice(0, characterCount)
       const resolved = resolvedRefs.current.slice(0, characterCount)
@@ -67,6 +76,52 @@ export function MaskedHeading({
 
       const glyphs = Array.from(codeKey)
       const glyph = () => glyphs[Math.floor(Math.random() * glyphs.length)] ?? '/'
+
+      if (recode) {
+        gsap.set(codeEls, { opacity: 0 })
+        gsap.set(resolvedEls, { opacity: 1 })
+        const total = maskedHeading.recodeSweep + maskedHeading.recodeHold
+        const state = { time: 0 }
+        let next = characterCount - 1
+        let lastTick = -1
+        const draw = () => {
+          while (
+            next >= 0 &&
+            state.time >=
+              maskedHeading.recodeSweep *
+                (characterCount <= 1 ? 0 : (characterCount - 1 - next) / (characterCount - 1))
+          ) {
+            const codeEl = codeEls[next]
+            const resolvedEl = resolvedEls[next]
+            if (codeEl) {
+              codeEl.textContent = glyph()
+              codeEl.style.opacity = '1'
+            }
+            if (resolvedEl) resolvedEl.style.opacity = '0'
+            next--
+          }
+          const tick = Math.floor(state.time / maskedHeading.tick)
+          if (tick === lastTick) return
+          lastTick = tick
+          for (let index = next + 1; index < characterCount; index++) {
+            const codeEl = codeEls[index]
+            if (codeEl) codeEl.textContent = glyph()
+          }
+        }
+        gsap.to(state, {
+          time: total,
+          duration: total,
+          ease: ease.none,
+          onUpdate: draw,
+          onComplete: () => {
+            state.time = Number.POSITIVE_INFINITY
+            draw()
+            onRecodeComplete?.()
+          },
+        })
+        draw()
+        return
+      }
 
       // When each character locks: a left-to-right sweep whose length scales with the title.
       const sweep = gsap.utils.clamp(
@@ -140,7 +195,16 @@ export function MaskedHeading({
     },
     {
       scope: rootRef,
-      dependencies: [characterCount, codeKey, reducedMotion, text, trigger, waiting],
+      dependencies: [
+        characterCount,
+        codeKey,
+        reducedMotion,
+        text,
+        trigger,
+        waiting,
+        recode,
+        onRecodeComplete,
+      ],
       revertOnUpdate: true,
     },
   )

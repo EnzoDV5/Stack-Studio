@@ -11,7 +11,8 @@ import styles from './AppShowcase.module.css'
 
 export interface AppShowcaseProps {
   id?: string
-  eyebrow: string
+  /** Optional small label above the title. */
+  eyebrow?: string
   /** Number shown in the eyebrow (the group's place on the page). */
   index?: number
   title: string
@@ -48,7 +49,7 @@ export function AppShowcase({
     <Section id={id} tone={tone} aria-labelledby={headingId} className="overflow-hidden">
       <div className="container-site grid items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
         <div>
-          <Eyebrow index={index} label={eyebrow} className="mb-6" />
+          {eyebrow && <Eyebrow index={index} label={eyebrow} className="mb-6" />}
           <Heading id={headingId} size="display-lg" compile className="max-w-[12ch]">
             {title}
           </Heading>

@@ -12,7 +12,7 @@ import { ease, reel } from '@/lib/motion-tokens'
 import { coverFrom, insetPath, pinDistance, scrollForOffset } from '@/lib/reel'
 import { ProjectMedia } from '@/sections/shared/ProjectMedia'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
-import type { Client, CtaLink, Project, StageId } from '@/types'
+import type { Client, CtaLink, ImageAsset, Project, StageId } from '@/types'
 
 export interface WorkReelLabels {
   /** Visual "View case study" cue on each panel. */
@@ -35,6 +35,7 @@ export interface WorkReelProps {
   more: CtaLink
   /** The last panel: all work, or start a project like these. */
   outro: { title: string; allWork: CtaLink; start: CtaLink }
+  outroIllustration: ImageAsset
   tone?: Tone
 }
 
@@ -84,6 +85,7 @@ export function WorkReel({
   labels,
   more,
   outro,
+  outroIllustration,
   tone = 'paper',
 }: WorkReelProps) {
   const headingId = useId()
@@ -340,19 +342,37 @@ export function WorkReel({
             })}
 
             <li data-reel-panel="" data-reel-chrome={chrome} className={panelClass[mode].outro}>
-              <div className="flex h-full flex-col justify-end gap-10 rounded-lg border border-tone p-8 lg:p-10">
-                <p className="max-w-[14ch] font-display text-heading-xl">{outro.title}</p>
-                <div className="flex flex-col items-start gap-6">
-                  <TextLink to={outro.allWork.to} arrow className="text-heading-md">
-                    {outro.allWork.label}
-                  </TextLink>
-                  <Button
-                    to={outro.start.to}
-                    withArrow
-                    analytics={{ event: 'Start project click', props: { location: 'home-reel' } }}
-                  >
-                    {outro.start.label}
-                  </Button>
+              <div
+                className={cn(
+                  'flex h-full flex-col rounded-lg border border-tone p-8 lg:p-10',
+                  mode !== 'pin' && 'min-h-[34rem]',
+                )}
+              >
+                <div className="flex min-h-0 flex-1 items-center justify-center pb-8">
+                  <img
+                    src={outroIllustration.src}
+                    width={outroIllustration.width}
+                    height={outroIllustration.height}
+                    alt={outroIllustration.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="block max-h-[18rem] max-w-full object-contain mix-blend-multiply"
+                  />
+                </div>
+                <div className="flex shrink-0 flex-col gap-10">
+                  <p className="max-w-[14ch] font-display text-heading-xl">{outro.title}</p>
+                  <div className="flex flex-col items-start gap-6">
+                    <TextLink to={outro.allWork.to} arrow className="text-heading-md">
+                      {outro.allWork.label}
+                    </TextLink>
+                    <Button
+                      to={outro.start.to}
+                      withArrow
+                      analytics={{ event: 'Start project click', props: { location: 'home-reel' } }}
+                    >
+                      {outro.start.label}
+                    </Button>
+                  </div>
                 </div>
               </div>
             </li>

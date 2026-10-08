@@ -1,0 +1,137 @@
+.section {
+  padding-block: clamp(2rem, 4vw, 3.5rem) clamp(2.5rem, 4.5vw, 4rem);
+}
+
+.eyebrow {
+  margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--tone-border);
+  border-radius: var(--radius-lg);
+  background: var(--tone-border);
+}
+
+.cell {
+  min-width: 0;
+  background: var(--tone-bg);
+}
+
+.link {
+  position: relative;
+  display: flex;
+  min-height: clamp(8.75rem, 12vw, 11rem);
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(1.2rem, 2.2vw, 2rem);
+  color: var(--tone-fg);
+  transition: background-color var(--duration-base) var(--ease-out-expo);
+}
+
+.link::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--tone-accent-text);
+  content: '';
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.link:hover,
+.link:focus-visible {
+  background: var(--tone-surface);
+}
+
+.link:hover::after,
+.link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--tone-accent-text);
+  outline-offset: -2px;
+}
+
+.label {
+  max-width: 15ch;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.3vw, 2.25rem);
+  font-weight: 650;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+/* Top right; it rises a little on hover with the arrow. */
+.icon {
+  position: absolute;
+  top: clamp(0.9rem, 1.6vw, 1.5rem);
+  right: clamp(0.9rem, 1.6vw, 1.5rem);
+  width: clamp(3.5rem, 5vw, 4.5rem);
+  height: auto;
+  transition: transform var(--duration-base) var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.link:hover .icon,
+.link:focus-visible .icon {
+  transform: translateY(-0.2rem) scale(1.06);
+}
+
+.arrow {
+  position: absolute;
+  right: clamp(1.2rem, 2.2vw, 2rem);
+  bottom: clamp(1.2rem, 2.2vw, 2rem);
+  color: var(--tone-accent-text);
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: transform var(--duration-base) var(--ease-out-expo);
+}
+
+.link:hover .arrow,
+.link:focus-visible .arrow {
+  transform: translate(0.25rem, 0.25rem);
+}
+
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .link {
+    min-height: 8.5rem;
+  }
+
+  .icon {
+    width: 2.75rem;
+  }
+
+  .label {
+    max-width: calc(100% - 1.75rem);
+    font-size: clamp(1.25rem, 5.8vw, 1.45rem);
+  }
+}
+
+@media (max-width: 359px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .link::after,
+  .icon,
+  .arrow {
+    transition: none;
+  }
+}

@@ -249,9 +249,7 @@ export const servicesContent = {
   hero: {
     eyebrow: 'Services', // COPY:
     title: 'What do you need?', // COPY:
-    intro:
-      'Need a website that stands out, software that brings your idea to life, or a team to keep it running? Start here.', // COPY:
-  } satisfies PageHeroContent,
+  },
   navigation: {
     label: 'Services sections', // COPY:
     items: [
@@ -286,9 +284,6 @@ export const servicesContent = {
     /** Build offerings shown here instead of under apps (ids in data/services). */
     offerings: ['desktop-app', 'backend-api'],
     cta: { label: 'Tell us about your software', to: '/start?path=build' }, // COPY:
-  },
-  improve: {
-    note: 'We estimate the hours and send a quote before any work starts. Once the changes are live, you can add ongoing Care.', // COPY:
   },
   /**
    * 05 Hosting and care: the monthly plans with their prices (the plan cards come from

@@ -14,7 +14,8 @@ import { cn } from '@/lib/cn'
 export type SectionHeaderVariant = 'stacked' | 'split' | 'minimal' | 'inline'
 
 export interface SectionHeaderProps {
-  eyebrow: string
+  /** Optional small label above the title. */
+  eyebrow?: string
   title: string
   intro?: string
   index?: number
@@ -62,7 +63,7 @@ export function SectionHeader({
       return (
         <div className={cn('grid gap-6 lg:grid-cols-12 lg:items-start', className)}>
           <div className="lg:col-span-6">
-            <Eyebrow label={eyebrow} index={index} className="mb-6" />
+            {eyebrow && <Eyebrow label={eyebrow} index={index} className="mb-6" />}
             {heading('max-w-[14ch]')}
           </div>
           {(intro || aside) && (
@@ -83,7 +84,7 @@ export function SectionHeader({
           )}
         >
           <div>
-            <Eyebrow label={eyebrow} index={index} className="mb-3" />
+            {eyebrow && <Eyebrow label={eyebrow} index={index} className="mb-3" />}
             {heading('max-w-[32ch]')}
           </div>
           {aside}
@@ -93,7 +94,7 @@ export function SectionHeader({
     case 'inline':
       return (
         <div className={cn('border-b border-tone pb-6', className)}>
-          <Eyebrow label={eyebrow} index={index} className="mb-5" />
+          {eyebrow && <Eyebrow label={eyebrow} index={index} className="mb-5" />}
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
             <div className="min-w-0 flex-1">{heading('max-w-[20ch]')}</div>
             {aside && <div className="shrink-0 lg:pb-3">{aside}</div>}
@@ -105,7 +106,7 @@ export function SectionHeader({
       return (
         <div className={cn('grid gap-8 lg:grid-cols-12 lg:items-end', className)}>
           <div className="lg:col-span-8">
-            <Eyebrow label={eyebrow} index={index} className="mb-6" />
+            {eyebrow && <Eyebrow label={eyebrow} index={index} className="mb-6" />}
             {heading('max-w-[18ch]')}
           </div>
           {(intro || aside) && (

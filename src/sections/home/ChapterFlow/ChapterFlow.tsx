@@ -1,12 +1,14 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useCallback, useId, useRef, useState } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
+import { ImageSequence } from '@/components/media/ImageSequence'
 import { Video } from '@/components/media/Video'
 import { MaskedHeading } from '@/components/motion/MaskedHeading'
 import { TextLink } from '@/components/ui/TextLink'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { pad2 } from '@/lib/format'
-import { ScrollTrigger, useGSAP } from '@/lib/gsap'
-import type { CtaLink, VideoAsset } from '@/types'
+import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
+import type { CtaLink, ImageAsset, ImageSequenceAsset, VideoAsset } from '@/types'
 import styles from './ChapterFlow.module.css'
 
 export interface ChapterFlowItem {
@@ -14,7 +16,10 @@ export interface ChapterFlowItem {
   body: string
   detail: string
   link?: CtaLink
-  media: VideoAsset
+  media:
+    | { kind: 'website'; screen: ImageAsset; solutions: ImageAsset; projects: ImageAsset }
+    | { kind: 'software'; laptop: ImageSequenceAsset; phone: ImageSequenceAsset }
+    | { kind: 'video'; video: VideoAsset }
 }
 
 export interface ChapterFlowProps {
@@ -27,31 +32,248 @@ export interface ChapterFlowProps {
 }
 
 const chapterCode = ['const idea = await stack.build();', 'return launch && improve;']
-const chapterTransitionMs = 720
 
 interface ChapterState {
-  current: number
-  currentKey: number
-  previous: number | null
-  previousKey: number | null
+  displayed: number
+  revision: number
+  recoding: boolean
 }
 
-function ChapterVisual({ item }: { item: ChapterFlowItem }) {
+const deviceScroll = { start: 'top 90%', end: 'center 45%', scrub: 0.7, ease: 'sine.inOut' }
+
+function WebsiteMockup({
+  screen,
+  solutions,
+  projects,
+  visible,
+}: {
+  screen: ImageAsset
+  solutions: ImageAsset
+  projects: ImageAsset
+  visible: boolean
+}) {
+  const sceneRef = useRef<HTMLDivElement>(null)
+  const laptopRef = useRef<HTMLDivElement>(null)
+  const screenRef = useRef<HTMLImageElement>(null)
+  const viewportRef = useRef<HTMLDivElement>(null)
+  const solutionsRef = useRef<HTMLDivElement>(null)
+  const projectsRef = useRef<HTMLDivElement>(null)
+  const reducedMotion = useReducedMotion()
+
+  useGSAP(
+    () => {
+      const scene = sceneRef.current
+      const laptop = laptopRef.current
+      const image = screenRef.current
+      const viewport = viewportRef.current
+      const solutionsPanel = solutionsRef.current
+      const projectsPanel = projectsRef.current
+      if (
+        !visible ||
+        reducedMotion ||
+        !scene ||
+        !laptop ||
+        !image ||
+        !viewport ||
+        !solutionsPanel ||
+        !projectsPanel
+      )
+        return
+
+      // Three depths: the browser drifts least, the laptop a little more and the phone in
+      // front most, while the real site scrolls on the laptop screen.
+      const timeline = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: {
+          trigger: scene,
+          start: 'top 90%',
+          end: 'bottom 10%',
+          scrub: 0.7,
+          invalidateOnRefresh: true,
+        },
+      })
+      timeline.fromTo(laptop, { yPercent: 5, scale: 0.97 }, { yPercent: -4, scale: 1 }, 0)
+      timeline.fromTo(
+        image,
+        { y: 0 },
+        {
+          y: () =>
+            -Math.max(
+              0,
+              Math.min(image.clientHeight - viewport.clientHeight, viewport.clientHeight * 1.5),
+            ),
+        },
+        0,
+      )
+      timeline.fromTo(
+        solutionsPanel,
+        { xPercent: -3, yPercent: 6 },
+        { xPercent: 2, yPercent: -6 },
+        0,
+      )
+      timeline.fromTo(projectsPanel, { yPercent: 16 }, { yPercent: -10 }, 0)
+      return () => timeline.kill()
+    },
+    { scope: sceneRef, dependencies: [visible, reducedMotion], revertOnUpdate: true },
+  )
+
   return (
-    <div className={styles.visual}>
-      <Video
-        video={{
-          ...item.media,
-          src: item.media.renditions?.[0]?.src ?? item.media.src,
-        }}
-        sizes="(min-width: 1024px) 34vw, 100vw"
-        className={styles.video}
-      />
+    <div ref={sceneRef} className={styles.websiteScene}>
+      <div className={styles.composition}>
+        <div ref={solutionsRef} className={styles.websiteBrowser}>
+          <img
+            src={solutions.src}
+            srcSet={solutions.srcSet}
+            sizes="(min-width: 1024px) 40vw, 110vw"
+            width={solutions.width}
+            height={solutions.height}
+            alt={solutions.alt}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div className={styles.websiteLaptop}>
+          <div ref={laptopRef} className={styles.laptopShot}>
+            <div className={styles.laptopLid}>
+              <div className={styles.laptopScreen}>
+                <div className={styles.browserBar} aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div ref={viewportRef} className={styles.browserViewport}>
+                  <img
+                    ref={screenRef}
+                    src={screen.src}
+                    srcSet={screen.srcSet}
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    width={screen.width}
+                    height={screen.height}
+                    alt={screen.alt}
+                    loading="lazy"
+                    decoding="async"
+                    onLoad={() => ScrollTrigger.refresh()}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className={styles.laptopBase} aria-hidden="true" />
+          </div>
+        </div>
+        <div ref={projectsRef} className={styles.websitePhone}>
+          <img
+            src={projects.src}
+            srcSet={projects.srcSet}
+            sizes="(min-width: 1024px) 24vw, 60vw"
+            width={projects.width}
+            height={projects.height}
+            alt={projects.alt}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
     </div>
   )
 }
 
-function ChapterCopy({ item, trigger }: { item: ChapterFlowItem; trigger: 'intro' | 'scroll' }) {
+function SoftwareMockup({
+  laptop,
+  phone,
+  visible,
+}: {
+  laptop: ImageSequenceAsset
+  phone: ImageSequenceAsset
+  visible: boolean
+}) {
+  const sceneRef = useRef<HTMLDivElement>(null)
+  const laptopRef = useRef<HTMLDivElement>(null)
+  const phoneRef = useRef<HTMLDivElement>(null)
+  const reducedMotion = useReducedMotion()
+
+  // The devices open and turn with the scroll (ImageSequence); the phone in front also drifts
+  // past the laptop for depth.
+  useGSAP(
+    () => {
+      const scene = sceneRef.current
+      const laptopShot = laptopRef.current
+      const phoneShot = phoneRef.current
+      if (!visible || reducedMotion || !scene || !laptopShot || !phoneShot) return
+      const timeline = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: { trigger: scene, start: 'top 90%', end: 'bottom 10%', scrub: 0.7 },
+      })
+      timeline.fromTo(laptopShot, { yPercent: 4 }, { yPercent: -4 }, 0)
+      timeline.fromTo(phoneShot, { yPercent: 12 }, { yPercent: -8 }, 0)
+      return () => timeline.kill()
+    },
+    { scope: sceneRef, dependencies: [visible, reducedMotion], revertOnUpdate: true },
+  )
+
+  return (
+    <div ref={sceneRef} className={styles.softwareScene}>
+      <div className={styles.composition}>
+        <div className={styles.softwareHalo} aria-hidden="true" />
+        <div ref={laptopRef} className={styles.softwareLaptop}>
+          <ImageSequence
+            sequence={laptop}
+            scroll={deviceScroll}
+            sizes="(min-width: 1024px) 45vw, 110vw"
+            className={styles.softwareSequence}
+          />
+        </div>
+        <div ref={phoneRef} className={styles.softwarePhone}>
+          <ImageSequence
+            sequence={phone}
+            scroll={deviceScroll}
+            sizes="(min-width: 1024px) 20vw, 50vw"
+            className={styles.softwareSequence}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ChapterVisual({ item, visible }: { item: ChapterFlowItem; visible: boolean }) {
+  return (
+    <div className={styles.visual}>
+      {item.media.kind === 'website' && (
+        <WebsiteMockup
+          screen={item.media.screen}
+          solutions={item.media.solutions}
+          projects={item.media.projects}
+          visible={visible}
+        />
+      )}
+      {item.media.kind === 'software' && (
+        <SoftwareMockup laptop={item.media.laptop} phone={item.media.phone} visible={visible} />
+      )}
+      {item.media.kind === 'video' && (
+        <Video
+          video={{
+            ...item.media.video,
+            src: item.media.video.renditions?.[0]?.src ?? item.media.video.src,
+          }}
+          sizes="(min-width: 1024px) 34vw, 100vw"
+          className={styles.video}
+        />
+      )}
+    </div>
+  )
+}
+
+function ChapterCopy({
+  item,
+  trigger,
+  recode = false,
+  onRecodeComplete,
+}: {
+  item: ChapterFlowItem
+  trigger: 'intro' | 'scroll'
+  recode?: boolean
+  onRecodeComplete?: () => void
+}) {
   return (
     <div className={styles.copy}>
       <MaskedHeading
@@ -59,6 +281,8 @@ function ChapterCopy({ item, trigger }: { item: ChapterFlowItem; trigger: 'intro
         text={item.title}
         codeLines={chapterCode}
         trigger={trigger}
+        recode={recode}
+        onRecodeComplete={onRecodeComplete}
         className={styles.chapterTitle}
       />
       <MaskedHeading
@@ -66,12 +290,31 @@ function ChapterCopy({ item, trigger }: { item: ChapterFlowItem; trigger: 'intro
         text={item.body}
         codeLines={chapterCode}
         trigger={trigger}
+        recode={recode}
         className={styles.chapterBody}
       />
-      <p className={styles.chapterDetail}>{item.detail}</p>
+      <MaskedHeading
+        as="p"
+        text={item.detail}
+        codeLines={chapterCode}
+        trigger={trigger}
+        recode={recode}
+        className={styles.chapterDetail}
+      />
       {item.link && (
-        <TextLink to={item.link.to} arrow className={styles.chapterLink}>
-          {item.link.label}
+        <TextLink
+          to={item.link.to}
+          arrow
+          aria-label={item.link.label}
+          className={styles.chapterLink}
+        >
+          <MaskedHeading
+            as="span"
+            text={item.link.label}
+            codeLines={chapterCode}
+            trigger={trigger}
+            recode={recode}
+          />
         </TextLink>
       )}
     </div>
@@ -82,24 +325,22 @@ function ChapterCopy({ item, trigger }: { item: ChapterFlowItem; trigger: 'intro
 export function ChapterFlow({ index, eyebrow, title, items, more, tone }: ChapterFlowProps) {
   const headingId = useId()
   const stageRef = useRef<HTMLDivElement>(null)
+  const targetRef = useRef(0)
   const [chapter, setChapter] = useState<ChapterState>({
-    current: 0,
-    currentKey: 0,
-    previous: null,
-    previousKey: null,
+    displayed: 0,
+    revision: 0,
+    recoding: false,
   })
   const desktop = useMediaQuery('(min-width: 1024px)')
+  const reducedMotion = useReducedMotion()
 
-  useEffect(() => {
-    if (chapter.previousKey === null) return
-    const currentKey = chapter.currentKey
-    const timeout = window.setTimeout(() => {
-      setChapter((state) =>
-        state.currentKey === currentKey ? { ...state, previous: null, previousKey: null } : state,
-      )
-    }, chapterTransitionMs)
-    return () => window.clearTimeout(timeout)
-  }, [chapter.currentKey, chapter.previousKey])
+  const finishRecode = useCallback(() => {
+    setChapter((state) =>
+      state.recoding
+        ? { displayed: targetRef.current, revision: state.revision + 1, recoding: false }
+        : state,
+    )
+  }, [])
 
   useGSAP(
     () => {
@@ -110,15 +351,15 @@ export function ChapterFlow({ index, eyebrow, title, items, more, tone }: Chapte
         const middle = window.innerHeight * 0.5
         const next = rows.findIndex((row) => row.getBoundingClientRect().bottom > middle)
         const index = next < 0 ? items.length - 1 : next
+        targetRef.current = index
         setChapter((state) =>
-          state.current === index
-            ? state
-            : {
-                current: index,
-                currentKey: state.currentKey + 1,
-                previous: state.current,
-                previousKey: state.currentKey,
-              },
+          reducedMotion
+            ? state.displayed === index && !state.recoding
+              ? state
+              : { displayed: index, revision: state.revision + 1, recoding: false }
+            : state.displayed === index || state.recoding
+              ? state
+              : { ...state, recoding: true },
         )
       }
       const scroll = ScrollTrigger.create({
@@ -133,12 +374,11 @@ export function ChapterFlow({ index, eyebrow, title, items, more, tone }: Chapte
       update()
       return () => scroll.kill()
     },
-    { scope: stageRef, dependencies: [desktop, items.length], revertOnUpdate: true },
+    { scope: stageRef, dependencies: [desktop, items.length, reducedMotion], revertOnUpdate: true },
   )
 
   if (items.length === 0) return null
-  const current = items[chapter.current] ?? items[0]
-  const previous = chapter.previous === null ? null : items[chapter.previous]
+  const current = items[chapter.displayed] ?? items[0]
   if (!current) return null
 
   return (
@@ -158,38 +398,27 @@ export function ChapterFlow({ index, eyebrow, title, items, more, tone }: Chapte
           <div className={styles.leftRail}>
             {items.map((item, chapter) => (
               <div key={item.title} data-chapter-row className={styles.slot}>
-                {chapter % 2 === 1 && <ChapterVisual item={item} />}
+                {chapter % 2 === 1 && <ChapterVisual item={item} visible={desktop} />}
               </div>
             ))}
           </div>
 
           <div className={styles.centerRail}>
             <div className={styles.stickyCopy}>
-              <div className={styles.copyStack}>
-                <div
-                  key={chapter.currentKey}
-                  className={`${styles.copyPane} ${chapter.currentKey > 0 ? styles.copyEntering : ''}`}
-                >
-                  <ChapterCopy item={current} trigger="intro" />
-                </div>
-                {previous && chapter.previousKey !== null && (
-                  <div
-                    key={chapter.previousKey}
-                    className={`${styles.copyPane} ${styles.copyLeaving}`}
-                    aria-hidden="true"
-                    inert
-                  >
-                    <ChapterCopy item={previous} trigger="intro" />
-                  </div>
-                )}
-              </div>
+              <ChapterCopy
+                key={chapter.revision}
+                item={current}
+                trigger="intro"
+                recode={chapter.recoding}
+                onRecodeComplete={finishRecode}
+              />
             </div>
           </div>
 
           <div className={styles.rightRail}>
             {items.map((item, chapter) => (
               <div key={item.title} className={styles.slot}>
-                {chapter % 2 === 0 && <ChapterVisual item={item} />}
+                {chapter % 2 === 0 && <ChapterVisual item={item} visible={desktop} />}
               </div>
             ))}
           </div>
@@ -197,7 +426,7 @@ export function ChapterFlow({ index, eyebrow, title, items, more, tone }: Chapte
           <ol className={styles.mobileChapters}>
             {items.map((item) => (
               <li key={item.title} className={styles.mobileChapter}>
-                <ChapterVisual item={item} />
+                <ChapterVisual item={item} visible={!desktop} />
                 <ChapterCopy item={item} trigger="scroll" />
               </li>
             ))}

@@ -5,7 +5,8 @@ import { SectionHeader } from '@/sections/shared/SectionHeader'
 import type { CtaLink } from '@/types'
 
 export interface MonthlyPlansProps {
-  eyebrow: string
+  /** Optional small label above the title. */
+  eyebrow?: string
   title: string
   plans: (PlanCardProps & { id: string })[]
   footnotes: string[]

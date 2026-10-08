@@ -171,6 +171,10 @@ export const maskedHeading = {
   tick: 0.055,
   /** Spreads the lock times: early characters lock quickly, the tail settles. */
   ease: 'power1.out',
+  /** How long a chapter takes to turn its readable text back into code. */
+  recodeSweep: 0.44,
+  /** Briefly hold the code before the next chapter starts decoding. */
+  recodeHold: 0.12,
 } as const
 
 /**

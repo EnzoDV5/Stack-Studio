@@ -45,7 +45,6 @@ const appRows = buildRows.filter((row) => !isWebsite(row.id) && !desktopIds.incl
 
 const websites: StageExplorerStage = {
   id: 'stage-build',
-  index: 1,
   name: c.websites.name,
   line: c.websites.line,
   rows: websiteRows,
@@ -60,12 +59,11 @@ const improve: StageExplorerStage[] = grow
   ? [
       {
         id: 'stage-grow',
-        index: 4,
         name: homeContent.paths.prompts.grow,
         line: grow.line,
         rows: rowsFor('grow'),
-        notes: [c.improve.note],
         cta: grow.cta,
+        illustration: media.services.fixOrImprove,
         layout: 'figures',
       },
     ]
@@ -114,15 +112,19 @@ export function ServicesPage() {
       <PageMeta {...pageMeta.services} />
       <SectionNavigator {...c.navigation} />
       <div id="services-top">
-        <ServicesHero content={c.hero} />
+        <ServicesHero
+          content={c.hero}
+          items={c.navigation.items.map((item) => ({
+            ...item,
+            icon: media.services.icons[item.id],
+          }))}
+        />
       </div>
       <StageExplorer className="pt-4 md:pt-8" stages={[websites]} labels={c.labels} />
       {/* The phone turn is scrubbed; the laptop after it plays once (an enter), so the two
           device sections never share a trigger. */}
       <AppShowcase
         id="apps"
-        index={2}
-        eyebrow={c.apps.eyebrow}
         title={c.apps.title}
         intro={c.apps.intro}
         rows={appRows}
@@ -132,8 +134,6 @@ export function ServicesPage() {
       />
       <DesktopShowcase
         id="desktop"
-        index={3}
-        eyebrow={c.desktop.eyebrow}
         title={c.desktop.title}
         intro={c.desktop.intro}
         rows={desktopRows}
@@ -145,9 +145,7 @@ export function ServicesPage() {
       <StageExplorer stages={improve} labels={c.labels} />
       <MonthlyPlans
         id="plans"
-        index={5}
         tone="paper"
-        eyebrow={c.plans.eyebrow}
         title={homeContent.paths.prompts.run}
         more={c.plans.more}
         plans={monthlyPlans}

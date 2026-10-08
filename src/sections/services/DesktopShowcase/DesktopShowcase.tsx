@@ -12,7 +12,8 @@ import styles from './DesktopShowcase.module.css'
 
 export interface DesktopShowcaseProps {
   id?: string
-  eyebrow: string
+  /** Optional small label above the title. */
+  eyebrow?: string
   /** Number shown in the eyebrow (the group's place on the page). */
   index?: number
   title: string
@@ -58,7 +59,7 @@ export function DesktopShowcase({
         </div>
 
         <div className="md:col-span-5 md:col-start-8">
-          <Eyebrow index={index} label={eyebrow} className="mb-6" />
+          {eyebrow && <Eyebrow index={index} label={eyebrow} className="mb-6" />}
           <Heading id={headingId} size="display-lg" compile className="max-w-[12ch]">
             {title}
           </Heading>

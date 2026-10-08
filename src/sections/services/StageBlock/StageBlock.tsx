@@ -4,10 +4,9 @@ import { MediaReveal } from '@/components/media/MediaReveal'
 import { Button } from '@/components/ui/Button'
 import { Heading } from '@/components/ui/Heading'
 import { cn } from '@/lib/cn'
-import { pad2 } from '@/lib/format'
 import type { OfferRow } from '@/lib/offer'
 import { OfferAccordion } from '@/sections/services/OfferAccordion'
-import type { CtaLink } from '@/types'
+import type { CtaLink, ImageAsset } from '@/types'
 import type { ServiceMediaItem } from '@/types/service-media'
 
 /**
@@ -15,14 +14,13 @@ import type { ServiceMediaItem } from '@/types/service-media'
  * - `feature`: the intro beside a wide image, then the offerings as dropdowns.
  * - `cards`: intro and a banner image, then the offerings side by side as cards.
  * - `split`: the image in its own column beside a compact list (plans).
- * - `figures`: the intro and CTA beside a large hourly quote and examples.
+ * - `figures`: the intro and illustration above the improvement details.
  * Give every group a different layout.
  */
 export type StageLayout = 'feature' | 'cards' | 'split' | 'figures'
 
 export interface StageBlockProps {
   id: string
-  index: number
   name: string
   /** One short line under the name: the whole pitch (no paragraph). */
   line: string
@@ -33,13 +31,13 @@ export interface StageBlockProps {
   labels: { includes: string }
   /** The group's image (and loop). Loops only play while on screen. */
   media?: ServiceMediaItem
+  illustration?: ImageAsset
   layout?: StageLayout
 }
 
 /** One group of offerings: number, name and line, its image, the offerings and a pre-filled CTA. */
 export function StageBlock({
   id,
-  index,
   name,
   line,
   rows,
@@ -47,17 +45,24 @@ export function StageBlock({
   cta,
   labels,
   media,
+  illustration,
   layout = 'feature',
 }: StageBlockProps) {
   const headingId = `${id}-heading`
 
   const intro = (
     <div>
-      <p className="mb-5 eyebrow text-accent">{pad2(index)}</p>
       <Heading id={headingId} size="display-lg" compile>
         {name}
       </Heading>
-      <p className="mt-4 max-w-[30ch] text-heading-lg text-muted">{line}</p>
+      <p
+        className={cn(
+          'mt-4 text-heading-lg text-muted',
+          layout === 'figures' ? 'max-w-[34ch] border-l-2 border-orange pl-5' : 'max-w-[30ch]',
+        )}
+      >
+        {line}
+      </p>
     </div>
   )
 
@@ -108,20 +113,24 @@ export function StageBlock({
     figures: () => (
       <ul className="divide-y divide-(--tone-border) border-y border-tone">
         {rows.map((row) => (
-          <li key={row.id} className="py-8 md:py-10">
-            <h3 className="text-heading-lg">{row.name}</h3>
-            {row.price && <p className="mt-4 numeric text-display-lg text-accent">{row.price}</p>}
-            <p className="mt-4 max-w-[56ch] text-body-lg text-muted">{row.summary}</p>
-            {row.examples.length > 0 && (
-              <ul className="mt-8 grid gap-x-8 gap-y-3 border-t border-tone pt-6 text-small sm:grid-cols-2">
-                {row.examples.map((example) => (
-                  <li key={example} className="flex gap-3">
-                    <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 bg-marker" />
-                    {example}
-                  </li>
-                ))}
-              </ul>
-            )}
+          <li key={row.id} className="grid gap-x-12 gap-y-6 py-8 md:grid-cols-12 md:py-10">
+            <div className="md:col-span-4">
+              <h3 className="text-heading-lg">{row.name}</h3>
+              {row.price && <p className="mt-4 numeric text-display-lg text-accent">{row.price}</p>}
+            </div>
+            <div className="md:col-span-8">
+              <p className="max-w-[56ch] text-body-lg text-muted">{row.summary}</p>
+              {row.examples.length > 0 && (
+                <ul className="mt-8 grid gap-x-8 gap-y-3 border-t border-tone pt-6 text-small sm:grid-cols-2">
+                  {row.examples.map((example) => (
+                    <li key={example} className="flex gap-3">
+                      <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 bg-marker" />
+                      {example}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </li>
         ))}
       </ul>
@@ -195,13 +204,28 @@ export function StageBlock({
       )}
 
       {layout === 'figures' && (
-        <div className="grid gap-10 md:grid-cols-12 md:items-start">
-          <div className="md:col-span-5">
-            {intro}
-            {footer(true)}
+        <>
+          <div className="grid gap-x-12 gap-y-10 md:grid-cols-12 md:items-center">
+            <div className="md:col-span-5">
+              {intro}
+              {footer(true)}
+            </div>
+            {illustration && (
+              <MediaReveal className="w-full md:col-span-7">
+                <img
+                  src={illustration.src}
+                  width={illustration.width}
+                  height={illustration.height}
+                  alt={illustration.alt}
+                  loading="lazy"
+                  decoding="async"
+                  className="block h-auto w-full"
+                />
+              </MediaReveal>
+            )}
           </div>
-          <div className="md:col-span-7">{offerings.figures()}</div>
-        </div>
+          <div className="mt-12 md:mt-16">{offerings.figures()}</div>
+        </>
       )}
 
       {layout !== 'figures' && footer()}

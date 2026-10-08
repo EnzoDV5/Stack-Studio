@@ -70,6 +70,7 @@
 
 .slot {
   height: var(--chapter-row-height);
+  padding: clamp(0.75rem, 1.1vw, 1.25rem);
 }
 
 .slot:not(:last-child) {
@@ -86,6 +87,242 @@
   overflow: hidden;
   border-radius: var(--radius-lg);
   background: var(--tone-surface);
+  container-type: size;
+}
+
+/*
+ * The device scenes are composed on a square that fits inside the card (whichever side is
+ * shorter), so every device stays whole at any card size and the background fills the rest.
+ */
+.composition {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(100cqw, 100cqh);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+}
+
+.websiteScene,
+.softwareScene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.websiteScene {
+  background:
+    radial-gradient(circle at 74% 19%, #4b6a4d 0, transparent 42%),
+    radial-gradient(circle at 8% 89%, #293d2e 0, transparent 45%), #101b16;
+}
+
+.websiteScene::after,
+.softwareScene::after {
+  position: absolute;
+  right: -15%;
+  bottom: -26%;
+  left: -15%;
+  height: 37%;
+  border-radius: 50%;
+  background: #030b08;
+  filter: blur(38px);
+  content: '';
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+/* The site on a laptop, front left, over the solutions page in a browser behind it. */
+.websiteLaptop {
+  position: absolute;
+  top: 36%;
+  left: 5%;
+  z-index: 1;
+  width: 76%;
+}
+
+.laptopShot {
+  filter: drop-shadow(0 1.6rem 1.8rem rgb(0 0 0 / 38%));
+  transform-origin: center 65%;
+  will-change: transform;
+}
+
+.laptopLid {
+  padding: 1.3% 1.3% 1.8%;
+  border: 2px solid #8c9694;
+  border-radius: 1.05rem 1.05rem 0.35rem 0.35rem;
+  background: #171b1a;
+  box-shadow:
+    inset 0 0 0 2px #333a37,
+    0 0 0 1px rgb(0 0 0 / 50%);
+}
+
+.laptopScreen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border-radius: 0.45rem 0.45rem 0.1rem 0.1rem;
+  background: #f4f4f0;
+}
+
+.browserBar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  height: 1rem;
+  align-items: center;
+  gap: 0.28rem;
+  padding-left: 0.55rem;
+  background: #f0f0ec;
+}
+
+.browserBar span {
+  width: 0.31rem;
+  height: 0.31rem;
+  border-radius: 50%;
+  background: #b4bdb4;
+}
+
+.browserBar span:first-child {
+  background: #e57658;
+}
+
+.browserViewport {
+  position: absolute;
+  inset: 1rem 0 0;
+  overflow: hidden;
+}
+
+.browserViewport img {
+  display: block;
+  width: 100%;
+  height: auto;
+  will-change: transform;
+}
+
+.laptopBase {
+  position: relative;
+  left: -5%;
+  width: 110%;
+  height: clamp(0.7rem, 2vw, 1.25rem);
+  border-radius: 0.1rem 0.1rem 48% 48%;
+  background: linear-gradient(180deg, #c9d1ce 0%, #8f9996 37%, #3d4945 82%, #1b2722 100%);
+  box-shadow: inset 0 1px rgb(255 255 255 / 70%);
+}
+
+.laptopBase::before {
+  position: absolute;
+  top: 0;
+  left: 39%;
+  width: 22%;
+  height: 34%;
+  border-radius: 0 0 0.5rem 0.5rem;
+  background: #87928d;
+  content: '';
+}
+
+/*
+ * The browser window and the phone are cut out of their rendered mockups (which have their own
+ * backdrop) at the device edges: the window spans 230–1050 × 89–631 of the 1280 × 720 image,
+ * the phone 176–424 × 115–629 of 600 × 750.
+ */
+.websiteBrowser {
+  position: absolute;
+  top: 8%;
+  left: 24%;
+  width: 72%;
+  aspect-ratio: 820 / 542;
+  overflow: hidden;
+  border-radius: 1.6% / 2.4%;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 8%),
+    0 1.2rem 2.4rem rgb(0 0 0 / 38%);
+  opacity: 0.92;
+  will-change: transform;
+}
+
+.websiteBrowser img {
+  position: absolute;
+  top: -16.42%;
+  left: -28.05%;
+  display: block;
+  width: 156.1%;
+  max-width: none;
+  height: auto;
+}
+
+.websitePhone {
+  position: absolute;
+  right: 4%;
+  bottom: 8%;
+  z-index: 2;
+  width: 25%;
+  aspect-ratio: 248 / 514;
+  overflow: hidden;
+  border-radius: 17% / 8.2%;
+  box-shadow:
+    -0.6rem 1.4rem 2rem rgb(0 0 0 / 42%),
+    0 0.2rem 0.5rem rgb(0 0 0 / 30%);
+  will-change: transform;
+}
+
+.websitePhone img {
+  position: absolute;
+  top: -22.37%;
+  left: -70.97%;
+  display: block;
+  width: 241.9%;
+  max-width: none;
+  height: auto;
+}
+
+.softwareScene {
+  background:
+    radial-gradient(circle at 72% 29%, rgb(245 123 54 / 33%), transparent 42%),
+    radial-gradient(circle at 12% 80%, #56403a, transparent 55%), #1c191a;
+}
+
+.softwareHalo {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  width: 84%;
+  aspect-ratio: 1;
+  border: 1px solid rgb(255 224 198 / 20%);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5rem rgb(255 226 187 / 4%);
+  translate: -50% -50%;
+}
+
+/*
+ * The rendered frames have transparent margins: the open laptop fills 16–87% of its frame's
+ * width, the phone 21–78%. These place the laptop at about 2–82% of the square and the phone
+ * over its right edge.
+ */
+.softwareLaptop,
+.softwarePhone {
+  position: absolute;
+  filter: drop-shadow(0 1.4rem 1.2rem rgb(0 0 0 / 36%));
+  will-change: transform;
+}
+
+.softwareLaptop {
+  top: 3%;
+  left: -15%;
+  width: 112%;
+}
+
+.softwarePhone {
+  right: -5%;
+  bottom: 4%;
+  z-index: 1;
+  width: 48%;
+}
+
+.softwareSequence {
+  width: 100%;
 }
 
 .stickyCopy {
@@ -99,53 +336,6 @@
   justify-content: center;
   padding: clamp(1.5rem, 4vw, 4rem);
   text-align: center;
-}
-
-.copyStack {
-  display: grid;
-  width: 100%;
-  place-items: center;
-}
-
-.copyPane {
-  display: flex;
-  grid-area: 1 / 1;
-  width: 100%;
-  justify-content: center;
-}
-
-.copyEntering {
-  animation: chapterEnter 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.copyLeaving {
-  z-index: 1;
-  pointer-events: none;
-  animation: chapterLeave 560ms cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-@keyframes chapterEnter {
-  from {
-    opacity: 0;
-    transform: translateY(1.25rem);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes chapterLeave {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateY(-0.9rem);
-  }
 }
 
 .copy {
@@ -225,6 +415,12 @@
     order: 2;
   }
 
+  .mobileChapter > .visual {
+    width: auto;
+    height: auto;
+    margin: 0.75rem;
+  }
+
   .mobileChapter .copy {
     justify-content: center;
     padding: clamp(1.5rem, 5vw, 4rem);
@@ -254,6 +450,7 @@
 
   .mobileChapter .visual {
     height: min(94vw, 33rem);
+    margin: 0.75rem 0.75rem 0;
   }
 
   .mobileChapter .copy {
@@ -269,16 +466,5 @@
 
   .mobileChapter .chapterBody {
     margin-top: 1rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .copyEntering,
-  .copyLeaving {
-    animation: none;
-  }
-
-  .copyLeaving {
-    opacity: 0;
   }
 }

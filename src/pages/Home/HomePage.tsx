@@ -49,13 +49,25 @@ const stageNames = Object.fromEntries(serviceStages.map((s) => [s.id, s.name])) 
  */
 const homePaths = ['build', 'grow', 'run', 'partner'] as const
 
-const chapterMedia = (['build', 'takeover', 'grow', 'partner', 'build', 'run'] as const).map(
-  (stage) => {
-    const video = serviceMedia[stage].video
-    if (!video) throw new Error(`Missing video for home chapter ${stage}`)
-    return video
+function chapterClip(stage: StageId): ChapterFlowItem['media'] {
+  const video = serviceMedia[stage].video
+  if (!video) throw new Error(`Missing video for home chapter ${stage}`)
+  return { kind: 'video', video }
+}
+
+const chapterMedia: ChapterFlowItem['media'][] = [
+  {
+    kind: 'website',
+    screen: media.projects.gcSolar.screen,
+    solutions: media.projects.gcSolar.gallery[0],
+    projects: media.projects.gcSolar.gallery[2],
   },
-)
+  { kind: 'software', laptop: media.desktop.laptop, phone: media.apps.phone },
+  chapterClip('grow'),
+  chapterClip('partner'),
+  chapterClip('build'),
+  chapterClip('run'),
+]
 
 /** Home keeps each path short: 2–3 example offerings or plan families, without prices. */
 function stageItems(stage: StageId) {
@@ -146,6 +158,7 @@ export function HomePage() {
         }}
         more={work.more}
         outro={work.outro}
+        outroIllustration={media.home.startToFinish}
       />
 
       <DeferredSection minHeight="90vh">
