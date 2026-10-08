@@ -4,9 +4,9 @@ import { media } from './media'
 export const site: SiteConfig = {
   name: 'Stack Studio',
   shortName: 'Stack',
-  tagline: 'Brand-led websites, built to convert.', // COPY:
+  tagline: 'Websites that stand out. Software that moves you forward.', // COPY:
   description:
-    'Stack Studio is a web studio in Centurion, South Africa, building brand-led, cinematic websites and digital products for businesses of every kind.', // COPY:
+    'Stack Studio helps businesses stand out and grow with custom websites, apps and software, plus hosting and ongoing care. Based in Centurion, South Africa.', // COPY:
   url: 'https://stackstudio.co.za', // COPY: confirm production domain
   locale: 'en-ZA',
   email: 'hello@stackstudio.co.za', // COPY: placeholder email

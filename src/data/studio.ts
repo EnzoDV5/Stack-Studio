@@ -45,7 +45,7 @@ export const values: ValueItem[] = [
   {
     id: 'partnership',
     title: 'In it for the long run', // COPY:
-    body: 'We host, care for and improve what we build. Launch day is the start, not the end.', // COPY:
+    body: 'We support the websites and apps we build after launch, with hosting, maintenance and improvements when you need them.', // COPY:
   },
 ]
 

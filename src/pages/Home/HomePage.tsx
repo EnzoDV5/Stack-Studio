@@ -13,6 +13,7 @@ import { technologies, technologyContent } from '@/data/technologies'
 import { testimonials } from '@/data/testimonials'
 import { stageRows } from '@/lib/offer'
 import { HomeHero } from '@/sections/home/HomeHero'
+import type { ChapterFlowItem } from '@/sections/home/ChapterFlow'
 import { WorkReel } from '@/sections/home/WorkReel'
 import type { PlanFamily, StageId } from '@/types'
 
@@ -25,11 +26,8 @@ const PathChooser = lazy(() =>
 const ClientVoices = lazy(() =>
   import('@/sections/home/ClientVoices').then((m) => ({ default: m.ClientVoices })),
 )
-const ProcessSnippet = lazy(() =>
-  import('@/sections/home/ProcessSnippet').then((m) => ({ default: m.ProcessSnippet })),
-)
-const ServicesSnippet = lazy(() =>
-  import('@/sections/home/ServicesSnippet').then((m) => ({ default: m.ServicesSnippet })),
+const ChapterFlow = lazy(() =>
+  import('@/sections/home/ChapterFlow').then((m) => ({ default: m.ChapterFlow })),
 )
 const StudioSnippet = lazy(() =>
   import('@/sections/home/StudioSnippet').then((m) => ({ default: m.StudioSnippet })),
@@ -51,6 +49,14 @@ const stageNames = Object.fromEntries(serviceStages.map((s) => [s.id, s.name])) 
  */
 const homePaths = ['build', 'grow', 'run', 'partner'] as const
 
+const chapterMedia = (['build', 'takeover', 'grow', 'partner', 'build', 'run'] as const).map(
+  (stage) => {
+    const video = serviceMedia[stage].video
+    if (!video) throw new Error(`Missing video for home chapter ${stage}`)
+    return video
+  },
+)
+
 /** Home keeps each path short: 2–3 example offerings or plan families, without prices. */
 function stageItems(stage: StageId) {
   switch (stage) {
@@ -71,7 +77,12 @@ function stageItems(stage: StageId) {
 }
 
 export function HomePage() {
-  const { hero, work, clients, paths, services, process, studio } = homeContent
+  const { hero, work, clients, paths, chapterFlow, studio } = homeContent
+  const chapters: ChapterFlowItem[] = chapterFlow.items.map((item, i) => {
+    const media = chapterMedia[i]
+    if (!media) throw new Error(`Missing media for home chapter ${i + 1}`)
+    return { ...item, media }
+  })
 
   return (
     <>
@@ -115,16 +126,12 @@ export function HomePage() {
         />
       </DeferredSection>
 
-      <DeferredSection minHeight="170vh">
-        <ServicesSnippet index={2} {...services} />
-      </DeferredSection>
-
-      <DeferredSection minHeight="170vh">
-        <ProcessSnippet index={3} {...process} />
+      <DeferredSection minHeight="430vh">
+        <ChapterFlow index={2} tone="paper" {...chapterFlow} items={chapters} />
       </DeferredSection>
 
       <WorkReel
-        index={4}
+        index={3}
         eyebrow={work.eyebrow}
         title={work.title}
         projects={projects}
@@ -143,7 +150,7 @@ export function HomePage() {
 
       <DeferredSection minHeight="90vh">
         <ClientVoices
-          index={5}
+          index={4}
           tone="paper"
           eyebrow={clients.eyebrow}
           title={clients.title}
@@ -166,7 +173,7 @@ export function HomePage() {
 
       <DeferredSection minHeight="95vh">
         <StudioSnippet
-          index={6}
+          index={5}
           tone="paper"
           eyebrow={studio.eyebrow}
           title={studio.title}

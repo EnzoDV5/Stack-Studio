@@ -204,7 +204,7 @@ export const media = {
     // Generated placeholder (scripts/generate-placeholders.mjs). Replace with a designed 1200×630 PNG/JPG.
     ogImage: {
       src: '/og-image.png',
-      alt: 'Stack Studio — brand-led websites, built to convert', // COPY:
+      alt: 'Stack Studio logo on a dark grid background', // COPY:
       width: 1200,
       height: 630,
     },

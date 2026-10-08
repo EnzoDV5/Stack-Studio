@@ -6,9 +6,9 @@ import type { CtaContent, PageHeroContent, PageMetaContent, SectionIntro } from 
 
 export const pageMeta = {
   home: {
-    title: 'Stack Studio — Brand-led websites, built to convert', // COPY:
+    title: 'Stack Studio — Websites, apps and software that help businesses grow', // COPY:
     description:
-      'A web studio in Centurion, South Africa. We design and build brand-led, cinematic websites and digital products for businesses of every kind.', // COPY:
+      'Stack Studio helps businesses stand out and grow with custom websites, apps and software, plus hosting and ongoing care. Based in Centurion, South Africa.', // COPY:
     path: '/',
   },
   work: {
@@ -20,7 +20,7 @@ export const pageMeta = {
   services: {
     title: 'Services', // COPY:
     description:
-      'Websites, apps and software, fixing or improving what you already have, and hosting and care once it’s live: Website Care, Managed Software and Partner, with what each costs.', // COPY:
+      'Websites that help your business stand out, apps and software that bring ideas to life, and hosting, maintenance and improvements that support growth.', // COPY:
     path: '/services',
   },
   process: {
@@ -32,7 +32,7 @@ export const pageMeta = {
   studio: {
     title: 'Studio', // COPY:
     description:
-      'Meet Stack Studio, the web studio in Centurion started by Enzo De Vittorio and Armand Naudé, building websites that work as hard as the businesses behind them.', // COPY:
+      'Meet Stack Studio, the Centurion team building websites, apps and software to help businesses stand out, work better and grow.', // COPY:
     path: '/studio',
   },
   start: {
@@ -58,7 +58,7 @@ export const pageMeta = {
 /** Shared closing CTA (orange band) used at the end of most pages. */
 export const closingCta: CtaContent = {
   eyebrow: 'Start a project', // COPY:
-  title: 'Let’s build the thing that brings in the work.', // COPY:
+  title: 'Let’s build what moves your business forward.', // COPY:
   body: 'Two minutes, a few questions and a rough estimate before you hit send.', // COPY:
   label: 'Start a project', // COPY:
   to: '/start',
@@ -85,7 +85,7 @@ export const homeContent = {
     eyebrow: 'Digital studio · Centurion, ZA', // COPY:
     title: 'Build it. Run it. Grow it.', // COPY: sets as three lines (see HomeHero)
     intro:
-      'Websites, web apps and custom software: we design and build them, take over what you already have, and keep it all running and improving.', // COPY:
+      'We build websites that help businesses stand out. We turn ideas into apps and software, then host, maintain and improve your site or app as you grow.', // COPY:
     cta: { label: 'Start a project', to: '/start' }, // COPY:
     secondaryCta: { label: 'See the work', to: '/work' }, // COPY:
   },
@@ -133,41 +133,49 @@ export const homeContent = {
     estimate: 'Start here', // COPY:
     more: { label: 'All services', to: '/services' }, // COPY:
   },
-  services: {
-    eyebrow: 'What we do', // COPY:
-    title: 'The right work for where you are.', // COPY:
-    intro:
-      'From a new digital home to the team that keeps it moving, we shape the work around what your business needs now.', // COPY:
+  chapterFlow: {
+    eyebrow: 'What we do / Process', // COPY:
+    title: 'From the first idea to what comes next.', // COPY:
     items: [
       {
-        title: 'Websites with a purpose', // COPY:
-        description:
-          'A distinctive site that makes your business clear and turns visits into enquiries.', // COPY:
-        examples: 'Business websites · immersive experiences', // COPY:
+        title: 'A website that stands out', // COPY:
+        body: 'Show what makes your business different and give the right people a reason to get in touch.', // COPY:
+        detail: 'Business websites · immersive experiences', // COPY:
         link: { label: 'Explore websites', to: '/services#stage-build' }, // COPY:
       },
       {
         title: 'Apps and custom software', // COPY:
-        description:
-          'Useful digital tools built around the way your people and customers actually work.', // COPY:
-        examples: 'Web apps · desktop tools · integrations', // COPY:
+        body: 'Bring your idea to life with a useful tool for your customers or team, built to grow with your business.', // COPY:
+        detail: 'Web apps · desktop tools · integrations', // COPY:
         link: { label: 'Explore software', to: '/services#apps' }, // COPY:
       },
       {
-        title: 'Fixes and improvements', // COPY:
-        description: 'Make the site or app you already have faster, clearer and more capable.', // COPY:
-        examples: 'Repairs · redesigns · new features', // COPY:
+        title: 'Improve what you have', // COPY:
+        body: 'Add the features you need, fix what gets in the way and make the experience better as your business grows.', // COPY:
+        detail: 'Fixes · new features · redesigns', // COPY:
         link: { label: 'Explore improvements', to: '/services#stage-grow' }, // COPY:
       },
       {
-        title: 'Hosting and ongoing care', // COPY:
-        description:
-          'A reliable home, regular upkeep and a team to call when something needs attention.', // COPY:
-        examples: 'Website Care · Managed Software · Partner', // COPY:
-        link: { label: 'Explore care', to: '/services#plans' }, // COPY:
+        title: 'Tell us what you need', // COPY:
+        body: 'Start with a short brief and rough estimate. We meet, then agree the scope and fixed quote.', // COPY:
+        detail: 'Brief · conversation · quote', // COPY:
+      },
+      {
+        title: 'We design and build it', // COPY:
+        body: 'You follow along on a staging link from week one, then we launch.', // COPY:
+        detail: 'Around six weeks', // COPY:
+      },
+      {
+        title: 'We keep it running', // COPY:
+        body: 'We host, monitor and maintain your site or app, with updates and support when something needs attention.', // COPY:
+        detail: 'Hosting · maintenance · support', // COPY:
+        link: { label: 'See hosting and care', to: '/services#plans' }, // COPY:
       },
     ],
-    more: { label: 'See all services', to: '/services' }, // COPY:
+    more: [
+      { label: 'See all services', to: '/services' }, // COPY:
+      { label: 'See how we work', to: '/process' }, // COPY:
+    ],
   },
   clients: {
     eyebrow: 'Clients', // COPY:
@@ -177,41 +185,11 @@ export const homeContent = {
     caseLink: (company: string) => `See the ${company} project`, // COPY:
     more: { label: 'See all the work', to: '/work' }, // COPY:
   },
-  /** How we work in four short steps; /process has the detail. */
-  process: {
-    eyebrow: 'Process', // COPY:
-    title: 'From first message to looked after.', // COPY:
-    intro: 'A clear path, real conversations and no disappearing act after launch.', // COPY:
-    countLabel: 'steps from idea to ongoing care', // COPY:
-    steps: [
-      {
-        title: 'Tell us what you need', // COPY:
-        body: 'A short brief with a rough estimate before you send it.', // COPY:
-        when: 'About two minutes', // COPY:
-      },
-      {
-        title: 'Meet and agree a fixed quote', // COPY:
-        body: 'We talk it through, then put the scope, timeline and payments in writing.', // COPY:
-        when: 'After we meet', // COPY:
-      },
-      {
-        title: 'We design and build it', // COPY:
-        body: 'You follow along on a staging link from week one, then we launch.', // COPY:
-        when: 'Around six weeks', // COPY:
-      },
-      {
-        title: 'We keep it running', // COPY:
-        body: 'Hosting, updates and fixes on a monthly plan, if you want one.', // COPY:
-        when: 'Every month', // COPY:
-      },
-    ],
-    more: { label: 'See how we work', to: '/process' }, // COPY:
-  },
   studio: {
     eyebrow: 'Studio', // COPY:
     title: 'You talk to the people who build it.', // COPY:
     intro:
-      'We started Stack to do websites properly, and we stay involved in every project, from the first call to long after launch.', // COPY:
+      'We build websites and software with our clients, and stay involved from the first call through launch and beyond.', // COPY:
     more: { label: 'Meet the studio', to: '/studio' }, // COPY:
   },
 }
@@ -271,7 +249,8 @@ export const servicesContent = {
   hero: {
     eyebrow: 'Services', // COPY:
     title: 'What do you need?', // COPY:
-    intro: 'Something new, something to fix, or a team to keep it going? Start here.', // COPY:
+    intro:
+      'Need a website that stands out, software that brings your idea to life, or a team to keep it running? Start here.', // COPY:
   } satisfies PageHeroContent,
   navigation: {
     label: 'Services sections', // COPY:
@@ -287,7 +266,7 @@ export const servicesContent = {
   /** The Build stage's website offerings, shown as their own group. */
   websites: {
     name: 'I need a new website.', // COPY:
-    line: 'A website built around your business.', // COPY:
+    line: 'Show what makes your business different and give people a reason to choose you.', // COPY:
     cta: { label: 'Start a website', to: '/start?path=build' }, // COPY:
   },
   /** The Build stage's apps and software, with the phone turn (dark, between the groups). */
@@ -295,7 +274,7 @@ export const servicesContent = {
     eyebrow: 'Apps and software', // COPY:
     title: 'I need an app or software.', // COPY:
     intro:
-      'Booking systems, client portals, dashboards and mobile apps: the software your business runs on.', // COPY:
+      'Booking systems, client portals, dashboards and apps that bring your idea to life and help your business work better.', // COPY:
     cta: { label: 'Tell us about your app', to: '/start?path=build' }, // COPY:
   },
   /** Desktop software and the systems behind it, with the laptop (dark, after the apps). */
@@ -449,7 +428,7 @@ export const processContent = {
     eyebrow: 'After launch', // COPY:
     title: 'Care that runs in the background.', // COPY:
     intro:
-      'Once you’re on a plan, we look after the technical side of your website or software month after month, so you can get on with running your business.', // COPY:
+      'We host, monitor and maintain your website or app, with backups, updates and help when something needs attention.', // COPY:
     mediaCaption: 'Looked after, every month.', // COPY:
     mediaLabel: 'Hosting / Care', // COPY:
     steps: [
@@ -527,14 +506,14 @@ export const studioContent = {
     eyebrow: 'Studio', // COPY:
     title: 'A growing studio with big standards.', // COPY:
     intro:
-      'Stack Studio was founded in Centurion to give businesses of every kind a digital presence as serious as the work they do.', // COPY:
+      'Stack Studio was founded in Centurion to help businesses stand out and grow through carefully built websites, apps and software.', // COPY:
   } satisfies PageHeroContent,
   intro: {
     eyebrow: 'Who we are', // COPY:
     title: 'Design, motion and development in one team.', // COPY:
     paragraphs: [
-      'Most businesses end up choosing between a designer who can’t build and a developer who can’t design. We started Stack to close that gap: one team that handles strategy, UX, visual design, motion, front-end and back-end, and then deploys it for real. We each have our focus, but we work across both ends of every build.', // COPY:
-      'The result is websites that look the part and actually work: fast, accessible, easy to update and designed to turn visitors into enquiries.', // COPY:
+      'A strong digital product needs good design and solid development working together. At Stack, strategy, UX, visual design, motion, front-end and back-end sit in one team. We each have our focus, but we work across both ends of every build.', // COPY:
+      'We build websites that show why a business is different, and apps and software shaped around what its customers and team need. After launch, we can host and maintain your site or app, and keep improving it as your business grows.', // COPY:
     ],
   },
   founders: {
