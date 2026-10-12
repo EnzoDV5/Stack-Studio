@@ -164,13 +164,15 @@ export function NextSteps({
   const card = (index: number, step: StepText, ui: ReactNode) => (
     <li
       data-card=""
-      className="grid gap-5 rounded-lg border border-tone bg-tone-surface p-5 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.6)] md:row-span-2 md:grid-rows-subgrid"
+      className="grid grid-cols-1 gap-5 rounded-lg border border-tone bg-tone-surface p-5 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.6)] md:row-span-2 md:grid-rows-subgrid"
     >
       <div className="flex flex-col">
         <span className="eyebrow text-accent">{pad2(index)}</span>
         <h3 className="mt-3 text-heading-md">{step.title}</h3>
         <p className="mt-2 text-small text-muted">{step.body}</p>
-        <Tag className="mt-4 self-start">{step.when}</Tag>
+        <Tag className="mt-4 h-auto! min-h-8 max-w-full self-start py-1.5 whitespace-normal!">
+          {step.when}
+        </Tag>
       </div>
       {/* A small version of what they see at this step (decorative). */}
       <div

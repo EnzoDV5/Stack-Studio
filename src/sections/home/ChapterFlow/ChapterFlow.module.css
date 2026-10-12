@@ -36,8 +36,9 @@
 
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 1fr);
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+  /* Full bleed, capped on ultra-wide screens so the cells keep their proportions. */
+  width: min(100vw, 120rem);
+  margin-left: calc(50% - min(50vw, 60rem));
   border-top: 1px solid var(--tone-border);
   border-bottom: 1px solid var(--tone-border);
 }

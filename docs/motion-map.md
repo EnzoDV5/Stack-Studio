@@ -194,7 +194,8 @@ scroll"). The lid and keyboard deck are two planes hinged on one edge under a sh
 perspective (no preserve-3d scene), so they stay joined: the laptop starts open, seen from
 above; the deck folds away as the lid comes upright and the laptop grows until the screen
 fills the view; then a full-page capture of the real site scrolls inside the screen, top to
-bottom (`macbook.open` + `macbook.perScreen` per screenful). The narrative is static; the gallery
+bottom (`macbook.open` + `macbook.perScreen` per screenful, times `macbook.portraitScroll` on
+portrait screens, where the laptop is small). The narrative is static; the gallery
 reveals before its Parallax drift.
 
 **Services:** ServicesHero (load: compile) · StageExplorer (MediaReveal on framed images and video: 01 Websites) · AppShowcase (scrub: phone turn, 02 Apps and software) ·
@@ -206,7 +207,8 @@ offerings the brief files under 'website'), desktop software (listed in `service
 beside the laptop) and apps (the rest, beside the phone), so nothing repeats. A transparent,
 viewport-height section rail follows progress and moves the current title beside its marker. The
 page introduction is outside the count. Each marker
-reveals its own label on hover or focus; on phones it becomes a menu. No project prices on the page (the brief
+reveals its own label on hover or focus; below 1280px it becomes a menu, and it fades out past the
+last section. No project prices on the page (the brief
 gives the estimate); each build service's dropdown opens the brief with it picked
 (`/start?type=<id>`). The plan cards in Hosting and care are the one place plan prices appear.
 AppShowcase ("Apps and software") is where apps get their own moment, since most

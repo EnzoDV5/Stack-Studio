@@ -193,6 +193,8 @@ export const macbook = {
   leanFrom: -14,
   /** Largest the laptop grows (capped so the screen always fits the viewport). */
   scaleTo: 1.8,
+  /** On portrait screens the laptop can only be as wide as the phone, so the pin runs shorter. */
+  portraitScroll: 0.6,
 } as const
 
 /**

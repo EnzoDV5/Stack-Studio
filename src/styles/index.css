@@ -4,3 +4,6 @@
 @import './base.css';
 @import './typography.css';
 @import './utilities.css';
+
+/* Short landscape screens (a phone on its side): trim layouts built around a full viewport. */
+@custom-variant short (@media (orientation: landscape) and (max-height: 32rem));

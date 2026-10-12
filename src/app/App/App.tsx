@@ -43,7 +43,10 @@ export function App() {
       <PageTransition preload={preloadRoute} label={chromeCopy.transitionLabel}>
         {(location) => (
           <>
-            <main id="main" tabIndex={-1} className="outline-none">
+            {/* overflow-x-clip: a slide-in or mid-reveal offset must never widen the layout
+                viewport on phones (body's clip propagates to the viewport, which mobile
+                browsers can still pan). Clip, unlike hidden, keeps sticky and pins working. */}
+            <main id="main" tabIndex={-1} className="overflow-x-clip outline-none">
               <Suspense fallback={<div className="min-h-dvh" aria-hidden="true" />}>
                 <AppRoutes location={location} />
               </Suspense>
@@ -63,9 +66,7 @@ export function App() {
                 nav: chromeCopy.navHeading,
               }}
               email={site.email}
-              whatsapp={
-                whatsapp ? { href: whatsapp, label: chromeCopy.whatsappLabel } : undefined
-              }
+              whatsapp={whatsapp ? { href: whatsapp, label: chromeCopy.whatsappLabel } : undefined}
               responsePromise={site.responsePromise}
               socials={site.socials}
               nav={footerNav}

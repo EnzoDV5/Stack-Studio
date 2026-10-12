@@ -50,6 +50,9 @@
       min-width: 0;
       flex-wrap: wrap;
       justify-content: center;
+      /* Wrapped rows sit closer than the scrolling gap, so long lists stay short on phones. */
+      row-gap: min(var(--marquee-gap), 1rem);
+      column-gap: min(var(--marquee-gap), 2rem);
     }
 
     .track[aria-hidden='true'] {

@@ -64,7 +64,7 @@ const panelClass: Record<Mode, { project: string; outro: string }> = {
   },
   carousel: {
     project: 'w-[82vw] shrink-0 snap-start sm:w-[62vw]',
-    outro: 'w-[82vw] shrink-0 snap-start sm:w-[62vw]',
+    outro: 'w-[88vw] shrink-0 snap-start sm:w-[62vw]',
   },
   grid: { project: '', outro: 'md:col-span-2' },
 }
@@ -345,7 +345,7 @@ export function WorkReel({
             <li data-reel-panel="" data-reel-chrome={chrome} className={panelClass[mode].outro}>
               <div
                 className={cn(
-                  'flex h-full flex-col rounded-lg border border-tone p-8 lg:p-10',
+                  'flex h-full flex-col rounded-lg border border-tone p-5 sm:p-8 lg:p-10',
                   mode !== 'pin' && 'min-h-[34rem]',
                 )}
               >

@@ -84,9 +84,9 @@ export function MobileMenu({
     }
   }, [open, reducedMotion])
 
-  // Close if the viewport grows past the mobile breakpoint.
+  // Close if the viewport grows past the breakpoint where the header shows the full nav (lg).
   useEffect(() => {
-    const mql = window.matchMedia('(min-width: 48rem)')
+    const mql = window.matchMedia('(min-width: 64rem)')
     const onChange = () => mql.matches && open && onClose()
     mql.addEventListener('change', onChange)
     return () => mql.removeEventListener('change', onChange)
@@ -115,8 +115,8 @@ export function MobileMenu({
           </button>
         </div>
 
-        <nav aria-label={label} className="relative container-site mt-8 flex-1">
-          <ul>
+        <nav aria-label={label} className="relative container-site mt-8 flex-1 short:mt-2">
+          <ul className="short:grid short:grid-cols-2 short:gap-x-10">
             {items.map((item, i) => (
               <li key={item.to} className="overflow-hidden">
                 <NavLink
@@ -125,7 +125,9 @@ export function MobileMenu({
                   data-menu-item=""
                   className={({ isActive }) => cn(styles.link, isActive && styles.active)}
                 >
-                  <span className={cn(styles.label, 'text-display-lg')}>{item.label}</span>
+                  <span className={cn(styles.label, 'text-display-lg short:text-heading-xl')}>
+                    {item.label}
+                  </span>
                   <span className={styles.index}>{pad2(i + 1)}</span>
                 </NavLink>
               </li>
@@ -133,7 +135,7 @@ export function MobileMenu({
           </ul>
         </nav>
 
-        <div className="relative container-site flex flex-col gap-8 pt-10 pb-10">
+        <div className="relative container-site flex flex-col gap-8 pt-10 pb-10 short:gap-5 short:py-6">
           <div data-menu-item="">
             <Button
               to={cta.to}

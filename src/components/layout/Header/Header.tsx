@@ -66,8 +66,8 @@ export function Header({ nav, cta, homeLabel, menuLabel, menuOpenLabel, menu }: 
             <Logo title="" />
           </Link>
 
-          <nav aria-label={menuLabel} className="hidden md:block">
-            <ul className="flex items-center gap-6 lg:gap-8">
+          <nav aria-label={menuLabel} className="hidden lg:block">
+            <ul className="flex items-center gap-7 xl:gap-8">
               {nav.map((item) => (
                 <li key={item.to}>
                   <NavLink
@@ -94,7 +94,7 @@ export function Header({ nav, cta, homeLabel, menuLabel, menuOpenLabel, menu }: 
             </Button>
             <button
               type="button"
-              className="-mr-2 inline-flex h-11 items-center gap-3 px-2 font-mono text-eyebrow tracking-[0.16em] uppercase md:hidden"
+              className="-mr-2 inline-flex h-11 items-center gap-3 px-2 font-mono text-eyebrow tracking-[0.16em] uppercase lg:hidden"
               aria-expanded={menuOpen}
               aria-haspopup="dialog"
               onClick={() => setMenuOpen(true)}

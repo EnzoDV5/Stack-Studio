@@ -72,8 +72,9 @@ the one place prices appear. Compact page title, then 01 new websites, 02 apps a
 **Start with this** link (`/start?type=<id>`) and every group ends with a button that opens
 the brief on its path. Then the FAQ (general, services and plan questions) and the closing CTA.
 
-A transparent, viewport-height section rail stays at the side on desktop and becomes a section
-menu on phones. The page title sits outside the count. Its connected markers show reading
+A transparent, viewport-height section rail stays at the side on desktop (from 1280px, where the
+gutter is wide enough) and becomes a section menu on phones and tablets. It fades out once the
+reader is past the last section, so it never sits over the closing CTA or the footer. The page title sits outside the count. Its connected markers show reading
 progress, and the current section name animates beside its marker. Hovering or focusing another
 marker reveals its name before jumping. Process uses the same navigator.
 

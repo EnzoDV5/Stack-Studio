@@ -112,7 +112,11 @@ export function MacbookScroll({ image, title, priority = false, className }: Mac
           scrollTrigger: {
             trigger: root,
             start: 'top top',
-            end: () => `+=${(open + siteScroll) * window.innerHeight}`,
+            end: () => {
+              const portrait = window.innerHeight > window.innerWidth
+              const length = (open + siteScroll) * (portrait ? macbook.portraitScroll : 1)
+              return `+=${length * window.innerHeight}`
+            },
             pin: true,
             scrub: true,
             anticipatePin: 1,

@@ -61,7 +61,7 @@ export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, video }: Ho
       tone="dark"
       solid
       spacing="none"
-      className="flex min-h-svh flex-col justify-center overflow-hidden pt-(--spacing-header) pb-[14svh]"
+      className="flex min-h-svh flex-col justify-center overflow-hidden pt-(--spacing-header) pb-[14svh] short:pt-[calc(var(--spacing-header)+1rem)] short:pb-12"
     >
       <div className="absolute inset-0 -z-20">
         <Video video={video} priority mode="controlled" playing className="absolute! inset-0" />
@@ -95,7 +95,7 @@ export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, video }: Ho
         <SplitReveal
           as="h1"
           trigger="intro"
-          className="mt-5 max-w-[4em] font-display text-display-2xl text-paper lg:text-[length:min(var(--text-display-2xl),14.5svh)]"
+          className="mt-5 max-w-[4em] font-display text-display-2xl text-paper landscape:text-[length:min(var(--text-display-2xl),14.5svh)]"
         >
           {title}
         </SplitReveal>

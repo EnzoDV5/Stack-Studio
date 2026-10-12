@@ -65,7 +65,7 @@ export function Footer({
             <p className="mt-5 text-small text-muted">{responsePromise}</p>
           </div>
 
-          <div className="lg:col-span-3 lg:col-start-7">
+          <div className="lg:col-span-4 lg:col-start-6">
             <p className="mb-5 eyebrow text-muted">{headings.social}</p>
             <ul className="space-y-3">
               {socials.map((social) => (

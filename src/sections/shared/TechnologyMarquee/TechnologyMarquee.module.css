@@ -29,7 +29,7 @@
   @media (prefers-reduced-motion: reduce) {
     .rows {
       padding-inline: var(--spacing-gutter);
-      gap: 2rem;
+      gap: 1rem;
     }
   }
 }

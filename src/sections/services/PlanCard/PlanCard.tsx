@@ -32,6 +32,7 @@ export function PlanCard({
   cta,
   mark = false,
 }: PlanCardProps) {
+  const [amount, period] = price.split('/', 2)
   return (
     <li
       id={anchorId}
@@ -45,7 +46,15 @@ export function PlanCard({
       )}
       <h3 className="text-heading-lg">{name}</h3>
       <p className={cn('mt-1 text-small', accent ? 'text-ink/80' : 'text-muted')}>{tagline}</p>
-      <p className="mt-7 numeric text-heading-xl">{price}</p>
+      <p className="mt-7 numeric text-heading-xl">
+        {amount}
+        {/* The billing period sits smaller so the price fits a three-column row on tablets. */}
+        {period && (
+          <span className={cn('text-heading-md', accent ? 'text-ink/80' : 'text-muted')}>
+            /{period}
+          </span>
+        )}
+      </p>
       {hours && (
         <p className={cn('mt-3 eyebrow', accent ? 'text-ink/80' : 'text-muted')}>{hours}</p>
       )}

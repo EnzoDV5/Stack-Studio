@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useId, type CSSProperties } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
 import type { PaymentSchedule, PolicyItem } from '@/types'
@@ -38,23 +38,26 @@ export function PoliciesList({
           size="heading-xl"
         />
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-2">
+        <div className="mt-12 grid gap-10 xl:grid-cols-2">
           {schedules.map((schedule) => (
             <div key={schedule.id}>
               <H className="text-heading-md">{schedule.label}</H>
               <p className="mt-1 eyebrow text-muted">{scheduleLabel}</p>
+              {/* A list on phones; from sm, one bar with segments sized by their share. */}
               <ol
-                className="mt-5 flex overflow-hidden rounded-md border border-tone"
+                className="mt-5 flex flex-col overflow-hidden rounded-md border border-tone sm:flex-row"
                 aria-label={schedule.appliesTo}
               >
                 {schedule.milestones.map((m) => (
                   <li
                     key={m.label}
-                    style={{ flexGrow: m.percent, flexBasis: 0 }}
-                    className="min-w-0 border-r border-tone p-3 last:border-r-0"
+                    style={{ '--share': m.percent } as CSSProperties}
+                    className="flex items-baseline gap-4 border-b border-tone p-3 last:border-b-0 sm:block sm:min-w-26 sm:grow-(--share) sm:basis-0 sm:border-r sm:border-b-0 sm:last:border-r-0"
                   >
-                    <span className="block numeric text-heading-md text-accent">{m.percent}%</span>
-                    <span className="mt-1 block text-micro text-muted">{m.label}</span>
+                    <span className="block w-12 shrink-0 numeric text-heading-md text-accent sm:w-auto">
+                      {m.percent}%
+                    </span>
+                    <span className="block text-micro text-muted sm:mt-1">{m.label}</span>
                   </li>
                 ))}
               </ol>

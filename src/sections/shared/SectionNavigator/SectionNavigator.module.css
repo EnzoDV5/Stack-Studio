@@ -4,6 +4,17 @@
   right: max(0.75rem, env(safe-area-inset-right));
   bottom: max(1rem, env(safe-area-inset-bottom));
   color: var(--color-paper);
+  transition:
+    opacity var(--duration-fast) var(--ease-out-expo),
+    visibility 0s linear;
+}
+
+.root[data-finished] {
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity var(--duration-fast) var(--ease-out-expo),
+    visibility 0s linear var(--duration-fast);
 }
 
 .desktop {
@@ -100,7 +111,8 @@
   background: var(--color-orange);
 }
 
-@media (min-width: 1024px) {
+/* From 1280px: below that the gutter is narrower than the rail, which would sit on the content. */
+@media (min-width: 1280px) {
   .root {
     top: calc(var(--spacing-header) + 1rem);
     bottom: 1rem;

@@ -29,7 +29,7 @@
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
-    padding-block: 0.9rem;
+    padding-block: clamp(0.55rem, 1.6svh, 0.9rem); /* tighter on short screens */
     border-bottom: 1px solid rgb(255 255 255 / 0.1);
   }
 

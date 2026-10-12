@@ -57,7 +57,7 @@ export function CareSteps({
 
           <MediaReveal
             from="left"
-            className="relative aspect-[5/4] overflow-hidden rounded-lg bg-ink lg:col-span-7 lg:aspect-[8/5]"
+            className="relative aspect-[5/4] overflow-hidden rounded-lg bg-ink sm:aspect-[16/10] lg:col-span-7 lg:aspect-auto lg:min-h-[24rem]"
           >
             <ServiceMedia
               item={media}

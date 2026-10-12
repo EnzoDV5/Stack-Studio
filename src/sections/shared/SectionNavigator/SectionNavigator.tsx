@@ -16,6 +16,9 @@ export interface SectionNavigatorProps {
 export function SectionNavigator({ label, items }: SectionNavigatorProps) {
   const [active, setActive] = useState(-1)
   const [mobileOpen, setMobileOpen] = useState(false)
+  // Past the last section: the closing CTA and footer are not part of the outline, and the
+  // floating control would sit over them.
+  const [finished, setFinished] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
   const desktopRef = useRef<HTMLElement>(null)
   const mobileButtonRef = useRef<HTMLButtonElement>(null)
@@ -51,6 +54,8 @@ export function SectionNavigator({ label, items }: SectionNavigatorProps) {
       if (desktopRef.current)
         desktopRef.current.dataset.surface = surface === 'dark' ? 'dark' : 'light'
       setActive(current)
+      const last = sections[sections.length - 1]
+      setFinished(last ? last.getBoundingClientRect().bottom < window.innerHeight * 0.6 : false)
     }
     const requestUpdate = () => {
       if (!frame) frame = window.requestAnimationFrame(update)
@@ -109,7 +114,12 @@ export function SectionNavigator({ label, items }: SectionNavigatorProps) {
   ))
 
   return (
-    <div ref={rootRef} className={styles.root}>
+    <div
+      ref={rootRef}
+      className={styles.root}
+      data-finished={finished || undefined}
+      inert={finished}
+    >
       <nav
         ref={desktopRef}
         aria-label={label}
@@ -149,7 +159,7 @@ export function SectionNavigator({ label, items }: SectionNavigatorProps) {
           {String(active + 1).padStart(2, '0')}/{String(items.length).padStart(2, '0')}
         </span>
       </button>
-      {mobileOpen && (
+      {mobileOpen && !finished && (
         <nav id={menuId} aria-label={label} className={styles.mobileMenu}>
           <ol>{links}</ol>
         </nav>
