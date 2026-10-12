@@ -181,7 +181,10 @@ autoplay. All content stays visible.
 ## Grain and texture
 
 `<GrainOverlay>`: one fixed SVG-noise layer at 5.5% opacity with stepped jitter (static
-under reduced motion). No blend modes, to keep compositing cheap.
+under reduced motion). No blend modes, to keep compositing cheap. The jitter runs on a
+6-per-second timer (`grain` in motion-tokens), not a CSS animation: a running CSS animation
+restyles every frame, and this layer is always on screen. The same goes for anything else that
+loops: the marquee and the hero glow pause while off screen.
 
 ## Media
 

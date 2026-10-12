@@ -140,7 +140,7 @@
     box-shadow: none;
   }
 
-  .desktop[data-surface='dark'] {
+  :global(html[data-page-tone='dark']) .desktop {
     --rail-text: var(--color-paper);
     --rail-mark: rgb(244 240 234 / 0.65);
     --rail-track: rgb(244 240 234 / 0.35);

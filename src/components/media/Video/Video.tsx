@@ -64,7 +64,15 @@ export function Video({
         (video.poster ? (
           <Image image={video.poster} priority={priority} sizes={sizes} className={styles.layer} />
         ) : (
-          <div className={cn(styles.layer, styles.gradient)} aria-hidden="true" />
+          <div
+            className={cn(
+              styles.layer,
+              styles.gradient,
+              // Hold the drift while it can't be seen (off screen, or under a playing video).
+              (!inView || isPlaying) && styles.still,
+            )}
+            aria-hidden="true"
+          />
         ))}
 
       {!failed && (

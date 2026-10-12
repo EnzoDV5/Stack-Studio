@@ -22,6 +22,8 @@
 }
 
 .link {
+  /* The tile is the container: its icon scales with the tile, not the viewport. */
+  container-type: inline-size;
   position: relative;
   display: flex;
   min-height: clamp(8.75rem, 12vw, 11rem);
@@ -69,12 +71,13 @@
   letter-spacing: -0.04em;
 }
 
-/* Top right; it rises a little on hover with the arrow. */
+/* Top right, sized by its tile (about 40px in a phone tile, 72px in a wide one). It rises a
+   little on hover with the arrow. */
 .icon {
   position: absolute;
-  top: clamp(0.9rem, 1.6vw, 1.5rem);
-  right: clamp(0.9rem, 1.6vw, 1.5rem);
-  width: clamp(3.5rem, 5vw, 4.5rem);
+  top: clamp(0.9rem, 4.5cqi, 1.5rem);
+  right: clamp(0.9rem, 4.5cqi, 1.5rem);
+  width: clamp(2.5rem, 12cqi + 1.5rem, 4.5rem);
   height: auto;
   transition: transform var(--duration-base) var(--ease-out-expo);
   pointer-events: none;
@@ -109,10 +112,6 @@
 @media (max-width: 639px) {
   .link {
     min-height: 8.5rem;
-  }
-
-  .icon {
-    width: 2.75rem;
   }
 
   .label {

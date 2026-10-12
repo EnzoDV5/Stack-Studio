@@ -349,15 +349,19 @@ export function WorkReel({
                   mode !== 'pin' && 'min-h-[34rem]',
                 )}
               >
-                <div className="flex min-h-0 flex-1 items-center justify-center pb-8">
+                {/* The illustration takes whatever room the card has left (up to 18rem tall)
+                    and scales down with it, in width and height. */}
+                <div className="relative mb-8 min-h-32 flex-1">
                   <img
                     src={outroIllustration.src}
+                    srcSet={outroIllustration.srcSet}
+                    sizes="(min-width: 640px) 24rem, 78vw"
                     width={outroIllustration.width}
                     height={outroIllustration.height}
                     alt={outroIllustration.alt}
                     loading="lazy"
                     decoding="async"
-                    className="block max-h-[18rem] max-w-full object-contain mix-blend-multiply"
+                    className="absolute inset-0 m-auto block size-full max-h-72 object-contain mix-blend-multiply"
                   />
                 </div>
                 <div className="flex shrink-0 flex-col gap-10">

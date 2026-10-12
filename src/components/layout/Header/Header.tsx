@@ -30,9 +30,11 @@ export function Header({ nav, cta, homeLabel, menuLabel, menuOpenLabel, menu }: 
   useEffect(() => {
     let frame = 0
     const onScroll = () => {
+      // Read the offset here, where layout is fresh; in the frame callback it would force a
+      // style recalc after the frame's animation writes.
+      const y = window.scrollY
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
-        const y = window.scrollY
         const diff = y - lastY.current
         if (Math.abs(diff) > DELTA) {
           setHidden(diff > 0 && y > SHOW_AT_TOP)

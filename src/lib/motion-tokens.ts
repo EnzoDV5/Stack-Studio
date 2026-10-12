@@ -91,8 +91,29 @@ export const marquee = {
   technologyItemSeconds: 5,
 } as const
 
+/**
+ * Film grain jitter (GrainOverlay): the layer jumps through these offsets (vw, vh) once per
+ * loop, six times a second. They are the positions the old `steps(6)` CSS keyframes landed on.
+ */
+export const grain = {
+  loopSeconds: 1,
+  offsets: [
+    [0, 0],
+    [-5, 3.33],
+    [0.67, -4],
+    [-2, -5],
+    [-3.33, 0.67],
+    [2, 2],
+  ],
+} as const
+
+/**
+ * Wheel and trackpad smoothing. Each frame the page covers `lerp` of the way to where the
+ * reader scrolled, so a lower value glides further after the wheel stops ("on ice"); below
+ * ~0.06 it starts to feel detached from the hand. Touch keeps the device's native momentum.
+ */
 export const lenis = {
-  lerp: 0.09,
+  lerp: 0.065,
   wheelMultiplier: 1,
 } as const
 

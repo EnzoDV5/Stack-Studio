@@ -72,7 +72,15 @@
     grid-template-rows: 1fr;
   }
 
+  /* A closed panel isn't rendered at all, so its lazy images (and layout) wait until it
+     opens. allow-discrete keeps the content visible until the closing animation ends. */
   .panelInner {
     overflow: hidden;
+    content-visibility: hidden;
+    transition: content-visibility var(--duration-fast) allow-discrete;
+  }
+
+  .open .panelInner {
+    content-visibility: visible;
   }
 }

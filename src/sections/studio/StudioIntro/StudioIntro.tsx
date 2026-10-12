@@ -36,7 +36,7 @@ export function StudioIntro({
           </div>
         </div>
         <MediaReveal className="aspect-4/5 rounded-lg bg-paper-200 lg:col-span-5 lg:col-start-8">
-          <Image image={image} sizes="(min-width: 1024px) 40vw, 100vw" />
+          <Image image={image} sizes="(min-width: 1700px) 640px, (min-width: 1024px) 40vw, 90vw" />
         </MediaReveal>
       </div>
     </Section>

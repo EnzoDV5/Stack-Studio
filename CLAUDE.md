@@ -37,6 +37,7 @@ npm run mockups:render   # render the project device mockups (public/media/READM
 node scripts/devices/render.mjs          # Services phone and laptop frames from the 3D models (local Chrome)
 node scripts/founders/encode.mjs <photo> public/media/founders/<id>  # 4:5 WebP founder portraits (local Chrome)
 node scripts/services-media/encode.mjs   # encode the service stage videos (needs ffmpeg; public/media/services/README.md)
+node scripts/illustrations/encode.mjs     # card illustrations: WebP renditions of the SVGs in public/Illustrations
 ```
 
 ## Folder conventions
@@ -237,13 +238,15 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
   which ships in the main bundle because it's the LCP-critical landing page. Heavy
   below-the-fold home sections use `DeferredSection` with `React.lazy`. `index.html`
   contains an inline brand shell in `#root` for instant first paint.
-- Last measured Lighthouse scores (mobile, local preview, after the Sept 2026 Home
-  restructure): Home 83–85, Work 88, Studio 87, Start 86, case study 84, Pricing 81–83,
-  Services 82, Privacy 82; accessibility, best practices and SEO 100 everywhere. On the same
-  machine the previous build scored Home 74–77 (it scored 91 on the faster machine used
-  before). Home's LCP is the hero intro while the preloader holds the h1; the rest is
-  vendor script evaluation. (Work and the case study were limited by remote picsum images;
-  those are now local mockups, so re-measure.)
+- Last measured Lighthouse performance (mobile, local preview, Oct 2026 performance pass, median
+  of 3 interleaved with the previous build on the same machine): Home 74 → 82, case study
+  61 → 68, Process 75 → 74, Start 84 → 85 (accessibility, best practices and SEO were 100 in
+  the Sept run). Home's LCP is the hero intro while the preloader holds the h1; the rest is
+  vendor script evaluation and GSAP tween set-up (each first tween on an element reads its
+  computed transform, forcing a layout).
+- Every image set has in-between widths (no 2× jumps) and `sizes` measured from the real
+  layout, so phones and 1× screens fetch what they show. Card illustrations are WebP
+  renditions (scripts/illustrations), never the multi-MB source SVGs in public/Illustrations.
 - `<Image>`: explicit width and height, `loading="lazy"` + `decoding="async"` by default,
   `priority` for hero media only. `<Video>`: muted, playsInline, loop, `preload="none"`,
   poster, plays only while in view, and falls back to the poster or a brand gradient on error.

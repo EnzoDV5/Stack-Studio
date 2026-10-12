@@ -28,7 +28,11 @@ export function CaseGallery({ label, items, tone = 'dark' }: CaseGalleryProps) {
                 <Parallax amount={10} className="absolute inset-x-0 top-[-6%] h-[112%]">
                   <Image
                     image={item}
-                    sizes={item.span === 'full' ? '100vw' : '(min-width: 768px) 50vw, 100vw'}
+                    sizes={
+                      item.span === 'full'
+                        ? '(min-width: 1700px) 1600px, 94vw'
+                        : '(min-width: 1700px) 800px, (min-width: 768px) 47vw, 94vw'
+                    }
                   />
                 </Parallax>
               </MediaReveal>

@@ -81,7 +81,8 @@ export function ServiceMedia({ item, active, paused, sizes }: ServiceMediaProps)
       {item.video && (
         <video
           ref={video}
-          poster={item.image.src}
+          // No poster: the <img> underneath already shows it, and a poster attribute downloads
+          // straight away, ignoring the image's lazy loading.
           muted
           loop
           playsInline

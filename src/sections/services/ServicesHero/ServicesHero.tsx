@@ -52,7 +52,7 @@ export function ServicesHero({
                       <img
                         src={item.icon.src}
                         srcSet={item.icon.srcSet}
-                        sizes="(min-width: 640px) 4.5rem, 3.5rem"
+                        sizes="(min-width: 640px) 4.5rem, 2.75rem"
                         width={item.icon.width}
                         height={item.icon.height}
                         alt=""

@@ -37,12 +37,12 @@ export function PlanCard({
     <li
       id={anchorId}
       className={cn(
-        'group relative isolate flex flex-col overflow-hidden rounded-lg border p-6 md:p-7',
+        'group @container relative isolate flex flex-col overflow-hidden rounded-lg border p-6 md:p-7',
         accent ? 'border-orange bg-orange text-ink' : 'border-tone',
       )}
     >
       {mark && (
-        <StackMark className="pointer-events-none absolute -right-8 -bottom-24 -z-10 w-48 text-ink sm:w-60 md:w-72 lg:-bottom-12 lg:w-40 xl:-bottom-24 xl:w-60" />
+        <StackMark className="pointer-events-none absolute -right-8 -bottom-[22cqi] -z-10 w-[52cqi] max-w-72 text-ink" />
       )}
       <h3 className="text-heading-lg">{name}</h3>
       <p className={cn('mt-1 text-small', accent ? 'text-ink/80' : 'text-muted')}>{tagline}</p>

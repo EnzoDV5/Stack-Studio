@@ -10,8 +10,9 @@ Until they exist, <Video> shows its poster or an animated brand-gradient placeho
 
 ## Case study site captures (/public/media/projects)
 
-`{id}-screen.webp` (2160 wide) and `{id}-screen-small.webp` (1080 wide) are full-page captures
-of the live client sites' homepages at a 1440 CSS px viewport, saved at 1.5× and 0.75×, and
+`{id}-screen.webp` (2160 wide), `{id}-screen-1440.webp`, `{id}-screen-small.webp` (1080 wide) and
+`{id}-screen-720.webp` are full-page captures of the live client sites' homepages at a 1440 CSS px
+viewport, saved at 1.5×, 1×, 0.75× and 0.5×, and
 scrolled inside the laptop on each case study:
 
 - gc-solar: https://gcsolar-redesign-demo.netlify.app/
@@ -50,8 +51,10 @@ projects and no two pages repeat a mockup:
 | Salon Friend   | Three phones     | Laptop between two phones              |
 
 Every scene is rendered separately at each output width (never downscaled), so text stays
-sharp at every size: cards 2400/1600/800, showcases and full gallery images 3840/2560/1280
-(3840 covers a full-bleed retina screen), half gallery images 2000/1200/600. Files are
+sharp at every size: cards 2400/1600/1200/800, showcases and full gallery images
+3840/2560/1920/1280/960 (3840 covers a full-bleed retina screen), half gallery images
+2000/1200/900/600. The in-between widths keep phones and 1× screens from fetching a file twice
+the size they show. Files are
 `{project}-{name}-{width}.webp`.
 
 - `scripts/mockups/shots.mjs`: which pages to capture per site (desktop 1440×900 at 2×,

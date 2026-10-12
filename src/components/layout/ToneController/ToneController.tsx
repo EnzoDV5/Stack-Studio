@@ -115,6 +115,9 @@ export function ToneController({ pathname }: ToneControllerProps) {
     let gliding = false
     // When the reader last scrolled (ticker seconds), to tell layout changes from reading.
     let scrolledAt = -Infinity
+    // The scroll offset ScrollTrigger last read (cached per frame), so the per-frame work never
+    // re-reads window.scrollY after its own style writes (that forces a style recalc).
+    let scrollTop = window.scrollY
 
     const setVars = (el: HTMLElement, values: string[]) => {
       const last = written.get(el) ?? []
@@ -136,7 +139,7 @@ export function ToneController({ pathname }: ToneControllerProps) {
       const bg = values[0]
       if (bg && document.body.style.backgroundColor !== bg) document.body.style.backgroundColor = bg
       if (everywhere) setVars(root, values)
-      const top = window.scrollY
+      const top = scrollTop
       const bottom = top + window.innerHeight
       for (const { el, stop } of sections) {
         if (!stop.solid && stop.top < bottom && stop.bottom > top) setVars(el, values)
@@ -157,7 +160,7 @@ export function ToneController({ pathname }: ToneControllerProps) {
     }
 
     const apply = (immediate = false) => {
-      const y = window.scrollY
+      const y = scrollTop
 
       // The section whose top has crossed the line owns the page colour.
       const tone = activeTone(
@@ -173,6 +176,9 @@ export function ToneController({ pathname }: ToneControllerProps) {
       const header = y <= HEADER_BACKDROP_AT ? (surfaceAt(stops, y + probeY, tone) ?? 'dark') : tone
       const headerTone = isLightTone(header) ? 'light' : 'dark'
       if (root.dataset.headerTone !== headerTone) root.dataset.headerTone = headerTone
+      // The page tone itself, for floating chrome over the content (the section rail).
+      const pageTone = isLightTone(tone) ? 'light' : 'dark'
+      if (root.dataset.pageTone !== pageTone) root.dataset.pageTone = pageTone
 
       if (!palette) return
 
@@ -205,6 +211,7 @@ export function ToneController({ pathname }: ToneControllerProps) {
     // lands on its colours straight away. One mid-scroll (a deferred section mounting as it
     // arrives) glides like scrolling does, so it can never flash.
     const measure = () => {
+      scrollTop = window.scrollY
       sections = measureSections()
       stops = sections.map((section) => section.stop)
       apply(gsap.ticker.time - scrolledAt > toneTokens.switch * 2)
@@ -215,7 +222,8 @@ export function ToneController({ pathname }: ToneControllerProps) {
     const trigger = ScrollTrigger.create({
       start: 0,
       end: 'max',
-      onUpdate: () => {
+      onUpdate: (self) => {
+        scrollTop = self.scroll()
         scrolledAt = gsap.ticker.time
         apply()
       },
@@ -230,6 +238,7 @@ export function ToneController({ pathname }: ToneControllerProps) {
       ScrollTrigger.removeEventListener('refresh', measure)
       root.classList.remove('tone-flow')
       delete root.dataset.headerTone
+      delete root.dataset.pageTone
       document.body.style.removeProperty('background-color')
       for (const { el } of sections) {
         CHANNELS.forEach(([, name]) => el.style.removeProperty(name))

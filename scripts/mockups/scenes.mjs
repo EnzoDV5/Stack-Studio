@@ -44,10 +44,10 @@ export const themes = {
  * largest covers a full-bleed retina screen: the Home hero and reel are 100vw.
  */
 export const shapes = {
-  card: { aspect: 3 / 4, widths: [2400, 1600, 800] }, // Work cards, next-project card
-  showcase: { aspect: 9 / 16, widths: [3840, 2560, 1280] }, // Home hero, work reel, case hero
-  wide: { aspect: 9 / 16, widths: [3840, 2560, 1280] }, // full-width gallery images
-  tall: { aspect: 5 / 4, widths: [2000, 1200, 600] }, // half-width gallery images
+  card: { aspect: 3 / 4, widths: [2400, 1600, 1200, 800] }, // Work cards, next-project card
+  showcase: { aspect: 9 / 16, widths: [3840, 2560, 1920, 1280, 960] }, // Home hero, work reel, case hero
+  wide: { aspect: 9 / 16, widths: [3840, 2560, 1920, 1280, 960] }, // full-width gallery images
+  tall: { aspect: 5 / 4, widths: [2000, 1200, 900, 600] }, // half-width gallery images
 }
 
 export const scenes = [

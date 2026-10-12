@@ -28,7 +28,7 @@ Each stage has:
 - `{stage}-720.mp4`: 1280 × 720 (CRF 24, max 1.8 Mb/s). The player picks the smallest encode
   that is sharp at the size the clip is actually drawn (`lib/video-source.ts`, which allows
   for `object-fit: cover` in tall boxes), so small slots never fetch the 1080p file.
-- `{stage}-poster.webp` (1920), `-poster-960.webp`, `-poster-480.webp`: the loop's first
+- `{stage}-poster.webp` (1920) and `-poster-{1280,960,720,480}.webp`: the loop's first
   frame, so the poster → video swap is invisible.
 
 Each is a roughly 10-second seamless loop: the last second crossfades back into the first frame.

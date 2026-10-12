@@ -46,7 +46,7 @@ export function ValuesGrid({
         />
         {image && (
           <MediaReveal className="mt-14 aspect-video rounded-lg bg-tone-surface lg:aspect-[21/9]">
-            <Image image={image} sizes="(min-width: 1600px) 1600px, 100vw" />
+            <Image image={image} sizes="(min-width: 1700px) 1600px, 94vw" />
           </MediaReveal>
         )}
         <ol className={cn('mt-16 grid gap-px border-y border-tone md:grid-cols-2', cols)}>

@@ -125,7 +125,7 @@ function WebsiteMockup({
           <img
             src={solutions.src}
             srcSet={solutions.srcSet}
-            sizes="(min-width: 1024px) 40vw, 110vw"
+            sizes="(min-width: 1920px) 640px, (min-width: 1024px) 33vw, (min-width: 640px) 53vw, 105vw"
             width={solutions.width}
             height={solutions.height}
             alt={solutions.alt}
@@ -147,7 +147,7 @@ function WebsiteMockup({
                     ref={screenRef}
                     src={screen.src}
                     srcSet={screen.srcSet}
-                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    sizes="(min-width: 1920px) 420px, (min-width: 1024px) 22vw, (min-width: 640px) 34vw, 68vw"
                     width={screen.width}
                     height={screen.height}
                     alt={screen.alt}
@@ -165,7 +165,7 @@ function WebsiteMockup({
           <img
             src={projects.src}
             srcSet={projects.srcSet}
-            sizes="(min-width: 1024px) 24vw, 60vw"
+            sizes="(min-width: 1920px) 345px, (min-width: 1024px) 18vw, (min-width: 640px) 28vw, 57vw"
             width={projects.width}
             height={projects.height}
             alt={projects.alt}
@@ -219,7 +219,7 @@ function SoftwareMockup({
           <ImageSequence
             sequence={laptop}
             scroll={deviceScroll}
-            sizes="(min-width: 1024px) 45vw, 110vw"
+            sizes="(min-width: 1920px) 640px, (min-width: 1024px) 33vw, (min-width: 640px) 53vw, 105vw"
             className={styles.softwareSequence}
           />
         </div>
@@ -227,7 +227,7 @@ function SoftwareMockup({
           <ImageSequence
             sequence={phone}
             scroll={deviceScroll}
-            sizes="(min-width: 1024px) 20vw, 50vw"
+            sizes="(min-width: 1920px) 275px, (min-width: 1024px) 14vw, (min-width: 640px) 22vw, 45vw"
             className={styles.softwareSequence}
           />
         </div>
@@ -256,7 +256,7 @@ function ChapterVisual({ item, visible }: { item: ChapterFlowItem; visible: bool
             ...item.media.video,
             src: item.media.video.renditions?.[0]?.src ?? item.media.video.src,
           }}
-          sizes="(min-width: 1024px) 34vw, 100vw"
+          sizes="(min-width: 1920px) 570px, (min-width: 1024px) 30vw, (min-width: 640px) 47vw, 94vw"
           className={styles.video}
         />
       )}

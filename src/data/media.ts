@@ -14,14 +14,20 @@ import type { ServiceMediaItem } from '@/types/service-media'
 
 /**
  * Full-page desktop capture of a live client site in /public/media/projects, scrolled on the
- * laptop in the case study: the page at 1440 CSS px wide, saved at 1.5× (2160 px) and 0.75×
- * (1080 px). `cssHeight` is the page height the capture script prints. How to recapture:
+ * laptop in the case study: the page at 1440 CSS px wide, saved at 1.5× (2160 px), 1× (1440),
+ * 0.75× (1080) and 0.5× (720), so phones and 1× screens don't download the 2160 file.
+ * `cssHeight` is the page height the capture script prints. How to recapture:
  * public/media/README.md (npm run mockups:capture -- --full).
  */
 function siteCapture(id: string, cssHeight: number, alt: string): ImageAsset {
   return {
     src: `/media/projects/${id}-screen.webp`,
-    srcSet: `/media/projects/${id}-screen-small.webp 1080w, /media/projects/${id}-screen.webp 2160w`,
+    srcSet: [
+      `/media/projects/${id}-screen-720.webp 720w`,
+      `/media/projects/${id}-screen-small.webp 1080w`,
+      `/media/projects/${id}-screen-1440.webp 1440w`,
+      `/media/projects/${id}-screen.webp 2160w`,
+    ].join(', '),
     width: 2160,
     height: Math.round(cssHeight * 1.5),
     alt,
@@ -35,13 +41,13 @@ function siteCapture(id: string, cssHeight: number, alt: string): ImageAsset {
  */
 const mockupShapes = {
   /** Work cards and the next-project card (4:3). */
-  card: { aspect: 3 / 4, widths: [2400, 1600, 800] },
+  card: { aspect: 3 / 4, widths: [2400, 1600, 1200, 800] },
   /** Home hero backdrop and work reel, full-bleed on retina screens (16:9). */
-  showcase: { aspect: 9 / 16, widths: [3840, 2560, 1280] },
+  showcase: { aspect: 9 / 16, widths: [3840, 2560, 1920, 1280, 960] },
   /** Full-width gallery images (16:9). */
-  wide: { aspect: 9 / 16, widths: [3840, 2560, 1280] },
+  wide: { aspect: 9 / 16, widths: [3840, 2560, 1920, 1280, 960] },
   /** Half-width gallery images (4:5). */
-  tall: { aspect: 5 / 4, widths: [2000, 1200, 600] },
+  tall: { aspect: 5 / 4, widths: [2000, 1200, 900, 600] },
 } as const
 type MockupShape = keyof typeof mockupShapes
 
@@ -58,12 +64,29 @@ function mockup(project: string, name: string, shape: MockupShape, alt: string):
   }
 }
 
-/** A square Services icon in /public/media/services/icons (192 and 96 px WebP). */
+/**
+ * A card illustration in /public/media/illustrations at each width (largest first), encoded
+ * from the source SVGs in public/Illustrations by scripts/illustrations/encode.mjs (keep the
+ * widths in step with it). `aspect` is height ÷ width.
+ */
+function illustration(id: string, widths: number[], aspect: number, alt: string): ImageAsset {
+  const url = (w: number) => `/media/illustrations/${id}-${w}.webp`
+  const largest = widths[0] ?? 1200
+  return {
+    src: url(widths[1] ?? largest),
+    srcSet: widths.map((w) => `${url(w)} ${w}w`).join(', '),
+    width: largest,
+    height: Math.round(largest * aspect),
+    alt,
+  }
+}
+
+/** A square Services icon in /public/media/services/icons (192, 128 and 96 px WebP). */
 function serviceIcon(id: string): ImageAsset {
   const url = (w: number) => `/media/services/icons/${id}-${w}.webp`
   return {
     src: url(192),
-    srcSet: `${url(96)} 96w, ${url(192)} 192w`,
+    srcSet: `${url(96)} 96w, ${url(128)} 128w, ${url(192)} 192w`,
     width: 192,
     height: 192,
     alt: '',
@@ -168,14 +191,20 @@ function deviceFrames(
 
 /**
  * A service stage's looping clip: 1920×1080 with a 1280×720 rendition (the player picks the
- * one that is sharp at the slot's size) and its first frame as a WebP poster at three widths.
+ * one that is sharp at the slot's size) and its first frame as a WebP poster at five widths.
  * Encoded by scripts/services-media (sources and licences: public/media/services/README.md).
  */
 function serviceClip(id: string, alt: string): ServiceMediaItem {
   const poster = (suffix: string) => `/media/services/${id}-poster${suffix}.webp`
   const image: ImageAsset = {
     src: poster('-960'),
-    srcSet: `${poster('-480')} 480w, ${poster('-960')} 960w, ${poster('')} 1920w`,
+    srcSet: [
+      `${poster('-480')} 480w`,
+      `${poster('-720')} 720w`,
+      `${poster('-960')} 960w`,
+      `${poster('-1280')} 1280w`,
+      `${poster('')} 1920w`,
+    ].join(', '),
     width: 1920,
     height: 1080,
     alt,
@@ -229,21 +258,21 @@ export const media = {
       'showreel.mp4',
       'Stack Studio showreel: a montage of websites we have designed and built', // COPY:
     ),
-    startToFinish: {
-      src: '/Illustrations/StartToFinish.svg',
-      alt: 'Illustration of a team collaborating on a website', // COPY:
-      width: 1448,
-      height: 1086,
-    },
+    startToFinish: illustration(
+      'start-to-finish',
+      [1200, 800, 480],
+      3 / 4,
+      'Illustration of a team collaborating on a website', // COPY:
+    ),
   },
 
   services: {
-    fixOrImprove: {
-      src: '/Illustrations/FixOrImprove.svg',
-      alt: 'A designer rearranging website components, with symbols for improvements and growth',
-      width: 1672,
-      height: 941,
-    },
+    fixOrImprove: illustration(
+      'fix-or-improve',
+      [1760, 1200, 800, 480],
+      991 / 1760,
+      'A designer rearranging website components, with symbols for improvements and growth',
+    ),
     /**
      * The quick-pick icons at the top of Services, keyed by the section they jump to. Encoded
      * from the sources in public/Icons by scripts/icons/encode.mjs. Decorative (the label
@@ -361,7 +390,7 @@ export const media = {
         2400,
         1350,
       ),
-      logo: clientLogo('mpg-foundation-on-dark', 1000, 1000, 'MPG Foundation logo'),
+      logo: clientLogo('mpg-foundation-on-dark', 400, 400, 'MPG Foundation logo'),
       gallery: [
         mockup(
           'mpg-foundation',
@@ -415,7 +444,7 @@ export const media = {
         1600,
         1200,
       ),
-      logo: clientLogo('salon-friend-on-dark', 682, 468, 'Salon Friend logo'),
+      logo: clientLogo('salon-friend-on-dark', 480, 329, 'Salon Friend logo'),
       gallery: [
         mockup('salon-friend', 'catalogue', 'wide', 'The Salon Friend catalogue in a browser'), // COPY: alt
         mockup('salon-friend', 'product-mobile', 'tall', 'A Salon Friend product page on a phone'), // COPY: alt
@@ -448,14 +477,14 @@ export const media = {
     // "Design, motion and development in one team": a designer and a developer at one screen.
     workspace: studioPhoto(
       'one-team',
-      [1600, 1000, 640],
+      [1600, 1200, 1000, 800, 640],
       4 / 5,
       'A designer and a developer working through a build together at one screen',
     ), // COPY: alt
     // "Built to grow": a team gathered around one table.
     detail: studioPhoto(
       'growing-team',
-      [3200, 2000, 1200],
+      [3200, 2000, 1600, 1200, 800],
       1 / 2,
       'A team working together around one large table, seen from above',
     ), // COPY: alt

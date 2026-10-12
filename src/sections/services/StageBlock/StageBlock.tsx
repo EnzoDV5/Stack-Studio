@@ -214,6 +214,8 @@ export function StageBlock({
               <MediaReveal className="w-full md:col-span-7">
                 <img
                   src={illustration.src}
+                  srcSet={illustration.srcSet}
+                  sizes="(min-width: 1700px) 58rem, (min-width: 768px) 55vw, 100vw"
                   width={illustration.width}
                   height={illustration.height}
                   alt={illustration.alt}

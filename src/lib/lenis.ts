@@ -24,7 +24,10 @@ export function startLenis(): () => void {
 
   const onTick = (time: number) => lenis.raf(time * 1000)
   lenis.on('scroll', ScrollTrigger.update)
-  gsap.ticker.add(onTick)
+  // Prioritised: Lenis scrolls (and ScrollTrigger reads the new offset) before GSAP renders the
+  // frame's tweens. Scrolling after those style writes would force a layout every frame, and
+  // scrubbed tweens now follow the scroll in the same frame instead of the next.
+  gsap.ticker.add(onTick, false, true)
   gsap.ticker.lagSmoothing(0)
   instance = lenis
 

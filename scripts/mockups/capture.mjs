@@ -86,7 +86,9 @@ if (full) {
     const height = await page.evaluate(() => document.documentElement.scrollHeight)
     for (const [suffix, scale] of [
       ['', 1.5],
+      ['-1440', 1],
       ['-small', 0.75],
+      ['-720', 0.5],
     ]) {
       await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: scale })
       await wait(800)

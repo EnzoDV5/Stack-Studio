@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState, type CSSProperties, type MouseEvent } from 'react'
+import { ScrollTrigger } from '@/lib/gsap'
 import { scrollToElement } from '@/lib/lenis'
 import styles from './SectionNavigator.module.css'
 
@@ -24,48 +25,69 @@ export function SectionNavigator({ label, items }: SectionNavigatorProps) {
   const mobileButtonRef = useRef<HTMLButtonElement>(null)
   const menuId = useId()
 
+  // Section positions are measured once (and again whenever the layout changes), so following
+  // the scroll is plain arithmetic: no layout reads or hit tests while the page glides. The
+  // rail's light/dark style comes from html[data-page-tone] (ToneController), in CSS.
   useEffect(() => {
     let frame = 0
+    let scrollY = window.scrollY
+    // Document positions: each section's top, and the bottom of the last one.
+    let tops: number[] = []
+    let end = Infinity
+
+    const measure = () => {
+      const y = window.scrollY
+      const sections = items.map((item) => document.getElementById(item.id))
+      tops = sections.map((section) =>
+        section ? section.getBoundingClientRect().top + y : Infinity,
+      )
+      const last = sections[sections.length - 1]
+      end = last ? last.getBoundingClientRect().bottom + y : Infinity
+    }
+
     const update = () => {
       frame = 0
-      const readingLine = window.innerHeight * 0.25
+      const readingLine = scrollY + window.innerHeight * 0.25
       let current = -1
-      const sections = items.map((item) => document.getElementById(item.id))
-      sections.forEach((section, index) => {
-        if (section && section.getBoundingClientRect().top <= readingLine) current = index
+      tops.forEach((top, index) => {
+        if (top <= readingLine) current = index
       })
       let progress = 0
       if (current >= 0) {
-        const thisSection = sections[current]
-        const nextSection = sections[current + 1]
-        const start = thisSection?.getBoundingClientRect().top ?? readingLine
-        const end =
-          nextSection?.getBoundingClientRect().top ??
-          thisSection?.getBoundingClientRect().bottom ??
-          readingLine
+        const start = tops[current] ?? readingLine
+        const stop = Math.min(tops[current + 1] ?? end, end)
         const within =
-          end > start ? Math.max(0, Math.min(1, (readingLine - start) / (end - start))) : 0
+          stop > start ? Math.max(0, Math.min(1, (readingLine - start) / (stop - start))) : 0
         progress = ((current + 0.5 + within) / items.length) * 100
       }
       desktopRef.current?.style.setProperty('--progress', `${progress}%`)
-      const surface = document
-        .elementFromPoint(window.innerWidth / 2, window.innerHeight / 2)
-        ?.closest<HTMLElement>('[data-tone]')?.dataset.tone
-      if (desktopRef.current)
-        desktopRef.current.dataset.surface = surface === 'dark' ? 'dark' : 'light'
       setActive(current)
-      const last = sections[sections.length - 1]
-      setFinished(last ? last.getBoundingClientRect().bottom < window.innerHeight * 0.6 : false)
+      setFinished(end - scrollY < window.innerHeight * 0.6)
     }
+
     const requestUpdate = () => {
       if (!frame) frame = window.requestAnimationFrame(update)
     }
-    update()
-    window.addEventListener('scroll', requestUpdate, { passive: true })
-    window.addEventListener('resize', requestUpdate)
+    // Read the offset in the scroll event itself: layout is fresh there, so it costs nothing.
+    const onScroll = () => {
+      scrollY = window.scrollY
+      requestUpdate()
+    }
+    const onLayout = () => {
+      measure()
+      scrollY = window.scrollY
+      requestUpdate()
+    }
+
+    onLayout()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onLayout)
+    // Fonts, media, accordions and lazy sections all end in a ScrollTrigger refresh.
+    ScrollTrigger.addEventListener('refresh', onLayout)
     return () => {
-      window.removeEventListener('scroll', requestUpdate)
-      window.removeEventListener('resize', requestUpdate)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onLayout)
+      ScrollTrigger.removeEventListener('refresh', onLayout)
       if (frame) window.cancelAnimationFrame(frame)
     }
   }, [items])

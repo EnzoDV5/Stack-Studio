@@ -7,7 +7,8 @@
  *
  * For each clip: a seamless loop (the last second crossfades back into the first frame, so
  * there is no jump when it repeats), silent H.264 at 1920×1080 and 1280×720 with capped
- * bitrates and faststart, and WebP posters (the loop's first frame) at 1920, 960 and 480 wide.
+ * bitrates and faststart, and WebP posters (the loop's first frame) at 1920, 1280, 960, 720
+ * and 480 wide.
  * Originals are cached in .media-cache (gitignored).
  */
 import { execFileSync } from 'node:child_process'
@@ -82,7 +83,9 @@ for (const clip of clips.filter((c) => !only || c.stage === only)) {
   // Posters: the first frame of the loop, so the swap from poster to video is seamless.
   for (const [suffix, width] of [
     ['', 1920],
+    ['-1280', 1280],
     ['-960', 960],
+    ['-720', 720],
     ['-480', 480],
   ]) {
     const file = join(outDir, `${clip.stage}-poster${suffix}.webp`)

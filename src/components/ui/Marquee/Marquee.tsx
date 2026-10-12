@@ -1,4 +1,5 @@
-import type { CSSProperties, ReactNode } from 'react'
+import { useRef, type CSSProperties, type ReactNode } from 'react'
+import { useInView } from '@/hooks/useInView'
 import { cn } from '@/lib/cn'
 import { marquee } from '@/lib/motion-tokens'
 import styles from './Marquee.module.css'
@@ -29,14 +30,18 @@ export function Marquee({
   className,
   'aria-label': ariaLabel,
 }: MarqueeProps) {
+  const rootRef = useRef<HTMLDivElement>(null)
+  // Off screen it stands still: a running CSS animation costs a style update every frame.
+  const onScreen = useInView(rootRef, { rootMargin: '100px 0px' })
   const style = {
     '--marquee-duration': `${duration}s`,
     '--marquee-gap': gap,
     // Leave unset while running so a parent can pause multiple rows on hover.
-    '--marquee-play-state': paused ? 'paused' : undefined,
+    '--marquee-play-state': paused || !onScreen ? 'paused' : undefined,
   } as CSSProperties
   return (
     <div
+      ref={rootRef}
       className={cn(
         styles.marquee,
         reverse && styles.reverse,

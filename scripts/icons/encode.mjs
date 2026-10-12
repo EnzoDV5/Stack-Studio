@@ -4,7 +4,7 @@
 // Chrome via puppeteer-core), a few KB each instead of ~0.5 MB.
 //
 //   node scripts/icons/encode.mjs [sourceDir] [outDir] [widths] [quality]
-//   node scripts/icons/encode.mjs public/Icons public/media/services/icons 192,96
+//   node scripts/icons/encode.mjs public/Icons public/media/services/icons 192,128,96
 /* global createImageBitmap, OffscreenCanvas -- used inside page.evaluate, in Chrome */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -13,7 +13,7 @@ import { launch } from '../mockups/browser.mjs'
 const [
   sourceDir = 'public/Icons',
   outDir = 'public/media/services/icons',
-  widthsArg = '192,96',
+  widthsArg = '192,128,96',
   quality = '0.9',
 ] = process.argv.slice(2)
 const widths = widthsArg.split(',').map(Number)

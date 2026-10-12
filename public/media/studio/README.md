@@ -15,7 +15,8 @@ Downloaded at 4000 × 2670 from
 cropped and encoded to WebP (quality 84) with ffmpeg:
 
 - `one-team`: 4:5 crop (`crop=2136:2670:1480:0`, both people in frame) at 1600, 1000 and 640
-  wide.
-- `growing-team`: 2:1 crop (`crop=4000:2000:0:335`) at 3200, 2000 and 1200 wide.
+  wide, plus 1200 and 800 downscaled from the 1600 file (quality 84) to close the gaps.
+- `growing-team`: 2:1 crop (`crop=4000:2000:0:335`) at 3200, 2000 and 1200 wide, plus 1600 and
+  800 downscaled from the 3200 file (quality 84).
 
 Paths, sizes and alt text are in `src/data/media.ts` (`studioPhoto`).
