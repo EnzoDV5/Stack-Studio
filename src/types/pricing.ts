@@ -25,7 +25,13 @@ export interface ServiceStage {
   briefPath: BriefPathId
 }
 
-/** How the quote builder treats a Build offering. */
+/**
+ * How a Build offering is filed: the brief's "website, app or software?" question and the
+ * three Build groups on Services.
+ */
+export type BuildKind = 'website' | 'app' | 'software'
+
+/** How the estimator treats a Build offering: websites get a range, the rest Discovery. */
 export type BuildCategory = 'website' | 'software'
 
 export interface PriceTier {
@@ -51,8 +57,8 @@ export interface Offering {
   notes?: string[]
   /** Must start with Discovery & Scoping. */
   requiresDiscovery?: boolean
-  /** Set = selectable as a project type in the quote builder. */
-  briefCategory?: BuildCategory
+  /** Set = selectable as a project type in the quote builder, under this kind. */
+  briefKind?: BuildKind
   visibility: Visibility
 }
 
@@ -143,12 +149,4 @@ export interface TimelineOption {
   label: string
   description: string
   multiplier: number
-}
-
-/** max null = open-ended. min/max both null = "Not sure". */
-export interface BudgetRange {
-  id: string
-  label: string
-  min: number | null
-  max: number | null
 }

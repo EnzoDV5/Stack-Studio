@@ -265,7 +265,7 @@ export const servicesContent = {
   websites: {
     name: 'I need a new website.', // COPY:
     line: 'Show what makes your business different and give people a reason to choose you.', // COPY:
-    cta: { label: 'Start a website', to: '/start?path=build' }, // COPY:
+    cta: { label: 'Start a website', to: '/start?kind=website' }, // COPY:
   },
   /** The Build stage's apps and software, with the phone turn (dark, between the groups). */
   apps: {
@@ -273,7 +273,7 @@ export const servicesContent = {
     title: 'I need an app or software.', // COPY:
     intro:
       'Booking systems, client portals, dashboards and apps that bring your idea to life and help your business work better.', // COPY:
-    cta: { label: 'Tell us about your app', to: '/start?path=build' }, // COPY:
+    cta: { label: 'Tell us about your app', to: '/start?kind=app' }, // COPY:
   },
   /** Desktop software and the systems behind it, with the laptop (dark, after the apps). */
   desktop: {
@@ -281,9 +281,7 @@ export const servicesContent = {
     title: 'I need software for my team.', // COPY:
     intro:
       'Windows and macOS tools for the work your team does every day, online or offline, and the systems that keep them in sync.', // COPY:
-    /** Build offerings shown here instead of under apps (ids in data/services). */
-    offerings: ['desktop-app', 'backend-api'],
-    cta: { label: 'Tell us about your software', to: '/start?path=build' }, // COPY:
+    cta: { label: 'Tell us about your software', to: '/start?kind=software' }, // COPY:
   },
   /**
    * 05 Hosting and care: the monthly plans with their prices (the plan cards come from
@@ -475,7 +473,7 @@ export const pricingContent = {
         'Hosting, domains and third-party usage unless agreed', // COPY:
         'Work outside the agreed scope and hours', // COPY:
       ],
-      cta: { label: 'Discuss Partner', to: '/start?partner=discuss' }, // COPY:
+      cta: { label: 'Ask about partnering', to: '/start?path=develop' }, // COPY:
     },
     boundary:
       'Managed tickets are for small changes of up to one hour each. Larger work is quoted separately or scoped through Partner.', // COPY:
@@ -554,7 +552,7 @@ export const privacyContent = {
     {
       heading: 'What we collect', // COPY:
       body: [
-        'When you complete the Start a project brief, we collect your name, email address and optional phone number and company name, plus the project details you choose to share (project type, scope, features, timeline and budget range).', // COPY:
+        'When you complete the Start a project brief, we collect your name, email address and optional phone number and company name, plus the project details you choose to share (project type, scope, features, timeline and what you already have).', // COPY:
         'If analytics are enabled, we use privacy-friendly, cookieless analytics that record anonymous page views and events (such as clicking “Start a project”). No personal information is collected this way.', // COPY:
       ],
     },

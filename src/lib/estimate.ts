@@ -5,19 +5,11 @@
  * and there must never be (the bundle is public).
  */
 import { addOns as defaultAddOns } from '@/data/addons'
-import { budgetRanges, timelineOptions } from '@/data/brief'
+import { timelineOptions } from '@/data/brief'
 import { plans as defaultPlans } from '@/data/plans'
 import { rates as defaultRates } from '@/data/rates'
 import { offerings as defaultOfferings } from '@/data/services'
-import type {
-  AddOn,
-  BriefAnswers,
-  BudgetRange,
-  Offering,
-  Plan,
-  Rate,
-  TimelineOption,
-} from '@/types'
+import type { AddOn, BriefAnswers, Offering, Plan, Rate, TimelineOption } from '@/types'
 
 export interface EstimateData {
   offerings: Offering[]
@@ -25,7 +17,6 @@ export interface EstimateData {
   addOns: AddOn[]
   rates: Rate[]
   timelines: TimelineOption[]
-  budgets: BudgetRange[]
 }
 
 export const defaultEstimateData: EstimateData = {
@@ -34,7 +25,6 @@ export const defaultEstimateData: EstimateData = {
   addOns: defaultAddOns,
   rates: defaultRates,
   timelines: timelineOptions,
-  budgets: budgetRanges,
 }
 
 /** Website builds at or above this (rounded low) must start with Discovery. */
@@ -42,8 +32,6 @@ export const DISCOVERY_THRESHOLD = 120_000
 /** high = low × this. */
 export const RANGE_SPREAD = 1.35
 export const ROUND_TO = 1_000
-
-export type BudgetFit = 'unknown' | 'comfortable' | 'within' | 'tight' | 'over'
 
 export interface EstimateLine {
   id: string
@@ -63,7 +51,6 @@ export type EstimateResult =
       high: number
       lines: EstimateLine[]
       timelineMultiplier: number
-      budgetFit: BudgetFit
       /** Chosen Care plan (shown as a separate monthly line), or null. */
       carePlan: Plan | null
       /** Cheapest visible Care plan, for the "Most clients add…" nudge. */
@@ -113,7 +100,7 @@ export function estimate(
     case 'run':
       return estimateRun(answers, data)
     case 'develop':
-      return estimateDevelop(answers)
+      return { kind: 'consult', topic: 'partner' }
     case 'unsure':
       return { kind: 'consult' }
     default:
@@ -128,7 +115,7 @@ function estimateBuild(answers: Partial<BriefAnswers>, data: EstimateData): Esti
   if (!offering) return { kind: 'none' }
   const discovery = find(data.offerings, 'discovery')
 
-  if (offering.briefCategory !== 'website') {
+  if (offering.briefKind !== 'website') {
     return {
       kind: 'discovery',
       offering,
@@ -195,25 +182,9 @@ function estimateBuild(answers: Partial<BriefAnswers>, data: EstimateData): Esti
     high,
     lines,
     timelineMultiplier,
-    budgetFit: budgetFit(answers.budget, low, high, data.budgets),
     carePlan,
     careFrom: Math.min(...carePlans.map((p) => p.pricePerMonth)),
   }
-}
-
-export function budgetFit(
-  budgetId: string | null | undefined,
-  low: number,
-  high: number,
-  budgets: BudgetRange[],
-): BudgetFit {
-  const range = budgets.find((b) => b.id === budgetId)
-  if (!range || range.min === null) return 'unknown'
-  if (range.max === null) return range.min >= high ? 'comfortable' : 'within'
-  if (range.min >= high) return 'comfortable'
-  if (high <= range.max) return 'within'
-  if (low <= range.max) return 'tight'
-  return 'over'
 }
 
 /* ---------- B. Something exists ---------- */
@@ -247,28 +218,6 @@ function estimateRun(answers: Partial<BriefAnswers>, data: EstimateData): Estima
     hourlyRate: null,
     needsAudit: answers.builtBy === 'other',
     limited: false,
-  }
-}
-
-/* ---------- D. Ongoing development ---------- */
-
-function estimateDevelop(answers: Partial<BriefAnswers>): EstimateResult {
-  switch (answers.hours) {
-    case 'discuss':
-      return { kind: 'consult', topic: 'partner' }
-    case 'custom': {
-      const hours = answers.customHours
-      if (!Number.isInteger(hours) || hours === undefined || hours < 1 || hours > 160)
-        return { kind: 'none' }
-      return { kind: 'consult', topic: 'partner' }
-    }
-    case 'few':
-    case '10':
-    case '20':
-    case '40':
-      return { kind: 'consult', topic: 'partner' }
-    default:
-      return { kind: 'none' }
   }
 }
 

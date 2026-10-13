@@ -9,7 +9,7 @@ export interface TextStepProps {
   error?: string
 }
 
-/** Free-text answer (the "Not sure" path). */
+/** Free-text answer (what we'd look after, the Partner idea, or the "Not sure" path). */
 export function TextStep({ id, label, value, placeholder, onChange, error }: TextStepProps) {
   return (
     <BriefField

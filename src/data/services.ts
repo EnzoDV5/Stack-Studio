@@ -63,7 +63,7 @@ export const serviceStages: ServiceStage[] = [
     line: 'New features and bigger changes within agreed monthly hours.', // COPY:
     summary:
       'Send requests as they come up. The same team plans and builds new features, design changes and integrations within agreed monthly hours.', // COPY:
-    cta: { label: 'Talk about your software', to: '/start?path=develop&partner=discuss' }, // COPY:
+    cta: { label: 'Tell us what you have in mind', to: '/start?path=develop' }, // COPY:
     briefPath: 'develop',
   },
 ]
@@ -89,7 +89,7 @@ export const offerings: Offering[] = [
       '30-day launch support', // COPY:
     ],
     notes: ['5 pages included.'], // COPY:
-    briefCategory: 'website',
+    briefKind: 'website',
     visibility: 'pricing',
   },
   {
@@ -110,7 +110,7 @@ export const offerings: Offering[] = [
       'Custom backend functionality', // COPY:
     ],
     notes: ['8 pages included.'], // COPY:
-    briefCategory: 'website',
+    briefKind: 'website',
     visibility: 'pricing',
   },
   {
@@ -131,7 +131,7 @@ export const offerings: Offering[] = [
       'Hosting and deployment', // COPY:
     ],
     notes: ['5 content pages plus the store.', 'Complex stores quoted separately.'], // COPY:
-    briefCategory: 'website',
+    briefKind: 'website',
     visibility: 'pricing',
   },
   {
@@ -160,7 +160,7 @@ export const offerings: Offering[] = [
       'Admin system and reporting', // COPY:
     ],
     requiresDiscovery: true,
-    briefCategory: 'software',
+    briefKind: 'app',
     visibility: 'pricing',
   },
   {
@@ -190,7 +190,7 @@ export const offerings: Offering[] = [
       'Admin dashboard', // COPY:
     ],
     requiresDiscovery: true,
-    briefCategory: 'software',
+    briefKind: 'app',
     visibility: 'pricing',
   },
   {
@@ -221,26 +221,8 @@ export const offerings: Offering[] = [
       'Automated workflows', // COPY:
     ],
     notes: ['AI/API usage is billed separately at actual cost.'], // COPY:
-    briefCategory: 'software',
+    briefKind: 'app',
     visibility: 'pricing',
-  },
-  {
-    id: 'backend-api',
-    stage: 'build',
-    name: 'Backend & API Development', // COPY:
-    summary: 'Backend systems built around your requirements.', // COPY:
-    ...buildEstimate(75),
-    includes: [
-      'REST APIs', // COPY:
-      'Auth, business logic and roles', // COPY:
-      'SQL and NoSQL databases', // COPY:
-      'File storage', // COPY:
-      'Admin systems and server functions', // COPY:
-      'Third-party integrations', // COPY:
-      'Docker and deployment', // COPY:
-    ],
-    briefCategory: 'software',
-    visibility: 'services',
   },
   {
     id: 'desktop-app',
@@ -257,7 +239,25 @@ export const offerings: Offering[] = [
       'Offline/online hybrid', // COPY:
     ],
     includes: [],
-    briefCategory: 'software',
+    briefKind: 'software',
+    visibility: 'services',
+  },
+  {
+    id: 'backend-api',
+    stage: 'build',
+    name: 'Backend & API Development', // COPY:
+    summary: 'Backend systems built around your requirements.', // COPY:
+    ...buildEstimate(75),
+    includes: [
+      'REST APIs', // COPY:
+      'Auth, business logic and roles', // COPY:
+      'SQL and NoSQL databases', // COPY:
+      'File storage', // COPY:
+      'Admin systems and server functions', // COPY:
+      'Third-party integrations', // COPY:
+      'Docker and deployment', // COPY:
+    ],
+    briefKind: 'software',
     visibility: 'services',
   },
   {

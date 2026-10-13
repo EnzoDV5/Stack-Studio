@@ -143,7 +143,7 @@ export function BriefFlow({
   )
 
   if (!step) return null
-  const options = resolveOptions(step, optionData)
+  const options = resolveOptions(step, optionData, answers)
 
   /* ---------- Navigation ---------- */
   const focusFirstError = (keys: string[]) => {
@@ -171,12 +171,16 @@ export function BriefFlow({
       index: stepIndex + 1,
       path: answers.path ?? 'none',
     })
-    if (returnToReview.current && step.kind !== 'review') {
+    const next = nextStepId(steps, step.id, answers, ctx)
+    const nextStep = steps.find((s) => s.id === next)
+    // Editing from the review: go straight back, unless the change opened an unanswered
+    // question (e.g. a new build kind needs a new project type).
+    const nextOpen = nextStep?.kind === 'single' && !answers[nextStep.field]
+    if (returnToReview.current && step.kind !== 'review' && !nextOpen) {
       returnToReview.current = false
       dispatch({ type: 'goTo', stepId: 'review', direction: 1 })
       return
     }
-    const next = nextStepId(steps, step.id, answers, ctx)
     if (next) dispatch({ type: 'goTo', stepId: next, direction: 1 })
   }
 
@@ -258,6 +262,11 @@ export function BriefFlow({
   const choose = (value: string) => {
     if (step.kind !== 'single') return
     dispatch({ type: 'choose', field: step.field, value })
+    // A different build kind clears a project type from another kind.
+    if (step.field === 'buildKind') {
+      const kind = data.offerings.find((o) => o.id === answers.buildType)?.briefKind
+      if (kind && kind !== value) dispatch({ type: 'choose', field: 'buildType', value: null })
+    }
     // A new project type resets the page count to what that type includes.
     if (step.field === 'buildType') {
       const included = data.offerings.find((o) => o.id === value)?.includedPages

@@ -3,7 +3,6 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, it } from 'node:test'
 import { deviceMotion, media } from '@/data/media'
-import { servicesContent } from '@/data/pages'
 import { offerings } from '@/data/services'
 
 const publicDir = join(import.meta.dirname, '../public')
@@ -25,12 +24,12 @@ describe('Services device sequences (scripts/devices)', () => {
     }
   })
 
-  it('group real, visible Build offerings under Desktop software', () => {
-    for (const id of servicesContent.desktop.offerings) {
-      const offering = offerings.find((o) => o.id === id)
-      assert.ok(offering, id)
-      assert.equal(offering.stage, 'build', id)
-      assert.notEqual(offering.visibility, 'hidden', id)
+  it('have real, visible Build offerings under Desktop software', () => {
+    const desktop = offerings.filter((o) => o.briefKind === 'software')
+    assert.ok(desktop.length > 0)
+    for (const offering of desktop) {
+      assert.equal(offering.stage, 'build', offering.id)
+      assert.notEqual(offering.visibility, 'hidden', offering.id)
     }
   })
 })

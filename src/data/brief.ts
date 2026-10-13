@@ -4,8 +4,7 @@
  * a `source` are resolved from services/addons/plans (lib/brief-steps.ts). The copy for
  * every estimate result lives here too. Rules: docs/pricing-model.md.
  */
-import type { BudgetFit } from '@/lib/estimate'
-import type { BriefStepConfig, BudgetRange, ShowIf, TimelineOption } from '@/types'
+import type { BriefStepConfig, ShowIf, TimelineOption } from '@/types'
 
 const BUILD: ShowIf[] = [{ field: 'path', in: ['build'] }]
 const WEBSITE: ShowIf[] = [...BUILD, { field: 'buildCategory', in: ['website'] }]
@@ -23,7 +22,7 @@ export const briefSteps: BriefStepConfig[] = [
       {
         value: 'build',
         label: 'I need something new',
-        description: 'A website, app or software.',
+        description: 'A website, an app or software for my team.',
       }, // COPY:
       {
         value: 'existing',
@@ -32,13 +31,13 @@ export const briefSteps: BriefStepConfig[] = [
       }, // COPY:
       {
         value: 'run',
-        label: 'I need someone to keep it working',
-        description: 'Website care, or website and app care with small monthly changes.',
+        label: 'I just need a care plan',
+        description: 'Hosting and upkeep for a site or app I already have.',
       }, // COPY:
       {
         value: 'develop',
-        label: 'I need a team for my software',
-        description: 'Choose monthly hours or discuss them with us.',
+        label: 'I want to partner with you',
+        description: 'One team for our projects. Tell us what you have in mind.',
       }, // COPY:
       {
         value: 'unsure',
@@ -50,14 +49,40 @@ export const briefSteps: BriefStepConfig[] = [
 
   /* ---------- A. Build ---------- */
   {
+    id: 'buildKind',
+    kind: 'single',
+    field: 'buildKind',
+    label: 'Build', // COPY:
+    title: 'What are we building?', // COPY:
+    hint: 'Start broad. Next you’ll pick the kind, with its starting price.', // COPY:
+    options: [
+      {
+        value: 'website',
+        label: 'A website',
+        description: 'A business site, an immersive brand site or an online store.',
+      }, // COPY:
+      {
+        value: 'app',
+        label: 'An app',
+        description: 'A web or mobile app, a portal or an AI tool.',
+      }, // COPY:
+      {
+        value: 'software',
+        label: 'Software for my team',
+        description: 'Desktop tools, and the backend and APIs behind them.',
+      }, // COPY:
+    ],
+    showIf: BUILD,
+  },
+  {
     id: 'buildType',
     kind: 'single',
     field: 'buildType',
     source: 'buildOfferings',
     label: 'Project', // COPY:
-    title: 'What are we building?', // COPY:
+    title: 'Which fits best?', // COPY:
     hint: 'Pick the closest fit. You can change it later.', // COPY:
-    showIf: BUILD,
+    showIf: [...BUILD, { field: 'buildKind', in: ['website', 'app', 'software'] }],
   },
   {
     id: 'pages',
@@ -152,16 +177,6 @@ export const briefSteps: BriefStepConfig[] = [
     hint: 'Rush timelines are possible, but they cost a little more.', // COPY:
     showIf: BUILD,
   },
-  {
-    id: 'budget',
-    kind: 'single',
-    field: 'budget',
-    source: 'budgets',
-    label: 'Budget', // COPY:
-    title: 'What budget are you working with?', // COPY:
-    hint: 'This helps us suggest the right scope. We won’t simply aim for the top of your range.', // COPY:
-    showIf: BUILD,
-  },
 
   /* ---------- B. Something exists ---------- */
   {
@@ -254,34 +269,31 @@ export const briefSteps: BriefStepConfig[] = [
     ],
     showIf: [{ field: 'path', in: ['run'] }],
   },
-  /* ---------- D. Ongoing development ---------- */
   {
-    id: 'hours',
-    kind: 'single',
-    field: 'hours',
-    label: 'Hours', // COPY:
-    title: 'Do you have an idea of the hours you need each month?', // COPY:
-    hint: 'An estimate is helpful, but we’ll work out the right scope with you.', // COPY:
-    options: [
-      { value: 'custom', label: 'I have an estimate' }, // COPY:
-      { value: 'discuss', label: 'Let’s work it out together' }, // COPY:
-    ],
-    showIf: [{ field: 'path', in: ['develop'] }],
+    id: 'currentSetup',
+    kind: 'text',
+    field: 'currentSetup',
+    minLength: 4,
+    placeholder: 'e.g. mybusiness.co.za, a WordPress site hosted with Afrihost…', // COPY:
+    error: 'Please tell us where it lives, a web address or a few words is enough.', // COPY:
+    label: 'Your setup', // COPY:
+    title: 'What do we look after?', // COPY:
+    hint: 'The web address, and what it’s built with or where it’s hosted if you know. Nothing new gets built: we take over what you have.', // COPY:
+    showIf: [{ field: 'path', in: ['run'] }],
   },
+
+  /* ---------- D. Partner ---------- */
   {
-    id: 'customHours',
-    kind: 'count',
-    field: 'customHours',
-    min: 1,
-    max: 160,
-    unit: { one: 'hour a month', other: 'hours a month' }, // COPY:
-    label: 'Partner hours', // COPY:
-    title: 'How many hours a month should we reserve?', // COPY:
-    hint: 'This helps us plan capacity. We’ll agree the scope and monthly quote with you.', // COPY:
-    showIf: [
-      { field: 'path', in: ['develop'] },
-      { field: 'hours', in: ['custom'] },
-    ],
+    id: 'partnerIdea',
+    kind: 'text',
+    field: 'partnerIdea',
+    minLength: 10,
+    placeholder:
+      'e.g. We run two websites and a booking app, and want one team to keep improving them and plan what comes next…', // COPY:
+    label: 'Partnership', // COPY:
+    title: 'What would we work on together?', // COPY:
+    hint: 'Your business, the projects you have in mind and how you see us helping. We’ll agree the scope, hours and a tailored quote on a call.', // COPY:
+    showIf: [{ field: 'path', in: ['develop'] }],
   },
 
   /* ---------- E. Not sure ---------- */
@@ -339,15 +351,6 @@ export const timelineOptions: TimelineOption[] = [
     description: 'Rush delivery with a dedicated schedule',
     multiplier: 1.3,
   }, // COPY:
-]
-
-export const budgetRanges: BudgetRange[] = [
-  { id: 'under-20', label: 'Under R20k', min: 0, max: 20_000 }, // COPY:
-  { id: '20-40', label: 'R20k – R40k', min: 20_000, max: 40_000 }, // COPY:
-  { id: '40-75', label: 'R40k – R75k', min: 40_000, max: 75_000 }, // COPY:
-  { id: '75-150', label: 'R75k – R150k', min: 75_000, max: 150_000 }, // COPY:
-  { id: '150-plus', label: 'R150k+', min: 150_000, max: null }, // COPY:
-  { id: 'unsure', label: 'Not sure', min: null, max: null }, // COPY:
 ]
 
 /** Defaults for a fresh brief (Website Care is preselected for new websites). */
@@ -428,7 +431,6 @@ export const briefCopy = {
       monthlyLabel: 'After launch', // COPY:
       careNudge: (price: string) =>
         `Most clients add Website Care from ${price}/month after launch.`, // COPY:
-      budgetLabel: 'Budget fit', // COPY:
       extraPages: (n: number) => `${n} extra page${n === 1 ? '' : 's'}`, // COPY:
       extraLanguages: (n: number) => `${n} extra language${n === 1 ? '' : 's'}`, // COPY:
     },
@@ -461,15 +463,8 @@ export const briefCopy = {
       label: 'Next step', // COPY:
       body: 'We’ll suggest the right starting point after a short call.', // COPY:
       partnerBody:
-        'We’ll review the projects and proposed hours with you, then agree a tailored monthly quote.', // COPY:
+        'We’ll read what you have in mind, then agree the projects, monthly hours and a tailored quote with you.', // COPY:
     },
-    budgetFit: {
-      unknown: '',
-      comfortable: 'Your budget comfortably covers this.', // COPY:
-      within: 'This fits your budget.', // COPY:
-      tight: 'Tight but workable. We can phase the build.', // COPY:
-      over: 'Above your range. We’ll suggest a phased approach or a leaner scope.', // COPY:
-    } satisfies Record<BudgetFit, string>,
     mobileToggle: 'Estimate', // COPY:
   },
 

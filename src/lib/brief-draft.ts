@@ -6,8 +6,8 @@
 import type { BriefAnswers } from '@/types'
 import { emptyAnswers } from './brief-reducer'
 
-// v2: branching quote builder. Older drafts (v1 shape) are ignored.
-const KEY = 'stack:brief-draft:v2'
+// v3: build kind, care-plan setup and partner idea (no budget). Older drafts are ignored.
+const KEY = 'stack:brief-draft:v3'
 
 export function loadDraft(): BriefAnswers | null {
   try {

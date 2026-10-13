@@ -7,7 +7,6 @@ import type {
   BriefAnswers,
   BriefOption,
   BriefStepConfig,
-  BudgetRange,
   BuildCategory,
   ConditionField,
   Offering,
@@ -25,16 +24,25 @@ export interface OptionData extends StepContext {
   addOns: AddOn[]
   plans: Plan[]
   timelines: TimelineOption[]
-  budgets: BudgetRange[]
   /** Short copy used in option metas, e.g. "/month". */
   labels: { perMonth: string }
 }
 
+/** Websites get the website questions; apps and team software share the software ones. */
 export function buildCategoryOf(
   answers: Partial<BriefAnswers>,
   ctx: StepContext,
 ): BuildCategory | null {
-  return ctx.offerings.find((o) => o.id === answers.buildType)?.briefCategory ?? null
+  const kind = ctx.offerings.find((o) => o.id === answers.buildType)?.briefKind
+  if (!kind) return null
+  return kind === 'website' ? 'website' : 'software'
+}
+
+/** Build offerings the quote builder offers (all kinds, or one). */
+export function briefOfferings(offerings: Offering[], kind?: string | null): Offering[] {
+  return offerings.filter(
+    (o) => o.briefKind && o.visibility !== 'hidden' && (!kind || o.briefKind === kind),
+  )
 }
 
 function valueOf(
@@ -102,9 +110,14 @@ export function firstOpenStepId(
   return (open ?? visible[visible.length - 1] ?? steps[0])?.id ?? 'path'
 }
 
-export function resolveOptions(step: BriefStepConfig, data: OptionData): BriefOption[] {
+/** Options for a choice step. Project types narrow to the chosen build kind. */
+export function resolveOptions(
+  step: BriefStepConfig,
+  data: OptionData,
+  answers: Partial<BriefAnswers>,
+): BriefOption[] {
   if (step.kind !== 'single' && step.kind !== 'multi') return []
-  const base = step.source ? fromSource(step.source, data) : (step.options ?? [])
+  const base = step.source ? fromSource(step.source, data, answers) : (step.options ?? [])
   const extra = step.kind === 'single' && step.extraOption ? [step.extraOption] : []
   return [...base, ...extra]
 }
@@ -112,17 +125,16 @@ export function resolveOptions(step: BriefStepConfig, data: OptionData): BriefOp
 function fromSource(
   source: NonNullable<Extract<BriefStepConfig, { kind: 'single' }>['source']>,
   data: OptionData,
+  answers: Partial<BriefAnswers>,
 ): BriefOption[] {
   switch (source) {
     case 'buildOfferings':
-      return data.offerings
-        .filter((o) => o.briefCategory && o.visibility !== 'hidden')
-        .map((o) => ({
-          value: o.id,
-          label: o.name,
-          description: o.summary,
-          meta: `${formatPrice(o.fromPrice)}+`,
-        }))
+      return briefOfferings(data.offerings, answers.buildKind).map((o) => ({
+        value: o.id,
+        label: o.name,
+        description: o.summary,
+        meta: `${formatPrice(o.fromPrice)}+`,
+      }))
     case 'websiteAddOns':
       return data.addOns
         .filter((a) => a.briefMode === 'toggle')
@@ -147,8 +159,6 @@ function fromSource(
         label: t.label,
         description: t.description,
       }))
-    case 'budgets':
-      return data.budgets.map((b) => ({ value: b.id, label: b.label }))
   }
 }
 
@@ -162,10 +172,10 @@ export function displayValue(
   switch (step.kind) {
     case 'single': {
       const value = answers[step.field]
-      return resolveOptions(step, data).find((o) => o.value === value)?.label ?? none
+      return resolveOptions(step, data, answers).find((o) => o.value === value)?.label ?? none
     }
     case 'multi': {
-      const options = resolveOptions(step, data)
+      const options = resolveOptions(step, data, answers)
       const labels = answers[step.field].map((v) => options.find((o) => o.value === v)?.label ?? v)
       return labels.length ? labels.join(', ') : none
     }

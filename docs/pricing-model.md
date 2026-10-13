@@ -151,9 +151,10 @@ Care is for one website; Managed adds one standard app and a small monthly chang
 - **Partner work:** planning, design, development and ongoing management across projects.
   This can include creating and managing an AI tool, building software, or managing several
   existing products. The projects, scope, monthly hours and price are agreed in conversation.
-- Pricing shows an orange Partner card without a numeric price. Its action opens
-  `/start?partner=discuss`. The brief also lets clients offer an estimate of the hours they
-  need, but it does not calculate a Partner price. Old fixed plan links open the discussion.
+- Pricing shows an orange Partner card without a numeric price. Its action opens the Partner
+  enquiry (`/start?path=develop`): a short description of what we'd work on together, then
+  contact details. The brief does not calculate a Partner price. Old fixed plan and
+  `?partner=` links open the same enquiry.
 - Hosting, domains and third-party usage are included only when agreed in the tailored scope.
 
 ## Policies (Pricing page and /terms)
@@ -195,8 +196,6 @@ Care is for one website; Managed adds one standard app and a small monthly chang
 
 **Timeline multipliers:** flexible ×0.95, standard ×1, within 6 weeks ×1.15, ASAP ×1.3.
 
-**Budget ranges:** Under R20k · R20k–R40k · R40k–R75k · R75k–R150k · R150k+ · Not sure.
-
 ## Public price placement
 
 - **Build (Home and /start):** Business Websites from R18,000 · Custom/Immersive from R35,000 · E-commerce
@@ -213,18 +212,18 @@ the project-specific estimate.
 ## Quote builder (/start)
 
 Steps are data in `src/data/brief.ts`, each with a `showIf` condition. Progress counts only
-the visible steps. Deep links work, e.g. `/start?path=build&type=ecommerce` and
-`/start?plan=care-essential`.
+the visible steps. Deep links work, e.g. `/start?type=ecommerce`, `/start?kind=app` and
+`/start?plan=care-essential`. There is no budget question: prices are already public.
 
 Step 1 asks "What do you need?" and branches:
 
-| Path                   | Steps                                                                                                                                            |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| A. Build something new | type → (website: pages, add-ons, languages, Website Care or "No plan for now") / (app, software, AI: who uses it, key needs) → timeline → budget |
-| B. Something exists    | what is it → code and hosting access → situation (multi) → urgency                                                                               |
-| C. Keep it running     | website or app → who built it                                                                                                                    |
-| D. Ongoing development | Estimated Partner hours or discuss first → contact                                                                                               |
-| E. Not sure            | short description                                                                                                                                |
+| Path                   | Steps                                                                                                                                                                         |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A. Build something new | website, app or software → type (of that kind) → (website: pages, add-ons, languages, Website Care or "No plan for now") / (app, software: who uses it, key needs) → timeline |
+| B. Something exists    | what is it → code and hosting access → situation (multi) → urgency                                                                                                            |
+| C. Just a care plan    | website or app → who built it → what we look after (address, platform, hosting)                                                                                               |
+| D. Partner             | what we'd work on together (short description)                                                                                                                                |
+| E. Not sure            | short description                                                                                                                                                             |
 
 All paths then go contact details → POPIA consent → review → submit.
 
@@ -235,7 +234,7 @@ Result kinds: `range` | `discovery` | `plan` | `audit` | `consult`.
 - **A. Website types → range.**
   - low = (from price + extra pages + add-ons + extra languages) × timeline multiplier;
     high = low × 1.35.
-  - Both are rounded to the nearest R1,000, and budget fit is kept.
+  - Both are rounded to the nearest R1,000.
   - A chosen Care plan appears as a separate monthly line.
   - Shows the current Website Care monthly price after launch.
 - **A. App, software and AI types, or website low ≥ R120,000 → discovery.** "Starts with
@@ -247,7 +246,7 @@ Result kinds: `range` | `discovery` | `plan` | `audit` | `consult`.
   - Website → Website Care Essential at R700/month.
   - App → Managed Software at R3,600/month.
   - Built by someone else adds "Starts with an audit and takeover."
-- **D → consult.** Any proposed hours are planning input; the projects and monthly price
+- **D → consult.** The description is planning input; the projects, monthly hours and price
   are agreed in conversation.
 - **E → consult:** discuss what is needed and recommend a starting point and hours.
 - Always shows: "Indicative estimate. Final quote after a short call."

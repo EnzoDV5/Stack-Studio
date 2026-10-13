@@ -41,8 +41,10 @@ the page that does the talking, so visitors choose where to go next.
   whole site (needs, services, process, work, clients, founders), each linking to its page.
 - **Services:** what do you offer, and what support fits? No project prices. Picking a service
   opens the brief ready for it (`/start?type=<service>` or the group's `?path=`). Hosting and
-  care is the plan cards (Website Care, Managed Software and Partner, with their prices); the
-  orange Partner card opens a brief to discuss projects and monthly hours.
+  care is the plan cards (Website Care, Managed Software and Partner, with their prices); a
+  plan's **Choose** opens the care-plan brief (no new build), and the orange Partner card opens
+  a short Partner enquiry. The websites, apps and software groups open the brief at that kind
+  (`/start?kind=website|app|software`).
 - **Process:** how does working with you run? What happens once you get in touch, the build
   week by week, how payments work, then how care runs after launch.
 - **Start:** the real estimate for this project, then contact.
@@ -70,14 +72,23 @@ Prices come in this order: the **plan prices** (on /services#plans) and the **br
 ## Start a project (guided brief)
 
 ```
-[1 Type] → [2 Scope] → [3 Features + ongoing plan] → [4 Timeline] → [5 Budget]
-        → [6 Contact + POPIA consent] → [7 Review] → submit → [Success]
+[What do you need?]
+  ├ Something new  → [Website, app or software?] → [Which one] → [Scope / features + care plan]
+  │                  → [Timeline]
+  ├ Help with what I have → [What it is] → [Access] → [Situation] → [Urgency]
+  ├ Just a care plan → [Website or app] → [Who built it] → [What do we look after?]
+  ├ Partner        → [What would we work on together?]
+  └ Not sure       → [Tell us what's going on]
+→ [Contact + POPIA consent] → [Review] → submit → [Success]
 ```
+
+There is no budget question: visitors have already seen the plan prices and the live estimate.
 
 - One question per screen, a progress bar, Back and Next, and keyboard support: Enter moves
   on, number keys pick an option, and arrow keys move within a group.
-- Deep links pre-fill it: `?path=`, `?type=<offering>`, `?plan=<plan>` and
-  `?quote=<starting quote>` (from a saved package link).
+- Deep links pre-fill it: `?path=`, `?kind=<website|app|software>`, `?type=<offering>`
+  (also sets its kind), `?plan=<plan>` (the care-plan path with that plan), `?partner=` (the
+  Partner enquiry) and `?quote=<starting quote>` (from a saved package link).
 - The live estimate panel updates with every answer and is always labelled indicative.
 - Validation runs per step with zod. Errors are announced and focus moves to them.
 - The contact step requires POPIA consent and links to `/privacy`.
@@ -94,9 +105,8 @@ Prices come in this order: the **plan prices** (on /services#plans) and the **br
 2. **Estimate before contact.** The estimate appears before we ask for contact details,
    so people see the value before they give anything away. This mirrors the Sparked
    calculator.
-3. **Budget fit, not budget judgement.** The budget step compares the chosen range with
-   the estimate and suggests phasing or a monthly plan when it is tight, instead of turning
-   people away.
+3. **No budget question.** Prices are public (plan cards, the live estimate), so asking for
+   a budget range only added a step. Phasing or a leaner scope comes up on the call instead.
 4. **WhatsApp as a pressure valve.** Many South African clients prefer it, so it sits next
    to the brief as an equal alternative instead of being buried in the footer.
 5. **Case study CTA before Next project.** People who finish a case study have the most

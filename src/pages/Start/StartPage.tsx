@@ -19,8 +19,8 @@ import type { BriefAnswers } from '@/types'
 const partnerNote = planFamilies.find((f) => f.id === 'partner')?.note
 
 /**
- * /start: the quote builder. Deep links pre-fill it (?path=, ?type=<offering>, ?plan=<plan>,
- * ?quote=<starting quote>, ?partner=custom|discuss)
+ * /start: the quote builder. Deep links pre-fill it (?path=, ?kind=<website|app|software>,
+ * ?type=<offering>, ?plan=<plan>, ?quote=<starting quote>, ?partner=)
  * on top of any draft saved in this tab, then it resumes at the first open step.
  */
 export function StartPage() {

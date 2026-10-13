@@ -14,7 +14,7 @@ import { ServicesHero } from '@/sections/services/ServicesHero'
 import { StageExplorer, type StageExplorerStage } from '@/sections/services/StageExplorer'
 import { FaqSection } from '@/sections/shared/FaqSection'
 import { SectionNavigator } from '@/sections/shared/SectionNavigator'
-import type { StageId } from '@/types'
+import type { BuildKind, StageId } from '@/types'
 
 const c = servicesContent
 const l = pricingContent.priceLabels
@@ -26,22 +26,21 @@ const data = { offerings, plans, rates }
  * and care, are the one place their prices appear.
  */
 const withStart = (row: OfferRow): OfferRow =>
-  offerings.some((o) => o.id === row.id && o.briefCategory)
+  offerings.some((o) => o.id === row.id && o.briefKind)
     ? { ...row, start: { label: c.labels.start, to: `/start?type=${row.id}` } }
     : row
 const rowsFor = (stage: StageId) => stageRows(stage, data, l, { prices: false }).map(withStart)
 
 const stage = (id: StageId) => serviceStages.find((s) => s.id === id)
 
-// Build splits in three, the way visitors look for it: websites (the offerings the brief files
-// under 'website'), desktop software (listed in servicesContent, with the laptop) and apps and
-// software (the rest, with the phone).
+// Build splits in three, the way visitors look for it and the brief asks for it (briefKind):
+// websites, apps (with the phone) and software for your team (desktop, with the laptop).
 const buildRows = rowsFor('build')
-const isWebsite = (id: string) => offerings.find((o) => o.id === id)?.briefCategory === 'website'
-const desktopIds: readonly string[] = c.desktop.offerings
-const websiteRows = buildRows.filter((row) => isWebsite(row.id))
-const desktopRows = desktopIds.flatMap((id) => buildRows.filter((row) => row.id === id))
-const appRows = buildRows.filter((row) => !isWebsite(row.id) && !desktopIds.includes(row.id))
+const rowsOfKind = (kind: BuildKind) =>
+  buildRows.filter((row) => offerings.find((o) => o.id === row.id)?.briefKind === kind)
+const websiteRows = rowsOfKind('website')
+const appRows = rowsOfKind('app')
+const desktopRows = rowsOfKind('software')
 
 const websites: StageExplorerStage = {
   id: 'stage-build',

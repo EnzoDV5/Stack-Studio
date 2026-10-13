@@ -47,7 +47,7 @@ export function schemaForStep(step: BriefStepConfig): z.ZodMiniType {
       return z.object({
         [step.field]: z
           .string()
-          .check(z.trim(), z.minLength(step.minLength, { error: e.description })),
+          .check(z.trim(), z.minLength(step.minLength, { error: step.error ?? e.description })),
       })
     case 'contact':
       return z.object(finalStep)
@@ -57,9 +57,12 @@ export function schemaForStep(step: BriefStepConfig): z.ZodMiniType {
 }
 
 const count = () => z.number().check(z.int(), z.gte(1))
+/** Free text. Its step schema has already checked the real minimum length. */
+const text = () => z.string().check(z.trim(), z.minLength(1, { error: e.description }))
 
 const buildSchema = z.object({
   path: z.literal('build'),
+  buildKind: choice(),
   buildType: choice(),
   pages: count(),
   addOns: z.array(z.string()),
@@ -68,7 +71,6 @@ const buildSchema = z.object({
   audience: z.nullable(z.string()),
   needs: z.array(z.string()),
   timeline: choice(),
-  budget: choice(),
   ...finalStep,
 })
 
@@ -85,21 +87,19 @@ const runSchema = z.object({
   path: z.literal('run'),
   runType: choice(),
   builtBy: choice(),
-  changeFrequency: choice(),
+  currentSetup: text(),
   ...finalStep,
 })
 
 const developSchema = z.object({
   path: z.literal('develop'),
-  workKinds: z.array(z.string()),
-  hours: choice(),
-  customHours: z.number().check(z.int(), z.gte(1), z.lte(160)),
+  partnerIdea: text(),
   ...finalStep,
 })
 
 const unsureSchema = z.object({
   path: z.literal('unsure'),
-  description: z.string().check(z.trim(), z.minLength(10, { error: e.description })),
+  description: text(),
   ...finalStep,
 })
 

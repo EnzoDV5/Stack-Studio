@@ -18,12 +18,12 @@ export const quotePresets: QuotePreset[] = [
     ],
     answers: {
       path: 'build',
+      buildKind: 'website',
       buildType: 'business-website',
       pages: 5,
       addOns: [],
       carePlan: 'care-essential',
       timeline: 'standard',
-      budget: 'unsure',
     },
   },
   {
@@ -37,12 +37,12 @@ export const quotePresets: QuotePreset[] = [
     ],
     answers: {
       path: 'build',
+      buildKind: 'website',
       buildType: 'business-website',
       pages: 6,
       addOns: ['booking'],
       carePlan: 'care-essential',
       timeline: 'standard',
-      budget: 'unsure',
     },
   },
   {
@@ -56,12 +56,12 @@ export const quotePresets: QuotePreset[] = [
     ],
     answers: {
       path: 'build',
+      buildKind: 'website',
       buildType: 'business-website',
       pages: 8,
       addOns: ['copywriting', 'blog'],
       carePlan: 'care-essential',
       timeline: 'standard',
-      budget: 'unsure',
     },
   },
   {
@@ -75,12 +75,12 @@ export const quotePresets: QuotePreset[] = [
     ],
     answers: {
       path: 'build',
+      buildKind: 'website',
       buildType: 'ecommerce',
       pages: 5,
       addOns: ['copywriting'],
       carePlan: 'care-essential',
       timeline: 'standard',
-      budget: 'unsure',
     },
   },
   {
@@ -94,12 +94,12 @@ export const quotePresets: QuotePreset[] = [
     ],
     answers: {
       path: 'build',
+      buildKind: 'website',
       buildType: 'immersive-website',
       pages: 8,
       addOns: [],
       carePlan: 'care-essential',
       timeline: 'standard',
-      budget: 'unsure',
     },
   },
 ]

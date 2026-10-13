@@ -48,6 +48,13 @@ const stageNames = Object.fromEntries(serviceStages.map((s) => [s.id, s.name])) 
  * plan, so it opens the plans).
  */
 const homePaths = ['build', 'grow', 'run', 'partner'] as const
+/** Where each path's details sit on /services (care and Partner are plan cards there). */
+const detailsAnchor: Record<(typeof homePaths)[number], string> = {
+  build: 'stage-build',
+  grow: 'stage-grow',
+  run: 'plans',
+  partner: 'plan-partner',
+}
 
 function chapterClip(stage: StageId): ChapterFlowItem['media'] {
   const video = serviceMedia[stage].video
@@ -121,7 +128,7 @@ export function HomePage() {
                 prompt: paths.prompts[id],
                 line: stage.line,
                 items: stageItems(id),
-                details: { label: paths.details, to: `/services#stage-${id}` },
+                details: { label: paths.details, to: `/services#${detailsAnchor[id]}` },
                 estimate:
                   id === 'run'
                     ? paths.plans

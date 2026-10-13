@@ -17,7 +17,7 @@ describe('starting quotes', () => {
     for (const preset of quotePresets) {
       const { buildType, addOns: chosen = [], carePlan } = preset.answers
       assert.ok(
-        offerings.some((o) => o.id === buildType && o.briefCategory && o.visibility !== 'hidden'),
+        offerings.some((o) => o.id === buildType && o.briefKind && o.visibility !== 'hidden'),
         `${preset.id}: ${buildType}`,
       )
       for (const id of chosen) {

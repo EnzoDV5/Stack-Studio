@@ -17,14 +17,6 @@ export interface EstimatePanelProps {
   className?: string
 }
 
-const fitTone = {
-  unknown: '',
-  comfortable: 'text-success',
-  within: 'text-success',
-  tight: 'text-orange',
-  over: 'text-error',
-} as const
-
 function Headline({ label, children }: { label: string; children: ReactNode }) {
   return (
     <>
@@ -65,7 +57,6 @@ export function EstimatePanel({
 
       case 'range': {
         const range = formatPriceRange(result.low, result.high, 1_000)
-        const fit = copy.budgetFit[result.budgetFit]
         return (
           <>
             <Headline label={copy.range.label}>
@@ -77,12 +68,6 @@ export function EstimatePanel({
               <p className="mt-3 numeric text-body-lg">
                 + {result.carePlan.name} {formatPrice(result.carePlan.pricePerMonth)}
                 <span className="text-muted">{copy.perMonth}</span>
-              </p>
-            )}
-            {fit && (
-              <p className={cn('mt-4 text-small', fitTone[result.budgetFit])}>
-                <span className="text-muted">{copy.range.budgetLabel}: </span>
-                {fit}
               </p>
             )}
             <Notes items={[copy.range.careNudge(formatPrice(result.careFrom))]} />

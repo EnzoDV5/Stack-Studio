@@ -102,8 +102,10 @@ Compact page title, who we are, the two founders, how we work (principles), valu
 ## Start `/start`
 
 A guided brief, one step per screen, with a live estimate panel:
-project type → scope → features and ongoing plan → timeline → budget → contact details
-(with POPIA consent) → review and submit → success state. WhatsApp is offered as an
+what you need → (new build: website, app or software → project type → scope and ongoing
+plan → timeline) / (help with what you have) / (care plan: what we look after) / (partner: a
+short description) → contact details (with POPIA consent) → review and submit → success
+state. No budget question: the plan prices and the live estimate are already on screen. WhatsApp is offered as an
 alternative throughout.
 
 ## Privacy `/privacy`

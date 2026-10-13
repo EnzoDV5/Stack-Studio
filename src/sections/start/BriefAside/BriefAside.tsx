@@ -17,12 +17,7 @@ export function BriefAside({ title, body, whatsapp, email }: BriefAsideProps) {
       <p className="mt-2 text-small text-muted">{body}</p>
       <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-4">
         {whatsapp && (
-          <WhatsAppButton
-            href={whatsapp.href}
-            label={whatsapp.label}
-            location="start"
-            size="sm"
-          />
+          <WhatsAppButton href={whatsapp.href} label={whatsapp.label} location="start" size="sm" />
         )}
         <TextLink
           href={`mailto:${email}`}

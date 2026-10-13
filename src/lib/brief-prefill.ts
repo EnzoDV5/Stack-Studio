@@ -1,13 +1,15 @@
 /**
- * Deep links into the quote builder, e.g. /start?path=build&type=ecommerce,
+ * Deep links into the quote builder, e.g. /start?type=ecommerce, /start?kind=app,
  * /start?plan=care-essential or /start?quote=launch (a ready-made starting quote). Pure: turns
  * URL params into answers.
  */
-import type { BriefAnswers, BriefPathId, Offering, Plan, QuotePreset } from '@/types'
+import type { BriefAnswers, BriefPathId, BuildKind, Offering, Plan, QuotePreset } from '@/types'
+import { briefOfferings } from './brief-steps'
 
 const PATHS: BriefPathId[] = ['build', 'existing', 'run', 'develop', 'unsure']
+const KINDS: BuildKind[] = ['website', 'app', 'software']
 
-/** Plan id → the Run/Develop answers that lead the estimator back to that plan. */
+/** Plan id → the Run answers that lead the estimator back to that plan. */
 const PLAN_ANSWERS: Record<string, Partial<BriefAnswers>> = {
   'care-essential': { path: 'run', runType: 'website' },
   'managed-app': { path: 'run', runType: 'app' },
@@ -17,6 +19,8 @@ const LEGACY_PLAN: Record<string, string> = {
   'care-pro': 'care-essential',
   'managed-system': 'managed-app',
 }
+/** Old fixed Partner packages: they open the Partner enquiry like the Partner card. */
+const LEGACY_PARTNER = ['partner-10', 'partner-20', 'partner-40']
 
 export interface Prefill {
   answers: Partial<BriefAnswers>
@@ -33,14 +37,12 @@ export function prefillFromParams(
   const quote = data.quotes?.find((q) => q.id === params.get('quote'))
   if (quote) return { answers: quote.answers, name: quote.name, stepId: 'contact' }
 
-  const type = params.get('type')
-  const offering = data.offerings.find(
-    (o) => o.id === type && o.briefCategory && o.visibility !== 'hidden',
-  )
+  const offering = briefOfferings(data.offerings).find((o) => o.id === params.get('type'))
   if (offering) {
     return {
       answers: {
         path: 'build',
+        buildKind: offering.briefKind ?? null,
         buildType: offering.id,
         ...(offering.includedPages ? { pages: offering.includedPages } : {}),
       },
@@ -48,37 +50,21 @@ export function prefillFromParams(
     }
   }
 
-  const partner = params.get('partner')
-  if (partner === 'custom')
-    return {
-      answers: { path: 'develop', hours: 'custom' },
-      name: 'Partner hours',
-      stepId: 'customHours',
-    }
-  if (partner === 'discuss')
-    return {
-      answers: { path: 'develop', hours: 'discuss' },
-      name: 'a Partner discussion',
-      stepId: 'contact',
-    }
+  // Services' website, app and software groups: skip "what are we building?".
+  const kind = params.get('kind')
+  if (KINDS.includes(kind as BuildKind)) {
+    return { answers: { path: 'build', buildKind: kind as BuildKind } }
+  }
 
+  // Partner card, Partner stage and old links (?partner=discuss|custom, ?plan=partner-…).
   const requestedPlanId = params.get('plan')
-  // Old Partner package links now open the same discussion as the new Partner sections.
-  if (requestedPlanId && ['partner-10', 'partner-20', 'partner-40'].includes(requestedPlanId))
-    return {
-      answers: { path: 'develop', hours: 'discuss' },
-      name: 'a Partner discussion',
-      stepId: 'contact',
-    }
+  if (params.has('partner') || (requestedPlanId && LEGACY_PARTNER.includes(requestedPlanId)))
+    return { answers: { path: 'develop' }, name: 'a Partner enquiry' }
+
   const planId = requestedPlanId ? (LEGACY_PLAN[requestedPlanId] ?? requestedPlanId) : null
   const plan = data.plans.find((p) => p.id === planId && p.visibility !== 'hidden')
   const planAnswers = planId ? PLAN_ANSWERS[planId] : undefined
-  if (plan && planAnswers)
-    return {
-      answers: planAnswers,
-      name: plan.name,
-      ...(plan.family === 'partner' ? { stepId: 'contact' } : {}),
-    }
+  if (plan && planAnswers) return { answers: planAnswers, name: plan.name }
 
   const path = params.get('path')
   if (PATHS.includes(path as BriefPathId)) return { answers: { path: path as BriefPathId } }

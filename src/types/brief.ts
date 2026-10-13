@@ -1,3 +1,5 @@
+import type { BuildKind } from './pricing'
+
 /**
  * Quote-builder types. Steps are configuration (src/data/brief.ts); the flow renders
  * whichever steps' `showIf` conditions pass for the current answers.
@@ -16,6 +18,8 @@ export interface BriefContact {
 export interface BriefAnswers {
   path: BriefPathId | null
   // A. Build
+  /** Website, app or software: narrows the project types offered next. */
+  buildKind: BuildKind | null
   buildType: string | null
   pages: number
   addOns: string[]
@@ -25,7 +29,6 @@ export interface BriefAnswers {
   audience: string | null
   needs: string[]
   timeline: string | null
-  budget: string | null
   // B. Existing
   existingType: string | null
   access: string | null
@@ -34,11 +37,10 @@ export interface BriefAnswers {
   // C. Run
   runType: string | null
   builtBy: string | null
-  changeFrequency: string | null
-  // D. Develop
-  workKinds: string[]
-  hours: string | null
-  customHours: number
+  /** What we'd look after: the address, what it's built with, where it's hosted. */
+  currentSetup: string
+  // D. Partner
+  partnerIdea: string
   // E. Unsure
   description: string
   // All paths
@@ -48,21 +50,19 @@ export interface BriefAnswers {
 
 export type ChoiceField =
   | 'path'
+  | 'buildKind'
   | 'buildType'
   | 'carePlan'
   | 'audience'
   | 'timeline'
-  | 'budget'
   | 'existingType'
   | 'access'
   | 'urgency'
   | 'runType'
   | 'builtBy'
-  | 'changeFrequency'
-  | 'hours'
-export type MultiField = 'addOns' | 'needs' | 'situation' | 'workKinds'
-export type CountField = 'pages' | 'languages' | 'customHours'
-export type TextField = 'description'
+export type MultiField = 'addOns' | 'needs' | 'situation'
+export type CountField = 'pages' | 'languages'
+export type TextField = 'description' | 'currentSetup' | 'partnerIdea'
 
 export interface BriefOption {
   value: string
@@ -73,8 +73,7 @@ export interface BriefOption {
 }
 
 /** Options resolved from other data files at runtime (offerings, add-ons, plans…). */
-export type OptionSource =
-  'buildOfferings' | 'websiteAddOns' | 'carePlans' | 'timelines' | 'budgets'
+export type OptionSource = 'buildOfferings' | 'websiteAddOns' | 'carePlans' | 'timelines'
 
 /** Derived values conditions can test, besides plain answer fields. */
 export type ConditionField = ChoiceField | 'buildCategory'
@@ -118,7 +117,14 @@ export type BriefStepConfig =
       max: number
       unit: { one: string; other: string }
     })
-  | (StepBase & { kind: 'text'; field: TextField; minLength: number; placeholder: string })
+  | (StepBase & {
+      kind: 'text'
+      field: TextField
+      minLength: number
+      placeholder: string
+      /** Shown when the answer is too short (defaults to the "tell us more" error). */
+      error?: string
+    })
   | (StepBase & { kind: 'contact' })
   | (StepBase & { kind: 'review' })
 
