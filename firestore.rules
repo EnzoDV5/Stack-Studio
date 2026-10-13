@@ -1,0 +1,97 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function validContact(contact) {
+      return contact is map
+        && contact.keys().hasOnly(['name', 'email', 'phone', 'company', 'message'])
+        && contact.name is string
+        && contact.name.size() >= 2
+        && contact.name.size() <= 120
+        && contact.email is string
+        && contact.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && (contact.phone == null || contact.phone is string)
+        && (contact.company == null || contact.company is string)
+        && (contact.message == null || contact.message is string);
+    }
+
+    function validSource(source) {
+      return source is map
+        && source.keys().hasOnly(['submittedAt', 'page', 'userAgent', 'authUid'])
+        && source.submittedAt is string
+        && source.page is string
+        && source.userAgent is string
+        && source.authUid == request.auth.uid;
+    }
+
+    match /client_contacts/{contactId} {
+      allow read, delete: if false;
+      allow create, update: if signedIn()
+        && contactId.matches('^[a-f0-9]{64}$')
+        && request.resource.data.keys().hasOnly([
+          'displayName',
+          'email',
+          'phone',
+          'company',
+          'latestMessage',
+          'latestReason',
+          'latestEnquiryId',
+          'latestSubmittedAt',
+          'updatedAt'
+        ])
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() >= 2
+        && request.resource.data.displayName.size() <= 120
+        && request.resource.data.email is string
+        && request.resource.data.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$');
+    }
+
+    match /project_enquiries/{enquiryId} {
+      allow read, delete: if false;
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly([
+          'status',
+          'reason',
+          'contactId',
+          'contact',
+          'project',
+          'estimate',
+          'emailAutomation',
+          'source',
+          'consent',
+          'createdAt',
+          'updatedAt'
+        ])
+        && request.resource.data.status == 'new'
+        && request.resource.data.reason in [
+          'new_build',
+          'existing_website_help',
+          'hosting_and_care',
+          'development_partner',
+          'not_sure_yet'
+        ]
+        && request.resource.data.contactId.matches('^[a-f0-9]{64}$')
+        && validContact(request.resource.data.contact)
+        && request.resource.data.consent == true
+        && validSource(request.resource.data.source);
+      allow update: if signedIn()
+        && resource.data.source.authUid == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'emailAutomation',
+          'updatedAt'
+        ])
+        && request.resource.data.emailAutomation is map
+        && request.resource.data.emailAutomation.provider == 'emailjs'
+        && request.resource.data.emailAutomation.teamNotificationStatus in ['sent', 'failed']
+        && request.resource.data.emailAutomation.autoReplyStatus in ['linked_template', 'failed'];
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

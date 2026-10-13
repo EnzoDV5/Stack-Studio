@@ -1,19 +1,13 @@
 /**
- * Sends the brief. With VITE_FORM_ENDPOINT set, it POSTs JSON to that endpoint (Formspree
- * accepts this as-is). Without it, a local stub logs the payload and resolves, so the flow
- * and success state work in development.
- *
- * TODO(forms): pick the production provider and set VITE_FORM_ENDPOINT:
- *   - Formspree: https://formspree.io/f/<id> (JSON POST works with the code below).
- *   - EmailJS: replace the fetch with emailjs.send(serviceId, templateId, payload, publicKey)
- *     (add @emailjs/browser, and read the ids through src/lib/config.ts).
- *   Either way: turn on spam protection (honeypot or reCAPTCHA) and email notifications
- *   in the provider dashboard.
+ * Sends the brief. Firebase is the primary production store when VITE_FIREBASE_* is set.
+ * VITE_FORM_ENDPOINT can still be used as a secondary notification endpoint while EmailJS
+ * templates are being added.
  */
 import type { BriefPathId } from '@/types'
 import type { ValidBrief } from './brief-schema'
 import { config } from './config'
 import type { EstimateKind } from './estimate'
+import type { SubmissionWriteResult } from './firebase-submissions'
 
 export interface BriefPayload {
   path: BriefPathId
@@ -29,14 +23,49 @@ export interface BriefPayload {
 }
 
 export async function submitBrief(payload: BriefPayload): Promise<void> {
-  if (!config.formEndpoint) {
-    // Local stub: no endpoint configured.
-    console.info('[brief] VITE_FORM_ENDPOINT not set: stub submit', payload)
-    await new Promise((resolve) => setTimeout(resolve, 900))
-    return
+  let sentAnywhere = false
+  let submission: SubmissionWriteResult | null = null
+
+  if (config.firebase) {
+    const { saveBriefToFirebase } = await import('./firebase-submissions')
+    submission = await saveBriefToFirebase(payload)
+    sentAnywhere = true
   }
 
-  const response = await fetch(config.formEndpoint, {
+  if (config.emailjs) {
+    try {
+      const { sendBriefEmails } = await import('./emailjs-brief')
+      await sendBriefEmails(payload, submission)
+      if (submission) {
+        const { updateBriefEmailAutomation } = await import('./firebase-submissions')
+        await updateBriefEmailAutomation(submission.enquiryId, 'sent')
+      }
+      sentAnywhere = true
+    } catch (error) {
+      if (submission) {
+        const { updateBriefEmailAutomation } = await import('./firebase-submissions')
+        await updateBriefEmailAutomation(submission.enquiryId, 'failed', error)
+        console.error('[brief] EmailJS failed after Firebase save', error)
+      } else {
+        throw error
+      }
+    }
+  }
+
+  const formEndpoint = config.formEndpoint
+  if (formEndpoint) {
+    await postToFormEndpoint(formEndpoint, payload)
+    sentAnywhere = true
+  }
+
+  if (!sentAnywhere) {
+    console.info('[brief] Firebase, EmailJS and VITE_FORM_ENDPOINT not set: stub submit', payload)
+    await new Promise((resolve) => setTimeout(resolve, 900))
+  }
+}
+
+async function postToFormEndpoint(endpoint: string, payload: BriefPayload): Promise<void> {
+  const response = await fetch(endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     body: JSON.stringify({

@@ -5,6 +5,7 @@ node_modules
 dist
 dist-ssr
 *.local
+.firebase
 
 # env — commit .env.example only
 .env

@@ -565,7 +565,7 @@ export const privacyContent = {
     {
       heading: 'Who we share it with', // COPY:
       body: [
-        'Your brief is delivered to us through a form-processing service (operator) that stores it securely on our behalf. We don’t share it with anyone else unless the law requires us to.', // COPY: name the operator (e.g. Formspree/EmailJS)
+        'Your brief is stored in Firebase and emailed to us through EmailJS, our form-processing and email operators. We don’t share it with anyone else unless the law requires us to.', // COPY:
       ],
     },
     {
