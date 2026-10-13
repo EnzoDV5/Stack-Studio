@@ -16,6 +16,9 @@ import { useScrollRefresh } from '@/hooks/useScrollRefresh'
 import { ClosingCta } from '@/sections/shared/ClosingCta'
 
 /** The app shell: global chrome around the routed page. The app layer is where data meets layout. */
+// The brief itself, and a received brief (/brief), end without the Start a project band.
+const NO_CLOSING_CTA = [primaryCta.to, '/brief']
+
 export function App() {
   usePageviewTracking()
   useScrollRefresh()
@@ -51,7 +54,7 @@ export function App() {
                 <AppRoutes location={location} />
               </Suspense>
             </main>
-            {!location.pathname.startsWith(primaryCta.to) && (
+            {!NO_CLOSING_CTA.some((path) => location.pathname.startsWith(path)) && (
               <ClosingCta
                 content={closingCta}
                 codeLines={closingCtaCode}

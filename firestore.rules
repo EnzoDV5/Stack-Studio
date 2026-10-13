@@ -40,6 +40,7 @@ service cloud.firestore {
           'latestMessage',
           'latestReason',
           'latestEnquiryId',
+          'latestReference',
           'latestSubmittedAt',
           'updatedAt'
         ])
@@ -55,6 +56,7 @@ service cloud.firestore {
       allow create: if signedIn()
         && request.resource.data.keys().hasOnly([
           'status',
+          'reference',
           'reason',
           'contactId',
           'contact',
@@ -67,6 +69,8 @@ service cloud.firestore {
           'updatedAt'
         ])
         && request.resource.data.status == 'new'
+        && request.resource.data.reference is string
+        && request.resource.data.reference.matches('^SS-[0-9]{6}-[0-9A-Z]{4}$')
         && request.resource.data.reason in [
           'new_build',
           'existing_website_help',

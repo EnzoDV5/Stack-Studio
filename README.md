@@ -85,10 +85,9 @@ touch control and becomes static, wrapped rows with reduced motion enabled.
 
 ## Connecting the enquiry form
 
-1. Create a Formspree form (or similar) and copy its endpoint.
-2. Set `VITE_FORM_ENDPOINT` in `.env.production.local` (or your build environment) and
-   rebuild.
-3. For EmailJS instead, follow the `TODO(forms)` in `src/lib/submit-brief.ts`.
+1. For EmailJS team notifications, client auto-replies and brief PDFs, follow [the EmailJS setup guide](docs/emailjs-setup.md).
+2. Optionally set `VITE_FORM_ENDPOINT` to a Formspree-compatible JSON endpoint as a secondary delivery channel.
+3. Set the values in your hosting build environment and rebuild before publishing.
 
 The brief sends the validated answers, a human-readable summary, the estimate and page
 metadata. It includes a honeypot field; also enable the provider's spam protection.

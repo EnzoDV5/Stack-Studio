@@ -64,8 +64,12 @@ export function Header({ nav, cta, homeLabel, menuLabel, menuOpenLabel, menu }: 
         )}
       >
         <div className="container-site flex h-full items-center justify-between gap-6">
-          <Link to="/" aria-label={homeLabel} className="text-[1.05rem]">
-            <Logo title="" />
+          <Link
+            to="/"
+            aria-label={homeLabel}
+            className="inline-flex items-center text-[1.55rem] sm:text-[1.7rem]"
+          >
+            <Logo variant="wordmark" title="" />
           </Link>
 
           <nav aria-label={menuLabel} className="hidden lg:block">

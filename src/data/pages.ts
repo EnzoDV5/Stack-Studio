@@ -41,6 +41,11 @@ export const pageMeta = {
       'Tell us about your project in two minutes with a guided brief and get a rough estimate before you send it.', // COPY:
     path: '/start',
   },
+  contact: {
+    title: 'Contact Stack Studio',
+    description: 'Send Stack Studio a message. We reply within one business day.',
+    path: '/contact',
+  },
   privacy: {
     title: 'Privacy notice', // COPY:
     description:
@@ -53,7 +58,33 @@ export const pageMeta = {
     path: '/404',
     noindex: true,
   },
+  briefRecord: {
+    title: 'Project brief', // COPY:
+    description: 'A project brief sent to Stack Studio.', // COPY:
+    path: '/brief',
+    noindex: true,
+  },
 } satisfies Record<string, PageMetaContent>
+
+export const contactContent = {
+  intro: {
+    eyebrow: 'Contact',
+    title: 'Send us a message.',
+    intro:
+      'A quick question or something you would like to discuss? Write to us here. For a project estimate, use Start a project.',
+  },
+  projectLink: 'Start a project instead',
+  formTitle: 'What would you like to tell us?',
+  responseNote: 'We read every message and reply within one business day.',
+  send: 'Send message',
+  sending: 'Sending…',
+  successTitle: 'Message received.',
+  successBody:
+    'Thanks for getting in touch. We’ll read your message and reply within one business day.',
+  again: 'Send another message',
+  failed: 'The message could not be sent. Please try again or email us directly.',
+  unavailable: 'The contact form is temporarily unavailable. Please email us directly.',
+} as const
 
 /** Shared closing CTA (orange band) used at the end of most pages. */
 export const closingCta: CtaContent = {
@@ -552,7 +583,7 @@ export const privacyContent = {
     {
       heading: 'What we collect', // COPY:
       body: [
-        'When you complete the Start a project brief, we collect your name, email address and optional phone number and company name, plus the project details you choose to share (project type, scope, features, timeline and what you already have).', // COPY:
+        'When you complete the Start a project brief, we collect your name, email address and optional phone number and company name, plus the project details you choose to share (project type, scope, features, timeline and what you already have). The contact form collects your name, email address, subject and message.', // COPY:
         'If analytics are enabled, we use privacy-friendly, cookieless analytics that record anonymous page views and events (such as clicking “Start a project”). No personal information is collected this way.', // COPY:
       ],
     },

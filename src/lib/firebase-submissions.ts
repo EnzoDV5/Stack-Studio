@@ -64,6 +64,7 @@ export async function saveBriefToFirebase(payload: BriefPayload): Promise<Submis
       latestMessage: payload.brief.contact.message || null,
       latestReason: enquiryReason(payload),
       latestEnquiryId: enquiryRef.id,
+      latestReference: payload.meta.ref,
       latestSubmittedAt: payload.meta.submittedAt,
       updatedAt: timestamp,
     },
@@ -72,6 +73,7 @@ export async function saveBriefToFirebase(payload: BriefPayload): Promise<Submis
 
   batch.set(enquiryRef, {
     status: 'new',
+    reference: payload.meta.ref,
     reason: enquiryReason(payload),
     contactId,
     contact: {

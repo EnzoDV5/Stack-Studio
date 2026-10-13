@@ -1,194 +1,275 @@
+/** A printable copy of the brief shared by the success screen and email download link. */
 import { jsPDF } from 'jspdf'
-import type { BriefPayload } from './submit-brief'
+import type { BriefRecordCopy } from '@/data/brief'
+import { formatSubmitted, type BriefRecord } from './brief-record'
 
-export interface BriefPdf {
-  filename: string
-  content: string
+export interface StudioDetails {
+  name: string
+  url: string
 }
 
-interface PdfRow {
-  label: string
-  value: string
+export interface BriefLogoImages {
+  mark: string
+  wordmark: string
 }
 
-const page = {
-  width: 595.28,
-  height: 841.89,
-  margin: 48,
+const W = 595.28
+const H = 841.89
+const M = 46
+const RIGHT = W - M
+const CONTENT = W - 2 * M
+const BOTTOM = H - 78
+const VALUE_X = M + 190
+const VALUE_W = RIGHT - VALUE_X
+
+// The site's palette, from src/styles/tokens.css.
+const c = {
+  ink: '#0a0a0a',
+  orange: '#ff5a14',
+  orangeDeep: '#b93d0a',
+  paper: '#f4f0ea',
+  line: '#dcd4c8',
+  muted: '#525252',
+  white: '#ffffff',
 }
 
-const color = {
-  ink: '#0A0A0A',
-  paper: '#F4F0EA',
-  paperLine: '#DCD4C8',
-  orange: '#FF5A14',
-  muted: '#737373',
-  white: '#FFFFFF',
-}
-
-function clean(value: unknown): string {
-  if (Array.isArray(value)) return value.map(clean).filter(Boolean).join(', ')
-  if (value === null || value === undefined || value === '') return 'Not supplied'
-  return String(value)
-}
-
-function filenameSafe(value: string): string {
+/** jsPDF's built-in font uses WinAnsi. Replace punctuation it cannot print. */
+export function pdfText(value: string): string {
   return value
-    .trim()
+    .replace(/[\u00a0\u2007\u2009\u202f]/g, ' ')
+    .replace(/[‘’]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/[–—]/g, '-')
+    .replace(/…/g, '...')
+    .replace(/•/g, '·')
+    .replace(/[^\r\n\u0020-\u007e\u00a0-\u00ff]/g, '')
+}
+
+export function briefPdfFilename(record: BriefRecord): string {
+  const name = record.contact.name
     .toLowerCase()
+    .normalize('NFKD')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
-    .slice(0, 64)
+    .slice(0, 40)
+  return `stack-studio-brief-${record.ref}${name ? `-${name}` : ''}.pdf`
 }
 
-function submittedDate(iso: string): string {
-  return new Intl.DateTimeFormat('en-ZA', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-    timeZone: 'Africa/Johannesburg',
-  }).format(new Date(iso))
-}
+class Writer {
+  y = 102
+  readonly doc: jsPDF
+  readonly logo?: BriefLogoImages
 
-function addPageIfNeeded(doc: jsPDF, y: number, needed = 80): number {
-  if (y + needed <= page.height - page.margin) return y
-
-  doc.addPage()
-  doc.setFillColor(color.paper)
-  doc.rect(0, 0, page.width, page.height, 'F')
-  return page.margin
-}
-
-function addSectionTitle(doc: jsPDF, title: string, y: number): number {
-  const nextY = addPageIfNeeded(doc, y, 64)
-  doc.setDrawColor(color.orange)
-  doc.setLineWidth(2)
-  doc.line(page.margin, nextY - 12, page.width - page.margin, nextY - 12)
-  doc.setTextColor(color.ink)
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(15)
-  doc.text(title, page.margin, nextY + 8)
-  return nextY + 32
-}
-
-function addRows(doc: jsPDF, rows: PdfRow[], y: number): number {
-  let cursor = y
-
-  for (const row of rows) {
-    cursor = addPageIfNeeded(doc, cursor, 58)
-    const labelWidth = 128
-    const valueX = page.margin + labelWidth
-    const valueWidth = page.width - page.margin - valueX
-    const lines = doc.splitTextToSize(row.value, valueWidth) as string[]
-    const rowHeight = Math.max(38, lines.length * 15 + 18)
-
-    doc.setFillColor(color.white)
-    doc.roundedRect(page.margin, cursor, page.width - page.margin * 2, rowHeight, 6, 6, 'F')
-    doc.setDrawColor(color.paperLine)
-    doc.roundedRect(page.margin, cursor, page.width - page.margin * 2, rowHeight, 6, 6, 'S')
-
-    doc.setTextColor(color.muted)
-    doc.setFont('helvetica', 'bold')
-    doc.setFontSize(8)
-    doc.text(row.label.toUpperCase(), page.margin + 14, cursor + 22)
-
-    doc.setTextColor(color.ink)
-    doc.setFont('helvetica', 'normal')
-    doc.setFontSize(10)
-    doc.text(lines, valueX, cursor + 22)
-
-    cursor += rowHeight + 8
+  constructor(doc: jsPDF, logo?: BriefLogoImages) {
+    this.doc = doc
+    this.logo = logo
   }
 
-  return cursor
+  font(style: 'normal' | 'bold', size: number, color = c.ink, spacing = 0) {
+    this.doc.setFont('helvetica', style)
+    this.doc.setFontSize(size)
+    this.doc.setTextColor(color)
+    this.doc.setCharSpace(spacing)
+  }
+
+  lines(value: string, width: number): string[] {
+    return this.doc.splitTextToSize(pdfText(value), width) as string[]
+  }
+
+  label(value: string, x: number, y: number, color = c.muted) {
+    this.font('bold', 7.5, color, 1.1)
+    this.doc.text(pdfText(value).toUpperCase(), x, y)
+    this.doc.setCharSpace(0)
+  }
+
+  rule(y: number, color = c.line, width = 0.65) {
+    this.doc.setDrawColor(color)
+    this.doc.setLineWidth(width)
+    this.doc.line(M, y, RIGHT, y)
+  }
+
+  paintPage(continued = false) {
+    this.doc.setFillColor(c.white)
+    this.doc.rect(0, 0, W, H, 'F')
+
+    if (this.logo) {
+      // The supplied transparent PNG artwork, repeated on each page.
+      this.doc.addImage(this.logo.mark, 'PNG', M, 34, 29, 29, 'stack-studio-mark')
+      this.doc.addImage(this.logo.wordmark, 'PNG', M + 38, 34, 87, 29, 'stack-studio-wordmark')
+      this.label('STUDIO', M + 40, 69, c.ink)
+    } else {
+      this.font('bold', 14, c.ink, 1)
+      this.doc.text('STACK', M, 48)
+      this.label('STUDIO', M + 1, 61, c.ink)
+    }
+    // Right-aligned document label balances the logo at the other edge.
+    this.font('bold', 7.5, c.muted, 1.1)
+    this.doc.text('PROJECT BRIEF', RIGHT, 51, { align: 'right' })
+    this.doc.setCharSpace(0)
+    this.rule(80, c.ink, 1)
+
+    if (continued) {
+      this.font('bold', 18)
+      this.doc.text('Project brief', M, 116)
+      this.y = 143
+    } else {
+      this.y = 102
+    }
+  }
+
+  ensure(height: number) {
+    if (this.y + height <= BOTTOM) return
+    this.doc.addPage()
+    this.paintPage(true)
+  }
+
+  section(index: number, title: string, minimumBodyHeight = 0) {
+    const groupHeight = 65 + minimumBodyHeight
+    if (groupHeight <= BOTTOM - 143 && this.y + groupHeight > BOTTOM) {
+      this.doc.addPage()
+      this.paintPage(true)
+    }
+    this.ensure(65)
+    this.y += 31
+    this.font('bold', 11, c.orangeDeep)
+    this.doc.text(String(index).padStart(2, '0'), M, this.y)
+    this.font('bold', 15, c.ink)
+    this.doc.text(pdfText(title), M + 34, this.y)
+    this.rule(this.y + 13)
+    this.y += 29
+  }
+
+  row(label: string, value: string) {
+    this.font('normal', 11)
+    const valueLines = this.lines(value, VALUE_W)
+    this.font('normal', 9)
+    const labelLines = this.lines(label, VALUE_X - M - 48)
+    let offset = 0
+
+    while (offset < valueLines.length) {
+      if (BOTTOM - this.y < 52) this.ensure(52)
+      const capacity = Math.max(1, Math.floor((BOTTOM - this.y - 20) / 15))
+      const chunk = valueLines.slice(offset, offset + capacity)
+      const height = Math.max(chunk.length * 15 + 17, labelLines.length * 12 + 17)
+      const baseline = this.y + 17
+
+      if (offset === 0) {
+        this.font('normal', 9, c.muted)
+        this.doc.text(labelLines, M + 34, baseline, { lineHeightFactor: 1.3 })
+      }
+      this.font('normal', 11)
+      this.doc.text(chunk, VALUE_X, baseline, { lineHeightFactor: 1.36 })
+      this.y += height
+      this.rule(this.y)
+      offset += chunk.length
+    }
+  }
+
+  message(text: string) {
+    this.font('normal', 11)
+    for (const line of this.lines(text, CONTENT - 34)) {
+      this.ensure(31)
+      this.doc.text(line, M + 34, this.y + 17)
+      this.y += 17
+    }
+    this.y += 6
+  }
 }
 
-function summaryRows(payload: BriefPayload): PdfRow[] {
-  return Object.entries(payload.summary).map(([label, value]) => ({
-    label,
-    value: clean(value),
-  }))
-}
-
-export function createBriefPdf(payload: BriefPayload): BriefPdf {
-  const doc = new jsPDF({ unit: 'pt', format: 'a4' })
-  const contact = payload.brief.contact
-  const submitted = submittedDate(payload.meta.submittedAt)
+/** A restrained, branded A4 record with the same answers as the email and success screen. */
+export function createBriefPdf(
+  record: BriefRecord,
+  copy: BriefRecordCopy,
+  studio: StudioDetails,
+  logo?: BriefLogoImages,
+): jsPDF {
+  const doc = new jsPDF({ unit: 'pt', format: 'a4', compress: true })
+  const w = new Writer(doc, logo)
+  const { contact } = record
+  const reason = copy.reasons[record.path]
+  const submitted = formatSubmitted(record.submittedAt)
 
   doc.setProperties({
-    title: `Stack Studio brief - ${contact.name}`,
-    subject: payload.result.recommendation,
-    author: 'Stack Studio',
-    creator: 'Stack Studio website',
+    title: pdfText(`${studio.name} ${copy.title} ${record.ref} - ${contact.name}`),
+    subject: pdfText(`${reason} - ${contact.name}`),
+    author: studio.name,
+    creator: studio.url,
   })
+  w.paintPage()
 
-  doc.setFillColor(color.paper)
-  doc.rect(0, 0, page.width, page.height, 'F')
+  w.label('New project enquiry', M, w.y + 14, c.orangeDeep)
+  w.font('bold', 39)
+  doc.text(pdfText(copy.title), M, w.y + 60)
+  w.font('normal', 23)
+  const nameLines = w.lines(contact.name, CONTENT).slice(0, 2)
+  doc.text(nameLines, M, w.y + 97, { lineHeightFactor: 1.17 })
+  const metaY = w.y + 97 + (nameLines.length - 1) * 27 + 42
+  w.rule(metaY, c.ink, 0.8)
+  const meta: [string, string][] = [
+    [copy.labels.reference, record.ref],
+    [copy.labels.submitted, submitted],
+    [copy.sections.project, reason],
+  ]
+  const col = CONTENT / 3
+  meta.forEach(([label, value], index) => {
+    const x = M + col * index
+    w.label(label, x, metaY + 18)
+    w.font('bold', 10, c.ink)
+    doc.text(w.lines(value, col - 17).slice(0, 2), x, metaY + 38, { lineHeightFactor: 1.25 })
+  })
+  w.rule(metaY + 68)
+  w.y = metaY + 87
 
-  doc.setFillColor(color.ink)
-  doc.rect(0, 0, page.width, 172, 'F')
-  doc.setFillColor(color.orange)
-  doc.rect(page.margin, 44, 22, 22, 'F')
-
-  doc.setTextColor(color.white)
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(18)
-  doc.text('Stack Studio', page.margin + 34, 62)
-
-  doc.setFontSize(34)
-  doc.text('Project brief', page.margin, 116)
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(11)
-  doc.text(`${contact.name} - ${payload.path} - ${submitted}`, page.margin, 140)
-
-  let y = 218
-  y = addSectionTitle(doc, 'Client', y)
-  y = addRows(
-    doc,
-    [
-      { label: 'Name', value: contact.name },
-      { label: 'Email', value: contact.email },
-      { label: 'Phone', value: contact.phone },
-      { label: 'Company', value: contact.company },
-      { label: 'Message', value: contact.message },
-    ],
-    y,
-  )
-
-  y = addSectionTitle(doc, 'Estimate', y + 16)
-  y = addRows(
-    doc,
-    [
-      { label: 'Result', value: payload.result.kind },
-      { label: 'Recommendation', value: payload.result.recommendation },
-    ],
-    y,
-  )
-
-  y = addSectionTitle(doc, 'Brief Answers', y + 16)
-  y = addRows(doc, summaryRows(payload), y)
-
-  y = addSectionTitle(doc, 'Source', y + 16)
-  addRows(
-    doc,
-    [
-      { label: 'Submitted', value: submitted },
-      { label: 'Page', value: payload.meta.page },
-      { label: 'Consent', value: payload.brief.consent ? 'Yes' : 'No' },
-    ],
-    y,
-  )
-
-  const pageCount = doc.getNumberOfPages()
-  for (let i = 1; i <= pageCount; i += 1) {
-    doc.setPage(i)
-    doc.setTextColor(color.muted)
-    doc.setFont('helvetica', 'normal')
-    doc.setFontSize(8)
-    doc.text(`Stack Studio brief - page ${i} of ${pageCount}`, page.margin, page.height - 24)
+  if (record.estimate.recommendation) {
+    w.font('bold', 20)
+    const lines = w.lines(record.estimate.recommendation, CONTENT - 40)
+    const height = 64 + lines.length * 23
+    w.ensure(height)
+    doc.setFillColor(c.paper)
+    doc.rect(M, w.y, CONTENT, height, 'F')
+    doc.setFillColor(c.orange)
+    doc.rect(M, w.y, 3, height, 'F')
+    w.label(copy.sections.estimate, M + 20, w.y + 23, c.orangeDeep)
+    w.font('bold', 20)
+    doc.text(lines, M + 20, w.y + 52, { lineHeightFactor: 1.16 })
+    w.font('normal', 8.5, c.muted)
+    doc.text(pdfText(copy.estimateNote), M + 20, w.y + height - 15)
+    w.y += height + 1
   }
 
-  return {
-    filename: `stack-studio-brief-${filenameSafe(contact.name)}.pdf`,
-    content: doc.output('datauristring'),
+  let index = 1
+  w.section(index++, copy.sections.contact, 4 * 36)
+  w.row(copy.labels.name, contact.name)
+  w.row(copy.labels.email, contact.email)
+  w.row(copy.labels.phone, contact.phone || copy.none)
+  w.row(copy.labels.company, contact.company || copy.none)
+
+  w.section(index++, copy.sections.project, record.answers.length * 40)
+  for (const [label, value] of record.answers) w.row(label, value || copy.none)
+
+  if (contact.message) {
+    w.section(index++, copy.sections.message, 60)
+    w.message(contact.message)
   }
+
+  w.section(index++, 'Record', 40)
+  w.row(copy.labels.source, record.page)
+
+  const pages = doc.getNumberOfPages()
+  const host = studio.url.replace(/^https?:\/\//, '')
+  for (let page = 1; page <= pages; page += 1) {
+    doc.setPage(page)
+    doc.setDrawColor(c.line)
+    doc.setLineWidth(0.65)
+    doc.line(M, H - 58, RIGHT, H - 58)
+    doc.setFillColor(c.orange)
+    doc.rect(M, H - 44, 5, 5, 'F')
+    w.font('bold', 8, c.ink, 0.45)
+    doc.text(pdfText(`${studio.name}  /  ${host}`), M + 13, H - 39)
+    w.font('normal', 8, c.muted)
+    doc.text(`${record.ref}     ${page} / ${pages}`, RIGHT, H - 39, { align: 'right' })
+    doc.setCharSpace(0)
+  }
+
+  return doc
 }

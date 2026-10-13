@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Heading } from '@/components/ui/Heading'
@@ -15,9 +15,18 @@ export interface BriefSuccessProps {
   whatsapp?: { href: string; label: string }
   primary: CtaLink
   secondary: CtaLink
+  /** The brief's reference, e.g. { label: 'Your reference', value: 'SS-261013-7K4Q' }. */
+  reference?: { label: string; value: string }
+  /** e.g. "A copy of your brief is on its way to …". */
+  note?: string
+  /** Saves the sent brief as a PDF. */
+  download?: { label: string; onDownload: () => Promise<void> }
 }
 
-/** Proper success state: confirmation, what happens next, and a WhatsApp fallback for urgent things. */
+/**
+ * Proper success state: confirmation, the brief's reference and a PDF copy, what happens
+ * next, and a WhatsApp fallback for urgent things.
+ */
 export function BriefSuccess({
   eyebrow,
   title,
@@ -27,7 +36,20 @@ export function BriefSuccess({
   whatsapp,
   primary,
   secondary,
+  reference,
+  note,
+  download,
 }: BriefSuccessProps) {
+  const [downloading, setDownloading] = useState(false)
+
+  const onDownload = () => {
+    if (!download || downloading) return
+    setDownloading(true)
+    download
+      .onDownload()
+      .catch((error: unknown) => console.error(error))
+      .finally(() => setDownloading(false))
+  }
   const headingRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -42,6 +64,30 @@ export function BriefSuccess({
           {title}
         </Heading>
       </div>
+      {(reference || download) && (
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border border-tone px-5 py-4">
+          {reference && (
+            <p>
+              <span className="block eyebrow text-muted">{reference.label}</span>
+              <span className="mt-1 block font-mono text-body-lg tracking-wide text-accent">
+                {reference.value}
+              </span>
+            </p>
+          )}
+          {download && (
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={onDownload}
+              aria-busy={downloading}
+            >
+              {download.label}
+            </Button>
+          )}
+          {note && <p className="w-full text-small text-muted">{note}</p>}
+        </div>
+      )}
       <p className="mt-8 text-body-lg text-muted">{body}</p>
       <ol className="mt-8 space-y-4">
         {steps.map((step, i) => (

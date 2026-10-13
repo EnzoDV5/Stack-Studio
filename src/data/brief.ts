@@ -494,6 +494,10 @@ export const briefCopy = {
       'A fixed quote or a recommended plan for you to look over.', // COPY:
     ],
     urgent: 'Something urgent? Message us on WhatsApp.', // COPY:
+    reference: 'Your reference', // COPY:
+    emailNote: (_email: string) =>
+      'Your brief has been sent to Stack Studio. Download your copy below.', // COPY:
+    download: 'Download your brief (PDF)', // COPY:
     home: { label: 'Back to home', to: '/' }, // COPY:
     work: { label: 'Browse our work', to: '/work' }, // COPY:
   },
@@ -504,3 +508,55 @@ export const briefCopy = {
     retry: 'Try again', // COPY:
   },
 }
+
+/**
+ * The sent brief as a record: the team email, the client auto-reply, the PDF and the /brief
+ * page (lib/brief-record.ts). The email layouts themselves are EmailJS templates
+ * (docs/emailjs/); these strings fill them.
+ */
+export const briefRecordCopy = {
+  /** Short reason per path, for subjects and the PDF header. */
+  reasons: {
+    build: 'New project', // COPY:
+    existing: 'Help with an existing site', // COPY:
+    run: 'Hosting and care', // COPY:
+    develop: 'Development partner', // COPY:
+    unsure: 'Not sure yet', // COPY:
+  },
+  title: 'Project brief', // COPY:
+  sections: {
+    estimate: 'Indicative estimate', // COPY:
+    contact: 'Contact', // COPY:
+    project: 'Project', // COPY:
+    message: 'Anything else', // COPY:
+  },
+  labels: {
+    reference: 'Reference', // COPY:
+    submitted: 'Submitted', // COPY:
+    name: 'Name', // COPY:
+    email: 'Email', // COPY:
+    phone: 'Phone', // COPY:
+    company: 'Company', // COPY:
+    source: 'Sent from', // COPY:
+  },
+  none: 'Not supplied', // COPY:
+  estimateNote: 'Indicative only. The final quote follows a short call.', // COPY:
+  email: {
+    teamSubject: (ref: string, reason: string, name: string) =>
+      `New brief ${ref}: ${reason} from ${name}`, // COPY:
+    clientSubject: (ref: string) => `We’ve got your brief (${ref})`, // COPY:
+  },
+  page: {
+    eyebrow: 'Brief record', // COPY:
+    loading: 'Opening the brief…', // COPY:
+    intro: (ref: string, submitted: string) => `${ref} · sent ${submitted}`, // COPY:
+    download: 'Download PDF', // COPY:
+    invalid: {
+      title: 'This brief link is incomplete.', // COPY:
+      body: 'Open it again from the email. Some mail apps cut long links short; if that happens, copy the whole link into your browser.', // COPY:
+    },
+    home: { label: 'Back to home', to: '/' }, // COPY:
+  },
+}
+
+export type BriefRecordCopy = typeof briefRecordCopy

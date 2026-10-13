@@ -39,9 +39,17 @@ const StartPage = lazyPage(
   () => import('@/pages/Start'),
   (m) => m.StartPage,
 )
+const ContactPage = lazyPage(
+  () => import('@/pages/Contact'),
+  (m) => m.ContactPage,
+)
 const PrivacyPage = lazyPage(
   () => import('@/pages/Privacy'),
   (m) => m.PrivacyPage,
+)
+const BriefRecordPage = lazyPage(
+  () => import('@/pages/BriefRecord'),
+  (m) => m.BriefRecordPage,
 )
 const NotFoundPage = lazyPage(
   () => import('@/pages/NotFound'),
@@ -58,7 +66,10 @@ export const appRoutes: AppRoute[] = [
   { path: '/pricing', redirect: '/services#plans' },
   { path: '/studio', Page: StudioPage },
   { path: '/start', Page: StartPage },
+  { path: '/contact', Page: ContactPage },
   { path: '/privacy', Page: PrivacyPage },
+  // A received brief, opened from the emails (not linked anywhere on the site).
+  { path: '/brief', Page: BriefRecordPage },
   { path: '*', Page: NotFoundPage },
 ]
 

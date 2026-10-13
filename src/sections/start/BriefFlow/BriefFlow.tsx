@@ -12,7 +12,9 @@ import { Button } from '@/components/ui/Button'
 import type { briefCopy as BriefCopy } from '@/data/brief'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { trackEvent } from '@/lib/analytics'
+import { downloadBriefPdf } from '@/lib/brief-download'
 import { clearDraft, saveDraft } from '@/lib/brief-draft'
+import { createBriefRef, type BriefRecord } from '@/lib/brief-record'
 import { briefReducer, initBriefState } from '@/lib/brief-reducer'
 import { validateBrief, validateStep } from '@/lib/brief-schema'
 import {
@@ -84,6 +86,8 @@ export function BriefFlow({
   )
   const { answers, errors, status } = state
   const [drawerOpen, setDrawerOpen] = useState(false)
+  // What was sent, for the success screen's reference and PDF copy.
+  const [sent, setSent] = useState<{ record: BriefRecord; emailed: boolean } | null>(null)
   const reducedMotion = useReducedMotion()
   const formId = useId()
   const rootRef = useRef<HTMLDivElement>(null)
@@ -200,6 +204,7 @@ export function BriefFlow({
       label: s.label,
       value: displayValue(s, answers, optionData, copy.review.none),
       stepId: s.id,
+      kind: s.kind,
     }))
 
   const recommendation = summarizeResult(result, priceLabels, {
@@ -231,19 +236,25 @@ export function BriefFlow({
 
     dispatch({ type: 'submit' })
     try {
-      await submitBrief({
+      const now = new Date()
+      const { record, emailed } = await submitBrief({
         path: valid.data.path,
         brief: valid.data,
-        summary: Object.fromEntries(reviewRows.map((r) => [r.label, r.value])),
+        // Contact details travel as their own fields, so the answers leave that step out.
+        summary: Object.fromEntries(
+          reviewRows.filter((r) => r.kind !== 'contact').map((r) => [r.label, r.value]),
+        ),
         result: { kind: result.kind, recommendation },
         meta: {
-          submittedAt: new Date().toISOString(),
+          ref: createBriefRef(now),
+          submittedAt: now.toISOString(),
           page: window.location.href,
           userAgent: navigator.userAgent,
         },
       })
       trackEvent('Brief submitted', { path: valid.data.path, result: result.kind })
       clearDraft()
+      setSent({ record, emailed })
       dispatch({ type: 'success' })
     } catch (error) {
       console.error(error)
@@ -323,6 +334,13 @@ export function BriefFlow({
             whatsapp={whatsapp}
             primary={copy.success.home}
             secondary={copy.success.work}
+            reference={sent ? { label: copy.success.reference, value: sent.record.ref } : undefined}
+            note={sent?.emailed ? copy.success.emailNote(sent.record.contact.email) : undefined}
+            download={
+              sent
+                ? { label: copy.success.download, onDownload: () => downloadBriefPdf(sent.record) }
+                : undefined
+            }
           />
         </div>
         {result.kind !== 'none' && (

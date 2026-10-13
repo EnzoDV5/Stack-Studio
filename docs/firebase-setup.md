@@ -40,39 +40,5 @@ firebase deploy --only firestore,hosting
 
 ## EmailJS
 
-The website sends the team notification through one EmailJS template. The client auto-reply
-should be linked from that main template in EmailJS, which consumes one extra request but
-keeps the website integration clean.
-
-Create:
-
-- Service: connect the email account that should send Stack Studio mail.
-- Main template: team notification, with Template ID copied to `VITE_EMAILJS_BRIEF_TEMPLATE_ID`.
-- Linked auto-reply template: sent to `{{client_email}}`.
-- Main template attachment: add a Variable Attachment named `brief_pdf`, filename `{{brief_pdf_filename}}`, content type PDF.
-
-Main template variables available:
-
-```txt
-{{title}}
-{{to_email}}
-{{client_name}}
-{{client_email}}
-{{client_phone}}
-{{client_company}}
-{{client_message}}
-{{reply_to}}
-{{enquiry_reason}}
-{{project_path}}
-{{estimate_kind}}
-{{recommendation}}
-{{submitted_at}}
-{{page_url}}
-{{summary_text}}
-{{contact_id}}
-{{enquiry_id}}
-{{brief_pdf_filename}}
-```
-
-For the main template, set Reply-To to `{{reply_to}}`. For the linked auto-reply, set
-To Email to `{{client_email}}`.
+Follow [emailjs-setup.md](emailjs-setup.md) for the current team template, linked client reply,
+PDF download and optional paid-plan PDF attachment configuration.

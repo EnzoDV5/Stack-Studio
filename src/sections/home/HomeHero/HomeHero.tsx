@@ -72,7 +72,7 @@ export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, video }: Ho
       />
       <GridOverlay fade="radial" className="-z-10" />
 
-      {/* The mark: huge, solid and crisp (vector), anchored to the right and bleeding off it.
+      {/* The mark: huge and anchored to the right, bleeding off the edge.
           The hero clips it, so as it sinks it disappears behind the next section. */}
       <div
         ref={frameRef}

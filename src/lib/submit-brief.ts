@@ -1,9 +1,13 @@
 /**
- * Sends the brief. Firebase is the primary production store when VITE_FIREBASE_* is set.
- * VITE_FORM_ENDPOINT can still be used as a secondary notification endpoint while EmailJS
- * templates are being added.
+ * Sends the brief to every channel that is configured (src/lib/config.ts):
+ *   - EmailJS: the team notification, plus a client reply when linked in the dashboard.
+ *   - Firebase: stores the brief in Firestore (docs/firebase-setup.md).
+ *   - VITE_FORM_ENDPOINT: a JSON POST (Formspree or similar), kept as a fallback.
+ * With EmailJS configured, the brief only counts as complete when the email request succeeds.
+ * Other channels are retained for record keeping and fallback when EmailJS isn't configured.
  */
 import type { BriefPathId } from '@/types'
+import { createBriefRecord, type BriefRecord } from './brief-record'
 import type { ValidBrief } from './brief-schema'
 import { config } from './config'
 import type { EstimateKind } from './estimate'
@@ -19,49 +23,84 @@ export interface BriefPayload {
     /** Plain-language recommendation, e.g. "R 23 000 – R 31 000" or "Website Care Essential". */
     recommendation: string
   }
-  meta: { submittedAt: string; page: string; userAgent: string }
+  meta: {
+    /** Reference quoted to the client, e.g. "SS-261013-7K4Q" (createBriefRef). */
+    ref: string
+    submittedAt: string
+    page: string
+    userAgent: string
+  }
 }
 
-export async function submitBrief(payload: BriefPayload): Promise<void> {
-  let sentAnywhere = false
+export interface BriefSubmission {
+  /** What was sent (the success screen offers it as a PDF). */
+  record: BriefRecord
+  /** Whether EmailJS accepted the team email request. */
+  emailed: boolean
+}
+
+export async function submitBrief(payload: BriefPayload): Promise<BriefSubmission> {
+  const record = createBriefRecord(payload)
+  const errors: unknown[] = []
+  let delivered = false
+  let emailed = false
   let submission: SubmissionWriteResult | null = null
 
   if (config.firebase) {
-    const { saveBriefToFirebase } = await import('./firebase-submissions')
-    submission = await saveBriefToFirebase(payload)
-    sentAnywhere = true
-  }
-
-  if (config.emailjs) {
     try {
-      const { sendBriefEmails } = await import('./emailjs-brief')
-      await sendBriefEmails(payload, submission)
-      if (submission) {
-        const { updateBriefEmailAutomation } = await import('./firebase-submissions')
-        await updateBriefEmailAutomation(submission.enquiryId, 'sent')
-      }
-      sentAnywhere = true
+      const { saveBriefToFirebase } = await import('./firebase-submissions')
+      submission = await saveBriefToFirebase(payload)
+      delivered = true
     } catch (error) {
-      if (submission) {
-        const { updateBriefEmailAutomation } = await import('./firebase-submissions')
-        await updateBriefEmailAutomation(submission.enquiryId, 'failed', error)
-        console.error('[brief] EmailJS failed after Firebase save', error)
-      } else {
-        throw error
-      }
+      errors.push(error)
+      console.error('[brief] Firebase save failed', error)
     }
   }
 
-  const formEndpoint = config.formEndpoint
-  if (formEndpoint) {
-    await postToFormEndpoint(formEndpoint, payload)
-    sentAnywhere = true
+  if (config.emailjs) {
+    let emailError: unknown = null
+    try {
+      const { sendBriefEmails } = await import('./emailjs-brief')
+      await sendBriefEmails(record, submission)
+      emailed = true
+      delivered = true
+    } catch (error) {
+      emailError = error
+      errors.push(error)
+      console.error('[brief] EmailJS send failed', error)
+    }
+    if (submission) {
+      // Best effort: the brief is already stored either way.
+      const { updateBriefEmailAutomation } = await import('./firebase-submissions')
+      await updateBriefEmailAutomation(
+        submission.enquiryId,
+        emailError ? 'failed' : 'sent',
+        emailError,
+      ).catch((error: unknown) => console.error('[brief] Firebase status update failed', error))
+    }
   }
 
-  if (!sentAnywhere) {
-    console.info('[brief] Firebase, EmailJS and VITE_FORM_ENDPOINT not set: stub submit', payload)
+  if (config.formEndpoint) {
+    try {
+      await postToFormEndpoint(config.formEndpoint, payload)
+      delivered = true
+    } catch (error) {
+      errors.push(error)
+      console.error('[brief] Form endpoint failed', error)
+    }
+  }
+
+  if ((config.emailjs && !emailed) || (errors.length && !delivered)) {
+    throw new Error('Brief delivery failed', { cause: errors })
+  }
+
+  if (!delivered) {
+    if (!config.isDev) throw new Error('No brief delivery channel is configured.')
+    console.info('[brief] No EmailJS, Firebase or VITE_FORM_ENDPOINT set: stub submit', payload)
     await new Promise((resolve) => setTimeout(resolve, 900))
   }
+
+  return { record, emailed }
 }
 
 async function postToFormEndpoint(endpoint: string, payload: BriefPayload): Promise<void> {
@@ -70,10 +109,11 @@ async function postToFormEndpoint(endpoint: string, payload: BriefPayload): Prom
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     body: JSON.stringify({
       ...payload.summary,
+      Reference: payload.meta.ref,
       Path: payload.path,
       Result: payload.result.kind,
       Recommendation: payload.result.recommendation,
-      _subject: `New brief (${payload.path}): ${payload.brief.contact.name}`,
+      _subject: `New brief ${payload.meta.ref} (${payload.path}): ${payload.brief.contact.name}`,
       _replyto: payload.brief.contact.email,
       payload,
     }),

@@ -105,7 +105,7 @@ export function MobileMenu({
       <div className="relative flex min-h-full flex-col">
         <GridOverlay fade="radial" />
         <div className="relative container-site flex h-(--spacing-header) items-center justify-between">
-          <Logo title="" />
+          <Logo variant="wordmark" title="" className="text-[1.55rem] sm:text-[1.7rem]" />
           <button
             type="button"
             onClick={onClose}

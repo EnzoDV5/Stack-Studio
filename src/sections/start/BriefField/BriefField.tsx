@@ -11,6 +11,7 @@ export interface BriefFieldProps {
   autoComplete?: HTMLInputAutoCompleteAttribute
   required?: boolean
   multiline?: boolean
+  maxLength?: number
   error?: string
 }
 
@@ -28,6 +29,7 @@ export function BriefField({
   autoComplete,
   required = false,
   multiline = false,
+  maxLength,
   error,
 }: BriefFieldProps) {
   const errorId = `${id}-error`
@@ -38,6 +40,7 @@ export function BriefField({
     placeholder,
     autoComplete,
     required,
+    maxLength,
     'aria-invalid': error ? true : undefined,
     'aria-describedby': error ? errorId : undefined,
     className: cn(inputClass, error ? 'border-error' : 'border-tone'),

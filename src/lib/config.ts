@@ -28,24 +28,27 @@ const firebase =
 
 const emailjsPublicKey = read(env.VITE_EMAILJS_PUBLIC_KEY)
 const emailjsServiceId = read(env.VITE_EMAILJS_SERVICE_ID)
+const emailjsContactTemplateId = read(env.VITE_EMAILJS_CONTACT_TEMPLATE_ID)
 const emailjsBriefTemplateId = read(env.VITE_EMAILJS_BRIEF_TEMPLATE_ID)
+const emailjsTemplateId = emailjsContactTemplateId ?? emailjsBriefTemplateId
 
 const emailjs =
-  emailjsPublicKey && emailjsServiceId && emailjsBriefTemplateId
+  emailjsPublicKey && emailjsServiceId && emailjsTemplateId
     ? {
         publicKey: emailjsPublicKey,
         serviceId: emailjsServiceId,
-        briefTemplateId: emailjsBriefTemplateId,
-        toEmail: read(env.VITE_EMAILJS_TO_EMAIL) ?? 'hello@stackstudio.co.za',
+        contactTemplateId: emailjsContactTemplateId ?? emailjsTemplateId,
+        briefTemplateId: emailjsBriefTemplateId ?? emailjsTemplateId,
+        attachPdf: read(env.VITE_EMAILJS_ATTACH_PDF) === 'true',
       }
     : null
 
 export const config = {
-  /** POST target for the Start a project brief (Formspree or similar). null uses the local stub. */
+  /** Optional JSON POST target for the brief. null uses a stub only in development. */
   formEndpoint: read(env.VITE_FORM_ENDPOINT),
   /** Firebase web app settings. null keeps the brief flow in local/form-endpoint mode. */
   firebase,
-  /** EmailJS settings for team notifications and linked auto-replies. */
+  /** EmailJS: the Contact Us template (with its client auto-reply linked). null skips email. */
   emailjs,
   /** Plausible-style site id (domain). null disables analytics entirely. */
   analyticsId: read(env.VITE_ANALYTICS_ID),

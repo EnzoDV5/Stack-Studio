@@ -9,7 +9,7 @@ export const site: SiteConfig = {
     'Stack Studio helps businesses stand out and grow with custom websites, apps and software, plus hosting and ongoing care. Based in Centurion, South Africa.', // COPY:
   url: 'https://stackstudio.co.za', // COPY: confirm production domain
   locale: 'en-ZA',
-  email: 'hello@stackstudio.co.za', // COPY: placeholder email
+  email: 'enzo.devittorio5@gmail.com',
   whatsapp: {
     number: '27000000000', // COPY: placeholder, digits only (27 + number without leading 0)
     display: '+27 00 000 0000', // COPY: placeholder

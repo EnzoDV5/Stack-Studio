@@ -1,0 +1,1 @@
+export { BriefRecordPage } from './BriefRecordPage'
