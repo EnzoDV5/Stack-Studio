@@ -14,6 +14,10 @@ The enquiry collections keep a history. `client_contacts` is the latest view. Ev
 `contactId` linking it to its contact document. Client reads and deletes are denied by the
 Firestore rules; staff access requires the Firebase console or an admin service account.
 
+`package.json` pins `@firebase/app` to the version required by the installed Firebase SDK.
+Auth and Firestore must share the same app instance; two installed core versions caused
+`Component auth has not been registered yet` and prevented every browser submission.
+
 ## Console Setup
 
 In the Firebase console for `stack-studio-2f8a1`:
