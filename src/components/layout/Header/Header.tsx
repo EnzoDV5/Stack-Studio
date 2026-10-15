@@ -280,6 +280,12 @@ export function Header({
                             onClick={closeDropdown}
                             aria-label={`View ${selected.label} section`}
                           >
+                            <div className={styles.previewCopy}>
+                              <span className={styles.previewKicker}>Section preview</span>
+                              <strong>{selected.label}</strong>
+                              <span>{preview.description}</span>
+                              <span className={styles.previewAction}>View section ↗</span>
+                            </div>
                             {preview.visual ? (
                               <div className={styles.previewDiagram} aria-hidden="true">
                                 <div className={styles.diagramTop}>
@@ -323,12 +329,6 @@ export function Header({
                                 />
                               </div>
                             )}
-                            <div className={styles.previewCopy}>
-                              <span className={styles.previewKicker}>Section preview</span>
-                              <strong>{selected.label}</strong>
-                              <span>{preview.description}</span>
-                              <span className={styles.previewAction}>View section ↗</span>
-                            </div>
                           </Link>
                         )}
                       </div>
