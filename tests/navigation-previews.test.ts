@@ -14,11 +14,23 @@ describe('section navigation previews', () => {
 
         if (preview.visual) {
           assert.ok(preview.steps.length > 0, `Empty diagram for ${section.to}`)
+        } else if (preview.device) {
+          const folder = preview.device === 'phone' ? 'phone/app' : 'laptop/desktop'
+          const width = preview.device === 'phone' ? 480 : 800
+          assert.ok(
+            existsSync(join(process.cwd(), 'public/media', folder, `frame-68-${width}.webp`)),
+            `Missing device frames for ${section.to}`,
+          )
         } else {
           assert.ok(
             existsSync(join(process.cwd(), 'public', preview.image.slice(1))),
             `Missing preview image for ${section.to}`,
           )
+          if (preview.video)
+            assert.ok(
+              existsSync(join(process.cwd(), 'public', preview.video.slice(1))),
+              `Missing preview video for ${section.to}`,
+            )
         }
       }
     }

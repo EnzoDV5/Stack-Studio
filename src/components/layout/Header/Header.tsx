@@ -8,6 +8,7 @@ import { cn } from '@/lib/cn'
 import { HEADER_BACKDROP_AT } from '@/lib/tone'
 import type { CtaLink, NavItem } from '@/types'
 import styles from './Header.module.css'
+import { PreviewMedia } from './PreviewMedia'
 
 export interface HeaderProps {
   nav: NavItem[]
@@ -38,17 +39,43 @@ export function Header({
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const [closingDropdown, setClosingDropdown] = useState<string | null>(null)
   const [previewIndex, setPreviewIndex] = useState(0)
   const lastY = useRef(0)
   const headerRef = useRef<HTMLElement>(null)
   const dropdownButtons = useRef<Record<string, HTMLButtonElement | null>>({})
   const lastWheel = useRef(0)
   const previewIndexRef = useRef(0)
+  const leaveTimer = useRef<number | null>(null)
 
   const selectPreview = useCallback((index: number) => {
     previewIndexRef.current = index
     setPreviewIndex(index)
   }, [])
+
+  const cancelClose = useCallback(() => {
+    if (leaveTimer.current !== null) window.clearTimeout(leaveTimer.current)
+    leaveTimer.current = null
+  }, [])
+
+  const closeDropdown = useCallback(() => {
+    cancelClose()
+    if (openDropdown) setClosingDropdown(openDropdown)
+    setOpenDropdown(null)
+  }, [cancelClose, openDropdown])
+
+  const scheduleClose = useCallback(() => {
+    cancelClose()
+    leaveTimer.current = window.setTimeout(closeDropdown, 280)
+  }, [cancelClose, closeDropdown])
+
+  useEffect(() => {
+    if (!closingDropdown) return
+    const timer = window.setTimeout(() => setClosingDropdown(null), 280)
+    return () => window.clearTimeout(timer)
+  }, [closingDropdown])
+
+  useEffect(() => cancelClose, [cancelClose])
 
   useEffect(() => {
     let frame = 0
@@ -77,11 +104,11 @@ export function Header({
   useEffect(() => {
     if (!openDropdown) return
     const closeOutside = (event: PointerEvent) => {
-      if (!headerRef.current?.contains(event.target as Node)) setOpenDropdown(null)
+      if (!headerRef.current?.contains(event.target as Node)) closeDropdown()
     }
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key !== 'Escape') return
-      setOpenDropdown(null)
+      closeDropdown()
       dropdownButtons.current[openDropdown]?.focus()
     }
     document.addEventListener('pointerdown', closeOutside)
@@ -90,7 +117,7 @@ export function Header({
       document.removeEventListener('pointerdown', closeOutside)
       document.removeEventListener('keydown', closeOnEscape)
     }
-  }, [openDropdown])
+  }, [closeDropdown, openDropdown])
 
   useEffect(() => {
     if (!openDropdown) return
@@ -126,7 +153,7 @@ export function Header({
         className={cn(
           styles.header,
           scrolled && styles.scrolled,
-          hidden && !menuOpen && !openDropdown && styles.hidden,
+          hidden && !menuOpen && !openDropdown && !closingDropdown && styles.hidden,
         )}
       >
         <div className="container-site flex h-full items-center justify-between gap-6">
@@ -143,26 +170,29 @@ export function Header({
               {nav.map((item) => {
                 const sections = dropdowns[item.to]
                 const isOpen = openDropdown === item.to
+                const isClosing = closingDropdown === item.to
                 const selected = sections?.[Math.min(previewIndex, sections.length - 1)]
                 const preview = selected && previews[selected.to]
                 return (
                   <li
                     key={item.to}
-                    className={styles.navItem}
+                    className={cn(styles.navItem, isOpen && styles.navItemOpen)}
                     onMouseEnter={() => {
                       if (sections && window.matchMedia('(hover: hover)').matches) {
+                        cancelClose()
+                        setClosingDropdown(null)
                         if (openDropdown !== item.to) selectPreview(0)
                         setOpenDropdown(item.to)
                       }
                     }}
                     onMouseLeave={() => {
-                      if (sections) setOpenDropdown(null)
+                      if (sections && isOpen) scheduleClose()
                     }}
                   >
                     <div className={styles.navGroup}>
                       <NavLink
                         to={item.to}
-                        onClick={() => setOpenDropdown(null)}
+                        onClick={closeDropdown}
                         className={({ isActive }) =>
                           cn(styles.navLink, 'text-small', isActive && styles.active)
                         }
@@ -180,8 +210,10 @@ export function Header({
                           aria-expanded={isOpen}
                           aria-controls={`nav-dropdown-${item.to.slice(1)}`}
                           onClick={() => {
+                            cancelClose()
+                            setClosingDropdown(null)
                             selectPreview(0)
-                            setOpenDropdown(isOpen ? null : item.to)
+                            setOpenDropdown(item.to)
                           }}
                         >
                           <span className={styles.chevron} aria-hidden="true" />
@@ -193,7 +225,12 @@ export function Header({
                         id={`nav-dropdown-${item.to.slice(1)}`}
                         className={styles.dropdown}
                         data-lenis-prevent=""
-                        hidden={!isOpen}
+                        data-state={isOpen ? 'open' : 'closing'}
+                        hidden={!isOpen && !isClosing}
+                        inert={!isOpen}
+                        aria-hidden={!isOpen}
+                        onMouseEnter={cancelClose}
+                        onMouseLeave={scheduleClose}
                       >
                         <div className={styles.dropdownLeft}>
                           <div className={styles.dropdownIntro}>
@@ -206,7 +243,7 @@ export function Header({
                               <li key={section.to}>
                                 <Link
                                   to={section.to}
-                                  onClick={() => setOpenDropdown(null)}
+                                  onClick={closeDropdown}
                                   onPointerEnter={() => selectPreview(index)}
                                   onFocus={() => selectPreview(index)}
                                   className={cn(index === previewIndex && styles.previewActive)}
@@ -216,7 +253,6 @@ export function Header({
                                   </span>
                                   <span className={styles.dropdownItemText}>
                                     <strong>{section.label}</strong>
-                                    <small>{previews[section.to]?.description}</small>
                                   </span>
                                   <span className={styles.dropdownArrow} aria-hidden="true">
                                     ↗
@@ -226,11 +262,11 @@ export function Header({
                             ))}
                           </ol>
                         </div>
-                        {selected && preview && (
+                        {(isOpen || isClosing) && selected && preview && (
                           <Link
                             to={selected.to}
                             className={styles.previewPanel}
-                            onClick={() => setOpenDropdown(null)}
+                            onClick={closeDropdown}
                             aria-label={`View ${selected.label} section`}
                           >
                             {preview.visual ? (
@@ -266,12 +302,7 @@ export function Header({
                                   <span />
                                   <i>STACK STUDIO / {item.label.toUpperCase()}</i>
                                 </div>
-                                <img
-                                  key={preview.image}
-                                  src={preview.image}
-                                  alt=""
-                                  loading="lazy"
-                                />
+                                <PreviewMedia key={selected.to} preview={preview} active={isOpen} />
                               </div>
                             )}
                             <div className={styles.previewCopy}>

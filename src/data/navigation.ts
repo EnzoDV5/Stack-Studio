@@ -27,11 +27,14 @@ export const sectionDropdowns: Record<string, NavItem[]> = {
 }
 
 export type SectionPreview = { description: string } & (
-  | { image: string; visual?: never; steps?: never }
+  | { image: string; video?: string; device?: never; visual?: never; steps?: never }
+  | { device: 'phone' | 'laptop'; image?: never; video?: never; visual?: never; steps?: never }
   | {
       visual: 'timeline' | 'payment'
       steps: { label: string; value: string }[]
       image?: never
+      video?: never
+      device?: never
     }
 )
 
@@ -39,11 +42,12 @@ export type SectionPreview = { description: string } & (
 export const sectionPreviews: Record<string, SectionPreview> = {
   '/services#stage-build': {
     description: 'A site that shows your work clearly and gives people a reason to choose you.',
-    image: '/media/projects/mockups/mpg-foundation-showcase-960.webp',
+    image: '/media/services/build-poster-480.webp',
+    video: '/media/services/build-720.mp4',
   },
   '/services#apps': {
     description: 'Useful web and mobile products built around the way your business works.',
-    image: '/media/projects/mockups/salon-friend-showcase-960.webp',
+    device: 'phone',
   },
   '/services#ai-systems': {
     description: 'Complete AI products with their own interface, data workflows and human review.',
@@ -51,15 +55,17 @@ export const sectionPreviews: Record<string, SectionPreview> = {
   },
   '/services#desktop': {
     description: 'Desktop tools and connected systems for the work your team does every day.',
-    image: '/media/services/backend-small.webp',
+    device: 'laptop',
   },
   '/services#stage-grow': {
     description: 'Make an existing site or app faster, clearer and more useful.',
     image: '/media/services/grow-poster-480.webp',
+    video: '/media/services/grow-720.mp4',
   },
   '/services#plans': {
     description: 'Hosting, maintenance and hands-on support after launch.',
     image: '/media/services/run-poster-480.webp',
+    video: '/media/services/run-720.mp4',
   },
   '/services#services-faq': {
     description: 'Quick answers about scope, pricing and working together.',
@@ -67,7 +73,8 @@ export const sectionPreviews: Record<string, SectionPreview> = {
   },
   '/process#next-steps': {
     description: 'From your first brief to a clear plan and quote.',
-    image: '/media/services/collaboration-small.webp',
+    image: '/media/services/partner-poster-480.webp',
+    video: '/media/services/partner-720.mp4',
   },
   '/process#timeline': {
     description: 'See how planning, design, development and launch fit together.',
@@ -85,6 +92,7 @@ export const sectionPreviews: Record<string, SectionPreview> = {
   '/process#care': {
     description: 'Updates, monitoring and support once your project is live.',
     image: '/media/services/run-poster-480.webp',
+    video: '/media/services/run-720.mp4',
   },
   '/process#process-faq': {
     description: 'Straight answers before we start working together.',

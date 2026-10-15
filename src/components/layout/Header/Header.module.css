@@ -67,6 +67,15 @@
     position: relative;
   }
 
+  .navItemOpen::after {
+    position: absolute;
+    top: 100%;
+    right: -1rem;
+    left: -1rem;
+    height: 2.5rem;
+    content: '';
+  }
+
   .navGroup {
     display: flex;
     align-items: center;
@@ -114,7 +123,16 @@
     background: #f7f5f1;
     box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.25);
     color: var(--color-ink);
-    animation: dropdownEnter 220ms var(--ease-out-expo) both;
+    transform-origin: top center;
+  }
+
+  .dropdown[data-state='open'] {
+    animation: dropdownEnter 360ms var(--ease-out-expo) both;
+  }
+
+  .dropdown[data-state='closing'] {
+    pointer-events: none;
+    animation: dropdownExit 260ms ease-in both;
   }
 
   .dropdown[hidden] {
@@ -126,7 +144,7 @@
     right: 0;
     bottom: 100%;
     left: 0;
-    height: 0.7rem;
+    height: 1rem;
     content: '';
   }
 
@@ -178,13 +196,13 @@
 
   .dropdownLinks a {
     display: flex;
-    min-height: 3.45rem;
+    min-height: 3.65rem;
     align-items: center;
     gap: 0.7rem;
-    padding: 0.45rem 0.7rem;
+    padding: 0.65rem 0.8rem;
     border-radius: 0.55rem;
     color: var(--color-ink);
-    font-size: 0.84rem;
+    font-size: 0.95rem;
     text-decoration: none;
     transition:
       background-color 160ms ease,
@@ -203,22 +221,11 @@
   }
 
   .dropdownItemText {
-    display: grid;
     min-width: 0;
-    gap: 0.18rem;
   }
 
   .dropdownItemText strong {
     font-weight: 700;
-  }
-
-  .dropdownItemText small {
-    overflow: hidden;
-    color: var(--color-grey-600);
-    font-size: 0.69rem;
-    line-height: 1.35;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   .dropdownArrow {
@@ -265,6 +272,8 @@
   }
 
   .previewChrome {
+    position: relative;
+    z-index: 1;
     display: flex;
     height: 1.45rem;
     flex: none;
@@ -294,12 +303,25 @@
     letter-spacing: 0.09em;
   }
 
-  .previewVisual img {
+  .previewVisual > img,
+  .previewVisual > video {
     width: 100%;
     min-height: 0;
     flex: 1;
     object-fit: cover;
-    animation: previewImageEnter 240ms ease both;
+    animation: previewImageEnter 420ms ease both;
+  }
+
+  .previewVisual > .deviceFrame {
+    object-fit: contain;
+    background: radial-gradient(circle at 50% 55%, #444 0, #242424 58%, #161616 100%);
+    transform: scale(1.3);
+  }
+
+  .previewVisual > .stillPreview {
+    animation:
+      previewImageEnter 420ms ease both,
+      stillDrift 7s ease-in-out 420ms infinite alternate;
   }
 
   .previewDiagram {
@@ -402,6 +424,56 @@
     display: none;
   }
 
+  .dropdown[data-state='open'] .diagramSteps:not(.paymentSteps) .diagramStep {
+    animation: timelineHighlight 5s ease-in-out infinite;
+  }
+
+  .dropdown[data-state='open'] .diagramSteps:not(.paymentSteps) .diagramStep:nth-child(2),
+  .dropdown[data-state='open'] .paymentSteps .diagramStep:nth-child(2) {
+    animation-delay: 1s;
+  }
+
+  .dropdown[data-state='open'] .diagramSteps:not(.paymentSteps) .diagramStep:nth-child(3),
+  .dropdown[data-state='open'] .paymentSteps .diagramStep:nth-child(3) {
+    animation-delay: 2s;
+  }
+
+  .dropdown[data-state='open'] .diagramSteps:not(.paymentSteps) .diagramStep:nth-child(4) {
+    animation-delay: 3s;
+  }
+
+  .dropdown[data-state='open'] .diagramSteps:not(.paymentSteps) .diagramStep:nth-child(5) {
+    animation-delay: 4s;
+  }
+
+  .dropdown[data-state='open'] .paymentSteps .diagramStep {
+    animation: paymentHighlight 3s ease-in-out infinite;
+  }
+
+  @keyframes timelineHighlight {
+    0%,
+    18% {
+      background: rgb(255 90 20 / 0.16);
+    }
+    22%,
+    100% {
+      background: transparent;
+    }
+  }
+
+  @keyframes paymentHighlight {
+    0%,
+    25% {
+      border-color: var(--color-orange);
+      background: rgb(255 90 20 / 0.12);
+    }
+    35%,
+    100% {
+      border-color: rgb(255 255 255 / 0.14);
+      background: transparent;
+    }
+  }
+
   .previewCopy {
     display: flex;
     min-height: 0;
@@ -451,10 +523,47 @@
     }
   }
 
+  @keyframes stillDrift {
+    from {
+      scale: 1;
+      object-position: 45% 50%;
+    }
+    to {
+      scale: 1.06;
+      object-position: 55% 50%;
+    }
+  }
+
   @keyframes dropdownEnter {
     from {
       opacity: 0;
-      translate: 0 -0.4rem;
+      translate: 0 -0.65rem;
+      scale: 0.98;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+      scale: 1;
+    }
+  }
+
+  @keyframes dropdownExit {
+    from {
+      opacity: 1;
+      translate: 0 0;
+      scale: 1;
+    }
+    to {
+      opacity: 0;
+      translate: 0 -0.45rem;
+      scale: 0.985;
+    }
+  }
+
+  @keyframes dropdownRowEnter {
+    from {
+      opacity: 0;
+      translate: 0 0.5rem;
     }
     to {
       opacity: 1;
@@ -462,9 +571,40 @@
     }
   }
 
+  .dropdown[data-state='open'] .dropdownLinks li {
+    animation: dropdownRowEnter 360ms var(--ease-out-expo) both;
+  }
+
+  .dropdown[data-state='open'] .dropdownLinks li:nth-child(2) {
+    animation-delay: 35ms;
+  }
+
+  .dropdown[data-state='open'] .dropdownLinks li:nth-child(3) {
+    animation-delay: 70ms;
+  }
+
+  .dropdown[data-state='open'] .dropdownLinks li:nth-child(4) {
+    animation-delay: 105ms;
+  }
+
+  .dropdown[data-state='open'] .dropdownLinks li:nth-child(5) {
+    animation-delay: 140ms;
+  }
+
+  .dropdown[data-state='open'] .dropdownLinks li:nth-child(6) {
+    animation-delay: 175ms;
+  }
+
+  .dropdown[data-state='open'] .dropdownLinks li:nth-child(7) {
+    animation-delay: 210ms;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .dropdown,
-    .previewVisual img {
+    .dropdown[data-state],
+    .dropdown[data-state='open'] .dropdownLinks li,
+    .previewVisual > img,
+    .previewVisual > video,
+    .dropdown[data-state='open'] .diagramStep {
       animation: none;
     }
   }
