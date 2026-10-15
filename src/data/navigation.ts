@@ -1,5 +1,7 @@
 import type { CtaLink, NavItem } from '@/types'
 import { processContent, servicesContent } from './pages'
+import { policies } from './policies'
+import { processSteps } from './process'
 
 export const primaryNav: NavItem[] = [
   { label: 'Home', to: '/', description: 'Back to the start' }, // COPY:
@@ -22,6 +24,72 @@ export const sectionDropdowns: Record<string, NavItem[]> = {
     label: item.label,
     to: `/process#${item.id}`,
   })),
+}
+
+export type SectionPreview = { description: string } & (
+  | { image: string; visual?: never; steps?: never }
+  | {
+      visual: 'timeline' | 'payment'
+      steps: { label: string; value: string }[]
+      image?: never
+    }
+)
+
+/** Short, visual previews for the desktop navigation. Keys match section links above. */
+export const sectionPreviews: Record<string, SectionPreview> = {
+  '/services#stage-build': {
+    description: 'A site that shows your work clearly and gives people a reason to choose you.',
+    image: '/media/projects/mockups/mpg-foundation-showcase-960.webp',
+  },
+  '/services#apps': {
+    description: 'Useful web and mobile products built around the way your business works.',
+    image: '/media/projects/mockups/salon-friend-showcase-960.webp',
+  },
+  '/services#ai-systems': {
+    description: 'Complete AI products with their own interface, data workflows and human review.',
+    image: '/media/services/automation-small.webp',
+  },
+  '/services#desktop': {
+    description: 'Desktop tools and connected systems for the work your team does every day.',
+    image: '/media/services/backend-small.webp',
+  },
+  '/services#stage-grow': {
+    description: 'Make an existing site or app faster, clearer and more useful.',
+    image: '/media/services/grow-poster-480.webp',
+  },
+  '/services#plans': {
+    description: 'Hosting, maintenance and hands-on support after launch.',
+    image: '/media/services/run-poster-480.webp',
+  },
+  '/services#services-faq': {
+    description: 'Quick answers about scope, pricing and working together.',
+    image: '/media/services/collaboration-small.webp',
+  },
+  '/process#next-steps': {
+    description: 'From your first brief to a clear plan and quote.',
+    image: '/media/services/collaboration-small.webp',
+  },
+  '/process#timeline': {
+    description: 'See how planning, design, development and launch fit together.',
+    visual: 'timeline',
+    steps: processSteps.slice(0, 5).map((step) => ({ label: step.title, value: step.duration })),
+  },
+  '/process#terms': {
+    description: 'Know when payments happen and what each stage covers.',
+    visual: 'payment',
+    steps: (policies.paymentSchedules[0]?.milestones ?? []).map((step) => ({
+      label: step.label,
+      value: `${step.percent}%`,
+    })),
+  },
+  '/process#care': {
+    description: 'Updates, monitoring and support once your project is live.',
+    image: '/media/services/run-poster-480.webp',
+  },
+  '/process#process-faq': {
+    description: 'Straight answers before we start working together.',
+    image: '/media/services/network-small.webp',
+  },
 }
 
 export const footerNav: NavItem[] = [

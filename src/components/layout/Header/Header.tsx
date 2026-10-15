@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router'
 import { MobileMenu, type MobileMenuProps } from '@/components/layout/MobileMenu'
 import { Button } from '@/components/ui/Button'
 import { Logo } from '@/components/ui/Logo'
+import type { SectionPreview } from '@/data/navigation'
 import { cn } from '@/lib/cn'
 import { HEADER_BACKDROP_AT } from '@/lib/tone'
 import type { CtaLink, NavItem } from '@/types'
@@ -11,6 +12,7 @@ import styles from './Header.module.css'
 export interface HeaderProps {
   nav: NavItem[]
   dropdowns: Record<string, NavItem[]>
+  previews: Record<string, SectionPreview>
   cta: CtaLink
   homeLabel: string
   menuLabel: string
@@ -25,6 +27,7 @@ const DELTA = 6
 export function Header({
   nav,
   dropdowns,
+  previews,
   cta,
   homeLabel,
   menuLabel,
@@ -35,9 +38,17 @@ export function Header({
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const [previewIndex, setPreviewIndex] = useState(0)
   const lastY = useRef(0)
   const headerRef = useRef<HTMLElement>(null)
   const dropdownButtons = useRef<Record<string, HTMLButtonElement | null>>({})
+  const lastWheel = useRef(0)
+  const previewIndexRef = useRef(0)
+
+  const selectPreview = useCallback((index: number) => {
+    previewIndexRef.current = index
+    setPreviewIndex(index)
+  }, [])
 
   useEffect(() => {
     let frame = 0
@@ -81,6 +92,30 @@ export function Header({
     }
   }, [openDropdown])
 
+  useEffect(() => {
+    if (!openDropdown) return
+    const panel = document.getElementById(`nav-dropdown-${openDropdown.slice(1)}`)
+    const sections = dropdowns[openDropdown]
+    if (!panel || !sections) return
+
+    const cyclePreview = (event: WheelEvent) => {
+      event.preventDefault()
+      if (Math.abs(event.deltaY) < 4) return
+      const now = performance.now()
+      if (now - lastWheel.current < 150) return
+      lastWheel.current = now
+      const next = Math.max(
+        0,
+        Math.min(sections.length - 1, previewIndexRef.current + Math.sign(event.deltaY)),
+      )
+      selectPreview(next)
+      panel.querySelectorAll('ol li')[next]?.scrollIntoView({ block: 'nearest' })
+    }
+
+    panel.addEventListener('wheel', cyclePreview, { passive: false })
+    return () => panel.removeEventListener('wheel', cyclePreview)
+  }, [openDropdown, dropdowns, selectPreview])
+
   // The native <dialog> restores focus to the toggle on close.
   const closeMenu = useCallback(() => setMenuOpen(false), [])
 
@@ -108,13 +143,17 @@ export function Header({
               {nav.map((item) => {
                 const sections = dropdowns[item.to]
                 const isOpen = openDropdown === item.to
+                const selected = sections?.[Math.min(previewIndex, sections.length - 1)]
+                const preview = selected && previews[selected.to]
                 return (
                   <li
                     key={item.to}
                     className={styles.navItem}
                     onMouseEnter={() => {
-                      if (sections && window.matchMedia('(hover: hover)').matches)
+                      if (sections && window.matchMedia('(hover: hover)').matches) {
+                        if (openDropdown !== item.to) selectPreview(0)
                         setOpenDropdown(item.to)
+                      }
                     }}
                     onMouseLeave={() => {
                       if (sections) setOpenDropdown(null)
@@ -140,7 +179,10 @@ export function Header({
                           aria-label={`Explore ${item.label} sections`}
                           aria-expanded={isOpen}
                           aria-controls={`nav-dropdown-${item.to.slice(1)}`}
-                          onClick={() => setOpenDropdown(item.to)}
+                          onClick={() => {
+                            selectPreview(0)
+                            setOpenDropdown(isOpen ? null : item.to)
+                          }}
                         >
                           <span className={styles.chevron} aria-hidden="true" />
                         </button>
@@ -150,28 +192,96 @@ export function Header({
                       <div
                         id={`nav-dropdown-${item.to.slice(1)}`}
                         className={styles.dropdown}
+                        data-lenis-prevent=""
                         hidden={!isOpen}
                       >
-                        <div className={styles.dropdownIntro}>
-                          <span className={styles.dropdownEyebrow}>Explore</span>
-                          <span className={styles.dropdownHeading}>{item.label}</span>
-                          <span className={styles.dropdownDescription}>{item.description}</span>
+                        <div className={styles.dropdownLeft}>
+                          <div className={styles.dropdownIntro}>
+                            <span className={styles.dropdownEyebrow}>Explore</span>
+                            <span className={styles.dropdownHeading}>{item.label}</span>
+                            <span className={styles.dropdownDescription}>{item.description}</span>
+                          </div>
+                          <ol className={styles.dropdownLinks}>
+                            {sections.map((section, index) => (
+                              <li key={section.to}>
+                                <Link
+                                  to={section.to}
+                                  onClick={() => setOpenDropdown(null)}
+                                  onPointerEnter={() => selectPreview(index)}
+                                  onFocus={() => selectPreview(index)}
+                                  className={cn(index === previewIndex && styles.previewActive)}
+                                >
+                                  <span className={styles.dropdownNumber}>
+                                    {String(index + 1).padStart(2, '0')}
+                                  </span>
+                                  <span className={styles.dropdownItemText}>
+                                    <strong>{section.label}</strong>
+                                    <small>{previews[section.to]?.description}</small>
+                                  </span>
+                                  <span className={styles.dropdownArrow} aria-hidden="true">
+                                    ↗
+                                  </span>
+                                </Link>
+                              </li>
+                            ))}
+                          </ol>
                         </div>
-                        <ol className={styles.dropdownLinks}>
-                          {sections.map((section, index) => (
-                            <li key={section.to}>
-                              <Link to={section.to} onClick={() => setOpenDropdown(null)}>
-                                <span className={styles.dropdownNumber}>
-                                  {String(index + 1).padStart(2, '0')}
-                                </span>
-                                <span>{section.label}</span>
-                                <span className={styles.dropdownArrow} aria-hidden="true">
-                                  ↗
-                                </span>
-                              </Link>
-                            </li>
-                          ))}
-                        </ol>
+                        {selected && preview && (
+                          <Link
+                            to={selected.to}
+                            className={styles.previewPanel}
+                            onClick={() => setOpenDropdown(null)}
+                            aria-label={`View ${selected.label} section`}
+                          >
+                            {preview.visual ? (
+                              <div className={styles.previewDiagram} aria-hidden="true">
+                                <div className={styles.diagramTop}>
+                                  <span>STACK STUDIO / {item.label.toUpperCase()}</span>
+                                  <span>
+                                    {preview.visual === 'payment' ? 'PAYMENT PLAN' : 'PROJECT PLAN'}
+                                  </span>
+                                </div>
+                                <div
+                                  className={cn(
+                                    styles.diagramSteps,
+                                    preview.visual === 'payment' && styles.paymentSteps,
+                                  )}
+                                >
+                                  {preview.steps.map((step, index) => (
+                                    <div key={step.label} className={styles.diagramStep}>
+                                      <span className={styles.diagramIndex}>
+                                        {String(index + 1).padStart(2, '0')}
+                                      </span>
+                                      <strong>{step.label}</strong>
+                                      <span>{step.value}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            ) : (
+                              <div className={styles.previewVisual}>
+                                <div className={styles.previewChrome} aria-hidden="true">
+                                  <span />
+                                  <span />
+                                  <span />
+                                  <i>STACK STUDIO / {item.label.toUpperCase()}</i>
+                                </div>
+                                <img
+                                  key={preview.image}
+                                  src={preview.image}
+                                  alt=""
+                                  loading="lazy"
+                                />
+                              </div>
+                            )}
+                            <div className={styles.previewCopy}>
+                              <span className={styles.previewKicker}>Section preview</span>
+                              <strong>{selected.label}</strong>
+                              <span>{preview.description}</span>
+                              <span className={styles.previewAction}>View section ↗</span>
+                            </div>
+                          </Link>
+                        )}
                       </div>
                     )}
                   </li>

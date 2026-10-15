@@ -16,6 +16,7 @@ import {
   primaryCta,
   primaryNav,
   sectionDropdowns,
+  sectionPreviews,
 } from '@/data/navigation'
 import { site, whatsappHref } from '@/data/site'
 import { usePageviewTracking } from '@/hooks/useAnalytics'
@@ -39,6 +40,7 @@ export function App() {
       <Header
         nav={primaryNav}
         dropdowns={sectionDropdowns}
+        previews={sectionPreviews}
         cta={primaryCta}
         homeLabel={chromeCopy.homeLabel}
         menuLabel={chromeCopy.menuLabel}

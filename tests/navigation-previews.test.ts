@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict'
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
+import { describe, it } from 'node:test'
+import { sectionDropdowns, sectionPreviews } from '../src/data/navigation'
+
+describe('section navigation previews', () => {
+  it('has a working preview for every Services and Process link', () => {
+    for (const sections of Object.values(sectionDropdowns)) {
+      for (const section of sections) {
+        const preview = sectionPreviews[section.to]
+        assert.ok(preview, `Missing preview for ${section.to}`)
+        assert.ok(preview.description)
+
+        if (preview.visual) {
+          assert.ok(preview.steps.length > 0, `Empty diagram for ${section.to}`)
+        } else {
+          assert.ok(
+            existsSync(join(process.cwd(), 'public', preview.image.slice(1))),
+            `Missing preview image for ${section.to}`,
+          )
+        }
+      }
+    }
+  })
+})
