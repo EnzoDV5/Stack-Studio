@@ -86,8 +86,9 @@ touch control and becomes static, wrapped rows with reduced motion enabled.
 ## Connecting the enquiry form
 
 1. For EmailJS team notifications, client auto-replies and brief PDFs, follow [the EmailJS setup guide](docs/emailjs-setup.md).
-2. Optionally set `VITE_FORM_ENDPOINT` to a Formspree-compatible JSON endpoint as a secondary delivery channel.
-3. Set the values in your hosting build environment and rebuild before publishing.
+2. To store project briefs and Contact messages in Firestore, follow [the Firebase setup guide](docs/firebase-setup.md).
+3. Optionally set `VITE_FORM_ENDPOINT` to a Formspree-compatible JSON endpoint as a secondary brief delivery channel.
+4. Set the values in your hosting build environment and rebuild before publishing.
 
 The brief sends the validated answers, a human-readable summary, the estimate and page
 metadata. It includes a honeypot field; also enable the provider's spam protection.

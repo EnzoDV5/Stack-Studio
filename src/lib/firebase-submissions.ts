@@ -1,10 +1,12 @@
 import { collection, doc, serverTimestamp, updateDoc, writeBatch } from 'firebase/firestore'
+import type { ContactEnquiry } from './contact-email'
 import type { BriefPayload } from './submit-brief'
 import { firebaseServices } from './firebase'
 
 export const firebaseCollections = {
   contacts: 'client_contacts',
   enquiries: 'project_enquiries',
+  contactEnquiries: 'contact_enquiries',
 } as const
 
 type FirebaseCollectionName = (typeof firebaseCollections)[keyof typeof firebaseCollections]
@@ -29,6 +31,12 @@ async function sha256(value: string): Promise<string> {
     .join('')
 }
 
+async function contactDocumentId(userId: string, email: string): Promise<string> {
+  // Scope a contact to its anonymous user. A public email hash alone lets any visitor
+  // overwrite another visitor's contact record with the same email address.
+  return `${userId}_${await sha256(normalizeEmail(email))}`
+}
+
 function enquiryReason(payload: BriefPayload): string {
   switch (payload.path) {
     case 'build':
@@ -47,7 +55,7 @@ function enquiryReason(payload: BriefPayload): string {
 export async function saveBriefToFirebase(payload: BriefPayload): Promise<SubmissionWriteResult> {
   const { db, userId } = await firebaseServices()
   const email = normalizeEmail(payload.brief.contact.email)
-  const contactId = await sha256(email)
+  const contactId = await contactDocumentId(userId, email)
   const contactRef = doc(db, firebaseCollections.contacts, contactId)
   const enquiryRef = doc(collection(db, firebaseCollections.enquiries))
   const timestamp = serverTimestamp()
@@ -59,6 +67,7 @@ export async function saveBriefToFirebase(payload: BriefPayload): Promise<Submis
     {
       displayName: payload.brief.contact.name,
       email,
+      ownerAuthUid: userId,
       phone: payload.brief.contact.phone || null,
       company: payload.brief.contact.company || null,
       latestMessage: payload.brief.contact.message || null,
@@ -112,6 +121,64 @@ export async function saveBriefToFirebase(payload: BriefPayload): Promise<Submis
     enquiryId: enquiryRef.id,
     collections: firebaseCollections,
   }
+}
+
+export async function saveContactToFirebase(enquiry: ContactEnquiry): Promise<string> {
+  const { db, userId } = await firebaseServices()
+  const email = normalizeEmail(enquiry.email)
+  const contactId = await contactDocumentId(userId, email)
+  const contactRef = doc(db, firebaseCollections.contacts, contactId)
+  const enquiryRef = doc(collection(db, firebaseCollections.contactEnquiries))
+  const timestamp = serverTimestamp()
+  const batch = writeBatch(db)
+
+  batch.set(
+    contactRef,
+    {
+      displayName: enquiry.name.trim(),
+      email,
+      ownerAuthUid: userId,
+      latestMessage: enquiry.message.trim(),
+      latestReason: 'general_contact',
+      latestEnquiryId: enquiryRef.id,
+      latestReference: null,
+      latestSubmittedAt: new Date().toISOString(),
+      updatedAt: timestamp,
+    },
+    { merge: true },
+  )
+  batch.set(enquiryRef, {
+    status: 'new',
+    contactId,
+    contact: { name: enquiry.name.trim(), email },
+    subject: enquiry.subject.trim(),
+    message: enquiry.message.trim(),
+    emailAutomation: { provider: 'emailjs', teamNotificationStatus: 'pending' },
+    source: { page: window.location.href, userAgent: navigator.userAgent, authUid: userId },
+    consent: true,
+    createdAt: timestamp,
+    updatedAt: timestamp,
+  })
+  await batch.commit()
+  return enquiryRef.id
+}
+
+export async function updateContactEmailAutomation(
+  enquiryId: string,
+  status: EmailAutomationStatus,
+  error?: unknown,
+): Promise<void> {
+  const { db } = await firebaseServices()
+  const message = error instanceof Error ? error.message : error ? String(error) : null
+  await updateDoc(doc(db, firebaseCollections.contactEnquiries, enquiryId), {
+    emailAutomation: {
+      provider: 'emailjs',
+      teamNotificationStatus: status,
+      errorMessage: message,
+      updatedAt: serverTimestamp(),
+    },
+    updatedAt: serverTimestamp(),
+  })
 }
 
 export async function updateBriefEmailAutomation(

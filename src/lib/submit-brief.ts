@@ -3,8 +3,8 @@
  *   - EmailJS: the team notification, plus a client reply when linked in the dashboard.
  *   - Firebase: stores the brief in Firestore (docs/firebase-setup.md).
  *   - VITE_FORM_ENDPOINT: a JSON POST (Formspree or similar), kept as a fallback.
- * With EmailJS configured, the brief only counts as complete when the email request succeeds.
- * Other channels are retained for record keeping and fallback when EmailJS isn't configured.
+ * When Firebase is configured, the brief must be saved before any delivery channel runs.
+ * With EmailJS configured, the brief also needs a successful email request.
  */
 import type { BriefPathId } from '@/types'
 import { createBriefRecord, type BriefRecord } from './brief-record'
@@ -39,23 +39,35 @@ export interface BriefSubmission {
   emailed: boolean
 }
 
-export async function submitBrief(payload: BriefPayload): Promise<BriefSubmission> {
+export interface BriefSubmissionOptions {
+  /** Reuse an enquiry already stored during a previous email attempt. */
+  savedSubmission?: SubmissionWriteResult | null
+  onSaved?: (submission: SubmissionWriteResult) => void
+}
+
+export async function submitBrief(
+  payload: BriefPayload,
+  options: BriefSubmissionOptions = {},
+): Promise<BriefSubmission> {
   const record = createBriefRecord(payload)
   const errors: unknown[] = []
   let delivered = false
   let emailed = false
-  let submission: SubmissionWriteResult | null = null
+  let submission: SubmissionWriteResult | null = options.savedSubmission ?? null
 
-  if (config.firebase) {
+  if (config.firebase && !submission) {
     try {
       const { saveBriefToFirebase } = await import('./firebase-submissions')
       submission = await saveBriefToFirebase(payload)
+      options.onSaved?.(submission)
       delivered = true
     } catch (error) {
-      errors.push(error)
       console.error('[brief] Firebase save failed', error)
+      throw new Error('Brief could not be saved to Firebase.', { cause: error })
     }
   }
+
+  if (submission) delivered = true
 
   if (config.emailjs) {
     let emailError: unknown = null

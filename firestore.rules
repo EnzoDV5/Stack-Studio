@@ -28,27 +28,39 @@ service cloud.firestore {
         && source.authUid == request.auth.uid;
     }
 
-    match /client_contacts/{contactId} {
-      allow read, delete: if false;
-      allow create, update: if signedIn()
-        && contactId.matches('^[a-f0-9]{64}$')
+    function validContactDocument(contactId) {
+      return signedIn()
+        && contactId.matches('^' + request.auth.uid + '_[a-f0-9]{64}$')
         && request.resource.data.keys().hasOnly([
-          'displayName',
-          'email',
-          'phone',
-          'company',
-          'latestMessage',
-          'latestReason',
-          'latestEnquiryId',
-          'latestReference',
-          'latestSubmittedAt',
-          'updatedAt'
+          'displayName', 'email', 'ownerAuthUid', 'phone', 'company',
+          'latestMessage', 'latestReason', 'latestEnquiryId',
+          'latestReference', 'latestSubmittedAt', 'updatedAt'
         ])
+        && request.resource.data.ownerAuthUid == request.auth.uid
         && request.resource.data.displayName is string
         && request.resource.data.displayName.size() >= 2
         && request.resource.data.displayName.size() <= 120
         && request.resource.data.email is string
-        && request.resource.data.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$');
+        && request.resource.data.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && (request.resource.data.get('phone', null) == null || request.resource.data.phone is string)
+        && (request.resource.data.get('company', null) == null || request.resource.data.company is string)
+        && (request.resource.data.get('latestMessage', null) == null || request.resource.data.latestMessage is string)
+        && request.resource.data.latestReason in [
+          'new_build', 'existing_website_help', 'hosting_and_care',
+          'development_partner', 'not_sure_yet', 'general_contact'
+        ]
+        && request.resource.data.latestEnquiryId is string
+        && (request.resource.data.get('latestReference', null) == null || request.resource.data.latestReference is string)
+        && request.resource.data.latestSubmittedAt is string
+        && request.resource.data.updatedAt is timestamp;
+    }
+
+    match /client_contacts/{contactId} {
+      allow read, delete: if false;
+      allow create: if validContactDocument(contactId);
+      allow update: if resource.data.ownerAuthUid == request.auth.uid
+        && resource.data.email == request.resource.data.email
+        && validContactDocument(contactId);
     }
 
     match /project_enquiries/{enquiryId} {
@@ -78,7 +90,7 @@ service cloud.firestore {
           'development_partner',
           'not_sure_yet'
         ]
-        && request.resource.data.contactId.matches('^[a-f0-9]{64}$')
+        && request.resource.data.contactId.matches('^' + request.auth.uid + '_[a-f0-9]{64}$')
         && validContact(request.resource.data.contact)
         && request.resource.data.consent == true
         && validSource(request.resource.data.source);
@@ -92,6 +104,55 @@ service cloud.firestore {
         && request.resource.data.emailAutomation.provider == 'emailjs'
         && request.resource.data.emailAutomation.teamNotificationStatus in ['sent', 'failed']
         && request.resource.data.emailAutomation.autoReplyStatus in ['linked_template', 'failed'];
+    }
+
+    match /contact_enquiries/{enquiryId} {
+      allow read, delete: if false;
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly([
+          'status', 'contactId', 'contact', 'subject', 'message',
+          'emailAutomation', 'source', 'consent', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.status == 'new'
+        && request.resource.data.contactId.matches('^' + request.auth.uid + '_[a-f0-9]{64}$')
+        && request.resource.data.contact is map
+        && request.resource.data.contact.keys().hasOnly(['name', 'email'])
+        && request.resource.data.contact.name is string
+        && request.resource.data.contact.name.size() >= 2
+        && request.resource.data.contact.name.size() <= 120
+        && request.resource.data.contact.email is string
+        && request.resource.data.contact.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && request.resource.data.subject is string
+        && request.resource.data.subject.size() >= 3
+        && request.resource.data.subject.size() <= 100
+        && request.resource.data.message is string
+        && request.resource.data.message.size() >= 10
+        && request.resource.data.message.size() <= 5000
+        && request.resource.data.emailAutomation.provider == 'emailjs'
+        && request.resource.data.emailAutomation.teamNotificationStatus == 'pending'
+        && request.resource.data.source is map
+        && request.resource.data.source.keys().hasOnly(['page', 'userAgent', 'authUid'])
+        && request.resource.data.source.page is string
+        && request.resource.data.source.userAgent is string
+        && request.resource.data.source.authUid == request.auth.uid
+        && request.resource.data.consent == true
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.updatedAt is timestamp;
+      allow update: if signedIn()
+        && resource.data.source.authUid == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'emailAutomation', 'updatedAt'
+        ])
+        && request.resource.data.emailAutomation is map
+        && request.resource.data.emailAutomation.keys().hasOnly([
+          'provider', 'teamNotificationStatus', 'errorMessage', 'updatedAt'
+        ])
+        && request.resource.data.emailAutomation.provider == 'emailjs'
+        && request.resource.data.emailAutomation.teamNotificationStatus in ['sent', 'failed']
+        && (request.resource.data.emailAutomation.errorMessage == null
+          || request.resource.data.emailAutomation.errorMessage is string)
+        && request.resource.data.emailAutomation.updatedAt is timestamp
+        && request.resource.data.updatedAt is timestamp;
     }
 
     match /{document=**} {

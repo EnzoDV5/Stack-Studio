@@ -33,6 +33,8 @@ import { scrollToElement } from '@/lib/lenis'
 import { distance, duration, ease } from '@/lib/motion-tokens'
 import type { PriceLabels } from '@/lib/offer'
 import { submitBrief } from '@/lib/submit-brief'
+import type { BriefPayload } from '@/lib/submit-brief'
+import type { SubmissionWriteResult } from '@/lib/firebase-submissions'
 import { BriefAside } from '@/sections/start/BriefAside'
 import { BriefProgress } from '@/sections/start/BriefProgress'
 import { BriefSuccess } from '@/sections/start/BriefSuccess'
@@ -96,6 +98,11 @@ export function BriefFlow({
   const shownStep = useRef(state.stepId)
   const lastResultKind = useRef<string>('none')
   const returnToReview = useRef(false)
+  const pendingSubmission = useRef<{
+    fingerprint: string
+    payload: BriefPayload
+    saved: SubmissionWriteResult | null
+  } | null>(null)
 
   const ctx = useMemo(() => ({ offerings: data.offerings }), [data.offerings])
   const optionData: OptionData = useMemo(
@@ -236,8 +243,7 @@ export function BriefFlow({
 
     dispatch({ type: 'submit' })
     try {
-      const now = new Date()
-      const { record, emailed } = await submitBrief({
+      const answersForDelivery = {
         path: valid.data.path,
         brief: valid.data,
         // Contact details travel as their own fields, so the answers leave that step out.
@@ -245,13 +251,32 @@ export function BriefFlow({
           reviewRows.filter((r) => r.kind !== 'contact').map((r) => [r.label, r.value]),
         ),
         result: { kind: result.kind, recommendation },
-        meta: {
-          ref: createBriefRef(now),
-          submittedAt: now.toISOString(),
-          page: window.location.href,
-          userAgent: navigator.userAgent,
+      }
+      const fingerprint = JSON.stringify(answersForDelivery)
+      if (pendingSubmission.current?.fingerprint !== fingerprint) {
+        const now = new Date()
+        pendingSubmission.current = {
+          fingerprint,
+          saved: null,
+          payload: {
+            ...answersForDelivery,
+            meta: {
+              ref: createBriefRef(now),
+              submittedAt: now.toISOString(),
+              page: window.location.href,
+              userAgent: navigator.userAgent,
+            },
+          },
+        }
+      }
+      const pending = pendingSubmission.current
+      const { record, emailed } = await submitBrief(pending.payload, {
+        savedSubmission: pending.saved,
+        onSaved: (saved) => {
+          pending.saved = saved
         },
       })
+      pendingSubmission.current = null
       trackEvent('Brief submitted', { path: valid.data.path, result: result.kind })
       clearDraft()
       setSent({ record, emailed })

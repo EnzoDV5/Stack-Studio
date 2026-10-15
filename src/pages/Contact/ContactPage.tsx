@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { Link } from 'react-router'
 import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
@@ -33,8 +33,10 @@ export function ContactPage() {
   const [consent, setConsent] = useState(false)
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
   const [status, setStatus] = useState<Status>('idle')
+  const savedEnquiryId = useRef<string | null>(null)
 
   const change = (field: keyof ContactEnquiry, value: string) => {
+    savedEnquiryId.current = null
     setEnquiry((current) => ({ ...current, [field]: value }))
     setErrors((current) => ({ ...current, [field]: undefined }))
     if (status === 'error') setStatus('idle')
@@ -49,13 +51,31 @@ export function ContactPage() {
 
     setStatus('sending')
     try {
+      if (config.firebase && !savedEnquiryId.current) {
+        const { saveContactToFirebase } = await import('@/lib/firebase-submissions')
+        savedEnquiryId.current = await saveContactToFirebase(enquiry)
+      }
       const { sendContactEmail } = await import('@/lib/emailjs-contact')
       await sendContactEmail(enquiry)
+      if (savedEnquiryId.current) {
+        const { updateContactEmailAutomation } = await import('@/lib/firebase-submissions')
+        await updateContactEmailAutomation(savedEnquiryId.current, 'sent').catch((error: unknown) =>
+          console.error('[contact] Firebase status update failed', error),
+        )
+      }
+      savedEnquiryId.current = null
       setStatus('sent')
       setEnquiry(emptyEnquiry)
       setConsent(false)
     } catch (error) {
-      console.error('[contact] EmailJS send failed', error)
+      if (savedEnquiryId.current) {
+        const { updateContactEmailAutomation } = await import('@/lib/firebase-submissions')
+        await updateContactEmailAutomation(savedEnquiryId.current, 'failed', error).catch(
+          (statusError: unknown) =>
+            console.error('[contact] Firebase status update failed', statusError),
+        )
+      }
+      console.error('[contact] Submission failed', error)
       setStatus('error')
     }
   }
