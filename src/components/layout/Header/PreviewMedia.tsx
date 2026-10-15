@@ -4,7 +4,7 @@ import { useReducedMotion } from '@/hooks/useReducedMotion'
 import styles from './Header.module.css'
 
 const deviceStill = {
-  phone: '/media/phone/app/frame-78-480.webp',
+  phone: '/media/phone/app/frame-78-800.webp',
   laptop: '/media/laptop/desktop/frame-70-800.webp',
 } as const
 
@@ -23,7 +23,15 @@ export function PreviewMedia({ preview, active }: { preview: SectionPreview; act
 
   if (preview.visual) return null
   if (device) {
-    return <img className={styles.deviceFrame} src={deviceStill[device]} alt="" decoding="async" />
+    return (
+      <img
+        className={styles.deviceFrame}
+        data-device={device}
+        src={deviceStill[device]}
+        alt=""
+        decoding="async"
+      />
+    )
   }
   if (preview.video && !reducedMotion) {
     return (

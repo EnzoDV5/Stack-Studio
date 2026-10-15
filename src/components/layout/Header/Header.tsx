@@ -300,13 +300,20 @@ export function Header({
                                 </div>
                               </div>
                             ) : (
-                              <div className={styles.previewVisual}>
-                                <div className={styles.previewChrome} aria-hidden="true">
-                                  <span />
-                                  <span />
-                                  <span />
-                                  <i>STACK STUDIO / {item.label.toUpperCase()}</i>
-                                </div>
+                              <div
+                                className={cn(
+                                  styles.previewVisual,
+                                  preview.device && styles.deviceStage,
+                                )}
+                              >
+                                {!preview.device && (
+                                  <div className={styles.previewChrome} aria-hidden="true">
+                                    <span />
+                                    <span />
+                                    <span />
+                                    <i>STACK STUDIO / {item.label.toUpperCase()}</i>
+                                  </div>
+                                )}
                                 <PreviewMedia key={selected.to} preview={preview} active={isOpen} />
                               </div>
                             )}
