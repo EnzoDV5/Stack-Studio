@@ -22,7 +22,7 @@ export const serviceStages: ServiceStage[] = [
     name: 'Something new', // COPY:
     line: 'A website, app or tool, built for you.', // COPY:
     summary:
-      'Websites, web apps, custom software and AI features, designed and developed in-house from first sketch to deployment.', // COPY:
+      'Websites, apps, custom software and complete AI systems, designed and developed from first sketch to deployment.', // COPY:
     cta: { label: 'Tell us what you need', to: '/start?path=build' }, // COPY:
     briefPath: 'build',
   },
@@ -194,15 +194,41 @@ export const offerings: Offering[] = [
     visibility: 'pricing',
   },
   {
+    id: 'ai-systems',
+    stage: 'build',
+    name: 'AI Systems & Apps', // COPY:
+    summary:
+      'A complete AI product with its own interface, backend, data workflows and human review.', // COPY:
+    ...buildEstimate(187.5),
+    examples: [
+      'AI research and knowledge platforms', // COPY:
+      'Document processing systems', // COPY:
+      'Customer and team assistants', // COPY:
+      'AI workflow and decision tools', // COPY:
+      'AI-powered web and mobile apps', // COPY:
+    ],
+    includes: [
+      'Product discovery and workflow design', // COPY:
+      'AI model and data integration', // COPY:
+      'Secure accounts, roles and admin tools', // COPY:
+      'Human review and quality checks', // COPY:
+      'Frontend, backend and deployment', // COPY:
+      'Monitoring and ongoing improvements', // COPY:
+    ],
+    notes: ['AI/API usage and hosting are scoped separately.'], // COPY:
+    requiresDiscovery: true,
+    briefKind: 'app',
+    visibility: 'pricing',
+  },
+  {
     id: 'ai-automation',
     stage: 'build',
-    name: 'AI & Automation', // COPY:
-    summary: 'We add useful AI features to the systems we build or the ones you already use.', // COPY:
+    name: 'AI Features & Automation', // COPY:
+    summary: 'Add focused AI features and useful automations to software you already use.', // COPY:
     ...buildEstimate(37.5),
     tiers: [
       { label: 'Automation', fromPrice: buildPrice(37.5) }, // COPY:
       { label: 'AI features', fromPrice: buildPrice(50) }, // COPY:
-      { label: 'Larger AI platforms', fromPrice: buildPrice(187.5) }, // COPY:
     ],
     examples: [
       'Website → CRM', // COPY:

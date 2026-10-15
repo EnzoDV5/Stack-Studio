@@ -32,9 +32,9 @@ export const faqs: Faq[] = [
   {
     id: 'ai',
     category: 'services',
-    question: 'Are you an AI agency?', // COPY:
+    question: 'Can you build a complete AI system?', // COPY:
     answer:
-      'No. We add useful AI features to the systems we build or the ones you already use: search, assistants, document analysis, automations. AI/API usage is billed separately at actual cost.', // COPY:
+      'Yes. We build complete AI apps and systems around your data, users and workflows, including the interface, backend, integrations and quality checks. We can also add focused AI features to existing software. AI/API usage is scoped and billed separately.', // COPY:
   },
   {
     id: 'minimum',

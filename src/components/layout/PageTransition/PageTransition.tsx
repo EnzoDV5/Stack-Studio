@@ -50,7 +50,7 @@ function panels(root: HTMLElement) {
 export function PageTransition({ children, preload, label }: PageTransitionProps) {
   const location = useLocation()
   const reducedMotion = useReducedMotion()
-  const { setTransitioning } = useIntro()
+  const { preloaderDone, setTransitioning } = useIntro()
   const [displayLocation, setDisplayLocation] = useState(location)
   const latest = useRef(location)
   const busy = useRef(false)
@@ -58,6 +58,7 @@ export function PageTransition({ children, preload, label }: PageTransitionProps
   // Last location whose #hash we've handled. Starts empty so a direct load of
   // /services#stage-build also lands on its anchor.
   const handledKey = useRef<string | null>(null)
+  const initialKey = useRef(location.key)
   const rootRef = useRef<HTMLDivElement>(null)
 
   const samePage = location.pathname === displayLocation.pathname
@@ -153,6 +154,31 @@ export function PageTransition({ children, preload, label }: PageTransitionProps
     handledKey.current = location.key
     if (location.hash) scrollToHash(location.hash)
   }, [samePage, location.key, location.hash])
+
+  // On a direct #hash load the route can still be suspended when the first
+  // scroll runs, and the preloader may hold the page at the top. Retry once
+  // the intro finishes and again when the lazy route adds its target.
+  useEffect(() => {
+    if (!preloaderDone || location.key !== initialKey.current || !location.hash) return
+    let settleTimer = 0
+    const observer = new MutationObserver(() => align())
+    const align = () => {
+      if (!scrollToHash(location.hash, true)) return
+      observer.disconnect()
+      // Page sections can move as the lazy route mounts its pinned content.
+      // Align once more after layout settles, especially for return visitors
+      // who skip the preloader.
+      settleTimer = window.setTimeout(() => scrollToHash(location.hash, true), 650)
+    }
+
+    if (document.getElementById(decodeURIComponent(location.hash.slice(1)))) align()
+    else observer.observe(document.body, { childList: true, subtree: true })
+
+    return () => {
+      observer.disconnect()
+      window.clearTimeout(settleTimer)
+    }
+  }, [preloaderDone, location.key, location.hash])
 
   // GSAP would otherwise parse the inline translateY(100%) as a px y and stack yPercent on it.
   useLayoutEffect(() => {

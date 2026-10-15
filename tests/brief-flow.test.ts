@@ -102,6 +102,21 @@ describe('Build: website, app or software', () => {
     assert.equal(prefill.answers.buildType, 'desktop-app')
   })
 
+  it('offers a complete AI system as its own app project', () => {
+    const aiSystem = offerings.find((offering) => offering.id === 'ai-systems')
+    assert.ok(aiSystem)
+    assert.equal(aiSystem.name, 'AI Systems & Apps')
+    assert.equal(aiSystem.briefKind, 'app')
+    assert.equal(aiSystem.requiresDiscovery, true)
+    const prefill = prefillFromParams(new URLSearchParams('type=ai-systems'), data)
+    assert.deepEqual(prefill.answers, {
+      path: 'build',
+      buildKind: 'app',
+      buildType: 'ai-systems',
+    })
+    assert.equal(estimate({ ...prefill.answers, timeline: 'standard' }).kind, 'discovery')
+  })
+
   it('still prices websites as a range and software through Discovery', () => {
     const base = { path: 'build', timeline: 'standard' } as const
     assert.equal(

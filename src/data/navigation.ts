@@ -1,4 +1,5 @@
 import type { CtaLink, NavItem } from '@/types'
+import { processContent, servicesContent } from './pages'
 
 export const primaryNav: NavItem[] = [
   { label: 'Home', to: '/', description: 'Back to the start' }, // COPY:
@@ -10,6 +11,18 @@ export const primaryNav: NavItem[] = [
 ]
 
 export const primaryCta: CtaLink = { label: 'Start a project', to: '/start' } // COPY:
+
+/** Fast links in the Services and Process navigation dropdowns. */
+export const sectionDropdowns: Record<string, NavItem[]> = {
+  '/services': servicesContent.navigation.items.flatMap((item) => [
+    { label: item.label, to: `/services#${item.id}` },
+    ...(item.id === 'apps' ? [{ label: 'AI Systems & Apps', to: '/services#ai-systems' }] : []),
+  ]),
+  '/process': processContent.navigation.items.map((item) => ({
+    label: item.label,
+    to: `/process#${item.id}`,
+  })),
+}
 
 export const footerNav: NavItem[] = [
   ...primaryNav,

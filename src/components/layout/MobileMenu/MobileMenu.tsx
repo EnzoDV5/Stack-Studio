@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NavLink } from 'react-router'
 import { GridOverlay } from '@/components/layout/GridOverlay'
 import { Button } from '@/components/ui/Button'
@@ -17,6 +17,7 @@ export interface MobileMenuProps {
   open: boolean
   onClose: () => void
   items: NavItem[]
+  sections: Record<string, NavItem[]>
   cta: CtaLink
   label: string
   closeLabel: string
@@ -32,6 +33,7 @@ export function MobileMenu({
   open,
   onClose,
   items,
+  sections,
   cta,
   label,
   closeLabel,
@@ -39,6 +41,7 @@ export function MobileMenu({
   socials,
 }: MobileMenuProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const [expanded, setExpanded] = useState<string | null>(null)
   const reducedMotion = useReducedMotion()
   useEffect(() => {
     const dialog = dialogRef.current
@@ -87,7 +90,12 @@ export function MobileMenu({
   // Close if the viewport grows past the breakpoint where the header shows the full nav (lg).
   useEffect(() => {
     const mql = window.matchMedia('(min-width: 64rem)')
-    const onChange = () => mql.matches && open && onClose()
+    const onChange = () => {
+      if (mql.matches && open) {
+        setExpanded(null)
+        onClose()
+      }
+    }
     mql.addEventListener('change', onChange)
     return () => mql.removeEventListener('change', onChange)
   }, [open, onClose])
@@ -99,6 +107,7 @@ export function MobileMenu({
       aria-label={label}
       onCancel={(event) => {
         event.preventDefault()
+        setExpanded(null)
         onClose()
       }}
     >
@@ -108,7 +117,10 @@ export function MobileMenu({
           <Logo variant="wordmark" title="" className="text-[1.55rem] sm:text-[1.7rem]" />
           <button
             type="button"
-            onClick={onClose}
+            onClick={() => {
+              setExpanded(null)
+              onClose()
+            }}
             className="-mr-2 inline-flex h-11 items-center px-2 font-mono text-eyebrow tracking-[0.16em] uppercase"
           >
             {closeLabel}
@@ -119,17 +131,53 @@ export function MobileMenu({
           <ul className="short:grid short:grid-cols-2 short:gap-x-10">
             {items.map((item, i) => (
               <li key={item.to} className="overflow-hidden">
-                <NavLink
-                  to={item.to}
-                  onClick={onClose}
-                  data-menu-item=""
-                  className={({ isActive }) => cn(styles.link, isActive && styles.active)}
-                >
-                  <span className={cn(styles.label, 'text-display-lg short:text-heading-xl')}>
-                    {item.label}
-                  </span>
-                  <span className={styles.index}>{pad2(i + 1)}</span>
-                </NavLink>
+                <div className={styles.navRow}>
+                  <NavLink
+                    to={item.to}
+                    onClick={() => {
+                      setExpanded(null)
+                      onClose()
+                    }}
+                    data-menu-item=""
+                    className={({ isActive }) => cn(styles.link, isActive && styles.active)}
+                  >
+                    <span className={cn(styles.label, 'text-display-lg short:text-heading-xl')}>
+                      {item.label}
+                    </span>
+                    <span className={styles.index}>{pad2(i + 1)}</span>
+                  </NavLink>
+                  {sections[item.to] && (
+                    <button
+                      type="button"
+                      className={styles.submenuToggle}
+                      aria-label={`Explore ${item.label} sections`}
+                      aria-expanded={expanded === item.to}
+                      onClick={() =>
+                        setExpanded((current) => (current === item.to ? null : item.to))
+                      }
+                    >
+                      <span aria-hidden="true">⌄</span>
+                    </button>
+                  )}
+                </div>
+                {sections[item.to] && expanded === item.to && (
+                  <ul className={styles.submenu} aria-label={`${item.label} sections`}>
+                    {sections[item.to]?.map((section) => (
+                      <li key={section.to}>
+                        <NavLink
+                          to={section.to}
+                          onClick={() => {
+                            setExpanded(null)
+                            onClose()
+                          }}
+                        >
+                          {section.label}
+                          <span aria-hidden="true">↗</span>
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
@@ -142,7 +190,10 @@ export function MobileMenu({
               size="lg"
               fullWidth
               withArrow
-              onClick={onClose}
+              onClick={() => {
+                setExpanded(null)
+                onClose()
+              }}
               analytics={{ event: 'Start project click', props: { location: 'mobile-menu' } }}
             >
               {cta.label}

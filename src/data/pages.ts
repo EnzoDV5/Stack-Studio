@@ -8,7 +8,7 @@ export const pageMeta = {
   home: {
     title: 'Stack Studio — Websites, apps and software that help businesses grow', // COPY:
     description:
-      'Stack Studio helps businesses stand out and grow with custom websites, apps and software, plus hosting and ongoing care. Based in Centurion, South Africa.', // COPY:
+      'Stack Studio builds custom websites, apps, software and AI systems, then helps businesses host, maintain and improve them. Based in Centurion, South Africa.', // COPY:
     path: '/',
   },
   work: {
@@ -20,7 +20,7 @@ export const pageMeta = {
   services: {
     title: 'Services', // COPY:
     description:
-      'Websites that help your business stand out, apps and software that bring ideas to life, and hosting, maintenance and improvements that support growth.', // COPY:
+      'Custom websites, apps, software and complete AI systems, plus hosting, maintenance and improvements that support growth.', // COPY:
     path: '/services',
   },
   process: {
@@ -116,7 +116,7 @@ export const homeContent = {
     eyebrow: 'Digital studio · Centurion, ZA', // COPY:
     title: 'Build it. Run it. Grow it.', // COPY: sets as three lines (see HomeHero)
     intro:
-      'We build websites that help businesses stand out. We turn ideas into apps and software, then host, maintain and improve your site or app as you grow.', // COPY:
+      'We build websites that stand out, apps and software that solve real problems, and complete AI systems built around your business. Then we help you run and improve them.', // COPY:
     cta: { label: 'Start a project', to: '/start' }, // COPY:
     secondaryCta: { label: 'See the work', to: '/work' }, // COPY:
   },
@@ -175,9 +175,9 @@ export const homeContent = {
         link: { label: 'Explore websites', to: '/services#stage-build' }, // COPY:
       },
       {
-        title: 'Apps and custom software', // COPY:
-        body: 'Bring your idea to life with a useful tool for your customers or team, built to grow with your business.', // COPY:
-        detail: 'Web apps · desktop tools · integrations', // COPY:
+        title: 'Apps, AI systems and software', // COPY:
+        body: 'Bring your idea to life with an app, a complete AI system or a useful tool for your team.', // COPY:
+        detail: 'Web apps · AI products · desktop tools', // COPY:
         link: { label: 'Explore software', to: '/services#apps' }, // COPY:
       },
       {
@@ -285,7 +285,7 @@ export const servicesContent = {
     label: 'Services sections', // COPY:
     items: [
       { id: 'stage-build', label: 'New website' }, // COPY:
-      { id: 'apps', label: 'Apps and software' }, // COPY:
+      { id: 'apps', label: 'Apps, software & AI' }, // COPY:
       { id: 'desktop', label: 'Desktop software' }, // COPY:
       { id: 'stage-grow', label: 'Fix or improve it' }, // COPY:
       { id: 'plans', label: 'Hosting and care' }, // COPY:
@@ -300,10 +300,10 @@ export const servicesContent = {
   },
   /** The Build stage's apps and software, with the phone turn (dark, between the groups). */
   apps: {
-    eyebrow: 'Apps and software', // COPY:
-    title: 'I need an app or software.', // COPY:
+    eyebrow: 'Apps, AI and software', // COPY:
+    title: 'I need an app, AI system or software.', // COPY:
     intro:
-      'Booking systems, client portals, dashboards and apps that bring your idea to life and help your business work better.', // COPY:
+      'From booking systems and client portals to complete AI platforms, we build the product, data layer and workflows together.', // COPY:
     cta: { label: 'Tell us about your app', to: '/start?kind=app' }, // COPY:
   },
   /** Desktop software and the systems behind it, with the laptop (dark, after the apps). */
@@ -343,7 +343,7 @@ export const processContent = {
     eyebrow: 'Process', // COPY:
     title: 'How we work, start to finish.', // COPY:
     intro:
-      'What happens once you get in touch, how a project runs week by week, how you pay, and how we look after it once it’s live.', // COPY:
+      'What happens once you get in touch, how a website, app or AI system is planned and built, how you pay, and what happens after launch.', // COPY:
   } satisfies PageHeroContent,
   navigation: {
     label: 'Process sections', // COPY:

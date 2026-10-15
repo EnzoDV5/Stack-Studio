@@ -64,7 +64,7 @@ export const briefSteps: BriefStepConfig[] = [
       {
         value: 'app',
         label: 'An app',
-        description: 'A web or mobile app, a portal or an AI tool.',
+        description: 'A web or mobile app, a portal or a complete AI system.',
       }, // COPY:
       {
         value: 'software',
@@ -161,7 +161,7 @@ export const briefSteps: BriefStepConfig[] = [
       { value: 'payments', label: 'Payments' }, // COPY:
       { value: 'dashboards', label: 'Dashboards and reporting' }, // COPY:
       { value: 'integrations', label: 'Integrations' }, // COPY:
-      { value: 'ai', label: 'AI features' }, // COPY:
+      { value: 'ai', label: 'AI models or assistants' }, // COPY:
       { value: 'mobile', label: 'Mobile app' }, // COPY:
       { value: 'admin', label: 'Admin system' }, // COPY:
     ],

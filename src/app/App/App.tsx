@@ -9,7 +9,14 @@ import { Preloader } from '@/components/layout/Preloader'
 import { SkipLink } from '@/components/layout/SkipLink'
 import { ToneController } from '@/components/layout/ToneController'
 import { closingCta, closingCtaCode } from '@/data/pages'
-import { chromeCopy, footerNav, legalNav, primaryCta, primaryNav } from '@/data/navigation'
+import {
+  chromeCopy,
+  footerNav,
+  legalNav,
+  primaryCta,
+  primaryNav,
+  sectionDropdowns,
+} from '@/data/navigation'
 import { site, whatsappHref } from '@/data/site'
 import { usePageviewTracking } from '@/hooks/useAnalytics'
 import { useScrollRefresh } from '@/hooks/useScrollRefresh'
@@ -31,6 +38,7 @@ export function App() {
 
       <Header
         nav={primaryNav}
+        dropdowns={sectionDropdowns}
         cta={primaryCta}
         homeLabel={chromeCopy.homeLabel}
         menuLabel={chromeCopy.menuLabel}

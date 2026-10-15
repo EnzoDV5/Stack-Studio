@@ -6,7 +6,7 @@ export const site: SiteConfig = {
   shortName: 'Stack',
   tagline: 'Websites that stand out. Software that moves you forward.', // COPY:
   description:
-    'Stack Studio helps businesses stand out and grow with custom websites, apps and software, plus hosting and ongoing care. Based in Centurion, South Africa.', // COPY:
+    'Stack Studio builds custom websites, apps, software and AI systems, with hosting and ongoing care. Based in Centurion, South Africa.', // COPY:
   url: 'https://stack-studio.web.app', // Use the live Hosting URL until the custom domain serves the site.
   locale: 'en-ZA',
   email: 'enzo.devittorio03@gmail.com',

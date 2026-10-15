@@ -51,7 +51,7 @@ export function Accordion({
         const triggerId = `${baseId}-t-${item.id}`
         const panelId = `${baseId}-p-${item.id}`
         return (
-          <div key={item.id} className={cn(styles.item, isOpen && styles.open)}>
+          <div id={item.id} key={item.id} className={cn(styles.item, isOpen && styles.open)}>
             <H className="m-0">
               <button
                 id={triggerId}
