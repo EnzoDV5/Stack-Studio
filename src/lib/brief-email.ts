@@ -89,6 +89,7 @@ export function briefEmailParams(record: BriefRecord, ctx: BriefEmailContext): B
   const { copy, studio } = ctx
   const { contact } = record
   const reason = copy.reasons[record.path]
+  const isPartner = record.path === 'develop'
   const submittedAt = formatSubmitted(record.submittedAt)
   const plainBrief = [
     `Reference: ${record.ref}`,
@@ -105,7 +106,7 @@ export function briefEmailParams(record: BriefRecord, ctx: BriefEmailContext): B
     '',
     `PDF: ${ctx.pdfUrl}`,
   ].join('\n')
-  const pdfLink = `<a href="${escapeHtml(ctx.pdfUrl)}" style="${s.link}">Download the PDF brief</a>`
+  const pdfLink = `<a href="${escapeHtml(ctx.pdfUrl)}" style="display:inline-block;padding:12px 18px;background:#111111;color:#ffffff;font:700 13px/1.4 Arial,Helvetica,sans-serif;text-decoration:none">Download your PDF brief</a>`
   const contentHtml = [
     `<p style="${s.text}"><strong>Reference:</strong> ${escapeHtml(record.ref)}<br><strong>Received:</strong> ${escapeHtml(submittedAt)}<br><strong>Enquiry:</strong> ${escapeHtml(reason)}</p>`,
     record.estimate.recommendation
@@ -117,8 +118,21 @@ export function briefEmailParams(record: BriefRecord, ctx: BriefEmailContext): B
 
   return {
     // Subjects: the team template uses {{subject}}, the auto-reply {{client_subject}}.
-    subject: copy.email.teamSubject(record.ref, reason, contact.name),
-    client_subject: copy.email.clientSubject(record.ref),
+    subject: isPartner
+      ? `Partnership enquiry ${record.ref} from ${contact.name}`
+      : copy.email.teamSubject(record.ref, reason, contact.name),
+    client_subject: isPartner
+      ? `We received your partnership enquiry (${record.ref}) | Stack Studio`
+      : copy.email.clientSubject(record.ref),
+    team_eyebrow: isPartner ? 'Partnership enquiry' : 'Project brief',
+    team_heading: isPartner ? 'A potential partner wants to talk' : 'A new project brief is ready',
+    client_eyebrow: isPartner ? 'Partnership enquiry received' : 'Project brief received',
+    client_intro: isPartner
+      ? 'Thank you for considering a partnership with Stack Studio. We will review your idea and get back to you within one business day.'
+      : 'Thank you for telling us about your project. We will review your brief and get back to you within one business day.',
+    client_copy_intro:
+      'Please check the details below. If anything is incorrect or you want to add something, reply to this email.',
+    logo_url: `${studio.url}/StackLogo2.png`,
 
     reference: record.ref,
     reason,

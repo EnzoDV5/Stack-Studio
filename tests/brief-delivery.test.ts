@@ -90,11 +90,38 @@ describe('general contact email', () => {
 
     assert.equal(params.reply_to, 'alex@example.com')
     assert.equal(params.client_email, 'alex@example.com')
+    assert.equal(params.team_eyebrow, 'Contact form')
+    assert.equal(params.pdf_url, '')
+    assert.equal(params.logo_url, `${site.url}/StackLogo2.png`)
     assert.equal(params.subject, 'New enquiry: Website question Unexpected line')
     assert.match(
       params.content_html,
       /Could you help\?<br>&lt;script&gt;alert\(1\)&lt;\/script&gt;/,
     )
     assert.doesNotMatch(params.content_html, /<script>/)
+  })
+})
+
+describe('partnership email', () => {
+  it('distinguishes a partnership brief and sends the client the same answers and PDF link', async () => {
+    const partnerRecord: BriefRecord = { ...record, path: 'develop' }
+    const pdfUrl = await briefRecordUrl(site.url, partnerRecord, { download: true })
+    const params = briefEmailParams(partnerRecord, {
+      copy: briefRecordCopy,
+      studio: {
+        name: site.name,
+        email: site.email,
+        url: site.url,
+        responsePromise: site.responsePromise,
+      },
+      pdfUrl,
+    })
+
+    assert.match(params.subject ?? '', /^Partnership enquiry/)
+    assert.match(params.client_subject ?? '', /partnership enquiry/)
+    assert.match(params.client_intro ?? '', /partnership/)
+    assert.match(params.content_html ?? '', /A website &amp; booking flow/)
+    assert.match(params.content_html ?? '', /Download your PDF brief/)
+    assert.equal(params.logo_url, `${site.url}/StackLogo2.png`)
   })
 })

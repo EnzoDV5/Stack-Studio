@@ -1,4 +1,5 @@
 import { escapeHtml } from './brief-email'
+import { site } from '@/data/site'
 
 export interface ContactEnquiry {
   name: string
@@ -30,6 +31,16 @@ export function contactEmailParams(enquiry: ContactEnquiry, submittedAt = new Da
   return {
     subject: `New enquiry: ${topic}`,
     client_subject: 'We received your message | Stack Studio',
+    team_eyebrow: 'Contact form',
+    team_heading: topic,
+    client_eyebrow: 'Message received',
+    client_intro:
+      'Thanks for getting in touch. We will read your message and reply within one business day.',
+    client_copy_intro:
+      'Please check the copy of your message below. If anything needs correcting, reply to this email.',
+    logo_url: `${site.url}/StackLogo2.png`,
+    reference: '',
+    pdf_url: '',
     name,
     email,
     title: topic,

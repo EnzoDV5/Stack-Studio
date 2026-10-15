@@ -1,24 +1,103 @@
-<div style="margin:0;padding:28px 12px;background:#f3f0eb;font-family:Arial,Helvetica,sans-serif;color:#151515">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:640px;margin:0 auto;border-collapse:collapse;background:#ffffff">
+<div
+  style="
+    margin: 0;
+    padding: 28px 12px;
+    background: #f3f0eb;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #151515;
+  "
+>
+  <table
+    role="presentation"
+    width="100%"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
+    style="
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background: #ffffff;
+    "
+  >
     <tr>
-      <td style="padding:24px 30px;background:#111111;border-bottom:4px solid #ff5a14">
-        <span style="color:#ff5a14;font-size:18px;font-weight:800;letter-spacing:3px">STACK</span>
-        <span style="padding-left:9px;color:#f3f0eb;font-size:10px;font-weight:700;letter-spacing:2px">STUDIO</span>
+      <td style="padding: 22px 30px; background: #111111; border-bottom: 4px solid #ff5a14">
+        <img
+          src="{{logo_url}}"
+          width="40"
+          height="40"
+          alt=""
+          style="
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+            border: 0;
+          "
+        />
+        <span
+          style="
+            padding-left: 12px;
+            color: #f3f0eb;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            vertical-align: middle;
+          "
+          >STACK STUDIO</span
+        >
       </td>
     </tr>
     <tr>
-      <td style="padding:35px 30px 22px">
-        <p style="margin:0 0 10px;color:#aa3e0c;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase">Message received</p>
-        <h1 style="margin:0 0 14px;color:#111111;font-size:28px;line-height:1.2">Thanks, {{client_first_name}}.</h1>
-        <p style="margin:0 0 12px;color:#333333;font-size:15px;line-height:1.6">We have received your message and will get in touch within one business day.</p>
-        <p style="margin:0;color:#666666;font-size:14px;line-height:1.6">Here is a copy of what you sent for your records.</p>
+      <td style="padding: 32px 30px 20px">
+        <p
+          style="
+            margin: 0 0 9px;
+            color: #aa3e0c;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+          "
+        >
+          {{client_eyebrow}}
+        </p>
+        <h1 style="margin: 0 0 14px; color: #111111; font-size: 28px; line-height: 1.2">
+          Thanks, {{client_first_name}}.
+        </h1>
+        <p style="margin: 0 0 12px; color: #333333; font-size: 15px; line-height: 1.6">
+          {{client_intro}}
+        </p>
+        <p style="margin: 0; color: #666666; font-size: 14px; line-height: 1.6">
+          {{client_copy_intro}}
+        </p>
+        {{#reference}}
+        <p style="margin: 14px 0 0; color: #525252; font-size: 13px">
+          Your reference: <strong>{{reference}}</strong>
+        </p>
+        {{/reference}}
       </td>
     </tr>
-    <tr><td style="padding:0 30px 30px">{{{content_html}}}</td></tr>
     <tr>
-      <td style="padding:20px 30px;background:#f3f0eb;border-top:1px solid #ded8d0;color:#666666;font-size:12px;line-height:1.6">
-        Need to add anything? Reply to this email.<br>
-        Stack Studio &nbsp;&middot;&nbsp; stackstudio.co.za
+      <td style="padding: 0 30px 28px">{{{content_html}}}</td>
+    </tr>
+    <tr>
+      <td
+        style="
+          padding: 20px 30px;
+          background: #f3f0eb;
+          border-top: 1px solid #ded8d0;
+          color: #666666;
+          font-size: 12px;
+          line-height: 1.6;
+        "
+      >
+        Need to correct or add anything? Reply to this email.<br />
+        Stack Studio &nbsp;&middot;&nbsp;
+        <a href="https://stack-studio.web.app" style="color: #aa3e0c; text-decoration: underline"
+          >stack-studio.web.app</a
+        >
       </td>
     </tr>
   </table>

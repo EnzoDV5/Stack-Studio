@@ -26,7 +26,7 @@ export async function sendBriefEmails(
       responsePromise: site.responsePromise,
       whatsappHref: whatsappHref(),
     },
-    pdfUrl: await briefRecordUrl(window.location.origin, record, { download: true }),
+    pdfUrl: await briefRecordUrl(site.url, record, { download: true }),
     ids: submission,
   })
 
