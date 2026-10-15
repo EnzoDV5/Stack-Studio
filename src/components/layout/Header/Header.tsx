@@ -41,24 +41,12 @@ export function Header({
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [closingDropdown, setClosingDropdown] = useState<string | null>(null)
   const [previewIndex, setPreviewIndex] = useState(0)
-  const [completedDevicePreviews, setCompletedDevicePreviews] = useState<Set<string>>(
-    () => new Set(),
-  )
   const lastY = useRef(0)
   const headerRef = useRef<HTMLElement>(null)
   const dropdownButtons = useRef<Record<string, HTMLButtonElement | null>>({})
   const lastWheel = useRef(0)
   const previewIndexRef = useRef(0)
   const leaveTimer = useRef<number | null>(null)
-  const markDevicePlayed = useCallback((previewKey: string) => {
-    setCompletedDevicePreviews((completed) => {
-      if (completed.has(previewKey)) return completed
-      const next = new Set(completed)
-      next.add(previewKey)
-      return next
-    })
-  }, [])
-
   const selectPreview = useCallback((index: number) => {
     previewIndexRef.current = index
     setPreviewIndex(index)
@@ -319,14 +307,7 @@ export function Header({
                                   <span />
                                   <i>STACK STUDIO / {item.label.toUpperCase()}</i>
                                 </div>
-                                <PreviewMedia
-                                  key={selected.to}
-                                  preview={preview}
-                                  active={isOpen}
-                                  played={completedDevicePreviews.has(selected.to)}
-                                  previewKey={selected.to}
-                                  onDeviceComplete={markDevicePlayed}
-                                />
+                                <PreviewMedia key={selected.to} preview={preview} active={isOpen} />
                               </div>
                             )}
                           </Link>

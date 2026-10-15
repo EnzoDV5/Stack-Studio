@@ -360,6 +360,7 @@
   }
 
   .previewVisual > .deviceFrame {
+    animation: none;
     object-fit: contain;
     background: radial-gradient(circle at 50% 55%, #444 0, #242424 58%, #161616 100%);
     transform: scale(1.3);
