@@ -123,16 +123,28 @@
     background: #f7f5f1;
     box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.25);
     color: var(--color-ink);
+    opacity: 0;
+    translate: 0 -0.35rem;
+    transition:
+      opacity 280ms ease,
+      translate 320ms cubic-bezier(0.16, 1, 0.3, 1);
     transform-origin: top center;
   }
 
   .dropdown[data-state='open'] {
-    animation: dropdownEnter 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    opacity: 1;
+    translate: 0 0;
   }
 
   .dropdown[data-state='closing'] {
     pointer-events: none;
-    animation: dropdownExit 240ms ease-in both;
+  }
+
+  @starting-style {
+    .dropdown[data-state='open'] {
+      opacity: 0;
+      translate: 0 -0.35rem;
+    }
   }
 
   .dropdown[hidden] {
@@ -256,12 +268,38 @@
     text-decoration: none;
   }
 
+  .dropdownIntro,
+  .previewPanel,
+  .dropdownLinks li {
+    opacity: 0;
+    translate: 0 0.35rem;
+    transition:
+      opacity 260ms ease,
+      translate 360ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dropdown[data-state='open'] .dropdownIntro,
+  .dropdown[data-state='open'] .previewPanel,
+  .dropdown[data-state='open'] .dropdownLinks li {
+    opacity: 1;
+    translate: 0 0;
+  }
+
   .dropdown[data-state='open'] .dropdownIntro {
-    animation: dropdownContentEnter 440ms 45ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    transition-delay: 30ms;
   }
 
   .dropdown[data-state='open'] .previewPanel {
-    animation: dropdownContentEnter 480ms 90ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    transition-delay: 70ms;
+  }
+
+  @starting-style {
+    .dropdown[data-state='open'] .dropdownIntro,
+    .dropdown[data-state='open'] .previewPanel,
+    .dropdown[data-state='open'] .dropdownLinks li {
+      opacity: 0;
+      translate: 0 0.35rem;
+    }
   }
 
   .previewPanel:focus-visible {
@@ -543,83 +581,34 @@
     }
   }
 
-  @keyframes dropdownEnter {
-    from {
-      opacity: 0;
-      translate: 0 -0.25rem;
-    }
-    to {
-      opacity: 1;
-      translate: 0 0;
-    }
-  }
-
-  @keyframes dropdownExit {
-    from {
-      opacity: 1;
-      translate: 0 0;
-    }
-    to {
-      opacity: 0;
-      translate: 0 -0.2rem;
-    }
-  }
-
-  @keyframes dropdownContentEnter {
-    from {
-      opacity: 0;
-      translate: 0 0.45rem;
-    }
-    to {
-      opacity: 1;
-      translate: 0 0;
-    }
-  }
-
-  @keyframes dropdownRowEnter {
-    from {
-      opacity: 0;
-      translate: 0 0.35rem;
-    }
-    to {
-      opacity: 1;
-      translate: 0 0;
-    }
-  }
-
-  .dropdown[data-state='open'] .dropdownLinks li {
-    animation: dropdownRowEnter 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
   .dropdown[data-state='open'] .dropdownLinks li:nth-child(2) {
-    animation-delay: 30ms;
+    transition-delay: 25ms;
   }
 
   .dropdown[data-state='open'] .dropdownLinks li:nth-child(3) {
-    animation-delay: 60ms;
+    transition-delay: 50ms;
   }
 
   .dropdown[data-state='open'] .dropdownLinks li:nth-child(4) {
-    animation-delay: 90ms;
+    transition-delay: 75ms;
   }
 
   .dropdown[data-state='open'] .dropdownLinks li:nth-child(5) {
-    animation-delay: 120ms;
+    transition-delay: 100ms;
   }
 
   .dropdown[data-state='open'] .dropdownLinks li:nth-child(6) {
-    animation-delay: 150ms;
-  }
-
-  .dropdown[data-state='open'] .dropdownLinks li:nth-child(7) {
-    animation-delay: 180ms;
+    transition-delay: 125ms;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .dropdown[data-state],
-    .dropdown[data-state='open'] .dropdownLinks li,
-    .dropdown[data-state='open'] .dropdownIntro,
-    .dropdown[data-state='open'] .previewPanel,
+    .dropdown,
+    .dropdownIntro,
+    .previewPanel,
+    .dropdownLinks li {
+      transition: none;
+    }
+
     .previewVisual > img,
     .previewVisual > video,
     .dropdown[data-state='open'] .diagramStep {

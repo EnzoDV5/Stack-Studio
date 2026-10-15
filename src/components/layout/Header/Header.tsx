@@ -82,7 +82,7 @@ export function Header({
 
   useEffect(() => {
     if (!closingDropdown) return
-    const timer = window.setTimeout(() => setClosingDropdown(null), 280)
+    const timer = window.setTimeout(() => setClosingDropdown(null), 340)
     return () => window.clearTimeout(timer)
   }, [closingDropdown])
 

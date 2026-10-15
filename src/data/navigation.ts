@@ -16,14 +16,18 @@ export const primaryCta: CtaLink = { label: 'Start a project', to: '/start' } //
 
 /** Fast links in the Services and Process navigation dropdowns. */
 export const sectionDropdowns: Record<string, NavItem[]> = {
-  '/services': servicesContent.navigation.items.flatMap((item) => [
-    { label: item.label, to: `/services#${item.id}` },
-    ...(item.id === 'apps' ? [{ label: 'AI Systems & Apps', to: '/services#ai-systems' }] : []),
-  ]),
-  '/process': processContent.navigation.items.map((item) => ({
-    label: item.label,
-    to: `/process#${item.id}`,
-  })),
+  '/services': servicesContent.navigation.items
+    .filter((item) => item.id !== 'services-faq')
+    .flatMap((item) => [
+      { label: item.label, to: `/services#${item.id}` },
+      ...(item.id === 'apps' ? [{ label: 'AI Systems & Apps', to: '/services#ai-systems' }] : []),
+    ]),
+  '/process': processContent.navigation.items
+    .filter((item) => item.id !== 'process-faq')
+    .map((item) => ({
+      label: item.label,
+      to: `/process#${item.id}`,
+    })),
 }
 
 export type SectionPreview = { description: string } & (
@@ -67,10 +71,6 @@ export const sectionPreviews: Record<string, SectionPreview> = {
     image: '/media/services/run-poster-480.webp',
     video: '/media/services/run-720.mp4',
   },
-  '/services#services-faq': {
-    description: 'Quick answers about scope, pricing and working together.',
-    image: '/media/services/collaboration-small.webp',
-  },
   '/process#next-steps': {
     description: 'From your first brief to a clear plan and quote.',
     image: '/media/services/partner-poster-480.webp',
@@ -93,10 +93,6 @@ export const sectionPreviews: Record<string, SectionPreview> = {
     description: 'Updates, monitoring and support once your project is live.',
     image: '/media/services/run-poster-480.webp',
     video: '/media/services/run-720.mp4',
-  },
-  '/process#process-faq': {
-    description: 'Straight answers before we start working together.',
-    image: '/media/services/network-small.webp',
   },
 }
 
