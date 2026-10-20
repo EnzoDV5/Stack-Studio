@@ -75,7 +75,7 @@ Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whol
 | 2   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns | none    |
 | 3   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)      | scrub   |
 | 4   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)        | enter   |
-| 5   | StageExplorer   | paper  | Fix or improve, Hosting and care              | none    |
+| 5   | StageExplorer   | paper  | Fix or improve: illustration assembles, idles | scrub   |
 | 6   | ProcessLine     | dark   | Timeline enters and responds to hover         | enter   |
 | 7   | NextSteps       | dark   | Four step cards deal out of a pile into a row | scrub   |
 | 8   | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
@@ -223,7 +223,11 @@ at 85% to its centre at 42%, 72 evenly spaced frames, cross-faded) the lid lifts
 the display wakes on an illustrative stock and orders app and it turns to face the copy. Each group has
 its own layout, picked for what it sells (`StageBlock layout`): Websites `feature` (the
 intro beside an image, then dropdowns), Fix or improve `figures` (one spread: the intro, the
-examples as pills and the CTA beside a large illustration that reveals on enter). Hosting and care is the MonthlyPlans cards (Website Care, Managed Software
+examples as pills and the CTA beside a large illustration). The illustration is an
+`IllustrationScene`: clip-path cut-outs of the one image (`media.services.fixOrImprove.pieces`)
+fly, pop, grow and draw into place with the scroll (`illustrationScene`: top 85% to centre 50%),
+then idle while on screen (side cards float, the refresh arrows spin, the plant sways, the
+dashed slot and dots pulse). Reduced motion: the plain image. Hosting and care is the MonthlyPlans cards (Website Care, Managed Software
 and Partner). Framed images and video reveal on
 scroll; loops only play while on screen.
 

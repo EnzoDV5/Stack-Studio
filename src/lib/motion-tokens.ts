@@ -277,6 +277,28 @@ export const stepsDeal = {
  * seems to follow the visitor down and slips off the bottom of the hero, behind the next
  * section.
  */
+/**
+ * IllustrationScene: the pieces assemble with the scroll (timeline seconds, spread over the
+ * scrub), then idle while the scene is on screen. Idle loops are slow and small on purpose.
+ */
+export const illustrationScene = {
+  start: 'top 85%',
+  end: 'center 50%',
+  scrub: 0.6,
+  /** When the first piece starts, and the gap to each next one. */
+  lead: 0.2,
+  step: 0.14,
+  /** Side pieces fly in from this share of the scene width, tilted (degrees). */
+  shift: 0.06,
+  tilt: 8,
+  loopEase: 'sine.inOut',
+  float: { y: 6, duration: 3.2 },
+  /** Seconds per turn. */
+  spin: 9,
+  sway: { angle: 2.5, duration: 3.8 },
+  pulse: { scale: 1.06, duration: 1.4, offset: 0.35 },
+} as const
+
 export const heroMark = {
   /** Travel over the hero's scroll, as a percentage of the mark's own height. */
   travel: 70,

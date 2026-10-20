@@ -8,7 +8,13 @@
  *   - Videos not yet made (showreel, project previews) fall back to their poster or an
  *     animated brand-gradient placeholder.
  */
-import type { ImageAsset, ImageSequenceAsset, VideoAsset } from '@/types'
+import type {
+  IllustrationPoint,
+  IllustrationSceneAsset,
+  ImageAsset,
+  ImageSequenceAsset,
+  VideoAsset,
+} from '@/types'
 import type { StageId } from '@/types'
 import type { ServiceMediaItem } from '@/types/service-media'
 
@@ -79,6 +85,24 @@ function illustration(id: string, widths: number[], aspect: number, alt: string)
     height: Math.round(largest * aspect),
     alt,
   }
+}
+
+/** A rectangular illustration piece, from its edges in % of the image. */
+function rect(left: number, top: number, right: number, bottom: number): IllustrationPoint[] {
+  return [
+    [left, top],
+    [right, top],
+    [right, bottom],
+    [left, bottom],
+  ]
+}
+
+/** An octagon around a round illustration piece, so it can spin. Radii in % of width, height. */
+function octagon(cx: number, cy: number, rx: number, ry: number): IllustrationPoint[] {
+  return Array.from({ length: 8 }, (_, i) => {
+    const angle = Math.PI / 8 + (i * Math.PI) / 4
+    return [cx + rx * Math.cos(angle), cy + ry * Math.sin(angle)] as const
+  })
 }
 
 /** A square Services icon in /public/media/services/icons (192, 128 and 96 px WebP). */
@@ -254,12 +278,61 @@ export const media = {
   },
 
   services: {
-    fixOrImprove: illustration(
-      'fix-or-improve',
-      [1760, 1200, 800, 480],
-      991 / 1760,
-      'A designer rearranging website components, with symbols for improvements and growth',
-    ),
+    // Comes apart into pieces that assemble as it scrolls in, then idle (IllustrationScene).
+    // Shapes are in % of the image; the figure and the card in their hands stay put.
+    fixOrImprove: {
+      image: illustration(
+        'fix-or-improve',
+        [1760, 1200, 800, 480],
+        991 / 1760,
+        'A designer rearranging website components, with symbols for improvements and growth',
+      ),
+      pieces: [
+        { id: 'sliders', shape: rect(6, 17.6, 20.8, 37.8), enter: 'left', idle: 'float' },
+        { id: 'refresh', shape: rect(6.1, 40.8, 16.2, 57.4), enter: 'left', idle: 'float' },
+        {
+          id: 'refresh-arrows',
+          shape: octagon(11.22, 49.1, 3.75, 6.66),
+          parent: 'refresh',
+          enter: 'pop',
+          idle: 'spin',
+        },
+        { id: 'growth', shape: rect(79.6, 16.4, 93.5, 37.8), enter: 'right', idle: 'float' },
+        {
+          id: 'growth-chart',
+          shape: rect(81.4, 19.2, 91.6, 35.5),
+          parent: 'growth',
+          enter: 'draw',
+        },
+        { id: 'add', shape: rect(79.6, 40, 90.2, 57.4), enter: 'right', idle: 'float' },
+        { id: 'slot', shape: rect(59.9, 21, 75.9, 39.6), enter: 'pop', idle: 'pulse' },
+        { id: 'chart', shape: rect(62.2, 42.6, 74.6, 56.3), enter: 'draw' },
+        { id: 'tile-1', shape: rect(35.4, 58.6, 48.8, 71), enter: 'rise' },
+        { id: 'tile-2', shape: rect(48.9, 58.6, 62.4, 71), enter: 'rise' },
+        { id: 'tile-3', shape: rect(62.5, 58.6, 75.9, 71), enter: 'rise' },
+        { id: 'copy', shape: rect(35.6, 73.6, 53.4, 83), enter: 'draw' },
+        { id: 'dot-1', shape: rect(57.2, 73, 62.1, 82), enter: 'pop', idle: 'pulse' },
+        { id: 'dot-2', shape: rect(63.5, 73, 68.5, 82), enter: 'pop', idle: 'pulse' },
+        { id: 'dot-3', shape: rect(69.8, 73, 74.8, 82), enter: 'pop', idle: 'pulse' },
+        {
+          // L-shaped: the leaves reach up beside the card above and stop short of the box.
+          id: 'plant',
+          shape: [
+            [90.4, 52.4],
+            [97.8, 52.4],
+            [97.8, 78.4],
+            [87, 78.4],
+            [87, 75.6],
+            [83.6, 75.6],
+            [83.6, 58.4],
+            [90.4, 58.4],
+          ],
+          enter: 'grow',
+          idle: 'sway',
+          origin: [91.5, 78.4],
+        },
+      ],
+    } satisfies IllustrationSceneAsset,
     /**
      * The quick-pick icons at the top of Services, keyed by the section they jump to. Encoded
      * from the sources in public/Icons by scripts/icons/encode.mjs. Decorative (the label

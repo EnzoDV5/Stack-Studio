@@ -8,6 +8,33 @@ export interface ImageAsset {
   sizes?: string
 }
 
+/** A point on an illustration, as percentages of its width and height. */
+export type IllustrationPoint = readonly [x: number, y: number]
+
+/**
+ * One piece cut out of a flat illustration (IllustrationScene): a polygon over the same image,
+ * so it can move on its own. Pieces never overlap, except a child inside its parent, which is
+ * cut out of the parent and moves with it. The image must have a transparent background.
+ */
+export interface IllustrationPiece {
+  id: string
+  shape: readonly IllustrationPoint[]
+  /** The piece this one sits inside. */
+  parent?: string
+  /** How it assembles as the scene scrolls into view (`draw` wipes in from the left). */
+  enter: 'left' | 'right' | 'rise' | 'pop' | 'grow' | 'draw'
+  /** What it does once on screen. */
+  idle?: 'float' | 'spin' | 'sway' | 'pulse'
+  /** Pivot for pop, grow, spin, sway and pulse. Defaults to the centre of the shape. */
+  origin?: IllustrationPoint
+}
+
+/** A flat illustration and the pieces it comes apart into. */
+export interface IllustrationSceneAsset {
+  image: ImageAsset
+  pieces: readonly IllustrationPiece[]
+}
+
 /**
  * Pre-rendered frames played back by scroll (ImageSequence), e.g. the Services phone turn.
  * Every rendition has the same frames at a different width; the player picks the sharpest one

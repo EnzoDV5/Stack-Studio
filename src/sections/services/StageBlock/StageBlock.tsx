@@ -1,12 +1,13 @@
 import type { ReactNode } from 'react'
 import { ServiceMedia } from '@/components/media/ServiceMedia'
+import { IllustrationScene } from '@/components/media/IllustrationScene'
 import { MediaReveal } from '@/components/media/MediaReveal'
 import { Button } from '@/components/ui/Button'
 import { Heading } from '@/components/ui/Heading'
 import { cn } from '@/lib/cn'
 import type { OfferRow } from '@/lib/offer'
 import { OfferAccordion } from '@/sections/services/OfferAccordion'
-import type { CtaLink, ImageAsset } from '@/types'
+import type { CtaLink, IllustrationSceneAsset } from '@/types'
 import type { ServiceMediaItem } from '@/types/service-media'
 
 /**
@@ -31,7 +32,8 @@ export interface StageBlockProps {
   labels: { includes: string }
   /** The group's image (and loop). Loops only play while on screen. */
   media?: ServiceMediaItem
-  illustration?: ImageAsset
+  /** The `figures` illustration, which comes apart and assembles as it scrolls in. */
+  illustration?: IllustrationSceneAsset
   layout?: StageLayout
 }
 
@@ -214,19 +216,11 @@ export function StageBlock({
               {footer(true)}
             </div>
             {illustration && (
-              <MediaReveal className="w-full md:col-span-7">
-                <img
-                  src={illustration.src}
-                  srcSet={illustration.srcSet}
-                  sizes="(min-width: 1700px) 58rem, (min-width: 768px) 55vw, 100vw"
-                  width={illustration.width}
-                  height={illustration.height}
-                  alt={illustration.alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="block h-auto w-full"
-                />
-              </MediaReveal>
+              <IllustrationScene
+                scene={illustration}
+                sizes="(min-width: 1700px) 58rem, (min-width: 768px) 55vw, 100vw"
+                className="w-full md:col-span-7"
+              />
             )}
           </div>
         </>
