@@ -96,17 +96,22 @@ No adjacent clashes.
 
 ### Studio
 
-| #   | Section             | Tone   | Opener                  | Motion                 | Trigger |
-| --- | ------------------- | ------ | ----------------------- | ---------------------- | ------- |
-| 1   | PageTitle           | paper  | own                     | Static                 | none    |
-| 2   | StudioIntro         | paper  | eyebrow + title         | Illustration assembles | enter   |
-| 3   | FounderProfiles     | dark   | SectionHeader (stacked) | Parallax portraits     | scrub   |
-| 4   | ValuesGrid (how)    | paper  | SectionHeader (stacked) | StaggerGroup rise      | enter   |
-| 5   | ValuesGrid (values) | dark   | SectionHeader (stacked) | StaggerGroup rise      | enter   |
-| 6   | Testimonial         | paper  | eyebrow                 | SplitReveal lines      | enter   |
-| 7   | ClosingCta          | orange | eyebrow                 | SplitReveal words      | enter   |
+| #   | Section             | Tone   | Opener                  | Motion                                                  | Trigger       |
+| --- | ------------------- | ------ | ----------------------- | ------------------------------------------------------- | ------------- |
+| 1   | PageTitle           | paper  | own                     | Static                                                  | none          |
+| 2   | StudioIntro         | paper  | eyebrow + title         | Illustration assembles                                  | enter         |
+| 3   | FounderProfiles     | dark   | SectionHeader (stacked) | Parallax portraits                                      | scrub         |
+| 4   | ValuesGrid (how)    | dark   | SectionHeader (stacked) | MediaReveal on its image                                | enter         |
+| 5   | StackDiagram        | dark   | SectionHeader (split)   | Build filter lights the spine; tools open their details | hover (click) |
+| 6   | ValuesGrid (values) | paper  | SectionHeader (inline)  | Static list                                             | none          |
+| 7   | Testimonial         | paper  | eyebrow                 | SplitReveal lines                                       | enter         |
+| 8   | ClosingCta          | orange | eyebrow                 | SplitReveal words                                       | enter         |
 
-Clashes: 4→5→6→7 are four `enter` reveals in a row; 3→4→5 share the stacked opener.
+StackDiagram (the stack as layers along a spine) is driven by the visitor: picking a build
+slides the pill highlight (clip-path), lights the spine through the layers that build uses
+(scaleY) and dims the rest; hovering, focusing or tapping a tool lights the layers it touches
+and fills the side panel (a bottom bar on small screens). CSS transitions only, off with
+reduced motion. Clashes: 7→8 are both `enter`; 3→4 share the stacked opener.
 
 ### Start
 
@@ -259,7 +264,7 @@ on how ongoing care runs, then links to the plans on /services. The video plays
 only while visible and stays on its poster with reduced motion.
 
 **Studio:** PageTitle (load: compile) · StudioIntro (enter: the illustration assembles at the middle of the screen) · FounderProfiles (enter:
-MediaReveal; scrub: parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · ValuesGrid
+MediaReveal; scrub: parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · StackDiagram (hover and click) · ValuesGrid
 "Values" (none) · Testimonial (none) · ClosingCta (enter).
 Openers: split · stacked · inline.
 

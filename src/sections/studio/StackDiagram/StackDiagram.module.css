@@ -1,0 +1,394 @@
+/* Layered so Tailwind utilities passed via className can override these rules. */
+@layer components {
+  /* Build pills, with one highlight that slides between them (clip-path only). */
+  .filters {
+    position: relative;
+    display: flex;
+    width: max-content;
+    gap: 0.25rem;
+    padding: 0.3rem;
+    border: 1px solid var(--tone-border);
+    border-radius: var(--radius-pill);
+  }
+
+  .indicator {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-pill);
+    background: var(--color-orange);
+    clip-path: inset(0 100% 0 0 round 999px);
+    pointer-events: none;
+  }
+
+  .indicator[data-placed] {
+    transition: clip-path var(--duration-fast) var(--ease-out-expo);
+  }
+
+  .filter {
+    position: relative;
+    height: 2.5rem;
+    padding-inline: 1.1rem;
+    border-radius: var(--radius-pill);
+    color: var(--tone-muted);
+    font-size: var(--text-small);
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color var(--duration-micro) ease;
+  }
+
+  .filter:hover {
+    color: var(--tone-fg);
+  }
+
+  /* Text on orange is ink. */
+  .filter[aria-pressed='true'] {
+    color: var(--color-ink);
+  }
+
+  .filter:focus-visible,
+  .tile:focus-visible,
+  .chipButton:focus-visible,
+  .close:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* The spine: a hairline through every layer, lit orange through the ones the build uses. */
+  .rows {
+    border-bottom: 1px solid var(--tone-border);
+  }
+
+  .row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    gap: 1rem 1.25rem;
+    padding-block: 1.1rem;
+    border-top: 1px solid var(--tone-border);
+  }
+
+  .row::before,
+  .row::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0.75rem;
+    content: '';
+    translate: -50% 0;
+  }
+
+  .row::before {
+    width: 1px;
+    background: var(--tone-border);
+  }
+
+  .row::after {
+    width: 2px;
+    background: var(--color-orange);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--duration-fast) var(--ease-out-expo);
+  }
+
+  .row[data-live]::after {
+    transform: scaleY(1);
+  }
+
+  .node {
+    position: relative;
+    z-index: 1;
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-top: 0.15rem;
+    justify-self: center;
+    border: 1.5px solid var(--tone-border);
+    border-radius: var(--radius-pill);
+    background: var(--tone-bg);
+    transition:
+      transform var(--duration-fast) var(--ease-out-expo),
+      background-color var(--duration-micro) ease,
+      border-color var(--duration-micro) ease,
+      box-shadow var(--duration-micro) ease;
+  }
+
+  .row[data-live] .node {
+    border-color: var(--color-orange);
+    background: var(--color-orange);
+  }
+
+  /* The layers the tool in focus touches. */
+  .row[data-related] .node {
+    transform: scale(1.5);
+    box-shadow: 0 0 0 0.35rem color-mix(in srgb, var(--color-orange) 25%, transparent);
+  }
+
+  .row[data-related] .layerName {
+    color: var(--tone-accent-text);
+  }
+
+  .label {
+    transition: opacity var(--duration-micro) ease;
+  }
+
+  .row:not([data-live]) .label {
+    opacity: 0.45;
+  }
+
+  .layerName {
+    transition: color var(--duration-micro) ease;
+  }
+
+  .tiles {
+    display: flex;
+    grid-column: 2;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  @media (min-width: 768px) {
+    .row {
+      grid-template-columns: 1.5rem 10rem minmax(0, 1fr);
+      column-gap: 1.5rem;
+    }
+
+    .tiles {
+      grid-column: 3;
+    }
+  }
+
+  .tile {
+    display: flex;
+    height: 2.5rem;
+    align-items: center;
+    gap: 0.5rem;
+    padding-inline: 0.75rem 0.9rem;
+    border: 1px solid var(--tone-border);
+    border-radius: var(--radius-pill);
+    color: var(--tone-fg);
+    opacity: 0.32;
+    transition:
+      opacity var(--duration-micro) ease,
+      transform var(--duration-fast) var(--ease-out-expo),
+      border-color var(--duration-micro) ease,
+      background-color var(--duration-micro) ease,
+      color var(--duration-micro) ease;
+  }
+
+  .tile[data-on] {
+    opacity: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tile:hover {
+      transform: translateY(-3px);
+    }
+  }
+
+  .tile[data-active] {
+    border-color: var(--color-orange);
+    background: var(--tone-surface);
+    color: var(--tone-accent-text);
+    opacity: 1;
+  }
+
+  .tile[aria-pressed='true'] {
+    box-shadow: inset 0 0 0 1px var(--color-orange);
+  }
+
+  .logo {
+    display: block;
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    background: currentColor;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+  }
+
+  /* Small screens show the name beside the logo, so a logo-less tool needs no monogram. */
+  .monogram {
+    display: none;
+    height: 1.75rem;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .name {
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  /* From tablets up, tools are square tiles: logo above, name below. */
+  @media (min-width: 768px) {
+    .tile {
+      width: 5.75rem;
+      height: 5rem;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0.6rem 0.4rem;
+      border-radius: var(--radius-md);
+    }
+
+    .logo {
+      width: 1.6rem;
+      height: 1.6rem;
+    }
+
+    .monogram {
+      display: grid;
+    }
+
+    .name {
+      display: -webkit-box;
+      overflow: hidden;
+      font-size: 0.75rem;
+      line-height: 1.2;
+      text-align: center;
+      white-space: normal;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+  }
+
+  /* The panel: sticky beside the diagram, or a bar along the bottom of small screens. */
+  .panel {
+    position: sticky;
+    z-index: 2;
+    bottom: 1rem;
+    align-self: end;
+    padding: 1.5rem;
+    border: 1px solid var(--tone-border);
+    border-radius: var(--radius-lg);
+    background: var(--tone-surface);
+    box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 0.3);
+  }
+
+  @media (min-width: 1024px) {
+    .panel {
+      top: calc(var(--spacing-header) + 1.5rem);
+      bottom: auto;
+      align-self: start;
+      padding: 2rem;
+      box-shadow: none;
+    }
+  }
+
+  .panelIn {
+    animation: panelIn var(--duration-fast) var(--ease-out-expo) both;
+  }
+
+  @keyframes panelIn {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem);
+    }
+  }
+
+  .panelMark {
+    display: grid;
+    width: 4rem;
+    height: 4rem;
+    place-items: center;
+    border: 1px solid var(--tone-border);
+    border-radius: var(--radius-md);
+    color: var(--tone-accent-text);
+  }
+
+  .panelMark .logo {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .panelMark .monogram {
+    display: grid;
+  }
+
+  .close {
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin: -0.5rem -0.5rem 0 0;
+    place-items: center;
+    color: var(--tone-muted);
+  }
+
+  .chip {
+    display: inline-flex;
+    height: 2rem;
+    align-items: center;
+    padding-inline: 0.8rem;
+    border: 1px solid var(--tone-border);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-small);
+  }
+
+  .chipButton {
+    transition:
+      border-color var(--duration-micro) ease,
+      color var(--duration-micro) ease;
+  }
+
+  .chipButton:hover,
+  .chipButton[aria-pressed='true'] {
+    border-color: var(--color-orange);
+    color: var(--tone-accent-text);
+  }
+
+  /* One column per layer: how many of its tools the build uses. */
+  .meter {
+    display: grid;
+    margin-top: 2rem;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .meterColumn {
+    display: grid;
+    gap: 0.5rem;
+    justify-items: center;
+  }
+
+  .meterTrack {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: 4.5rem;
+    border-radius: var(--radius-xs);
+    background: var(--tone-border);
+  }
+
+  .meterBar {
+    display: block;
+    height: 100%;
+    background: var(--color-orange);
+    transform: scaleY(var(--fill));
+    transform-origin: bottom;
+    transition: transform var(--duration-fast) var(--ease-out-expo);
+  }
+
+  .meterLabel {
+    color: var(--tone-muted);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .indicator[data-placed],
+    .row::after,
+    .node,
+    .tile,
+    .meterBar {
+      transition: none;
+    }
+
+    .panelIn {
+      animation: none;
+    }
+  }
+}

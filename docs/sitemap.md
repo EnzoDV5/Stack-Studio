@@ -97,7 +97,8 @@ Then the process FAQ and the closing CTA. The old `/pricing` URL redirects to
 
 ## Studio `/studio`
 
-Compact page title, who we are, the two founders, how we work (principles), values, closing CTA.
+Compact page title, who we are, the two founders, how we work (principles), our stack (an
+interactive diagram of the tools we use, filtered by kind of build), values, closing CTA.
 
 ## Start `/start`
 

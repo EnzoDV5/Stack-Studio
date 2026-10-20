@@ -19,3 +19,21 @@ export interface Technology {
   /** Locally vendored official brand SVG. Omit for standards with no official logo. */
   logo?: string
 }
+
+/** A layer of the stack diagram (Studio): one technology category, in build order. */
+export interface TechnologyLayer {
+  id: TechnologyCategory
+  label: string
+  /** What the layer is for, in a few words. */
+  line: string
+}
+
+/** A kind of build the stack diagram can filter to, and the technologies it uses. */
+export interface StackBuild {
+  id: string
+  label: string
+  /** One line on what the stack does for this kind of build. */
+  summary: string
+  /** Technology ids; empty means every technology. */
+  technologies: readonly string[]
+}

@@ -1,4 +1,4 @@
-import type { Technology } from '@/types/technology'
+import type { StackBuild, Technology, TechnologyLayer } from '@/types/technology'
 
 export const technologyContent = {
   heading: 'The stack behind the work',
@@ -280,5 +280,146 @@ export const technologies: readonly Technology[] = [
     categories: ['Tools', 'Backend'],
     description: 'Schema validation and typed application data',
     logo: '/logos/technologies/zod.svg',
+  },
+]
+
+// The stack diagram on Studio: the layers in build order, then the kinds of build it filters to.
+export const stackContent = {
+  eyebrow: 'Our stack', // COPY:
+  title: 'The tools behind every build.', // COPY:
+  intro:
+    'Pick what you need built to see the stack we reach for, layer by layer. Hover or tap a tool for what we use it for.', // COPY:
+  filterLabel: 'Show the stack for', // COPY:
+  layersLabel: 'Layers', // COPY:
+  buildsLabel: 'Used for', // COPY:
+  closeLabel: 'Close', // COPY:
+  countLabel: (shown: number, total: number) =>
+    shown === total ? `${total} tools` : `${shown} of ${total} tools`, // COPY:
+  layerCount: (count: number) => `${count} ${count === 1 ? 'layer' : 'layers'}`, // COPY:
+}
+
+export const technologyLayers: readonly TechnologyLayer[] = [
+  { id: 'Design', label: 'Design', line: 'How it looks and works' }, // COPY:
+  { id: 'Languages', label: 'Languages', line: 'What it’s written in' }, // COPY:
+  { id: 'Frontend', label: 'Frontend', line: 'What people see and use' }, // COPY:
+  { id: 'Mobile', label: 'Mobile', line: 'Apps for Android and iOS' }, // COPY:
+  { id: 'Desktop', label: 'Desktop', line: 'Apps for Windows and macOS' }, // COPY:
+  { id: 'Backend', label: 'Backend', line: 'The logic behind it' }, // COPY:
+  { id: 'Database', label: 'Data', line: 'Where the data lives' }, // COPY:
+  { id: 'AI', label: 'AI', line: 'Models and assistants' }, // COPY:
+  { id: 'Infrastructure', label: 'Infrastructure', line: 'Where it runs and ships' }, // COPY:
+  { id: 'Tools', label: 'Tools', line: 'How we build and test' }, // COPY:
+]
+
+// COPY: which tools each kind of build uses. Review against real projects.
+export const stackBuilds: readonly StackBuild[] = [
+  {
+    id: 'all',
+    label: 'Everything', // COPY:
+    summary: 'Everything we design, build and run with.', // COPY:
+    technologies: [],
+  },
+  {
+    id: 'websites',
+    label: 'Websites', // COPY:
+    summary: 'Fast, animated websites that are easy to find and to run.', // COPY:
+    technologies: [
+      'figma',
+      'html5',
+      'css3',
+      'javascript',
+      'typescript',
+      'react',
+      'vite',
+      'nextjs',
+      'tailwind',
+      'gsap',
+      'threejs',
+      'nodejs',
+      'git',
+      'github',
+      'vercel',
+      'netlify',
+      'cloudflare',
+    ],
+  },
+  {
+    id: 'web-apps',
+    label: 'Web apps', // COPY:
+    summary: 'Typed, tested apps with accounts, data and payments.', // COPY:
+    technologies: [
+      'figma',
+      'typescript',
+      'sql',
+      'react',
+      'nextjs',
+      'tailwind',
+      'shadcn',
+      'framer-motion',
+      'nodejs',
+      'express',
+      'postgresql',
+      'supabase',
+      'firebase',
+      'docker',
+      'git',
+      'github',
+      'github-actions',
+      'vercel',
+      'postman',
+      'zod',
+    ],
+  },
+  {
+    id: 'mobile',
+    label: 'Mobile apps', // COPY:
+    summary: 'One codebase for Android and iOS, with a backend behind it.', // COPY:
+    technologies: [
+      'figma',
+      'typescript',
+      'react-native',
+      'expo',
+      'flutter',
+      'nodejs',
+      'firebase',
+      'supabase',
+      'git',
+      'github',
+    ],
+  },
+  {
+    id: 'desktop',
+    label: 'Desktop apps', // COPY:
+    summary: 'Desktop tools for your team, built with web technology.', // COPY:
+    technologies: [
+      'figma',
+      'typescript',
+      'sql',
+      'react',
+      'electron',
+      'tauri',
+      'nodejs',
+      'git',
+      'github',
+      'github-actions',
+    ],
+  },
+  {
+    id: 'ai',
+    label: 'AI systems', // COPY:
+    summary: 'AI built into your business: assistants, documents and workflows.', // COPY:
+    technologies: [
+      'python',
+      'typescript',
+      'openai',
+      'claude',
+      'gemini',
+      'nodejs',
+      'postgresql',
+      'supabase',
+      'docker',
+      'github',
+      'zod',
+    ],
   },
 ]
