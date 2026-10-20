@@ -72,6 +72,38 @@ const scenes: Record<string, IllustrationSceneAsset> = {
   'Fix or improve': media.services.fixOrImprove,
   'Start to finish': media.home.startToFinish,
   Studio: media.studio.oneTeam,
+  'Proof value': media.studio.values.proof,
+  'Craft value': media.studio.values.craft,
+  'Clarity value': media.studio.values.clarity,
+  'Long run value': media.studio.values.longRun,
+}
+
+/** Nonzero winding, the clip-path default, so a ring traced back round its hole is hollow. */
+function inside([x, y]: IllustrationPoint, shape: readonly IllustrationPoint[]): boolean {
+  let winding = 0
+  shape.forEach(([x1, y1], i) => {
+    const [x2, y2] = shape[(i + 1) % shape.length] ?? [x1, y1]
+    const side = (x2 - x1) * (y - y1) - (x - x1) * (y2 - y1)
+    if (y1 <= y && y2 > y && side > 0) winding++
+    else if (y1 > y && y2 <= y && side < 0) winding--
+  })
+  return winding !== 0
+}
+
+/** Whether two shapes share any area, sampled on a fine grid over their common box. */
+function overlaps(a: readonly IllustrationPoint[], b: readonly IllustrationPoint[]): boolean {
+  const p = bounds(a)
+  const q = bounds(b)
+  const left = Math.max(p.left, q.left)
+  const right = Math.min(p.left + p.width, q.left + q.width)
+  const top = Math.max(p.top, q.top)
+  const bottom = Math.min(p.top + p.height, q.top + q.height)
+  for (let x = left + 0.05; x < right; x += 0.1) {
+    for (let y = top + 0.05; y < bottom; y += 0.1) {
+      if (inside([x, y], a) && inside([x, y], b)) return true
+    }
+  }
+  return false
 }
 
 for (const [name, { pieces }] of Object.entries(scenes))
@@ -92,24 +124,12 @@ for (const [name, { pieces }] of Object.entries(scenes))
     })
 
     it('never overlaps two pieces at the same level', () => {
-      const overlaps = (a: IllustrationPiece, b: IllustrationPiece) => {
-        const p = bounds(a.shape)
-        const q = bounds(b.shape)
-        return (
-          p.left < q.left + q.width &&
-          q.left < p.left + p.width &&
-          p.top < q.top + q.height &&
-          q.top < p.top + p.height
-        )
-      }
-      for (const a of pieces) {
-        for (const b of pieces) {
-          if (a === b || a.parent !== b.parent) continue
-          // The plant is L-shaped around the card above it; its boxes overlap but its shape doesn't.
-          if (a.id === 'plant' || b.id === 'plant') continue
-          assert.ok(!overlaps(a, b), `${a.id} overlaps ${b.id}`)
+      pieces.forEach((a, i) => {
+        for (const b of pieces.slice(i + 1)) {
+          if (a.parent !== b.parent) continue
+          assert.ok(!overlaps(a.shape, b.shape), `${a.id} overlaps ${b.id}`)
         }
-      }
+      })
     })
 
     it('has unique ids', () => {

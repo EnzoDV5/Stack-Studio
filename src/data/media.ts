@@ -105,6 +105,19 @@ function octagon(cx: number, cy: number, rx: number, ry: number): IllustrationPo
   })
 }
 
+/** A ring around a round illustration piece (an octagon with an octagon cut out), so it can spin. */
+function ring(cx: number, cy: number, outer: number, inner: number): IllustrationPoint[] {
+  const out = octagon(cx, cy, outer, outer)
+  const hole = octagon(cx, cy, inner, inner).reverse()
+  // One outline: around the outside, then back round the hole the other way.
+  return [...out, ...out.slice(0, 1), ...hole, ...hole.slice(0, 1)]
+}
+
+/** A Studio value icon: decorative (the value's title says it), 144 CSS px wide. */
+function valueIcon(id: string): ImageAsset {
+  return illustration(`value-${id}`, [432, 288], 1, '')
+}
+
 /** A square Services icon in /public/media/services/icons (192, 128 and 96 px WebP). */
 function serviceIcon(id: string): ImageAsset {
   const url = (w: number) => `/media/services/icons/${id}-${w}.webp`
@@ -595,6 +608,101 @@ export const media = {
         { id: 'spark-3', shape: rect(23, 39, 26, 41.8), enter: 'pop', idle: 'pulse' },
       ],
     } satisfies IllustrationSceneAsset,
+    // The four value icons (transparent PNG sources in public/Illustrations). Each comes apart
+    // into its loose parts, which assemble as the list reaches the middle of the screen.
+    values: {
+      proof: {
+        image: valueIcon('proof'),
+        pieces: [
+          { id: 'picture', shape: rect(28.6, 33.8, 54, 53.2), enter: 'pop' },
+          { id: 'lines', shape: rect(28.8, 56.2, 52.4, 71.4), enter: 'draw' },
+          {
+            id: 'tick',
+            shape: [
+              [57.4, 52.6],
+              [73.4, 52.6],
+              [73.4, 58.5],
+              [66.5, 64.2],
+              [57.4, 64.2],
+            ],
+            enter: 'draw',
+          },
+          { id: 'pupil', shape: octagon(73.9, 69.4, 5, 5), enter: 'pop', idle: 'pulse' },
+        ],
+      } satisfies IllustrationSceneAsset,
+      craft: {
+        image: valueIcon('craft'),
+        pieces: [
+          {
+            // Sketches: it rocks on its tip.
+            id: 'pencil',
+            shape: [
+              [40.6, 59.6],
+              [44.4, 46.6],
+              [69.4, 21.8],
+              [73.5, 20.8],
+              [78.6, 25],
+              [78.8, 30],
+              [53.6, 55.2],
+            ],
+            enter: 'right',
+            idle: 'sway',
+            origin: [42, 58.4],
+          },
+        ],
+      } satisfies IllustrationSceneAsset,
+      clarity: {
+        image: valueIcon('clarity'),
+        pieces: [
+          { id: 'dots', shape: rect(25.4, 31.6, 40.4, 35.8), enter: 'pop' },
+          { id: 'path', shape: rect(25.6, 44.6, 76, 66), enter: 'draw' },
+          {
+            id: 'stop-1',
+            shape: octagon(29, 62.4, 3.4, 3.4),
+            parent: 'path',
+            enter: 'pop',
+            idle: 'pulse',
+          },
+          {
+            id: 'stop-2',
+            shape: octagon(43.8, 62.4, 3.4, 3.4),
+            parent: 'path',
+            enter: 'pop',
+            idle: 'pulse',
+          },
+          {
+            id: 'stop-3',
+            shape: octagon(57.9, 50.5, 3.4, 3.4),
+            parent: 'path',
+            enter: 'pop',
+            idle: 'pulse',
+          },
+        ],
+      } satisfies IllustrationSceneAsset,
+      longRun: {
+        image: valueIcon('long-run'),
+        pieces: [
+          { id: 'shield', shape: octagon(50, 50.2, 21.3, 21.3), enter: 'pop' },
+          {
+            id: 'wrench',
+            shape: [
+              [48, 41],
+              [62.6, 41],
+              [62.6, 52],
+              [50, 63.6],
+              [45, 63.6],
+              [40.8, 59],
+              [40.8, 55],
+            ],
+            parent: 'shield',
+            enter: 'pop',
+            idle: 'sway',
+          },
+          // The arrows circle the shield, slowly.
+          { id: 'cycle', shape: ring(50, 50.2, 38, 21.5), enter: 'pop', idle: 'spin' },
+        ],
+      } satisfies IllustrationSceneAsset,
+    },
     // Pexels License stock (free for commercial use, no attribution); source in
     // public/media/studio/README.md. Swap for a real studio photo later.
     // "Built to grow": a team gathered around one table.

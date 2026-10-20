@@ -1,5 +1,5 @@
 // Encodes the card illustrations: each source SVG in public/Illustrations wraps one large PNG
-// (2-4 MB). Chrome draws the SVG exactly as a page would, and responsive WebP renditions are
+// (2-4 MB); the Studio value icons are transparent PNGs. Chrome draws the SVG exactly as a page would, and responsive WebP renditions are
 // written with its canvas encoder (local Chrome via puppeteer-core), so a card downloads the
 // width it is shown at instead of the whole source.
 //
@@ -23,6 +23,11 @@ const illustrations = {
   'FixOrImprove.svg': { id: 'fix-or-improve', widths: [1760, 1200, 800, 480] },
   // Studio, the intro beside the story: up to ~640 CSS px wide (40vw on large screens).
   'Studio.svg': { id: 'studio', widths: [1280, 960, 640, 480] },
+  // Studio, the four value icons: 144 CSS px wide on their cards.
+  'ValueProof.png': { id: 'value-proof', widths: [432, 288] },
+  'ValueCraft.png': { id: 'value-craft', widths: [432, 288] },
+  'ValueClarity.png': { id: 'value-clarity', widths: [432, 288] },
+  'ValueLongRun.png': { id: 'value-long-run', widths: [432, 288] },
 }
 
 mkdirSync(outDir, { recursive: true })
@@ -30,8 +35,9 @@ const browser = await launch()
 const page = await browser.newPage()
 
 for (const [file, { id, widths }] of Object.entries(illustrations)) {
-  const svg = readFileSync(join(sourceDir, file))
-  const dataUrl = `data:image/svg+xml;base64,${svg.toString('base64')}`
+  const source = readFileSync(join(sourceDir, file))
+  const type = file.endsWith('.png') ? 'image/png' : 'image/svg+xml'
+  const dataUrl = `data:${type};base64,${source.toString('base64')}`
 
   const results = await page.evaluate(
     async (src, widths, quality) => {

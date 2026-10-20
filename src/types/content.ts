@@ -1,4 +1,4 @@
-import type { ImageAsset } from './media'
+import type { IllustrationSceneAsset, ImageAsset } from './media'
 
 /** A column on the Home process timeline: a week, or the time after launch. */
 export interface TimelineColumn {
@@ -62,4 +62,6 @@ export interface ValueItem {
   id: string
   title: string
   body: string
+  /** A small line icon that assembles with the list (Studio values). */
+  icon?: IllustrationSceneAsset
 }

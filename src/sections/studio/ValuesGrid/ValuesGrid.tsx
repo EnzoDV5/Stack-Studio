@@ -1,5 +1,6 @@
 import { useId } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
+import { IllustrationScene } from '@/components/media/IllustrationScene'
 import { Image } from '@/components/media/Image'
 import { MediaReveal } from '@/components/media/MediaReveal'
 import { cn } from '@/lib/cn'
@@ -20,8 +21,9 @@ export interface ValuesGridProps {
 }
 
 /**
- * Numbered principles/values grid (used for "How we work" and "Values"). The list is static;
- * an optional image opens with a clip reveal as it enters.
+ * Numbered principles/values grid (used for "How we work" and "Values"). An optional image
+ * opens with a clip reveal as it enters; items with an icon assemble it (IllustrationScene)
+ * as the list reaches the middle of the screen, one after another, and hop it on hover.
  */
 export function ValuesGrid({
   intro,
@@ -53,8 +55,15 @@ export function ValuesGrid({
           {items.map((item, i) => (
             <li
               key={item.id}
-              className="border-tone py-10 md:pr-10 lg:border-l lg:pl-8 lg:first:border-l-0 lg:first:pl-0"
+              className="group border-tone py-10 md:pr-10 lg:border-l lg:pl-8 lg:first:border-l-0 lg:first:pl-0"
             >
+              {item.icon && (
+                // The art sits inset in its square, so the box hangs left to line it up with
+                // the text. On hover it hops and tilts.
+                <div className="-mt-6 mb-3 -ml-8 size-36 transition-transform duration-(--duration-fast) ease-(--ease-out-expo) group-hover:-translate-y-1.5 group-hover:scale-110 group-hover:-rotate-6 motion-reduce:transition-none">
+                  <IllustrationScene scene={item.icon} sizes="9rem" delay={i * 0.15} />
+                </div>
+              )}
               <p className="eyebrow text-accent">{pad2(i + 1)}</p>
               <h3 className="mt-6 text-heading-lg">{item.title}</h3>
               <p className="mt-3 text-muted">{item.body}</p>

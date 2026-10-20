@@ -31,21 +31,25 @@ export const values: ValueItem[] = [
     id: 'proof',
     title: 'Proof over promises', // COPY:
     body: 'We show real work, real process and real prices. You shouldn’t have to take our word for it.', // COPY:
+    icon: media.studio.values.proof,
   },
   {
     id: 'craft',
     title: 'Craft, not decoration', // COPY:
     body: 'Every animation, every word, every pixel has a job. If it doesn’t help someone decide, it goes.', // COPY:
+    icon: media.studio.values.craft,
   },
   {
     id: 'clarity',
     title: 'Clarity at every step', // COPY:
     body: 'Plain language, honest timelines and a staging link from day one. No black boxes.', // COPY:
+    icon: media.studio.values.clarity,
   },
   {
     id: 'partnership',
     title: 'In it for the long run', // COPY:
     body: 'We support the websites and apps we build after launch, with hosting, maintenance and improvements when you need them.', // COPY:
+    icon: media.studio.values.longRun,
   },
 ]
 

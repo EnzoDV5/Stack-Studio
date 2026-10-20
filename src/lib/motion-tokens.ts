@@ -292,8 +292,9 @@ export const illustrationScene = {
   /** When the first piece starts, and the gap to each next one. */
   lead: 0.1,
   step: 0.07,
-  /** Side pieces fly in from this share of the scene width, tilted (degrees). */
+  /** Side pieces fly in from this share of the scene width (at least minShift px), tilted (degrees). */
   shift: 0.06,
+  minShift: 28,
   tilt: 8,
   loopEase: 'sine.inOut',
   float: { y: 6, duration: 3.2 },

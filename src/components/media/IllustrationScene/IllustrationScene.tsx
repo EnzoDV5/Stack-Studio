@@ -18,6 +18,8 @@ export interface IllustrationSceneProps {
    * the middle on the way in).
    */
   trigger?: 'center' | 'visible'
+  /** Seconds to wait once triggered, e.g. to cascade a row of icons. */
+  delay?: number
   className?: string
 }
 
@@ -49,6 +51,7 @@ export function IllustrationScene({
   scene,
   sizes,
   trigger = 'center',
+  delay = 0,
   className,
 }: IllustrationSceneProps) {
   const rootRef = useRef<HTMLDivElement>(null)
@@ -70,7 +73,7 @@ export function IllustrationScene({
         outer(id)?.querySelector<HTMLElement>(':scope > [data-piece-idle]')
       const clip = (id: string) =>
         idle(id)?.querySelector<HTMLElement>(':scope > [data-piece-clip]')
-      const shift = () => root.offsetWidth * motion.shift
+      const shift = () => Math.max(root.offsetWidth * motion.shift, motion.minShift)
 
       // Idle loops run once it's assembled, and only while it's on screen.
       let assembled = false
@@ -80,6 +83,7 @@ export function IllustrationScene({
 
       const tl = gsap.timeline({
         paused: true,
+        delay,
         defaults: { duration: duration.base, ease: ease.out },
         onComplete: () => {
           assembled = true
@@ -176,7 +180,11 @@ export function IllustrationScene({
         stopWatch()
       }
     },
-    { scope: rootRef, dependencies: [animated, ready, scene, trigger], revertOnUpdate: true },
+    {
+      scope: rootRef,
+      dependencies: [animated, delay, ready, scene, trigger],
+      revertOnUpdate: true,
+    },
   )
 
   return (
