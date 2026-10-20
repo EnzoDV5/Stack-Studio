@@ -3,7 +3,7 @@ import { media } from '@/data/media'
 import { pageMeta, studioContent } from '@/data/pages'
 import { founders, principles, values } from '@/data/studio'
 import { stackBuilds, stackContent, technologies, technologyLayers } from '@/data/technologies'
-import { testimonials } from '@/data/testimonials'
+import { testimonialLabels, testimonials } from '@/data/testimonials'
 import { PageTitle } from '@/sections/shared/PageTitle'
 import { Testimonial } from '@/sections/shared/Testimonial'
 import { FounderProfiles } from '@/sections/studio/FounderProfiles'
@@ -12,7 +12,6 @@ import { StudioIntro } from '@/sections/studio/StudioIntro'
 import { ValuesGrid } from '@/sections/studio/ValuesGrid'
 
 export function StudioPage() {
-  const testimonial = testimonials[1] ?? testimonials[0]
   return (
     <>
       <PageMeta {...pageMeta.studio} />
@@ -49,7 +48,7 @@ export function StudioPage() {
         titleSize="display-lg"
         tone="paper"
       />
-      {testimonial && <Testimonial testimonial={testimonial} />}
+      <Testimonial testimonials={testimonials} labels={testimonialLabels} />
     </>
   )
 }

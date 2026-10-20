@@ -3,7 +3,7 @@
  * before launch, and add the name of the person quoted. Never publish invented quotes
  * attributed to real people.
  */
-import type { Testimonial } from '@/types'
+import type { Testimonial, TestimonialLabels } from '@/types'
 import { media } from './media'
 
 export const testimonials: Testimonial[] = [
@@ -31,4 +31,12 @@ export const testimonials: Testimonial[] = [
 
 export function getTestimonial(id: string | undefined): Testimonial | undefined {
   return testimonials.find((t) => t.id === id)
+}
+
+/** The Studio testimonial carousel's controls (screen-reader names). */
+export const testimonialLabels: TestimonialLabels = {
+  carousel: 'Client testimonials', // COPY:
+  previous: 'Previous testimonial', // COPY:
+  next: 'Next testimonial', // COPY:
+  slide: (index, count) => `${index} of ${count}`, // COPY:
 }

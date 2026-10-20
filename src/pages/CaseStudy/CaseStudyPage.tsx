@@ -86,7 +86,7 @@ export function CaseStudyPage() {
         />
       )}
 
-      {testimonial && <Testimonial testimonial={testimonial} />}
+      {testimonial && <Testimonial testimonials={[testimonial]} />}
 
       <CaseOutro
         cta={{

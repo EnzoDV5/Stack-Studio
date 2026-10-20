@@ -40,6 +40,16 @@ export interface Testimonial {
   projectSlug?: string
 }
 
+/** The testimonial carousel's controls (screen-reader names). */
+export interface TestimonialLabels {
+  /** The carousel's accessible name, e.g. "Client testimonials". */
+  carousel: string
+  previous: string
+  next: string
+  /** The accessible name of each slide, e.g. "2 of 3". */
+  slide: (index: number, count: number) => string
+}
+
 export interface Client {
   id: string
   name: string

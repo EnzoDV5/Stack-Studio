@@ -79,7 +79,7 @@ export function ValuesGrid({
                 // centred on it: the drawing fills the tile whatever its padding.
                 <div className="relative size-20 rounded-lg border border-tone bg-tone-surface transition-transform duration-(--duration-fast) ease-(--ease-out-expo) group-hover:-translate-y-1 group-hover:-rotate-3 motion-reduce:transition-none">
                   <div className="absolute top-1/2 left-1/2 size-28 -translate-1/2">
-                    <IllustrationScene scene={item.icon} sizes="7rem" delay={i * 0.15} />
+                    <IllustrationScene scene={item.icon} sizes="7rem" />
                   </div>
                 </div>
               ) : (
