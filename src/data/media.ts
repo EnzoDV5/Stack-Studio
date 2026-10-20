@@ -9,6 +9,7 @@
  *     animated brand-gradient placeholder.
  */
 import type {
+  ClientLogoSet,
   IllustrationPoint,
   IllustrationSceneAsset,
   ImageAsset,
@@ -131,12 +132,28 @@ function serviceIcon(id: string): ImageAsset {
 }
 
 /**
- * A client's logo for dark backgrounds (transparent WebP in /public/logos/clients). Logos drawn
- * for light backgrounds use their generated -on-dark file (scripts/mockups/logos.mjs).
+ * A client logo (transparent WebP in /public/logos/clients). Each client has one drawn for each
+ * page tone; the missing one is generated (-on-dark or -on-light, scripts/mockups/logos.mjs).
  */
 function clientLogo(file: string, width: number, height: number, alt: string): ImageAsset {
   return { src: `/logos/clients/${file}.webp`, width, height, alt }
 }
+
+/** Every client logo, for dark and light backgrounds (case study titles, testimonials). */
+const clientLogos = {
+  gcSolar: {
+    onDark: clientLogo('gc-solar', 570, 113, 'GC Solar logo'),
+    onLight: clientLogo('gc-solar-on-light', 570, 113, 'GC Solar logo'),
+  },
+  mpgFoundation: {
+    onDark: clientLogo('mpg-foundation-on-dark', 400, 400, 'MPG Foundation logo'),
+    onLight: clientLogo('mpg-foundation', 400, 400, 'MPG Foundation logo'),
+  },
+  salonFriend: {
+    onDark: clientLogo('salon-friend-on-dark', 480, 329, 'Salon Friend logo'),
+    onLight: clientLogo('salon-friend', 480, 329, 'Salon Friend logo'),
+  },
+} satisfies Record<string, ClientLogoSet>
 
 /**
  * A founder's portrait: /public/media/founders/{id}-{w}.webp at each width (largest first),
@@ -265,6 +282,7 @@ export const serviceMedia: Record<StageId, ServiceMediaItem> = {
 }
 
 export const media = {
+  clients: clientLogos,
   brand: {
     // Generated placeholder (scripts/generate-placeholders.mjs). Replace with a designed 1200×630 PNG/JPG.
     ogImage: {
@@ -442,7 +460,7 @@ export const media = {
         2400,
         1350,
       ),
-      logo: clientLogo('gc-solar', 570, 113, 'GC Solar logo'),
+      logo: clientLogos.gcSolar.onDark,
       gallery: [
         mockup('gc-solar', 'solutions', 'wide', 'The GC Solar solutions page in a browser'), // COPY: alt
         mockup('gc-solar', 'quote-mobile', 'tall', 'The GC Solar quote request on a phone'), // COPY: alt
@@ -488,7 +506,7 @@ export const media = {
         2400,
         1350,
       ),
-      logo: clientLogo('mpg-foundation-on-dark', 400, 400, 'MPG Foundation logo'),
+      logo: clientLogos.mpgFoundation.onDark,
       gallery: [
         mockup(
           'mpg-foundation',
@@ -542,7 +560,7 @@ export const media = {
         1600,
         1200,
       ),
-      logo: clientLogo('salon-friend-on-dark', 480, 329, 'Salon Friend logo'),
+      logo: clientLogos.salonFriend.onDark,
       gallery: [
         mockup('salon-friend', 'catalogue', 'wide', 'The Salon Friend catalogue in a browser'), // COPY: alt
         mockup('salon-friend', 'product-mobile', 'tall', 'A Salon Friend product page on a phone'), // COPY: alt

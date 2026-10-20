@@ -8,6 +8,12 @@ export interface ImageAsset {
   sizes?: string
 }
 
+/** A client logo drawn for each page tone, so it sits straight on either with no plate. */
+export interface ClientLogoSet {
+  onDark: ImageAsset
+  onLight: ImageAsset
+}
+
 /** A point on an illustration, as percentages of its width and height. */
 export type IllustrationPoint = readonly [x: number, y: number]
 

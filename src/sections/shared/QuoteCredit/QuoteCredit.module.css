@@ -1,0 +1,35 @@
+/* Layered so Tailwind utilities passed via className can override these rules. */
+@layer components {
+  /*
+   * Both logo versions are rendered; only the one drawn for the colour on screen shows.
+   * Without the tone flow (reduced motion) a section paints its own tone, so follow that.
+   */
+  .onLight,
+  .onDark {
+    display: none;
+  }
+
+  .credit[data-surface='light'] .onLight,
+  .credit[data-surface='dark'] .onDark {
+    display: block;
+  }
+
+  /* With the tone flow a section shows the page colour, so follow the page tone instead. */
+  :global(html.tone-flow[data-page-tone='light'])
+    :global([data-tone]:not([data-tone-solid]))
+    .onLight,
+  :global(html.tone-flow[data-page-tone='dark'])
+    :global([data-tone]:not([data-tone-solid]))
+    .onDark {
+    display: block;
+  }
+
+  :global(html.tone-flow[data-page-tone='light'])
+    :global([data-tone]:not([data-tone-solid]))
+    .onDark,
+  :global(html.tone-flow[data-page-tone='dark'])
+    :global([data-tone]:not([data-tone-solid]))
+    .onLight {
+    display: none;
+  }
+}

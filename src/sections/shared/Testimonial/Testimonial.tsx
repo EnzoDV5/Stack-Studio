@@ -1,5 +1,6 @@
 import { Section, type Tone } from '@/components/layout/Section'
 import { Eyebrow } from '@/components/ui/Eyebrow'
+import { QuoteCredit } from '@/sections/shared/QuoteCredit'
 import type { Testimonial as TestimonialData } from '@/types'
 
 export interface TestimonialProps {
@@ -10,12 +11,6 @@ export interface TestimonialProps {
 
 /** One big client quote. Static: on inner pages only the page title may reveal. */
 export function Testimonial({ testimonial, eyebrow, tone = 'paper' }: TestimonialProps) {
-  const initials = testimonial.company
-    .split(/\s+/)
-    .map((w) => w[0])
-    .join('')
-    .slice(0, 2)
-
   return (
     <Section tone={tone}>
       <figure className="container-site grid gap-10 lg:grid-cols-12">
@@ -33,19 +28,14 @@ export function Testimonial({ testimonial, eyebrow, tone = 'paper' }: Testimonia
             {testimonial.quote}
           </p>
         </blockquote>
-        <figcaption className="flex items-center gap-4 lg:col-span-9 lg:col-start-3">
-          <span
-            aria-hidden="true"
-            className="grid size-12 place-items-center rounded-pill bg-ink font-mono text-small text-paper"
-          >
-            {initials}
-          </span>
-          <span>
-            <span className="block font-semibold">{testimonial.name}</span>
-            <span className="block text-small text-muted">
-              {testimonial.role}, {testimonial.company}
-            </span>
-          </span>
+        <figcaption className="lg:col-span-9 lg:col-start-3">
+          <QuoteCredit
+            name={testimonial.name}
+            role={testimonial.role}
+            company={testimonial.company}
+            logo={testimonial.logo}
+            tone={tone}
+          />
         </figcaption>
       </figure>
     </Section>

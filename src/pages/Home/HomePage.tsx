@@ -177,6 +177,7 @@ export function HomePage() {
               name: t.name,
               role: t.role,
               company: t.company,
+              logo: t.logo,
               link: project
                 ? { label: clients.caseLink(t.company), to: `/work/${project.slug}` }
                 : undefined,

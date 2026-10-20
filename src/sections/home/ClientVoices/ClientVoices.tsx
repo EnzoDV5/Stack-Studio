@@ -2,15 +2,17 @@ import { useId } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
 import { StaggerGroup } from '@/components/motion/StaggerGroup'
 import { TextLink } from '@/components/ui/TextLink'
+import { QuoteCredit } from '@/sections/shared/QuoteCredit'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
-import type { CtaLink } from '@/types'
+import type { ClientLogoSet, CtaLink } from '@/types'
 
 export interface ClientVoice {
   id: string
   quote: string
-  name: string
+  name?: string
   role: string
   company: string
+  logo?: ClientLogoSet
   /** The client's case study. */
   link?: CtaLink
 }
@@ -58,13 +60,14 @@ export function ClientVoices({
                 <blockquote className="mt-6 flex-1">
                   <p className="font-display text-heading-lg md:text-heading-xl">{voice.quote}</p>
                 </blockquote>
-                <figcaption className="mt-10 flex flex-wrap items-end justify-between gap-x-6 gap-y-4 border-t border-tone pt-6">
-                  <span>
-                    <span className="block font-semibold">{voice.name}</span>
-                    <span className="block text-small text-muted">
-                      {voice.role}, {voice.company}
-                    </span>
-                  </span>
+                <figcaption className="mt-10 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-tone pt-6">
+                  <QuoteCredit
+                    name={voice.name}
+                    role={voice.role}
+                    company={voice.company}
+                    logo={voice.logo}
+                    tone={tone}
+                  />
                   {voice.link && (
                     <TextLink to={voice.link.to} arrow className="text-small">
                       {voice.link.label}

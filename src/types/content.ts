@@ -1,4 +1,4 @@
-import type { IllustrationSceneAsset, ImageAsset } from './media'
+import type { ClientLogoSet, IllustrationSceneAsset, ImageAsset } from './media'
 
 /** A column on the Home process timeline: a week, or the time after launch. */
 export interface TimelineColumn {
@@ -32,9 +32,11 @@ export interface Faq {
 export interface Testimonial {
   id: string
   quote: string
-  name: string
+  /** The person quoted; until there is one, the quote is credited to the role and company. */
+  name?: string
   role: string
   company: string
+  logo?: ClientLogoSet
   projectSlug?: string
 }
 
