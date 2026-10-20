@@ -559,16 +559,44 @@ export const media = {
     ), // COPY: alt
   },
 
-  // Pexels License stock (free for commercial use, no attribution), chosen for what each
-  // section says; sources in public/media/studio/README.md. Swap for real studio photos later.
   studio: {
-    // "Design, motion and development in one team": a designer and a developer at one screen.
-    workspace: studioPhoto(
-      'one-team',
-      [1600, 1200, 1000, 800, 640],
-      4 / 5,
-      'A designer and a developer working through a build together at one screen',
-    ), // COPY: alt
+    // "Design, motion and development in one team": the team around one site. The panels are
+    // joined by the path, so the loose details move: the browser and panel content, the
+    // path's dots and the sparks (IllustrationScene).
+    oneTeam: {
+      image: illustration(
+        'studio',
+        [1280, 960, 640, 480],
+        1,
+        'Three people building a website together, surrounded by panels for images, video and code', // COPY: alt
+      ),
+      pieces: [
+        { id: 'browser-dots', shape: rect(30.5, 36.6, 37, 38.6), enter: 'pop' },
+        { id: 'shape-triangle', shape: rect(14.2, 23, 17.2, 26.2), enter: 'pop' },
+        { id: 'shape-circle', shape: rect(14.1, 27.2, 17.2, 30.4), enter: 'pop' },
+        { id: 'shape-square', shape: rect(14.1, 31.2, 17.2, 34.4), enter: 'pop' },
+        { id: 'sun', shape: octagon(27.97, 26.8, 2.1, 2.1), enter: 'pop' },
+        { id: 'play', shape: rect(70.7, 19.8, 75.8, 24.4), enter: 'pop', idle: 'pulse' },
+        { id: 'progress', shape: rect(64.7, 27.1, 81.7, 29.1), enter: 'draw' },
+        { id: 'code-tag', shape: rect(78.5, 37.3, 93.8, 43), enter: 'draw' },
+        { id: 'code-lines', shape: rect(81.2, 43, 93.8, 47.9), enter: 'draw' },
+        { id: 'copy', shape: rect(51.2, 41.5, 68, 49), enter: 'draw' },
+        { id: 'button', shape: rect(51.2, 49.8, 62.7, 54.4), enter: 'pop', idle: 'pulse' },
+        { id: 'circle-1', shape: octagon(42.03, 59.14, 3, 3), enter: 'pop' },
+        { id: 'circle-2', shape: octagon(50.63, 59.14, 3, 3), enter: 'pop' },
+        { id: 'circle-3', shape: octagon(59.22, 59.14, 3, 3), enter: 'pop' },
+        { id: 'captions', shape: rect(38.8, 62.2, 63, 65.2), enter: 'draw' },
+        { id: 'dot-1', shape: octagon(30.31, 20.7, 1.6, 1.6), enter: 'pop', idle: 'pulse' },
+        { id: 'dot-2', shape: octagon(90.86, 32.97, 1.3, 1.3), enter: 'pop', idle: 'pulse' },
+        { id: 'dot-3', shape: octagon(87.89, 58.98, 1.3, 1.3), enter: 'pop', idle: 'pulse' },
+        { id: 'dot-4', shape: octagon(7.81, 41.41, 1.3, 1.3), enter: 'pop', idle: 'pulse' },
+        { id: 'spark-1', shape: rect(41.8, 20.3, 46.4, 25.4), enter: 'pop', idle: 'pulse' },
+        { id: 'spark-2', shape: rect(85.2, 18.8, 90, 23.4), enter: 'pop', idle: 'pulse' },
+        { id: 'spark-3', shape: rect(23, 39, 26, 41.8), enter: 'pop', idle: 'pulse' },
+      ],
+    } satisfies IllustrationSceneAsset,
+    // Pexels License stock (free for commercial use, no attribution); source in
+    // public/media/studio/README.md. Swap for a real studio photo later.
     // "Built to grow": a team gathered around one table.
     detail: studioPhoto(
       'growing-team',

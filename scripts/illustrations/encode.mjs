@@ -21,6 +21,8 @@ const illustrations = {
   'StartToFinish.svg': { id: 'start-to-finish', widths: [1200, 800, 480] },
   // Services, Fix or improve: up to ~880 CSS px wide beside its intro.
   'FixOrImprove.svg': { id: 'fix-or-improve', widths: [1760, 1200, 800, 480] },
+  // Studio, the intro beside the story: up to ~640 CSS px wide (40vw on large screens).
+  'Studio.svg': { id: 'studio', widths: [1280, 960, 640, 480] },
 }
 
 mkdirSync(outDir, { recursive: true })

@@ -144,11 +144,6 @@ export const reel = {
   panelScroll: 0.45,
   /** Corner radius the full-bleed media settles into (px, matches --radius-lg). */
   radius: 16,
-  /**
-   * The outro card's illustration assembles as the card slides in, between these shares of
-   * its slide (0: its first edge shows, 1: the reel's end, card at rest).
-   */
-  outroBuild: { from: 0.3, to: 1 },
 } as const
 
 /** Legacy package showcase, retained for the package section. */
@@ -283,16 +278,20 @@ export const stepsDeal = {
  * section.
  */
 /**
- * IllustrationScene: the pieces assemble with the scroll (timeline seconds, spread over the
- * scrub), then idle while the scene is on screen. Idle loops are slow and small on purpose.
+ * IllustrationScene: the pieces assemble once (seconds, not scroll) when the scene reaches
+ * the middle of the screen, or comes fully into view, then idle while it's on screen. Idle
+ * loops are slow and small on purpose.
  */
 export const illustrationScene = {
-  start: 'top 85%',
-  end: 'center 50%',
-  scrub: 0.6,
+  /** IntersectionObserver options for each trigger. */
+  trigger: {
+    /** A thin band across the middle of the viewport. */
+    center: { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+    visible: { threshold: 0.95 },
+  },
   /** When the first piece starts, and the gap to each next one. */
-  lead: 0.2,
-  step: 0.14,
+  lead: 0.1,
+  step: 0.07,
   /** Side pieces fly in from this share of the scene width, tilted (degrees). */
   shift: 0.06,
   tilt: 8,

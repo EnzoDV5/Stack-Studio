@@ -1,9 +1,10 @@
-import { useRef, type RefObject } from 'react'
+import { useRef } from 'react'
+import { useIntro } from '@/app/providers/IntroProvider'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
-import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
+import { gsap, useGSAP } from '@/lib/gsap'
 import { sceneLayout, type PieceLayout } from '@/lib/illustration-scene'
-import { ease, illustrationScene as motion } from '@/lib/motion-tokens'
+import { duration, ease, illustrationScene as motion } from '@/lib/motion-tokens'
 import type { IllustrationSceneAsset } from '@/types'
 import { ScenePiece } from './ScenePiece'
 
@@ -11,34 +12,51 @@ export interface IllustrationSceneProps {
   scene: IllustrationSceneAsset
   /** The `sizes` for the image (every piece uses it, so they all fetch the same file). */
   sizes: string
-  className?: string
   /**
-   * Hand the assembly to a parent instead of the page scroll: the timeline is created paused
-   * and stored here, and the parent sets its progress (e.g. a card in a sideways-pinned reel,
-   * where vertical scroll positions don't say when it's in view).
+   * When it assembles: `center` once it crosses the middle of the screen, `visible` once it's
+   * fully in view (e.g. the last card of a sideways reel or carousel, which never crosses
+   * the middle on the way in).
    */
-  timelineRef?: RefObject<gsap.core.Timeline | null>
+  trigger?: 'center' | 'visible'
+  className?: string
 }
 
 const flatten = (layouts: PieceLayout[]): PieceLayout[] =>
   layouts.flatMap((layout) => [layout, ...flatten(layout.children)])
 
+/** Runs `callback` with each change in whether `el` meets the observer's conditions. */
+function observe(el: Element, options: IntersectionObserverInit, callback: (hit: boolean) => void) {
+  const observer = new IntersectionObserver((entries) => {
+    const entry = entries[entries.length - 1]
+    if (entry) callback(entry.isIntersecting && entry.intersectionRatio >= minRatio(options))
+  }, options)
+  observer.observe(el)
+  return () => observer.disconnect()
+}
+
+const minRatio = ({ threshold }: IntersectionObserverInit) =>
+  typeof threshold === 'number' ? threshold : 0
+
 /**
- * A flat illustration that comes apart: its pieces (clip-path cut-outs of the same image) fly,
- * pop, grow and draw into place as it scrolls into view (scrubbed), then idle while it's on
- * screen: cards float, an icon spins, a plant sways, dots pulse. With reduced motion it's the
- * plain image.
+ * A flat illustration that comes apart: its pieces (clip-path cut-outs of the same image) sit
+ * hidden until it reaches the middle of the screen (or comes fully into view), then fly, pop,
+ * grow and draw into place, once. After that they idle while on screen: cards float, an icon
+ * spins, a plant sways, dots pulse. IntersectionObserver sees where it really is, so this
+ * works inside the sideways reel and the carousel too. With reduced motion it's the plain
+ * image.
  */
 export function IllustrationScene({
   scene,
   sizes,
+  trigger = 'center',
   className,
-  timelineRef,
 }: IllustrationSceneProps) {
   const rootRef = useRef<HTMLDivElement>(null)
+  const played = useRef(false)
   const reducedMotion = useReducedMotion()
+  // Nothing assembles under the preloader or page wipe.
+  const { ready } = useIntro()
   const animated = !reducedMotion && scene.pieces.length > 0
-  const driven = timelineRef !== undefined
   const layout = sceneLayout(scene.pieces)
   const { image } = scene
 
@@ -54,23 +72,20 @@ export function IllustrationScene({
         idle(id)?.querySelector<HTMLElement>(':scope > [data-piece-clip]')
       const shift = () => root.offsetWidth * motion.shift
 
-      const tl = gsap.timeline({
-        defaults: { duration: 1, ease: ease.out },
-        ...(driven
-          ? { paused: true }
-          : {
-              scrollTrigger: {
-                trigger: root,
-                start: motion.start,
-                end: motion.end,
-                scrub: motion.scrub,
-                invalidateOnRefresh: true,
-              },
-            }),
-      })
-      if (timelineRef) timelineRef.current = tl
-      tl.from('[data-scene-base]', { opacity: 0, duration: 1.2, ease: ease.outQuart }, 0)
+      // Idle loops run once it's assembled, and only while it's on screen.
+      let assembled = false
+      let onScreen = false
+      const syncLoops = () =>
+        loops.forEach((loop) => (assembled && onScreen ? loop.play() : loop.pause()))
 
+      const tl = gsap.timeline({
+        paused: true,
+        defaults: { duration: duration.base, ease: ease.out },
+        onComplete: () => {
+          assembled = true
+          syncLoops()
+        },
+      })
       pieces.forEach(({ piece, clip: shape, clipFrom }, i) => {
         const node = outer(piece.id)
         if (!node) return
@@ -105,7 +120,6 @@ export function IllustrationScene({
         }
       })
 
-      // Idle loops run only while the scene is on screen.
       let pulses = 0
       const loops = pieces.flatMap(({ piece }, i) => {
         const node = idle(piece.id)
@@ -141,18 +155,28 @@ export function IllustrationScene({
             })
         }
       })
-      ScrollTrigger.create({
-        trigger: root,
-        start: 'top bottom',
-        end: 'bottom top',
-        onToggle: ({ isActive }) =>
-          loops.forEach((loop) => (isActive ? loop.play() : loop.pause())),
+
+      // Rebuilt after it has played (e.g. a wipe came and went): show it finished.
+      if (played.current) tl.progress(1)
+      const stopPlay =
+        ready && !played.current
+          ? observe(root, motion.trigger[trigger], (hit) => {
+              if (!hit) return
+              played.current = true
+              tl.play()
+              stopPlay?.()
+            })
+          : undefined
+      const stopWatch = observe(root, {}, (hit) => {
+        onScreen = hit
+        syncLoops()
       })
       return () => {
-        if (timelineRef?.current === tl) timelineRef.current = null
+        stopPlay?.()
+        stopWatch()
       }
     },
-    { scope: rootRef, dependencies: [animated, driven, scene], revertOnUpdate: true },
+    { scope: rootRef, dependencies: [animated, ready, scene, trigger], revertOnUpdate: true },
   )
 
   return (

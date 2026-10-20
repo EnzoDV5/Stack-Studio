@@ -100,7 +100,6 @@ export function WorkReel({
   const trackRef = useRef<HTMLOListElement>(null)
   const barRef = useRef<HTMLSpanElement>(null)
   const pinTrigger = useRef<ScrollTrigger | null>(null)
-  const outroScene = useRef<gsap.core.Timeline | null>(null)
   const outroAspect = outroIllustration.image.width / outroIllustration.image.height
 
   useGSAP(
@@ -166,33 +165,6 @@ export function WorkReel({
           .fromTo(chrome, { opacity: 0 }, { opacity: 1, duration: shrink * 0.4 }, shrink * 0.6)
       }
       timeline.to(track, { x: () => -travel(), duration: travelFor }, shrink)
-
-      // The outro illustration (IllustrationScene, which hands over its timeline) assembles
-      // as its card slides in, between the reel.outroBuild shares of the card's slide (from its
-      // left edge first showing to the end of the travel).
-      const outro = track.querySelector<HTMLElement>('[data-reel-outro]')
-      if (outro) {
-        const sliding = { progress: 0 }
-        const shows = () => {
-          const distance = travel()
-          if (distance <= 0) return 0
-          return gsap.utils.clamp(0, 1, (offsetWithin(outro, pin).x - pin.clientWidth) / distance)
-        }
-        timeline.to(
-          sliding,
-          {
-            progress: 1,
-            duration: travelFor,
-            onUpdate: () => {
-              const slide = 1 - shows()
-              const from = 1 - slide * (1 - reel.outroBuild.from)
-              const span = Math.max(slide * (reel.outroBuild.to - reel.outroBuild.from), 0.001)
-              outroScene.current?.progress(gsap.utils.clamp(0, 1, (sliding.progress - from) / span))
-            },
-          },
-          shrink,
-        )
-      }
 
       pinTrigger.current = timeline.scrollTrigger ?? null
       return () => {
@@ -372,12 +344,7 @@ export function WorkReel({
               )
             })}
 
-            <li
-              data-reel-panel=""
-              data-reel-outro=""
-              data-reel-chrome={chrome}
-              className={panelClass[mode].outro}
-            >
+            <li data-reel-panel="" data-reel-chrome={chrome} className={panelClass[mode].outro}>
               <div
                 className={cn(
                   'flex h-full flex-col rounded-lg border border-tone p-5 sm:p-8 lg:p-10',
@@ -388,7 +355,7 @@ export function WorkReel({
                     left (up to 18rem tall) and scales down with it in width and height (container
                     units keep its aspect). Elsewhere the card can grow, so it just fills the
                     width (up to 24rem); container heights there resolve to 0 in Chrome. It
-                    assembles as the card slides in (pinned) or scrolls in. */}
+                    assembles once it's fully in view: at the end of the reel or carousel. */}
                 <div
                   className={cn(
                     'relative mb-8 min-h-32 flex-1',
@@ -410,7 +377,7 @@ export function WorkReel({
                     <IllustrationScene
                       scene={outroIllustration}
                       sizes="(min-width: 640px) 24rem, 78vw"
-                      timelineRef={mode === 'pin' ? outroScene : undefined}
+                      trigger="visible"
                     />
                   </div>
                 </div>

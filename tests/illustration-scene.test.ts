@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { bounds, clipPolygon, sceneLayout } from '@/lib/illustration-scene'
 import { media } from '@/data/media'
-import type { IllustrationPiece, IllustrationPoint } from '@/types'
+import type { IllustrationPiece, IllustrationPoint, IllustrationSceneAsset } from '@/types'
 
 const rect = (l: number, t: number, r: number, b: number): IllustrationPoint[] => [
   [l, t],
@@ -68,9 +68,10 @@ describe('sceneLayout', () => {
   })
 })
 
-const scenes = {
+const scenes: Record<string, IllustrationSceneAsset> = {
   'Fix or improve': media.services.fixOrImprove,
   'Start to finish': media.home.startToFinish,
+  Studio: media.studio.oneTeam,
 }
 
 for (const [name, { pieces }] of Object.entries(scenes))

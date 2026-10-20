@@ -19,7 +19,7 @@ export function StudioPage() {
         eyebrow={studioContent.intro.eyebrow}
         title={studioContent.intro.title}
         paragraphs={studioContent.intro.paragraphs}
-        image={media.studio.workspace}
+        illustration={media.studio.oneTeam}
       />
       <FounderProfiles
         intro={studioContent.founders}

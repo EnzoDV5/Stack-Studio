@@ -75,7 +75,7 @@ Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whol
 | 2   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns | none    |
 | 3   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)      | scrub   |
 | 4   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)        | enter   |
-| 5   | StageExplorer   | paper  | Fix or improve: illustration assembles, idles | scrub   |
+| 5   | StageExplorer   | paper  | Fix or improve: illustration assembles, idles | enter   |
 | 6   | ProcessLine     | dark   | Timeline enters and responds to hover         | enter   |
 | 7   | NextSteps       | dark   | Four step cards deal out of a pile into a row | scrub   |
 | 8   | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
@@ -96,15 +96,15 @@ No adjacent clashes.
 
 ### Studio
 
-| #   | Section             | Tone   | Opener                  | Motion             | Trigger |
-| --- | ------------------- | ------ | ----------------------- | ------------------ | ------- |
-| 1   | PageTitle           | paper  | own                     | Static             | none    |
-| 2   | StudioIntro         | paper  | eyebrow + title         | MediaReveal clip   | enter   |
-| 3   | FounderProfiles     | dark   | SectionHeader (stacked) | Parallax portraits | scrub   |
-| 4   | ValuesGrid (how)    | paper  | SectionHeader (stacked) | StaggerGroup rise  | enter   |
-| 5   | ValuesGrid (values) | dark   | SectionHeader (stacked) | StaggerGroup rise  | enter   |
-| 6   | Testimonial         | paper  | eyebrow                 | SplitReveal lines  | enter   |
-| 7   | ClosingCta          | orange | eyebrow                 | SplitReveal words  | enter   |
+| #   | Section             | Tone   | Opener                  | Motion                 | Trigger |
+| --- | ------------------- | ------ | ----------------------- | ---------------------- | ------- |
+| 1   | PageTitle           | paper  | own                     | Static                 | none    |
+| 2   | StudioIntro         | paper  | eyebrow + title         | Illustration assembles | enter   |
+| 3   | FounderProfiles     | dark   | SectionHeader (stacked) | Parallax portraits     | scrub   |
+| 4   | ValuesGrid (how)    | paper  | SectionHeader (stacked) | StaggerGroup rise      | enter   |
+| 5   | ValuesGrid (values) | dark   | SectionHeader (stacked) | StaggerGroup rise      | enter   |
+| 6   | Testimonial         | paper  | eyebrow                 | SplitReveal lines      | enter   |
+| 7   | ClosingCta          | orange | eyebrow                 | SplitReveal words      | enter   |
 
 Clashes: 4→5→6→7 are four `enter` reveals in a row; 3→4→5 share the stacked opener.
 
@@ -165,10 +165,17 @@ colour, not a section's signature motion, so it doesn't count toward rule 1.
 **Timing.** Enter animations start with the element well on screen (`trigger.start`, top
 at 75%; count-ups at `trigger.startLate`, 62%; the process plan at 70%), so they play in full.
 Titles compile the moment they're on screen (`trigger.heading`, top at 90%). The WorkReel shrink happens inside its pin rather than while the section slides in, so the
-full-bleed image is seen whole first. The reel's closing card illustration is an
-`IllustrationScene` driven by the pin (`reel.outroBuild`): its loose parts (the path's dots,
-the chat bubble, the browser and card content) pop and draw in as the card slides in, and are
-done as it comes to rest. In the mobile carousel it follows the page scroll instead.
+full-bleed image is seen whole first.
+
+**Illustrations.** The three line illustrations (Services Fix or improve, the WorkReel's
+closing card, Studio "Who we are") are `IllustrationScene`s: clip-path cut-outs of one image
+(`media.*.pieces`) that sit hidden, then fly, pop, grow and draw into place once, in time (not
+with the scroll), and idle while on screen. They are not scrubbed: the studio asked for them to
+play as a moment. `trigger="center"` (the default) plays when the illustration crosses a thin
+band across the middle of the screen; `trigger="visible"` (the WorkReel card) waits until it is
+fully in view, which is the end of the pinned reel on desktop and the last swipe of the mobile
+carousel. IntersectionObserver sees where they really are, sideways reel included. Nothing
+assembles under the preloader or page wipe (`useIntro().ready`).
 
 **Deliberate deviations.** On /services the phone turn (AppShowcase) and the laptop
 opening (DesktopShowcase) are neighbours and both scrubbed: the studio asked for both devices
@@ -179,7 +186,9 @@ default elsewhere. ProcessLine (on /process) plays on entry and is then driven b
 clicks (people couldn't read a week while it followed the scroll). The readout beside it shows
 an overview until the first hover, click or arrow key, so the entrance sweep doesn't flick it
 through every week. It sits between the scrubbed NextSteps and the static PoliciesList, so it
-shares a trigger with neither neighbour. On /work the closing band's compile follows the WorkGrid's `enter` reveals. The
+shares a trigger with neither neighbour. On /services the Fix or improve illustration plays once (an enter) right after the laptop,
+also an enter: the studio asked for every illustration to play as a moment at the middle of the
+screen, and the two read differently (a device opening, a drawing assembling). On /work the closing band's compile follows the WorkGrid's `enter` reveals. The
 titles used to scrub with the scroll, which felt jittery, and a card grid and one title
 are different enough not to read as a repeat.
 
@@ -228,8 +237,8 @@ its own layout, picked for what it sells (`StageBlock layout`): Websites `featur
 intro beside an image, then dropdowns), Fix or improve `figures` (one spread: the intro, the
 examples as pills and the CTA beside a large illustration). The illustration is an
 `IllustrationScene`: clip-path cut-outs of the one image (`media.services.fixOrImprove.pieces`)
-fly, pop, grow and draw into place with the scroll (`illustrationScene`: top 85% to centre 50%),
-then idle while on screen (side cards float, the refresh arrows spin, the plant sways, the
+fly, pop, grow and draw into place once it crosses the middle of the screen, then idle while
+on screen (side cards float, the refresh arrows spin, the plant sways, the
 dashed slot and dots pulse). Reduced motion: the plain image. Hosting and care is the MonthlyPlans cards (Website Care, Managed Software
 and Partner). Framed images and video reveal on
 scroll; loops only play while on screen.
@@ -249,7 +258,7 @@ reduced motion they sit in order. CareSteps (on /process) pairs an editorial hea
 on how ongoing care runs, then links to the plans on /services. The video plays
 only while visible and stays on its poster with reduced motion.
 
-**Studio:** PageTitle (load: compile) · StudioIntro (enter: MediaReveal) · FounderProfiles (enter:
+**Studio:** PageTitle (load: compile) · StudioIntro (enter: the illustration assembles at the middle of the screen) · FounderProfiles (enter:
 MediaReveal; scrub: parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · ValuesGrid
 "Values" (none) · Testimonial (none) · ClosingCta (enter).
 Openers: split · stacked · inline.
