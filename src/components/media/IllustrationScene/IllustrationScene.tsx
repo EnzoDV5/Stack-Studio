@@ -27,10 +27,14 @@ const flatten = (layouts: PieceLayout[]): PieceLayout[] =>
   layouts.flatMap((layout) => [layout, ...flatten(layout.children)])
 
 /** Runs `callback` with each change in whether `el` meets the observer's conditions. */
-function observe(el: Element, options: IntersectionObserverInit, callback: (hit: boolean) => void) {
+function observe(
+  el: Element,
+  options: IntersectionObserverInit,
+  callback: (hit: boolean, entry: IntersectionObserverEntry) => void,
+) {
   const observer = new IntersectionObserver((entries) => {
     const entry = entries[entries.length - 1]
-    if (entry) callback(entry.isIntersecting && entry.intersectionRatio >= minRatio(options))
+    if (entry) callback(entry.isIntersecting && entry.intersectionRatio >= minRatio(options), entry)
   }, options)
   observer.observe(el)
   return () => observer.disconnect()
@@ -162,18 +166,26 @@ export function IllustrationScene({
 
       // Rebuilt after it has played (e.g. a wipe came and went): show it finished.
       if (played.current) tl.progress(1)
+      const play = () => {
+        if (played.current || !ready) return
+        played.current = true
+        tl.play()
+        stopPlay?.()
+      }
       const stopPlay =
         ready && !played.current
           ? observe(root, motion.trigger[trigger], (hit) => {
-              if (!hit) return
-              played.current = true
-              tl.play()
-              stopPlay?.()
+              if (hit) play()
             })
           : undefined
-      const stopWatch = observe(root, {}, (hit) => {
+      const stopWatch = observe(root, {}, (hit, entry) => {
         onScreen = hit
         syncLoops()
+        // A jump (an anchor, a reload mid-page) can carry a centre-triggered scene past the
+        // middle without touching it: if it arrives on screen already above the middle, play.
+        if (hit && trigger === 'center' && entry.boundingClientRect.top < window.innerHeight / 2) {
+          play()
+        }
       })
       return () => {
         stopPlay?.()

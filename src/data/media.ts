@@ -113,9 +113,9 @@ function ring(cx: number, cy: number, outer: number, inner: number): Illustratio
   return [...out, ...out.slice(0, 1), ...hole, ...hole.slice(0, 1)]
 }
 
-/** A Studio value icon: decorative (the value's title says it), 144 CSS px wide. */
+/** A Studio value icon: decorative (the value's title says it), 112 CSS px wide. */
 function valueIcon(id: string): ImageAsset {
-  return illustration(`value-${id}`, [432, 288], 1, '')
+  return illustration(`value-${id}`, [360, 240, 160], 1, '')
 }
 
 /** A square Services icon in /public/media/services/icons (192, 128 and 96 px WebP). */

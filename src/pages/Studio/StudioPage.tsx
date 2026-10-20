@@ -45,7 +45,8 @@ export function StudioPage() {
       <ValuesGrid
         intro={{ ...studioContent.values, eyebrow: undefined }}
         items={values}
-        headerVariant="inline"
+        headerVariant="minimal"
+        titleSize="display-lg"
         tone="paper"
       />
       {testimonial && <Testimonial testimonial={testimonial} />}

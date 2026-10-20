@@ -23,11 +23,11 @@ const illustrations = {
   'FixOrImprove.svg': { id: 'fix-or-improve', widths: [1760, 1200, 800, 480] },
   // Studio, the intro beside the story: up to ~640 CSS px wide (40vw on large screens).
   'Studio.svg': { id: 'studio', widths: [1280, 960, 640, 480] },
-  // Studio, the four value icons: 144 CSS px wide on their cards.
-  'ValueProof.png': { id: 'value-proof', widths: [432, 288] },
-  'ValueCraft.png': { id: 'value-craft', widths: [432, 288] },
-  'ValueClarity.png': { id: 'value-clarity', widths: [432, 288] },
-  'ValueLongRun.png': { id: 'value-long-run', widths: [432, 288] },
+  // Studio, the four value icons: 112 CSS px wide on their cards.
+  'ValueProof.png': { id: 'value-proof', widths: [360, 240, 160] },
+  'ValueCraft.png': { id: 'value-craft', widths: [360, 240, 160] },
+  'ValueClarity.png': { id: 'value-clarity', widths: [360, 240, 160] },
+  'ValueLongRun.png': { id: 'value-long-run', widths: [360, 240, 160] },
 }
 
 mkdirSync(outDir, { recursive: true })
