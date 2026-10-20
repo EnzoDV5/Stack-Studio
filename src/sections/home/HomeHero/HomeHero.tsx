@@ -73,7 +73,9 @@ export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, video }: Ho
       <GridOverlay fade="radial" className="-z-10" />
 
       {/* The mark: huge and anchored to the right, bleeding off the edge.
-          The hero clips it, so as it sinks it disappears behind the next section. */}
+          The hero clips it, so as it sinks it disappears behind the next section. On large
+          screens its base already runs off the bottom: the triangle is about 0.98em tall and
+          centred in the image, so 62svh - 0.49em puts its base at 112svh at any size. */}
       <div
         ref={frameRef}
         aria-hidden="true"
@@ -83,7 +85,7 @@ export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, video }: Ho
           <Logo
             variant="mark"
             title=""
-            className="-mr-[12vw] translate-y-[6svh] text-[min(62svh,52vw)] lg:-mr-[6vw] lg:text-[min(66svh,40vw)]"
+            className="-mr-[12vw] translate-y-[6svh] text-[min(62svh,52vw)] lg:-mr-[8vw] lg:translate-y-[calc(62svh-0.49em)] lg:text-[min(96svh,50vw)]"
           />
         </div>
       </div>
@@ -103,7 +105,7 @@ export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, video }: Ho
         <div className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-5">
           <MagneticButton
             to={cta.to}
-            size="lg"
+            size="md"
             withArrow
             analytics={{ event: 'Start project click', props: { location: 'home-hero' } }}
           >
