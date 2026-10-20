@@ -1,7 +1,10 @@
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { Section, type Tone } from '@/components/layout/Section'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
 import { pad2 } from '@/lib/format'
+import { Flip, gsap, useGSAP } from '@/lib/gsap'
+import { duration, ease } from '@/lib/motion-tokens'
 import { layersTouching, stackRows, usesTechnology } from '@/lib/stack'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
 import type { SectionIntro } from '@/types'
@@ -40,12 +43,15 @@ export function StackDiagram({
 }: StackDiagramProps) {
   const headingId = useId()
   const [buildId, setBuildId] = useState(builds[0]?.id ?? '')
-  // Bumped on each build change so the lit logos replay their pop (they remount).
-  const [pops, setPops] = useState(0)
   const [hovered, setHovered] = useState<string | null>(null)
   const [pinned, setPinned] = useState<string | null>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const indicatorRef = useRef<HTMLSpanElement>(null)
+  const listRef = useRef<HTMLOListElement>(null)
+  // Where every tile sat before a build change, so the ones that stay can glide to their new
+  // place (GSAP Flip, transforms only).
+  const flipState = useRef<Flip.FlipState | null>(null)
+  const reducedMotion = useReducedMotion()
 
   const build = builds.find((b) => b.id === buildId) ?? builds[0]
   const rows = stackRows(technologies, layers)
@@ -54,12 +60,11 @@ export function StackDiagram({
   const activeId = hovered ?? pinned
   const active = technologies.find((t) => t.id === activeId)
   const related = new Set(active ? layersTouching(layers, active).map((layer) => layer.id) : [])
-  // Each lit logo pops a beat after the one before it, top to bottom.
-  const popOrder = new Map(
+  // Layers the build uses, numbered in order (the others are hidden).
+  const layerNumber = new Map(
     rows
-      .flatMap((row) => row.technologies)
-      .filter((t) => used(t.id))
-      .map((t, i) => [t.id, i]),
+      .filter((row) => row.technologies.some((t) => used(t.id)))
+      .map((row, i) => [row.layer.id, i + 1]),
   )
 
   // The highlight slides between the build pills (a clip-path, so only the clip animates).
@@ -86,11 +91,43 @@ export function StackDiagram({
   }, [buildId])
 
   const selectBuild = (id: string) => {
-    if (id === buildId) return
+    const next = builds.find((b) => b.id === id)
+    if (!next || id === buildId) return
+    if (!reducedMotion && listRef.current) {
+      flipState.current = Flip.getState(listRef.current.querySelectorAll('[data-flip-id]'))
+    }
     setBuildId(id)
-    setPops((n) => n + 1)
     setHovered(null)
+    if (pinned && !usesTechnology(next, pinned)) setPinned(null)
   }
+
+  // After a build change: tools that stay glide to their new place, new ones pop in.
+  useGSAP(
+    () => {
+      const state = flipState.current
+      if (!state) return
+      flipState.current = null
+      Flip.from(state, {
+        duration: duration.fast,
+        ease: ease.out,
+        onEnter: (entering) =>
+          gsap.fromTo(
+            entering,
+            { opacity: 0, scale: 0.4, rotation: -20 },
+            {
+              opacity: 1,
+              scale: 1,
+              rotation: 0,
+              duration: duration.fast,
+              ease: ease.out,
+              stagger: 0.02,
+              clearProps: 'transform,opacity',
+            },
+          ),
+      })
+    },
+    { scope: listRef, dependencies: [buildId] },
+  )
 
   return (
     <Section tone={tone} aria-labelledby={headingId}>
@@ -133,17 +170,20 @@ export function StackDiagram({
         )}
 
         <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-12">
-          <ol className={cn(styles.rows, 'lg:col-span-8')} onPointerLeave={() => setHovered(null)}>
-            {rows.map((row, i) => (
+          <ol
+            ref={listRef}
+            className={cn(styles.rows, 'lg:col-span-8')}
+            onPointerLeave={() => setHovered(null)}
+          >
+            {rows.map((row) => (
               <li
                 key={row.layer.id}
-                className={styles.row}
-                data-live={row.technologies.some((t) => used(t.id)) || undefined}
+                className={cn(styles.row, !layerNumber.has(row.layer.id) && 'hidden')}
                 data-related={related.has(row.layer.id) || undefined}
               >
                 <span aria-hidden="true" className={styles.node} />
                 <div className={styles.label}>
-                  <p className="eyebrow text-accent">{pad2(i + 1)}</p>
+                  <p className="eyebrow text-accent">{pad2(layerNumber.get(row.layer.id) ?? 0)}</p>
                   <h3 className={cn(styles.layerName, 'mt-1.5 text-heading-md')}>
                     {row.layer.label}
                   </h3>
@@ -151,15 +191,17 @@ export function StackDiagram({
                 </div>
                 <ul className={styles.tiles}>
                   {row.technologies.map((technology) => (
-                    <li key={technology.id}>
+                    <li
+                      key={technology.id}
+                      data-flip-id={technology.id}
+                      className={cn(!used(technology.id) && 'hidden')}
+                    >
                       <button
                         type="button"
                         className={styles.tile}
-                        data-on={used(technology.id) || undefined}
                         data-active={activeId === technology.id || undefined}
                         aria-pressed={pinned === technology.id}
                         aria-label={technology.name}
-                        style={{ '--i': popOrder.get(technology.id) ?? 0 } as CSSProperties}
                         onPointerEnter={(event) => {
                           if (event.pointerType === 'mouse') setHovered(technology.id)
                         }}
@@ -169,12 +211,7 @@ export function StackDiagram({
                           setPinned((id) => (id === technology.id ? null : technology.id))
                         }
                       >
-                        <span
-                          key={pops}
-                          aria-hidden="true"
-                          className={styles.mark}
-                          data-pop={pops > 0 || undefined}
-                        >
+                        <span aria-hidden="true" className={styles.mark}>
                           {technology.logo ? (
                             <span
                               className={styles.logo}

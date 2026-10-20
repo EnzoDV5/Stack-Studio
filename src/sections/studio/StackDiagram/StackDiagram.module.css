@@ -53,7 +53,7 @@
     outline-offset: 2px;
   }
 
-  /* The spine: a hairline through every layer, lit orange through the ones the build uses. */
+  /* The spine: an orange line through the layers the build uses (the others are hidden). */
   .rows {
     border-bottom: 1px solid var(--tone-border);
   }
@@ -67,31 +67,15 @@
     border-top: 1px solid var(--tone-border);
   }
 
-  .row::before,
-  .row::after {
+  .row::before {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0.75rem;
-    content: '';
-    translate: -50% 0;
-  }
-
-  .row::before {
-    width: 1px;
-    background: var(--tone-border);
-  }
-
-  .row::after {
     width: 2px;
     background: var(--color-orange);
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform var(--duration-fast) var(--ease-out-expo);
-  }
-
-  .row[data-live]::after {
-    transform: scaleY(1);
+    content: '';
+    translate: -50% 0;
   }
 
   .node {
@@ -101,19 +85,14 @@
     height: 0.8rem;
     margin-top: 0.15rem;
     justify-self: center;
-    border: 1.5px solid var(--tone-border);
+    border: 1.5px solid var(--color-orange);
     border-radius: var(--radius-pill);
-    background: var(--tone-bg);
+    background: var(--color-orange);
     transition:
       transform var(--duration-fast) var(--ease-out-expo),
       background-color var(--duration-micro) ease,
       border-color var(--duration-micro) ease,
       box-shadow var(--duration-micro) ease;
-  }
-
-  .row[data-live] .node {
-    border-color: var(--color-orange);
-    background: var(--color-orange);
   }
 
   /* The layers the tool in focus touches. */
@@ -124,14 +103,6 @@
 
   .row[data-related] .layerName {
     color: var(--tone-accent-text);
-  }
-
-  .label {
-    transition: opacity var(--duration-micro) ease;
-  }
-
-  .row:not([data-live]) .label {
-    opacity: 0.45;
   }
 
   .layerName {
@@ -167,24 +138,17 @@
     border: 1px solid var(--tone-border);
     border-radius: var(--radius-pill);
     color: var(--tone-fg);
-    opacity: 0.32;
     transition:
-      opacity var(--duration-micro) ease,
       transform var(--duration-fast) var(--ease-out-expo),
       border-color var(--duration-micro) ease,
       background-color var(--duration-micro) ease,
       color var(--duration-micro) ease;
   }
 
-  .tile[data-on] {
-    opacity: 1;
-  }
-
   .tile[data-active] {
     border-color: var(--color-orange);
     background: var(--tone-surface);
     color: var(--tone-accent-text);
-    opacity: 1;
   }
 
   .tile[aria-pressed='true'] {
@@ -195,26 +159,6 @@
     display: grid;
     flex: none;
     place-items: center;
-  }
-
-  /* Switching builds: the lit logos pop in turn, top to bottom. */
-  .tile[data-on] .mark[data-pop] {
-    animation: pop var(--duration-fast) var(--ease-out-expo) both;
-    animation-delay: calc(var(--i) * 22ms);
-  }
-
-  @keyframes pop {
-    0% {
-      opacity: 0;
-      transform: scale(0.3) rotate(-25deg);
-    }
-    60% {
-      opacity: 1;
-      transform: scale(1.18) rotate(6deg);
-    }
-    100% {
-      transform: none;
-    }
   }
 
   /* Hover: the tile lifts and the logo hops (squash, jump, land). */
@@ -406,7 +350,6 @@
 
   @media (prefers-reduced-motion: reduce) {
     .indicator[data-placed],
-    .row::after,
     .node,
     .tile,
     .name {
@@ -414,7 +357,6 @@
     }
 
     .panelIn,
-    .tile[data-on] .mark[data-pop],
     .tile:hover .logo,
     .tile:hover .monogram {
       animation: none;

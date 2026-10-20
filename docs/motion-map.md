@@ -103,13 +103,14 @@ No adjacent clashes.
 | 3   | FounderProfiles     | dark   | SectionHeader (stacked) | Parallax portraits                                      | scrub         |
 | 4   | ValuesGrid (how)    | dark   | SectionHeader (stacked) | MediaReveal on its image                                | enter         |
 | 5   | StackDiagram        | dark   | SectionHeader (split)   | Build filter lights the spine; tools open their details | hover (click) |
-| 6   | ValuesGrid (values) | paper  | SectionHeader (inline)  | Icons assemble in turn; they hop on hover               | enter         |
+| 6   | ValuesGrid (values) | paper  | SectionHeader (minimal) | Icons assemble in turn; they hop on hover               | enter         |
 | 7   | Testimonial         | paper  | eyebrow                 | SplitReveal lines                                       | enter         |
 | 8   | ClosingCta          | orange | eyebrow                 | SplitReveal words                                       | enter         |
 
 StackDiagram (the stack as seven layers along a spine) is driven by the visitor: picking a
-build slides the pill highlight (clip-path), lights the spine through the layers that build
-uses (scaleY), dims the rest and pops the lit logos in turn; logos hop on hover (squash, jump,
+build slides the pill highlight (clip-path) and filters the diagram to the layers and tools
+that build uses: the tools that stay glide to their new place and the ones that return pop in
+(GSAP Flip, transforms only); logos hop on hover (squash, jump,
 land) and, from tablets up, show their name above; hovering, focusing or tapping a tool lights
 the layers it touches and fills the side panel (a bottom bar on small screens). CSS only, off
 with reduced motion. The Values icons are `IllustrationScene`s that assemble one after another
