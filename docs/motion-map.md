@@ -222,8 +222,8 @@ the copy and offerings on the right. As it scrolls through the view (`laptopTurn
 at 85% to its centre at 42%, 72 evenly spaced frames, cross-faded) the lid lifts from shut,
 the display wakes on an illustrative stock and orders app and it turns to face the copy. Each group has
 its own layout, picked for what it sells (`StageBlock layout`): Websites `feature` (the
-intro beside an image, then dropdowns), Fix or improve `figures` (the hourly rate as a large
-figure, no image). Hosting and care is the MonthlyPlans cards (Website Care, Managed Software
+intro beside an image, then dropdowns), Fix or improve `figures` (one spread: the intro, the
+examples as pills and the CTA beside a large illustration that reveals on enter). Hosting and care is the MonthlyPlans cards (Website Care, Managed Software
 and Partner). Framed images and video reveal on
 scroll; loops only play while on screen.
 

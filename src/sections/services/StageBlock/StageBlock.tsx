@@ -14,7 +14,7 @@ import type { ServiceMediaItem } from '@/types/service-media'
  * - `feature`: the intro beside a wide image, then the offerings as dropdowns.
  * - `cards`: intro and a banner image, then the offerings side by side as cards.
  * - `split`: the image in its own column beside a compact list (plans).
- * - `figures`: the intro and illustration above the improvement details.
+ * - `figures`: one spread, the intro with the details as pills beside a large illustration.
  * Give every group a different layout.
  */
 export type StageLayout = 'feature' | 'cards' | 'split' | 'figures'
@@ -110,30 +110,32 @@ export function StageBlock({
       </ul>
     ),
 
+    // Beside the illustration: each offering as a mono label over its examples as pills. The
+    // line above already says how it's quoted, so the summary isn't repeated.
     figures: () => (
-      <ul className="divide-y divide-(--tone-border) border-y border-tone">
+      <div className="space-y-6 border-t border-tone pt-6">
         {rows.map((row) => (
-          <li key={row.id} className="grid gap-x-12 gap-y-6 py-8 md:grid-cols-12 md:py-10">
-            <div className="md:col-span-4">
-              <h3 className="text-heading-lg">{row.name}</h3>
-              {row.price && <p className="mt-4 numeric text-display-lg text-accent">{row.price}</p>}
-            </div>
-            <div className="md:col-span-8">
-              <p className="max-w-[56ch] text-body-lg text-muted">{row.summary}</p>
-              {row.examples.length > 0 && (
-                <ul className="mt-8 grid gap-x-8 gap-y-3 border-t border-tone pt-6 text-small sm:grid-cols-2">
-                  {row.examples.map((example) => (
-                    <li key={example} className="flex gap-3">
-                      <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 bg-marker" />
-                      {example}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </li>
+          <div key={row.id}>
+            <h3 className="flex flex-wrap items-baseline gap-x-3 eyebrow text-muted">
+              {row.name}
+              {row.price && <span className="numeric text-accent">{row.price}</span>}
+            </h3>
+            {row.examples.length > 0 && (
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {row.examples.map((example) => (
+                  <li
+                    key={example}
+                    className="inline-flex h-9 items-center gap-2 rounded-pill border border-tone px-3.5 text-small"
+                  >
+                    <span aria-hidden="true" className="size-1.5 shrink-0 bg-marker" />
+                    {example}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         ))}
-      </ul>
+      </div>
     ),
   }
 
@@ -208,6 +210,7 @@ export function StageBlock({
           <div className="grid gap-x-12 gap-y-10 md:grid-cols-12 md:items-center">
             <div className="md:col-span-5">
               {intro}
+              <div className="mt-8">{offerings.figures()}</div>
               {footer(true)}
             </div>
             {illustration && (
@@ -226,7 +229,6 @@ export function StageBlock({
               </MediaReveal>
             )}
           </div>
-          <div className="mt-12 md:mt-16">{offerings.figures()}</div>
         </>
       )}
 
