@@ -46,7 +46,7 @@ export function ClosingCta({
           <MagneticButton
             to={content.to}
             variant={buttonVariant}
-            size="lg"
+            size="md"
             withArrow
             analytics={{ event: 'Start project click', props: { location } }}
           >
