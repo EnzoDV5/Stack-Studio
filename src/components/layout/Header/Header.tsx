@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { type CSSProperties, useCallback, useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router'
 import { MobileMenu, type MobileMenuProps } from '@/components/layout/MobileMenu'
 import { Button } from '@/components/ui/Button'
@@ -206,7 +206,14 @@ export function Header({
                           cn(styles.navLink, 'text-small', isActive && styles.active)
                         }
                       >
-                        {item.label}
+                        <span className="sr-only">{item.label}</span>
+                        <span className={styles.navRoll} aria-hidden="true">
+                          {[...item.label].map((char, i) => (
+                            <span key={i} style={{ '--i': i } as CSSProperties}>
+                              {char === ' ' ? ' ' : char}
+                            </span>
+                          ))}
+                        </span>
                       </NavLink>
                       {sections && (
                         <button
