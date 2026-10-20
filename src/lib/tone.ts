@@ -66,19 +66,33 @@ export function toCss([r, g, b, a]: Rgba): string {
 /**
  * The tone the page shows: the last section whose top has crossed `line` (a page position,
  * usually the middle of the viewport). One tone at a time: the page switches when a section
- * crosses the line instead of blending neighbours while you scroll. Sections shorter than
- * `minLength` px, and solid sections (which paint themselves), never take over the page
- * colour, so a short section can't make the page flicker.
+ * crosses the line instead of blending neighbours while you scroll. Solid sections (which
+ * paint themselves) never take over the page colour, and nor does a chapter shorter than
+ * `minLength` px, so a short section can't make the page flicker. A chapter is a run of
+ * touching, non-solid sections in the same tone, so two short paper sections in a row still
+ * turn the page paper.
  */
 export function activeTone(stops: readonly ToneStop[], line: number, minLength = 0): ToneName {
   let tone: ToneName = stops[0]?.tone ?? 'dark'
-  for (const stop of stops) {
-    if (stop.top > line) break // sorted by top
-    if (stop.solid && stop !== stops[0]) continue
-    if (stop.bottom - stop.top < minLength && stop !== stops[0]) continue
+  stops.forEach((stop, i) => {
+    if (stop.top > line || i === 0) return // sorted by top
+    if (stop.solid || chapterLength(stops, i) < minLength) return
     tone = stop.tone
-  }
+  })
   return tone
+}
+
+/** How long the chapter around `stops[index]` is, in px (see `activeTone`). */
+function chapterLength(stops: readonly ToneStop[], index: number): number {
+  const stop = stops[index]
+  if (!stop) return 0
+  const joins = (a: ToneStop | undefined, b: ToneStop | undefined) =>
+    !!a && !!b && !a.solid && !b.solid && a.tone === b.tone && Math.abs(b.top - a.bottom) < 2
+  let first = index
+  let last = index
+  while (joins(stops[first - 1], stops[first])) first--
+  while (joins(stops[last], stops[last + 1])) last++
+  return (stops[last]?.bottom ?? stop.bottom) - (stops[first]?.top ?? stop.top)
 }
 
 /**

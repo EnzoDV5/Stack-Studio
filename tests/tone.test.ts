@@ -71,6 +71,21 @@ describe('activeTone', () => {
     assert.equal(activeTone(withShort, 3000, 800), 'dark')
   })
 
+  it('counts neighbouring sections in the same tone as one chapter', () => {
+    const chapter: ToneStop[] = [
+      { tone: 'dark', top: 0, bottom: 1500 },
+      { tone: 'paper', top: 1500, bottom: 2000 }, // 500px
+      { tone: 'paper', top: 2000, bottom: 2400 }, // 400px: 900px together
+      { tone: 'orange', top: 2400, bottom: 3000, solid: true },
+    ]
+    assert.equal(activeTone(chapter, 1600, 800), 'paper')
+    assert.equal(activeTone(chapter, 2100, 800), 'paper')
+    assert.equal(activeTone(chapter, 2100, 1000), 'dark')
+    // A gap breaks the chapter.
+    const apart: ToneStop[] = [...chapter.slice(0, 2), { tone: 'paper', top: 2100, bottom: 2500 }]
+    assert.equal(activeTone(apart, 2200, 800), 'dark')
+  })
+
   it('is one tone at a time, never a mix, and dark with no sections', () => {
     assert.equal(activeTone(stops, 5000), 'orange')
     assert.equal(activeTone([], 0), 'dark')

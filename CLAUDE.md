@@ -100,8 +100,9 @@ tests/          node:test files for pure helpers (run with Node's TypeScript str
 - Sections render inside `<Section tone="dark|paper|white|orange">`. **Group neighbouring
   sections into tone chapters** (e.g. dark → paper → dark → paper on Home) rather than
   alternating every section: the page colour flows between tones, and a change every
-  section reads as flashing. Aim for a change no more than every ~2 viewports; sections
-  shorter than `tone.minSection` (0.9 viewport) never take over the page colour anyway.
+  section reads as flashing. Aim for a change no more than every ~2 viewports; a chapter (touching
+  same-tone sections) shorter than `tone.minSection` (0.9 viewport) never takes over the page
+  colour anyway.
   Use orange only for the single closing CTA band per page (it is `solid`, so it paints
   itself rather than turning the page orange).
 - Eyebrows follow `NN · LABEL` (mono, uppercase, letter-spaced) via `<Eyebrow index label />`.

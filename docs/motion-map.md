@@ -109,8 +109,10 @@ No adjacent clashes.
 
 StackDiagram (the stack as seven layers along a spine) is driven by the visitor: picking a
 build slides the pill highlight (clip-path) and filters the diagram to the layers and tools
-that build uses: the tools that stay glide to their new place and the ones that return pop in
-(GSAP Flip, transforms only); logos hop on hover (squash, jump,
+that build uses in one continuous move (GSAP Flip, nested, transforms and opacity only, a
+soft `stackFilter` in-out ease): layers and tools that leave fade and shrink out where they
+were, the ones that stay glide to their new place, and the ones that return fade in after a
+beat; logos hop on hover (squash, jump,
 land) and, from tablets up, show their name above; hovering, focusing or tapping a tool lights
 the layers it touches and fills the side panel (a bottom bar on small screens). CSS only, off
 with reduced motion. The Values icons are `IllustrationScene`s that assemble one after another
@@ -155,8 +157,9 @@ Home dark (hero, paths) → paper (services) → dark (process) → paper (work,
 then the solid orange band. Case study: dark → paper → dark (2). Services: paper → dark → paper → dark (the
 device showcases, then fix or improve and the plans, then the FAQ). Process: paper → dark (next
 steps, timeline) → paper (terms, care, FAQ) (2). Studio: paper → dark →
-paper (2). Sections shorter than `tone.minSection` (0.9 viewport) never take over the page
-colour, and `solid` sections (the orange band) paint themselves.
+paper (2). A chapter (a run of touching, non-solid sections in one tone) shorter than
+`tone.minSection` (0.9 viewport) never takes over the page colour, so two short paper sections
+in a row (Studio's values and testimonial) still turn the page paper, and `solid` sections (the orange band) paint themselves.
 
 **Continuous flow.** `ToneController` makes every `[data-tone]` section transparent and
 switches the page colours (`--page-bg`, `--page-fg`, muted, border, accent, grid, surface,
