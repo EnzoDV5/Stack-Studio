@@ -40,6 +40,9 @@ export function Header({
   const [menuOpen, setMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [closingDropdown, setClosingDropdown] = useState<string | null>(null)
+  // Set when one dropdown replaces another: the panels share a frame, so the new one shows at
+  // once and only its contents fade in, instead of the page flashing through between them.
+  const [switched, setSwitched] = useState(false)
   const [previewIndex, setPreviewIndex] = useState(0)
   const lastY = useRef(0)
   const headerRef = useRef<HTMLElement>(null)
@@ -61,7 +64,17 @@ export function Header({
     cancelClose()
     if (openDropdown) setClosingDropdown(openDropdown)
     setOpenDropdown(null)
+    setSwitched(false)
   }, [cancelClose, openDropdown])
+
+  const showDropdown = (to: string) => {
+    cancelClose()
+    setClosingDropdown(null)
+    if (openDropdown === to) return
+    setSwitched(openDropdown !== null)
+    selectPreview(0)
+    setOpenDropdown(to)
+  }
 
   const scheduleClose = useCallback(() => {
     cancelClose()
@@ -178,10 +191,7 @@ export function Header({
                     className={cn(styles.navItem, isOpen && styles.navItemOpen)}
                     onMouseEnter={() => {
                       if (sections && window.matchMedia('(hover: hover)').matches) {
-                        cancelClose()
-                        setClosingDropdown(null)
-                        if (openDropdown !== item.to) selectPreview(0)
-                        setOpenDropdown(item.to)
+                        showDropdown(item.to)
                       }
                     }}
                     onMouseLeave={() => {
@@ -208,12 +218,7 @@ export function Header({
                           aria-label={`Explore ${item.label} sections`}
                           aria-expanded={isOpen}
                           aria-controls={`nav-dropdown-${item.to.slice(1)}`}
-                          onClick={() => {
-                            cancelClose()
-                            setClosingDropdown(null)
-                            selectPreview(0)
-                            setOpenDropdown(item.to)
-                          }}
+                          onClick={() => showDropdown(item.to)}
                         >
                           <span className={styles.chevron} aria-hidden="true" />
                         </button>
@@ -225,6 +230,7 @@ export function Header({
                         className={styles.dropdown}
                         data-lenis-prevent=""
                         data-state={isOpen ? 'open' : 'closing'}
+                        data-switched={isOpen && switched ? '' : undefined}
                         hidden={!isOpen && !isClosing}
                         inert={!isOpen}
                         aria-hidden={!isOpen}

@@ -149,6 +149,12 @@
     pointer-events: none;
   }
 
+  /* Replacing another dropdown in the same frame: show the panel at once so the page never
+     shows through between the two; its contents still fade in below. */
+  .dropdown[data-switched] {
+    transition: none;
+  }
+
   @starting-style {
     .dropdown[data-state='open'] {
       opacity: 0;
