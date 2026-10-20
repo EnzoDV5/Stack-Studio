@@ -4,7 +4,7 @@ import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
 import { pad2 } from '@/lib/format'
 import { Flip, gsap, useGSAP } from '@/lib/gsap'
-import { duration, ease } from '@/lib/motion-tokens'
+import { ease, stackFilter } from '@/lib/motion-tokens'
 import { layersTouching, stackRows, usesTechnology } from '@/lib/stack'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
 import type { SectionIntro } from '@/types'
@@ -101,26 +101,37 @@ export function StackDiagram({
     if (pinned && !usesTechnology(next, pinned)) setPinned(null)
   }
 
-  // After a build change: tools that stay glide to their new place, new ones pop in.
+  // After a build change, one continuous move: layers and tools that leave fade and shrink out
+  // where they were, the ones that stay glide to their new place (tiles ride inside their
+  // layer), and the ones that return fade in once there's room for them.
   useGSAP(
     () => {
       const state = flipState.current
       if (!state) return
       flipState.current = null
       Flip.from(state, {
-        duration: duration.fast,
-        ease: ease.out,
+        duration: stackFilter.duration,
+        ease: stackFilter.ease,
+        nested: true,
+        absoluteOnLeave: true,
+        onLeave: (leaving) =>
+          gsap.to(leaving, {
+            opacity: 0,
+            scale: stackFilter.scale,
+            duration: stackFilter.fade,
+            ease: ease.outQuart,
+          }),
         onEnter: (entering) =>
           gsap.fromTo(
             entering,
-            { opacity: 0, scale: 0.4, rotation: -20 },
+            { opacity: 0, scale: stackFilter.scale },
             {
               opacity: 1,
               scale: 1,
-              rotation: 0,
-              duration: duration.fast,
-              ease: ease.out,
-              stagger: 0.02,
+              duration: stackFilter.duration,
+              delay: stackFilter.enterDelay,
+              ease: stackFilter.ease,
+              stagger: stackFilter.stagger,
               clearProps: 'transform,opacity',
             },
           ),
@@ -178,6 +189,7 @@ export function StackDiagram({
             {rows.map((row) => (
               <li
                 key={row.layer.id}
+                data-flip-id={`layer-${row.layer.id}`}
                 className={cn(styles.row, !layerNumber.has(row.layer.id) && 'hidden')}
                 data-related={related.has(row.layer.id) || undefined}
               >

@@ -84,6 +84,21 @@ export const cursor = {
   followEase: 'power3.out',
 } as const
 
+/**
+ * The stack diagram's build filter (GSAP Flip): staying layers and tools glide, leaving ones
+ * fade and shrink out, returning ones fade in after a beat. A soft in-out ease, so the move
+ * starts and lands gently rather than snapping.
+ */
+export const stackFilter = {
+  duration: 0.8,
+  ease: 'power3.inOut',
+  /** Leaving items fade quicker than the move, so they're gone before others slide over. */
+  fade: 0.35,
+  enterDelay: 0.25,
+  stagger: 0.025,
+  scale: 0.85,
+} as const
+
 export const marquee = {
   /** Seconds per full loop at the default width. CSS reads this as a custom property. */
   loopSeconds: 38,
