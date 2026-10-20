@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { stackBuilds, technologies, technologyLayers } from '@/data/technologies'
-import { buildsUsing, stackRows, usesTechnology } from '@/lib/stack'
+import { buildsUsing, layersTouching, stackRows, usesTechnology } from '@/lib/stack'
 
 describe('stackRows', () => {
   const rows = stackRows(technologies, technologyLayers)
@@ -12,17 +12,34 @@ describe('stackRows', () => {
     assert.equal(new Set(placed).size, technologies.length)
     for (const row of rows) {
       for (const technology of row.technologies) {
-        assert.equal(technology.categories[0], row.layer.id, technology.id)
+        const [primary] = technology.categories
+        assert.ok(primary && row.layer.categories.includes(primary), technology.id)
       }
     }
   })
 
   it('has a layer for every category used, and no empty layers', () => {
-    const layerIds = new Set(technologyLayers.map((layer) => layer.id))
+    const layerIds = new Set(technologyLayers.flatMap((layer) => layer.categories))
     for (const technology of technologies) {
       for (const category of technology.categories) assert.ok(layerIds.has(category), category)
     }
     for (const row of rows) assert.ok(row.technologies.length > 0, row.layer.id)
+  })
+})
+
+describe('layersTouching', () => {
+  it('finds every layer a technology belongs to', () => {
+    const typescript = technologies.find((t) => t.id === 'typescript')
+    assert.ok(typescript)
+    assert.deepEqual(
+      layersTouching(technologyLayers, typescript).map((layer) => layer.id),
+      ['languages', 'frontend', 'apps', 'backend'],
+    )
+  })
+
+  it('puts each category in one layer only', () => {
+    const categories = technologyLayers.flatMap((layer) => layer.categories)
+    assert.equal(new Set(categories).size, categories.length)
   })
 })
 

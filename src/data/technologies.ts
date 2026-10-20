@@ -290,25 +290,30 @@ export const stackContent = {
   intro:
     'Pick what you need built to see the stack we reach for, layer by layer. Hover or tap a tool for what we use it for.', // COPY:
   filterLabel: 'Show the stack for', // COPY:
-  layersLabel: 'Layers', // COPY:
   buildsLabel: 'Used for', // COPY:
   closeLabel: 'Close', // COPY:
   countLabel: (shown: number, total: number) =>
     shown === total ? `${total} tools` : `${shown} of ${total} tools`, // COPY:
-  layerCount: (count: number) => `${count} ${count === 1 ? 'layer' : 'layers'}`, // COPY:
 }
 
 export const technologyLayers: readonly TechnologyLayer[] = [
-  { id: 'Design', label: 'Design', line: 'How it looks and works' }, // COPY:
-  { id: 'Languages', label: 'Languages', line: 'What it’s written in' }, // COPY:
-  { id: 'Frontend', label: 'Frontend', line: 'What people see and use' }, // COPY:
-  { id: 'Mobile', label: 'Mobile', line: 'Apps for Android and iOS' }, // COPY:
-  { id: 'Desktop', label: 'Desktop', line: 'Apps for Windows and macOS' }, // COPY:
-  { id: 'Backend', label: 'Backend', line: 'The logic behind it' }, // COPY:
-  { id: 'Database', label: 'Data', line: 'Where the data lives' }, // COPY:
-  { id: 'AI', label: 'AI', line: 'Models and assistants' }, // COPY:
-  { id: 'Infrastructure', label: 'Infrastructure', line: 'Where it runs and ships' }, // COPY:
-  { id: 'Tools', label: 'Tools', line: 'How we build and test' }, // COPY:
+  { id: 'design', label: 'Design', line: 'How it looks and works', categories: ['Design'] }, // COPY:
+  { id: 'languages', label: 'Languages', line: 'What it’s written in', categories: ['Languages'] }, // COPY:
+  { id: 'frontend', label: 'Frontend', line: 'What people see and use', categories: ['Frontend'] }, // COPY:
+  { id: 'apps', label: 'Apps', line: 'Mobile and desktop', categories: ['Mobile', 'Desktop'] }, // COPY:
+  {
+    id: 'backend',
+    label: 'Backend & data', // COPY:
+    line: 'The logic and the data behind it', // COPY:
+    categories: ['Backend', 'Database'],
+  },
+  { id: 'ai', label: 'AI', line: 'Models and assistants', categories: ['AI'] }, // COPY:
+  {
+    id: 'shipping',
+    label: 'Shipping', // COPY:
+    line: 'Where it runs and how we ship it', // COPY:
+    categories: ['Infrastructure', 'Tools'],
+  },
 ]
 
 // COPY: which tools each kind of build uses. Review against real projects.

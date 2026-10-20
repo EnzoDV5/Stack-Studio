@@ -20,12 +20,14 @@ export interface Technology {
   logo?: string
 }
 
-/** A layer of the stack diagram (Studio): one technology category, in build order. */
+/** A layer of the stack diagram (Studio), in build order: one or more categories. */
 export interface TechnologyLayer {
-  id: TechnologyCategory
+  id: string
   label: string
   /** What the layer is for, in a few words. */
   line: string
+  /** A technology sits in the layer that holds its primary (first) category. */
+  categories: readonly TechnologyCategory[]
 }
 
 /** A kind of build the stack diagram can filter to, and the technologies it uses. */
