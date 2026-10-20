@@ -1,24 +1,27 @@
-// Crops a founder photo to 4:5 (from the top, keeping the headroom) and encodes WebP
-// renditions with headless Chrome's canvas encoder (local Chrome via puppeteer-core, so no
-// ffmpeg needed). Canvas output carries no EXIF, so camera and location data are dropped.
+// Crops a founder photo to 4:5 (from the top, keeping the headroom, or to an x,y,width box in
+// source pixels for a tighter frame) and encodes WebP renditions with headless Chrome's canvas
+// encoder (local Chrome via puppeteer-core, so no ffmpeg needed). Canvas output carries no
+// EXIF, so camera and location data are dropped.
 //
-//   node scripts/founders/encode.mjs <photo.jpg> public/media/founders/<id> [widths] [quality]
-//   node scripts/founders/encode.mjs ~/Downloads/enzo.jpg public/media/founders/enzo
+//   node scripts/founders/encode.mjs <photo.jpg> public/media/founders/<id> [widths] [quality] [crop]
+//   node scripts/founders/encode.mjs ~/Downloads/enzo.jpg public/media/founders/enzo 1200,800,480 0.84 600,1000,3000
 /* global createImageBitmap, OffscreenCanvas -- used inside page.evaluate, in Chrome */
 import { readFileSync, writeFileSync } from 'node:fs'
 import { launch } from '../mockups/browser.mjs'
 
-const [input, outBase, widthsArg = '1200,800,480', quality = '0.84'] = process.argv.slice(2)
+const [input, outBase, widthsArg = '1200,800,480', quality = '0.84', cropArg] =
+  process.argv.slice(2)
 const widths = widthsArg.split(',').map(Number)
+const crop = cropArg ? cropArg.split(',').map(Number) : null
 const dataUrl = `data:image/jpeg;base64,${readFileSync(input).toString('base64')}`
 
 const browser = await launch()
 const page = await browser.newPage()
 const results = await page.evaluate(
-  async (dataUrl, widths, quality) => {
+  async (dataUrl, widths, quality, crop) => {
     const bitmap = await createImageBitmap(await (await fetch(dataUrl)).blob())
-    const cropW = bitmap.width
-    const cropH = Math.min(bitmap.height, Math.round((cropW * 5) / 4))
+    const [cropX, cropY, cropW] = crop ?? [0, 0, bitmap.width]
+    const cropH = Math.min(bitmap.height - cropY, Math.round((cropW * 5) / 4))
     const out = []
     for (const w of widths) {
       const h = Math.round((w * 5) / 4)
@@ -31,7 +34,7 @@ const results = await page.evaluate(
         const step = new OffscreenCanvas(Math.round(sw / 2), Math.round(sh / 2))
         const c = step.getContext('2d')
         c.imageSmoothingQuality = 'high'
-        if (first) c.drawImage(src, 0, 0, cropW, cropH, 0, 0, step.width, step.height)
+        if (first) c.drawImage(src, cropX, cropY, cropW, cropH, 0, 0, step.width, step.height)
         else c.drawImage(src, 0, 0, step.width, step.height)
         src = step
         sw = step.width
@@ -41,7 +44,7 @@ const results = await page.evaluate(
       const canvas = new OffscreenCanvas(w, h)
       const ctx = canvas.getContext('2d')
       ctx.imageSmoothingQuality = 'high'
-      if (first) ctx.drawImage(src, 0, 0, cropW, cropH, 0, 0, w, h)
+      if (first) ctx.drawImage(src, cropX, cropY, cropW, cropH, 0, 0, w, h)
       else ctx.drawImage(src, 0, 0, sw, sh, 0, 0, w, h)
       const blob = await canvas.convertToBlob({ type: 'image/webp', quality })
       const bytes = new Uint8Array(await blob.arrayBuffer())
@@ -55,6 +58,7 @@ const results = await page.evaluate(
   dataUrl,
   widths,
   Number(quality),
+  crop,
 )
 await browser.close()
 

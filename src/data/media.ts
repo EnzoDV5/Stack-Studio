@@ -102,19 +102,6 @@ function clientLogo(file: string, width: number, height: number, alt: string): I
 }
 
 /**
- * A neutral avatar (head-and-shoulders silhouette with initials) standing in for a founder's
- * portrait: /public/media/founders/{id}-placeholder.svg, 4:5 like the real photos will be.
- */
-function founderPlaceholder(id: string, name: string): ImageAsset {
-  return {
-    src: `/media/founders/${id}-placeholder.svg`,
-    width: 900,
-    height: 1125,
-    alt: `Placeholder portrait for ${name}`,
-  }
-}
-
-/**
  * A founder's portrait: /public/media/founders/{id}-{w}.webp at each width (largest first),
  * cropped to 4:5 like the portrait frames.
  */
@@ -460,10 +447,13 @@ export const media = {
   },
 
   // Real portraits, cropped to 4:5 and encoded to WebP at 1200, 800 and 480 wide
-  // (public/media/founders/README.md). COPY: PLACEHOLDER avatar for Enzo until his portrait
-  // exists: add it the same way and swap in founderPhoto('enzo', …).
+  // (public/media/founders/README.md).
   founders: {
-    enzo: founderPlaceholder('enzo', 'Enzo De Vittorio'),
+    enzo: founderPhoto(
+      'enzo',
+      [1200, 800, 480],
+      'Enzo De Vittorio, co-founder of Stack Studio, standing in a field of dry grass at golden hour',
+    ), // COPY: alt
     armand: founderPhoto(
       'armand',
       [1200, 800, 480],
