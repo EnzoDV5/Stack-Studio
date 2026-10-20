@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, type RefObject } from 'react'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
 import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
@@ -12,6 +12,12 @@ export interface IllustrationSceneProps {
   /** The `sizes` for the image (every piece uses it, so they all fetch the same file). */
   sizes: string
   className?: string
+  /**
+   * Hand the assembly to a parent instead of the page scroll: the timeline is created paused
+   * and stored here, and the parent sets its progress (e.g. a card in a sideways-pinned reel,
+   * where vertical scroll positions don't say when it's in view).
+   */
+  timelineRef?: RefObject<gsap.core.Timeline | null>
 }
 
 const flatten = (layouts: PieceLayout[]): PieceLayout[] =>
@@ -23,10 +29,16 @@ const flatten = (layouts: PieceLayout[]): PieceLayout[] =>
  * screen: cards float, an icon spins, a plant sways, dots pulse. With reduced motion it's the
  * plain image.
  */
-export function IllustrationScene({ scene, sizes, className }: IllustrationSceneProps) {
+export function IllustrationScene({
+  scene,
+  sizes,
+  className,
+  timelineRef,
+}: IllustrationSceneProps) {
   const rootRef = useRef<HTMLDivElement>(null)
   const reducedMotion = useReducedMotion()
   const animated = !reducedMotion && scene.pieces.length > 0
+  const driven = timelineRef !== undefined
   const layout = sceneLayout(scene.pieces)
   const { image } = scene
 
@@ -44,14 +56,19 @@ export function IllustrationScene({ scene, sizes, className }: IllustrationScene
 
       const tl = gsap.timeline({
         defaults: { duration: 1, ease: ease.out },
-        scrollTrigger: {
-          trigger: root,
-          start: motion.start,
-          end: motion.end,
-          scrub: motion.scrub,
-          invalidateOnRefresh: true,
-        },
+        ...(driven
+          ? { paused: true }
+          : {
+              scrollTrigger: {
+                trigger: root,
+                start: motion.start,
+                end: motion.end,
+                scrub: motion.scrub,
+                invalidateOnRefresh: true,
+              },
+            }),
       })
+      if (timelineRef) timelineRef.current = tl
       tl.from('[data-scene-base]', { opacity: 0, duration: 1.2, ease: ease.outQuart }, 0)
 
       pieces.forEach(({ piece, clip: shape, clipFrom }, i) => {
@@ -131,8 +148,11 @@ export function IllustrationScene({ scene, sizes, className }: IllustrationScene
         onToggle: ({ isActive }) =>
           loops.forEach((loop) => (isActive ? loop.play() : loop.pause())),
       })
+      return () => {
+        if (timelineRef?.current === tl) timelineRef.current = null
+      }
     },
-    { scope: rootRef, dependencies: [animated, scene], revertOnUpdate: true },
+    { scope: rootRef, dependencies: [animated, driven, scene], revertOnUpdate: true },
   )
 
   return (

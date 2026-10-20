@@ -144,6 +144,11 @@ export const reel = {
   panelScroll: 0.45,
   /** Corner radius the full-bleed media settles into (px, matches --radius-lg). */
   radius: 16,
+  /**
+   * The outro card's illustration assembles as the card slides in, between these shares of
+   * its slide (0: its first edge shows, 1: the reel's end, card at rest).
+   */
+  outroBuild: { from: 0.3, to: 1 },
 } as const
 
 /** Legacy package showcase, retained for the package section. */

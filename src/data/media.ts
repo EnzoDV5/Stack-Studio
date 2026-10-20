@@ -269,12 +269,37 @@ export const media = {
       'showreel.mp4',
       'Stack Studio showreel: a montage of websites we have designed and built', // COPY:
     ),
-    startToFinish: illustration(
-      'start-to-finish',
-      [1200, 800, 480],
-      3 / 4,
-      'Illustration of a team collaborating on a website', // COPY:
-    ),
+    // The work reel's closing card. Most of it is held in hands or joined by the path, so
+    // only the loose parts move: the path's dots, the chat bubble and the content on the
+    // browser and the card (IllustrationScene).
+    startToFinish: {
+      image: illustration(
+        'start-to-finish',
+        [1200, 800, 480],
+        3 / 4,
+        'Illustration of a team collaborating on a website', // COPY:
+      ),
+      pieces: [
+        {
+          id: 'dot-1',
+          shape: octagon(33.92, 10.78, 1.92, 2.56),
+          enter: 'pop',
+          idle: 'pulse',
+        },
+        { id: 'wireframe', shape: rect(43.4, 33.3, 54.8, 47.4), enter: 'draw' },
+        { id: 'dot-2', shape: octagon(75, 22.22, 1.25, 1.67), enter: 'pop', idle: 'pulse' },
+        { id: 'bubble', shape: rect(76.25, 19.6, 83.2, 27), enter: 'pop' },
+        { id: 'bubble-lines', shape: rect(77, 21.2, 82, 25.6), parent: 'bubble', enter: 'draw' },
+        {
+          id: 'dot-3',
+          shape: octagon(84.83, 34.11, 1.33, 1.78),
+          enter: 'pop',
+          idle: 'pulse',
+        },
+        { id: 'card-photo', shape: octagon(77.67, 44.56, 2.7, 3.6), enter: 'pop' },
+        { id: 'card-lines', shape: rect(73.5, 47.9, 81.2, 51.8), enter: 'draw' },
+      ],
+    } satisfies IllustrationSceneAsset,
   },
 
   services: {

@@ -4,6 +4,7 @@ import { Section, type Tone } from '@/components/layout/Section'
 import { Button } from '@/components/ui/Button'
 import { TextLink } from '@/components/ui/TextLink'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { IllustrationScene } from '@/components/media/IllustrationScene'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
 import { gsap, useGSAP, type ScrollTrigger } from '@/lib/gsap'
@@ -12,7 +13,7 @@ import { ease, reel } from '@/lib/motion-tokens'
 import { coverFrom, insetPath, pinDistance, scrollForOffset } from '@/lib/reel'
 import { ProjectMedia } from '@/sections/shared/ProjectMedia'
 import { SectionHeader } from '@/sections/shared/SectionHeader'
-import type { Client, CtaLink, ImageAsset, Project, StageId } from '@/types'
+import type { Client, CtaLink, IllustrationSceneAsset, Project, StageId } from '@/types'
 
 export interface WorkReelLabels {
   /** Visual "View case study" cue on each panel. */
@@ -36,7 +37,7 @@ export interface WorkReelProps {
   more: CtaLink
   /** The last panel: all work, or start a project like these. */
   outro: { title: string; allWork: CtaLink; start: CtaLink }
-  outroIllustration: ImageAsset
+  outroIllustration: IllustrationSceneAsset
   tone?: Tone
 }
 
@@ -99,6 +100,8 @@ export function WorkReel({
   const trackRef = useRef<HTMLOListElement>(null)
   const barRef = useRef<HTMLSpanElement>(null)
   const pinTrigger = useRef<ScrollTrigger | null>(null)
+  const outroScene = useRef<gsap.core.Timeline | null>(null)
+  const outroAspect = outroIllustration.image.width / outroIllustration.image.height
 
   useGSAP(
     () => {
@@ -163,6 +166,33 @@ export function WorkReel({
           .fromTo(chrome, { opacity: 0 }, { opacity: 1, duration: shrink * 0.4 }, shrink * 0.6)
       }
       timeline.to(track, { x: () => -travel(), duration: travelFor }, shrink)
+
+      // The outro illustration (IllustrationScene, which hands over its timeline) assembles
+      // as its card slides in, between the reel.outroBuild shares of the card's slide (from its
+      // left edge first showing to the end of the travel).
+      const outro = track.querySelector<HTMLElement>('[data-reel-outro]')
+      if (outro) {
+        const sliding = { progress: 0 }
+        const shows = () => {
+          const distance = travel()
+          if (distance <= 0) return 0
+          return gsap.utils.clamp(0, 1, (offsetWithin(outro, pin).x - pin.clientWidth) / distance)
+        }
+        timeline.to(
+          sliding,
+          {
+            progress: 1,
+            duration: travelFor,
+            onUpdate: () => {
+              const slide = 1 - shows()
+              const from = 1 - slide * (1 - reel.outroBuild.from)
+              const span = Math.max(slide * (reel.outroBuild.to - reel.outroBuild.from), 0.001)
+              outroScene.current?.progress(gsap.utils.clamp(0, 1, (sliding.progress - from) / span))
+            },
+          },
+          shrink,
+        )
+      }
 
       pinTrigger.current = timeline.scrollTrigger ?? null
       return () => {
@@ -342,27 +372,47 @@ export function WorkReel({
               )
             })}
 
-            <li data-reel-panel="" data-reel-chrome={chrome} className={panelClass[mode].outro}>
+            <li
+              data-reel-panel=""
+              data-reel-outro=""
+              data-reel-chrome={chrome}
+              className={panelClass[mode].outro}
+            >
               <div
                 className={cn(
                   'flex h-full flex-col rounded-lg border border-tone p-5 sm:p-8 lg:p-10',
                   mode !== 'pin' && 'min-h-[34rem]',
                 )}
               >
-                {/* The illustration takes whatever room the card has left (up to 18rem tall)
-                    and scales down with it, in width and height. */}
-                <div className="relative mb-8 min-h-32 flex-1">
-                  <img
-                    src={outroIllustration.src}
-                    srcSet={outroIllustration.srcSet}
-                    sizes="(min-width: 640px) 24rem, 78vw"
-                    width={outroIllustration.width}
-                    height={outroIllustration.height}
-                    alt={outroIllustration.alt}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 m-auto block size-full max-h-72 object-contain mix-blend-multiply"
-                  />
+                {/* Pinned, the card has a fixed height: the illustration takes whatever room is
+                    left (up to 18rem tall) and scales down with it in width and height (container
+                    units keep its aspect). Elsewhere the card can grow, so it just fills the
+                    width (up to 24rem); container heights there resolve to 0 in Chrome. It
+                    assembles as the card slides in (pinned) or scrolls in. */}
+                <div
+                  className={cn(
+                    'relative mb-8 min-h-32 flex-1',
+                    mode === 'pin' ? '@container-size' : 'flex flex-col justify-center',
+                  )}
+                >
+                  <div
+                    className={
+                      mode === 'pin' ? 'absolute inset-0 m-auto' : 'mx-auto w-full max-w-96'
+                    }
+                    style={{
+                      width:
+                        mode === 'pin'
+                          ? `min(100cqw, ${outroAspect * 100}cqh, ${outroAspect * 18}rem)`
+                          : undefined,
+                      aspectRatio: outroAspect,
+                    }}
+                  >
+                    <IllustrationScene
+                      scene={outroIllustration}
+                      sizes="(min-width: 640px) 24rem, 78vw"
+                      timelineRef={mode === 'pin' ? outroScene : undefined}
+                    />
+                  </div>
                 </div>
                 <div className="flex shrink-0 flex-col gap-10">
                   <p className="max-w-[14ch] font-display text-heading-xl">{outro.title}</p>

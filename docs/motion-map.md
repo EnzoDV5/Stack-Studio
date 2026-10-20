@@ -165,7 +165,10 @@ colour, not a section's signature motion, so it doesn't count toward rule 1.
 **Timing.** Enter animations start with the element well on screen (`trigger.start`, top
 at 75%; count-ups at `trigger.startLate`, 62%; the process plan at 70%), so they play in full.
 Titles compile the moment they're on screen (`trigger.heading`, top at 90%). The WorkReel shrink happens inside its pin rather than while the section slides in, so the
-full-bleed image is seen whole first.
+full-bleed image is seen whole first. The reel's closing card illustration is an
+`IllustrationScene` driven by the pin (`reel.outroBuild`): its loose parts (the path's dots,
+the chat bubble, the browser and card content) pop and draw in as the card slides in, and are
+done as it comes to rest. In the mobile carousel it follows the page scroll instead.
 
 **Deliberate deviations.** On /services the phone turn (AppShowcase) and the laptop
 opening (DesktopShowcase) are neighbours and both scrubbed: the studio asked for both devices

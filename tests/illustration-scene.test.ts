@@ -68,46 +68,50 @@ describe('sceneLayout', () => {
   })
 })
 
-describe('the Fix or improve scene', () => {
-  const { pieces } = media.services.fixOrImprove
+const scenes = {
+  'Fix or improve': media.services.fixOrImprove,
+  'Start to finish': media.home.startToFinish,
+}
 
-  it('keeps every piece inside the image and every child inside its parent', () => {
-    for (const piece of pieces) {
-      const box = bounds(piece.shape)
-      assert.ok(box.left >= 0 && box.top >= 0, piece.id)
-      assert.ok(box.left + box.width <= 100 && box.top + box.height <= 100, piece.id)
-      if (!piece.parent) continue
-      const parent = pieces.find((p) => p.id === piece.parent)
-      assert.ok(parent, `${piece.id} has no parent ${piece.parent}`)
-      const outer = bounds(parent.shape)
-      assert.ok(box.left >= outer.left && box.top >= outer.top, piece.id)
-      assert.ok(box.left + box.width <= outer.left + outer.width, piece.id)
-      assert.ok(box.top + box.height <= outer.top + outer.height, piece.id)
-    }
-  })
-
-  it('never overlaps two pieces at the same level', () => {
-    const overlaps = (a: IllustrationPiece, b: IllustrationPiece) => {
-      const p = bounds(a.shape)
-      const q = bounds(b.shape)
-      return (
-        p.left < q.left + q.width &&
-        q.left < p.left + p.width &&
-        p.top < q.top + q.height &&
-        q.top < p.top + p.height
-      )
-    }
-    for (const a of pieces) {
-      for (const b of pieces) {
-        if (a === b || a.parent !== b.parent) continue
-        // The plant is L-shaped around the card above it; its boxes overlap but its shape doesn't.
-        if (a.id === 'plant' || b.id === 'plant') continue
-        assert.ok(!overlaps(a, b), `${a.id} overlaps ${b.id}`)
+for (const [name, { pieces }] of Object.entries(scenes))
+  describe(`the ${name} scene`, () => {
+    it('keeps every piece inside the image and every child inside its parent', () => {
+      for (const piece of pieces) {
+        const box = bounds(piece.shape)
+        assert.ok(box.left >= 0 && box.top >= 0, piece.id)
+        assert.ok(box.left + box.width <= 100 && box.top + box.height <= 100, piece.id)
+        if (!piece.parent) continue
+        const parent = pieces.find((p) => p.id === piece.parent)
+        assert.ok(parent, `${piece.id} has no parent ${piece.parent}`)
+        const outer = bounds(parent.shape)
+        assert.ok(box.left >= outer.left && box.top >= outer.top, piece.id)
+        assert.ok(box.left + box.width <= outer.left + outer.width, piece.id)
+        assert.ok(box.top + box.height <= outer.top + outer.height, piece.id)
       }
-    }
-  })
+    })
 
-  it('has unique ids', () => {
-    assert.equal(new Set(pieces.map((p) => p.id)).size, pieces.length)
+    it('never overlaps two pieces at the same level', () => {
+      const overlaps = (a: IllustrationPiece, b: IllustrationPiece) => {
+        const p = bounds(a.shape)
+        const q = bounds(b.shape)
+        return (
+          p.left < q.left + q.width &&
+          q.left < p.left + p.width &&
+          p.top < q.top + q.height &&
+          q.top < p.top + p.height
+        )
+      }
+      for (const a of pieces) {
+        for (const b of pieces) {
+          if (a === b || a.parent !== b.parent) continue
+          // The plant is L-shaped around the card above it; its boxes overlap but its shape doesn't.
+          if (a.id === 'plant' || b.id === 'plant') continue
+          assert.ok(!overlaps(a, b), `${a.id} overlaps ${b.id}`)
+        }
+      }
+    })
+
+    it('has unique ids', () => {
+      assert.equal(new Set(pieces.map((p) => p.id)).size, pieces.length)
+    })
   })
-})
