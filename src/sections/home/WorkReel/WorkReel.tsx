@@ -60,7 +60,10 @@ function offsetWithin(el: HTMLElement, ancestor: HTMLElement) {
 
 const panelClass: Record<Mode, { project: string; outro: string }> = {
   pin: {
-    project: 'h-full w-[min(62vw,68rem)] shrink-0',
+    // As wide as the height allows: the panel's media is 16:9 and the lines under it take
+    // about 7.5rem, so a short window gets a narrower panel rather than a cropped mockup, and
+    // a tall one a wider panel rather than empty space.
+    project: 'h-full w-[min(72vw,84rem,calc((100cqh-7.5rem)*16/9))] shrink-0',
     outro: 'h-full w-[min(34vw,30rem)] shrink-0',
   },
   carousel: {
@@ -241,7 +244,8 @@ export function WorkReel({
           ref={viewportRef}
           className={cn(
             // No clipping here: the full-bleed cover has to reach above it. The pin clips.
-            mode === 'pin' && 'relative mt-8 min-h-0 flex-1',
+            // A size container, so the panels can size themselves from its height (cqh).
+            mode === 'pin' && '@container-size relative mt-8 min-h-0 flex-1',
             mode === 'carousel' &&
               'mt-10 no-scrollbar snap-x snap-mandatory scroll-px-(--spacing-gutter) overflow-x-auto',
             mode === 'grid' && 'container-site mt-12',
@@ -279,7 +283,9 @@ export function WorkReel({
                       data-reel-cover={isCover ? '' : undefined}
                       className={cn(
                         'overflow-hidden rounded-lg',
-                        mode === 'pin' ? 'min-h-0 flex-1' : 'aspect-4/3',
+                        // 16:9 like the mockups, so none are cropped; pinned, it may give a
+                        // little height back if the lines under it wrap.
+                        mode === 'pin' ? 'aspect-video min-h-0 shrink' : 'aspect-video',
                       )}
                     >
                       <ProjectMedia
@@ -292,16 +298,16 @@ export function WorkReel({
                     </div>
                     <div
                       data-reel-chrome={isCover ? '' : undefined}
-                      className="mt-5 flex flex-wrap items-end justify-between gap-x-10 gap-y-4"
+                      className="mt-4 flex flex-wrap items-end justify-between gap-x-10 gap-y-3"
                     >
                       <div className="min-w-0">
-                        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-                          <h3 className="text-heading-xl">{project.name}</h3>
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                          <h3 className="text-heading-lg">{project.name}</h3>
                           {client?.logo && (
                             <span
                               role="img"
                               aria-label={`${client.name} logo`}
-                              className="block h-14 w-40 shrink-0 bg-grey-700 sm:h-16 sm:w-48"
+                              className="block h-8 w-24 shrink-0 bg-grey-700 sm:h-9 sm:w-28"
                               style={{
                                 maskImage: `url(${client.logo})`,
                                 maskRepeat: 'no-repeat',
@@ -311,7 +317,7 @@ export function WorkReel({
                             />
                           )}
                         </div>
-                        <dl className="mt-4 flex flex-wrap gap-x-8 gap-y-2 text-small">
+                        <dl className="mt-3 flex flex-wrap gap-x-8 gap-y-2 text-small">
                           <div>
                             <dt className="eyebrow text-muted">{labels.sector}</dt>
                             <dd className="mt-1">{project.sector}</dd>

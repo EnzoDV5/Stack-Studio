@@ -1,6 +1,6 @@
 # Stack Studio EmailJS setup
 
-The site uses one team template for the project brief, partnership path, and general Contact form. Its linked auto-reply sends each visitor a copy of their own submission. The shared template fields change the subject and introduction for each path. The team recipient and reply address are `enzo.devittorio03@gmail.com`.
+The site uses one team template for the project brief, partnership path, and general Contact form. Its linked auto-reply sends each visitor a copy of their own submission. The shared template fields change the subject and introduction for each path. The team recipient and reply address are `stackstudio26@gmail.com`.
 
 The current EmailJS Free account has two templates and does not support attachments. Brief emails therefore include a **Download your PDF brief** link; the same branded PDF is available on the success page. A real PDF attachment requires a paid plan and the extra setup below. [EmailJS pricing](https://www.emailjs.com/pricing/).
 
@@ -10,7 +10,7 @@ Open **Email Templates → Contact Us** (`template_4ru3xiv`) and set these field
 
 | Field      | Value                                      |
 | ---------- | ------------------------------------------ |
-| To Email   | `enzo.devittorio03@gmail.com`              |
+| To Email   | `stackstudio26@gmail.com`              |
 | From Name  | `Stack Studio`                             |
 | From Email | Keep **Use Default Email Address** checked |
 | Reply To   | `{{reply_to}}`                             |
@@ -27,7 +27,7 @@ Open **Email Templates → Auto-Reply** (`template_s8hnkvq`) and set:
 | To Email   | `{{client_email}}`                         |
 | From Name  | `Stack Studio`                             |
 | From Email | Keep **Use Default Email Address** checked |
-| Reply To   | `enzo.devittorio03@gmail.com`              |
+| Reply To   | `stackstudio26@gmail.com`              |
 | Subject    | `{{client_subject}}`                       |
 
 Paste [client-template.html](emailjs/client-template.html) into its HTML/source editor, apply, and **Save**. Leave **Auto-Reply → Auto-Reply** unlinked. Then open **Contact Us → Auto-Reply**, select **Auto-Reply** as the linked template, and **Save**. Refresh both templates to check the settings persisted. One form submission then uses two EmailJS requests: the team email and the visitor confirmation. [EmailJS auto-replies](https://www.emailjs.com/docs/user-guide/auto-reply/).
@@ -56,7 +56,7 @@ Restart the development server after changing `.env.local`. Do not put an EmailJ
 
 ## 5. Test all three paths
 
-1. Submit `/contact` with an email address you control. Confirm the team email reaches `enzo.devittorio03@gmail.com`, the visitor receives the confirmation with the submitted message, and replying to each email addresses the right person.
+1. Submit `/contact` with an email address you control. Confirm the team email reaches `stackstudio26@gmail.com`, the visitor receives the confirmation with the submitted message, and replying to each email addresses the right person.
 2. Submit `/start` as a normal project brief. Confirm both emails include all the answers, the reference and the PDF download link.
 3. Submit `/start?path=develop` as a partnership enquiry. Confirm the subject says **Partnership enquiry**, the visitor text mentions the partnership, and both emails include the submitted details.
 4. In EmailJS **Email History**, look for the main and linked message for each test. A successful browser request confirms EmailJS accepted the send, but the inbox still needs checking.
