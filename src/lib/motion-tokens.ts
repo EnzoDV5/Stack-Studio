@@ -167,7 +167,7 @@ export const packageShowcase = {
   lidFrom: -72,
   start: 'top 75%',
   secondsPerScreen: 8,
-  hold: 1.2,
+  hold: 1,
 } as const
 
 /**
@@ -268,24 +268,40 @@ export const laptopTurn = {
 } as const
 
 /**
- * NextSteps (Process, desktop): the four step cards start as a loose, overlapping pile in the
- * middle and deal out into their row as the section scrolls into view (scrubbed;
- * transforms only). It opens the page, already on screen, so the start is clamped to the top:
- * the pile is whole on arrival and deals out over the first scroll.
+ * NextSteps (Process): the four steps play out as one story once a row of cards is well on
+ * screen (seconds, not scroll). Each card pops up and lights up in turn, the visitor's cursor
+ * makes their choices (an option, a time, a meeting mode, accepting the quote) while ours
+ * happen on their own (the reply types, the quote fills and counts up), and a token flies from
+ * one card to the next (the brief, the invite, the quote). Rows play one after another; on
+ * phones each card is its own row.
  */
-export const stepsDeal = {
-  start: 'clamp(top 80%)',
-  end: 'center 55%',
-  scrub: 1,
-  /** Where each card sits in the pile: its tilt (degrees) and a little vertical scatter (px). */
-  pile: [
-    { rotation: -8, y: 36 },
-    { rotation: 5, y: -14 },
-    { rotation: -3, y: 22 },
-    { rotation: 7, y: -24 },
-  ],
-  /** The pile is a little smaller than the row. */
-  scale: 0.9,
+export const stepsStory = {
+  start: 'top 75%',
+  /** A card pops up from this far below (px) and this scale. */
+  rise: 48,
+  scale: 0.92,
+  /** Seconds for each small part of an interface to come in (a line, a row, the email). */
+  ui: 0.4,
+  /** Seconds for the cursor to glide to its next target. */
+  cursorMove: 0.4,
+  cursorEase: 'power3.inOut',
+  /** A click: the cursor and its target press to this scale and back (seconds each way). */
+  press: 0.92,
+  pressTime: 0.1,
+  /** Seconds for a click's ripple to spread and fade. */
+  ripple: 0.5,
+  /** The pause between one action and the next. */
+  beat: 0.1,
+  /** Seconds for a token to fly to the next card, and how high it arcs (px). */
+  fly: 0.5,
+  arc: 56,
+  /** How many times the reply's typing dots bob (seconds each way) before the message appears. */
+  typingBobs: 2,
+  typingBob: 0.12,
+  /** Seconds for the quote's total to count up. */
+  countUp: 0.8,
+  /** How long the last card stays lit once the story ends. */
+  hold: 1.2,
 } as const
 
 /**

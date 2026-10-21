@@ -166,7 +166,7 @@ Neighbouring sections never share a trigger type, and every section's motion is 
 | Framed media        | Rounded images and video open with a clip mask as their contents settle; Work filters also Flip cards | `MediaReveal`, `WorkGrid`        |
 | Work cards          | Hover video preview (desktop)                                                                         | `ProjectMedia`                   |
 | Services, FAQs      | Expanding rows; each service stage has its own layout                                                 | `Accordion`, `StageBlock`        |
-| Services next steps | Step cards (mini interfaces) deal out of a pile into a row on scroll                                  | `NextSteps`                      |
+| Services next steps | Step cards (mini interfaces) play out the steps as a story, card by card                              | `NextSteps`                      |
 | Monthly plans       | Two fixed bundles shown side by side for comparison                                                   | `MonthlyPlans`, `PlanCard`       |
 | Portraits, images   | Gentle parallax (scroll, or pointer on Home)                                                          | `Parallax`                       |
 | Technologies        | CSS marquee, hover pause and pause control                                                            | `TechnologyMarquee`, `Marquee`   |

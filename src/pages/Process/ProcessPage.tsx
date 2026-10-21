@@ -58,9 +58,8 @@ export function ProcessPage() {
           }
         />
       </div>
-      {/* The step cards deal out on scroll, then the plan plays on entry, so the two never
-          share a trigger. The title and next steps share one light chapter; the page turns
-          dark at the week-by-week timeline. */}
+      {/* The step cards play out as a story on entry, then the plan plays on entry too (a
+          deliberate exception to "neighbours never share a trigger", asked for by the studio). */}
       <NextSteps
         tone="dark"
         eyebrow={c.nextSteps.eyebrow}

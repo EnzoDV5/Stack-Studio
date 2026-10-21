@@ -69,17 +69,17 @@ Clashes: 3→4→5→6 are four `enter` reveals in a row. FadeUp is used on whol
 
 ### Services
 
-| #   | Section         | Tone   | Motion                                        | Trigger |
-| --- | --------------- | ------ | --------------------------------------------- | ------- |
-| 1   | PageTitle       | paper  | Static                                        | none    |
-| 2   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns | none    |
-| 3   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)      | scrub   |
-| 4   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)        | enter   |
-| 5   | StageExplorer   | paper  | Fix or improve: illustration assembles, idles | enter   |
-| 6   | ProcessLine     | dark   | Timeline enters and responds to hover         | enter   |
-| 7   | NextSteps       | dark   | Four step cards deal out of a pile into a row | scrub   |
-| 8   | FaqSection      | dark   | Accordion, sticky heading                     | hover   |
-| 9   | ClosingCta      | orange | SplitReveal words                             | enter   |
+| #   | Section         | Tone   | Motion                                           | Trigger |
+| --- | --------------- | ------ | ------------------------------------------------ | ------- |
+| 1   | PageTitle       | paper  | Static                                           | none    |
+| 2   | StageExplorer   | paper  | "What do you need?" index, Websites dropdowns    | none    |
+| 3   | AppShowcase     | dark   | iPhone turns to face the viewer (frames)         | scrub   |
+| 4   | DesktopShowcase | dark   | MacBook opens and turns, once (frames)           | enter   |
+| 5   | StageExplorer   | paper  | Fix or improve: illustration assembles, idles    | enter   |
+| 6   | ProcessLine     | dark   | Timeline enters and responds to hover            | enter   |
+| 7   | NextSteps       | dark   | The four steps play out as a story, card by card | enter   |
+| 8   | FaqSection      | dark   | Accordion, sticky heading                        | hover   |
+| 9   | ClosingCta      | orange | SplitReveal words                                | enter   |
 
 No adjacent clashes.
 
@@ -256,7 +256,7 @@ dashed slot and dots pulse). Reduced motion: the plain image. Hosting and care i
 and Partner). Framed images and video reveal on
 scroll; loops only play while on screen.
 
-**Process:** PageTitle (load: compile; ProcessJourney beside it plays the six steps in turn on entry: the path draws to each stage, the stage does its own move, the rail lights its label) · NextSteps (scrub: the step cards deal out) ·
+**Process:** PageTitle (load: compile; ProcessJourney beside it plays the six steps in turn on entry: the path draws to each stage, the stage does its own move, the rail lights its label) · NextSteps (enter: the four steps play out as a story) ·
 ProcessLine (enter + hover: how a project runs, week by week) · PoliciesList (none) ·
 CareSteps (enter: one care video) · FaqSection (click) · ClosingCta (enter). Openers: split ·
 minimal · split · own · own. NextSteps shows what happens once someone gets in touch, shown
@@ -264,10 +264,15 @@ rather than told, in the studio's real order: the brief (with a real
 estimate from the "Launch website" starting quote) lands in the inbox, we reply by email with
 times to meet, we meet in person or online, then the fixed quote (with its warranty, staging and
 ownership ticks). Four cards side by side (one row from xl, two by two below), each with the step above its
-small interface; the interfaces line up across the row (subgrid). On desktop they start as a loose, tilted pile in the middle and deal out
-into their row as the section scrolls in (`stepsDeal`, transforms only). The section opens the
-page, already on screen, so its start is clamped to the top and the pile is whole on arrival; on phones and with
-reduced motion they sit in order. CareSteps (on /process) pairs an editorial headline with a video and three numbered steps
+small interface; the interfaces line up across the row (subgrid). Once a row of cards is well on
+screen it plays out as a story (`stepsStory`, seconds not scroll): each card pops up and lights
+up in turn, the visitor's cursor picks an option and sends the brief, picks a time, picks how to
+meet and accepts the quote, while our side happens on its own (the reply types itself, the date
+flips in, the quote fills and its total counts up), and a token (the brief, the invite, the
+quote) flies from each card to the next. Cards in the same row play one after another (the row of
+four from xl, pairs on tablets, one at a time on phones). The markup is the finished story, so with
+reduced motion the cards simply show it. NextSteps and ProcessLine are both `enter`: a deliberate
+exception to "neighbours never share a trigger", asked for by the studio. CareSteps (on /process) pairs an editorial headline with a video and three numbered steps
 on how ongoing care runs, then links to the plans on /services. The video plays
 only while visible and stays on its poster with reduced motion.
 
