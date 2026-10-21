@@ -66,7 +66,7 @@ export function QuoteStarters({
           {quotes.map((quote) => (
             <li
               key={quote.id}
-              className="flex flex-col rounded-lg border border-tone p-7 transition-colors duration-(--duration-micro) hover:border-orange focus-within:border-orange md:p-8"
+              className="flex flex-col rounded-lg border border-tone p-7 transition-colors duration-(--duration-micro) focus-within:border-orange hover:border-orange md:p-8"
             >
               <h3 className="text-heading-lg">{quote.name}</h3>
               <p className="mt-2 text-small text-muted">{quote.for}</p>

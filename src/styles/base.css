@@ -74,6 +74,12 @@
     cursor: not-allowed;
   }
 
+  /* Over [data-cursor-label] the <Cursor> bubble takes over from the system cursor. */
+  html.has-cursor-bubble [data-cursor-label],
+  html.has-cursor-bubble [data-cursor-label] * {
+    cursor: none;
+  }
+
   ::selection {
     background-color: var(--color-orange);
     color: var(--color-ink);

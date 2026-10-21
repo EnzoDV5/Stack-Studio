@@ -36,7 +36,12 @@ function Rows({ rows }: { rows: [string, string][] }) {
  * A received brief, laid out like its PDF: reference, estimate and download on the left,
  * the numbered contact, project and message sections on the right.
  */
-export function BriefRecordView({ record, copy, onDownload, tone = 'paper' }: BriefRecordViewProps) {
+export function BriefRecordView({
+  record,
+  copy,
+  onDownload,
+  tone = 'paper',
+}: BriefRecordViewProps) {
   const [downloading, setDownloading] = useState(false)
   const { contact } = record
   const none = copy.none
@@ -73,9 +78,7 @@ export function BriefRecordView({ record, copy, onDownload, tone = 'paper' }: Br
           {record.estimate.recommendation && (
             <div className="border border-l-4 border-tone border-l-orange p-6">
               <p className="eyebrow text-accent">{copy.sections.estimate}</p>
-              <p className="mt-3 font-display text-heading-lg">
-                {record.estimate.recommendation}
-              </p>
+              <p className="mt-3 font-display text-heading-lg">{record.estimate.recommendation}</p>
               <p className="mt-3 text-small text-muted">{copy.estimateNote}</p>
             </div>
           )}

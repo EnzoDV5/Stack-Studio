@@ -9,6 +9,7 @@ import type { Project } from '@/types'
 export interface ProjectCardProps {
   project: Project
   ctaLabel: string
+  cursorLabel: string
   sampleLabel: string
   /** 'feature' = large editorial card (home), 'grid' = work grid tile. */
   variant?: 'feature' | 'grid'
@@ -27,6 +28,7 @@ export interface ProjectCardProps {
 export function ProjectCard({
   project,
   ctaLabel,
+  cursorLabel,
   sampleLabel,
   variant = 'grid',
   reveal = true,
@@ -53,6 +55,7 @@ export function ProjectCard({
       <Link
         to={`/work/${project.slug}`}
         className="group block"
+        data-cursor-label={cursorLabel}
         onPointerEnter={() => setHovering(true)}
         onPointerLeave={() => setHovering(false)}
         onFocus={() => setHovering(true)}

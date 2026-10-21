@@ -38,6 +38,7 @@ node scripts/devices/render.mjs          # Services phone and laptop frames from
 node scripts/founders/encode.mjs <photo> public/media/founders/<id>  # 4:5 WebP founder portraits (local Chrome)
 node scripts/services-media/encode.mjs   # encode the service stage videos (needs ffmpeg; public/media/services/README.md)
 node scripts/illustrations/encode.mjs     # card illustrations: WebP renditions of the SVGs in public/Illustrations
+node scripts/cursor/render.mjs           # logo cursors in public/cursor (macOS sips for the PNGs)
 ```
 
 ## Folder conventions
@@ -50,7 +51,7 @@ src/
   components/
     ui/         Button, MagneticButton, Eyebrow, Heading, Container, Tag, Accordion, Marquee, TextLink, Divider,
                 Logo, StackMark, WhatsAppButton
-    layout/     Header, Footer, MobileMenu, PageTransition, Preloader, GridOverlay, GrainOverlay,
+    layout/     Header, Footer, MobileMenu, PageTransition, Preloader, Cursor, GridOverlay, GrainOverlay,
                 Section, SkipLink, DeferredSection, ToneController
     media/      Image, Video, MediaReveal, ServiceMedia, MacbookScroll, ClientLogo, ImageSequence
     motion/     SplitReveal, Parallax, CountUp, DrawLine, StaggerGroup, MaskedHeading
@@ -161,7 +162,9 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
   always visible. Check `useReducedMotion()` in every motion component.
 - The cursor is the Stack mark as a native CSS cursor (`public/cursor`, `--cursor-default` /
   `--cursor-pointer` in `tokens.css`, desktop pointers only). Use `cursor-(--cursor-pointer)`,
-  not `cursor-pointer`, on custom clickable elements. Magnetic effects only on
+  not `cursor-pointer`, on custom clickable elements. Over `[data-cursor-label]` (project cards)
+  `Cursor` morphs the mark into an orange label bubble. Regenerate the cursor art with
+  `node scripts/cursor/render.mjs` and copy its paths into `Cursor`. Magnetic effects only on
   `(hover: hover) and (pointer: fine)` (`useIsTouch`).
 - The preloader runs once per session (`sessionStorage`) and takes under 1.5s. The page
   transition is an orange/black panel wipe with a scroll reset. The header hides on scroll

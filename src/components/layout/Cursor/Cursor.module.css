@@ -1,0 +1,49 @@
+/* Layered so Tailwind utilities passed via className can override these rules. */
+@layer components {
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--z-cursor);
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .visible {
+    opacity: 1;
+  }
+
+  /* Matches public/cursor/pointer.svg, so the swap from the system cursor is invisible. */
+  .mark {
+    position: absolute;
+    overflow: visible;
+    fill: var(--color-ink);
+  }
+
+  .chevron {
+    stroke: var(--color-orange);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    paint-order: stroke;
+  }
+
+  .bubble {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 96px;
+    margin: -48px 0 0 -48px;
+    border-radius: 999px;
+    background: var(--color-orange);
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--text-micro);
+    letter-spacing: var(--text-micro--letter-spacing);
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+}

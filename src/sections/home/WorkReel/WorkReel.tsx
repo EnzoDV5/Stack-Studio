@@ -18,6 +18,7 @@ import type { Client, CtaLink, IllustrationSceneAsset, Project, StageId } from '
 export interface WorkReelLabels {
   /** Visual "View case study" cue on each panel. */
   cta: string
+  cursor: string
   sample: string
   sector: string
   stages: string
@@ -267,6 +268,7 @@ export function WorkReel({
                 >
                   <Link
                     to={`/work/${project.slug}`}
+                    data-cursor-label={labels.cursor}
                     className="group flex h-full flex-col"
                     onPointerEnter={() => setHovered(project.slug)}
                     onPointerLeave={() => setHovered(null)}

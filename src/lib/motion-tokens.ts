@@ -79,6 +79,14 @@ export const magnetic = {
   releaseDuration: 1.1,
 } as const
 
+/** The cursor bubble over [data-cursor-label]: tracks the pointer with a short settle. */
+export const cursor = {
+  follow: 0.15,
+  followEase: 'power3.out',
+  /** Leaving plays the morph back faster than it came in. */
+  leaveSpeed: 1.6,
+} as const
+
 /**
  * The stack diagram's build filter (GSAP Flip): staying layers and tools glide, leaving ones
  * fade and shrink out, returning ones fade in after a beat. A soft in-out ease, so the move

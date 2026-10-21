@@ -124,6 +124,7 @@ export const homeContent = {
     eyebrow: 'Selected work', // COPY:
     title: 'Proof, not promises.', // COPY:
     cardCta: 'View case study', // COPY:
+    cursorLabel: 'View', // COPY:
     sectorLabel: 'Sector', // COPY:
     stagesLabel: 'Stages', // COPY:
     more: { label: 'All work', to: '/work' }, // COPY:
@@ -237,6 +238,7 @@ export const workContent = {
   emptyLabel: 'No projects in this category yet.', // COPY:
   sampleLabel: 'Sample', // COPY:
   cardCta: 'View case study', // COPY:
+  cursorLabel: 'View', // COPY:
   countLabel: (n: number) => `${n} project${n === 1 ? '' : 's'}`, // COPY:
 }
 

@@ -1,4 +1,10 @@
-import { getApp, getApps, initializeApp, type FirebaseApp, type FirebaseOptions } from 'firebase/app'
+import {
+  getApp,
+  getApps,
+  initializeApp,
+  type FirebaseApp,
+  type FirebaseOptions,
+} from 'firebase/app'
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check'
 import { getAuth, signInAnonymously, type Auth } from 'firebase/auth'
 import { getFirestore, type Firestore } from 'firebase/firestore'
@@ -29,7 +35,8 @@ function options(): FirebaseOptions | null {
 
 function firebaseApp(): FirebaseApp {
   const firebaseOptions = options()
-  if (!firebaseOptions) throw new Error('Firebase is not configured. Add the VITE_FIREBASE_* values.')
+  if (!firebaseOptions)
+    throw new Error('Firebase is not configured. Add the VITE_FIREBASE_* values.')
 
   return getApps().length ? getApp() : initializeApp(firebaseOptions)
 }

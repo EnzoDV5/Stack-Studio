@@ -154,6 +154,7 @@ export function HomePage() {
         stageNames={stageNames}
         labels={{
           cta: work.cardCta,
+          cursor: work.cursorLabel,
           sample: workContent.sampleLabel,
           sector: work.sectorLabel,
           stages: work.stagesLabel,

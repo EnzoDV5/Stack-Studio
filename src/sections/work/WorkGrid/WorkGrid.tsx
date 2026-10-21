@@ -27,6 +27,7 @@ export interface WorkGridProps {
     empty: string
     sample: string
     cardCta: string
+    cursor: string
     count: (n: number) => string
   }
   tone?: Tone
@@ -115,6 +116,7 @@ export function WorkGrid({
                   priority={i === 0}
                   headingLevel="h2"
                   ctaLabel={labels.cardCta}
+                  cursorLabel={labels.cursor}
                   sampleLabel={labels.sample}
                 />
               </div>

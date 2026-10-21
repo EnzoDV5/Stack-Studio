@@ -136,6 +136,7 @@
   --z-header: 50;
   --z-menu: 60;
   --z-grain: 90;
+  --z-cursor: 100;
   --z-transition: 110;
   --z-preloader: 120;
 
@@ -146,7 +147,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   :root {
-    --cursor-default: url('/cursor/default.svg') 16 2, url('/cursor/default.png') 16 2, auto;
-    --cursor-pointer: url('/cursor/pointer.svg') 16 2, url('/cursor/pointer.png') 16 2, pointer;
+    --cursor-default: url('/cursor/default.svg') 4 3, url('/cursor/default.png') 4 3, auto;
+    --cursor-pointer: url('/cursor/pointer.svg') 4 3, url('/cursor/pointer.png') 4 3, pointer;
   }
 }

@@ -30,6 +30,7 @@ export function WorkPage() {
           empty: workContent.emptyLabel,
           sample: workContent.sampleLabel,
           cardCta: workContent.cardCta,
+          cursor: workContent.cursorLabel,
           count: workContent.countLabel,
         }}
       />
