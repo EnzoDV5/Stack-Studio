@@ -475,12 +475,13 @@ export const media = {
       ],
     },
     mpgFoundation: {
-      // Full-page capture of mpgf.org.za (29 Sep 2026, 1.5×), scrolled on the case study laptop.
-      screen: siteCapture(
-        'mpg-foundation',
-        9605,
-        'The MPG Foundation website, from the homepage down to the footer', // COPY: alt
-      ),
+      // Supplied full-page screenshot, scrolled on the case study laptop.
+      screen: {
+        src: '/MPG%20Wesbite%20screen.png',
+        width: 547,
+        height: 3371,
+        alt: 'The MPG Foundation website, from the homepage down to the footer', // COPY: alt
+      },
       card: mockup(
         'mpg-foundation',
         'card',
