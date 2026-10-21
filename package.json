@@ -15,7 +15,8 @@
     "typecheck": "tsc -b",
     "test": "node --import ./scripts/test-register.mjs --test \"tests/**/*.test.ts\"",
     "mockups:capture": "node scripts/mockups/capture.mjs",
-    "mockups:render": "node scripts/mockups/render.mjs"
+    "mockups:render": "node scripts/mockups/render.mjs",
+    "readme:render": "node scripts/readme/render.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^5.0.3",

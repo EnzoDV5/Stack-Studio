@@ -65,7 +65,7 @@ export default defineConfig([
   },
   {
     // Puppeteer scripts: page.evaluate callbacks run in the browser.
-    files: ['scripts/mockups/**/*.mjs'],
+    files: ['scripts/mockups/**/*.mjs', 'scripts/readme/**/*.mjs'],
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
   prettier,

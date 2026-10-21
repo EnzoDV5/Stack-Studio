@@ -1,141 +1,166 @@
-# Stack Studio: website
+<a id="top"></a>
 
-The production site for **Stack Studio**, a two-person web studio in Centurion, South
-Africa. It is a brand-led, cinematic, conversion-focused portfolio with one job: move a
-visitor from _"who are you?"_ to **Start a project**.
+<div align="center">
 
-Built with Vite, React 19, strict TypeScript, Tailwind CSS v4, React Router, GSAP
-(ScrollTrigger and SplitText), Lenis and zod.
+  <a href="https://stack-studio.web.app/">
+    <img src="docs/readme/hero.webp" alt="Stack Studio website on desktop and mobile, with the words Build it. Run it. Grow it." width="100%" />
+  </a>
 
-- **Conventions for contributors and AI sessions:** [`CLAUDE.md`](./CLAUDE.md)
-- **Design system:** [`docs/design-system.md`](./docs/design-system.md)
-- **Sitemap and user flow:** [`docs/sitemap.md`](./docs/sitemap.md),
-  [`docs/user-flow.md`](./docs/user-flow.md)
+  <h1>Stack Studio</h1>
 
-## Setup
+  <p><strong>Build it. Run it. Grow it.</strong></p>
 
-Requires Node 20+ (developed on Node 24).
+  <p>Websites, apps, software and AI systems for businesses ready to move forward.<br />Designed and built in Centurion, South Africa.</p>
+
+  <p>
+    <a href="https://stack-studio.web.app/"><strong>Explore the live site</strong></a>
+    &nbsp;·&nbsp;
+    <a href="https://stack-studio.web.app/work"><strong>See the work</strong></a>
+    &nbsp;·&nbsp;
+    <a href="https://stack-studio.web.app/start"><strong>Start a project</strong></a>
+  </p>
+
+  <p><code>React 19</code> · <code>TypeScript</code> · <code>Vite</code> · <code>Tailwind CSS v4</code> · <code>GSAP</code> · <code>Firebase</code></p>
+
+</div>
+
+---
+
+## The website
+
+Stack Studio is the studio's digital home: a responsive portfolio that introduces the team, explains its services and process, shows completed client work, and guides visitors into a project brief. Its visual language pairs bold type, warm orange, dark surfaces, detailed device imagery and purposeful motion.
+
+The site follows a simple journey: **find → understand → trust → contact**. Each page gives visitors a clear next step without hiding the details they need to make a decision.
+
+### What is inside
+
+| Area                | What visitors can do                                                            |
+| ------------------- | ------------------------------------------------------------------------------- |
+| **Home**            | Get the studio's story, services, featured work and a clear route to the brief. |
+| **Work**            | Explore case studies for GC Solar, MPG Foundation and Salon Friend.             |
+| **Services**        | See websites, software, AI systems, hosting and ongoing care.                   |
+| **Process**         | Understand the project timeline, collaboration and next steps.                  |
+| **Studio**          | Meet the people and principles behind the work.                                 |
+| **Start a project** | Complete a guided, validated brief with a tailored estimate.                    |
+| **Contact**         | Send a general enquiry.                                                         |
+
+The interface includes route transitions, scroll-led motion, responsive media and reduced-motion support. The project brief can use Firebase, EmailJS and an optional form endpoint; configuration and provider setup are documented below.
+
+## Walkthrough
+
+<div align="center">
+  <img src="docs/readme/video-placeholder.webp" alt="Stack Studio walkthrough video placeholder: A closer look is coming." width="100%" />
+  <p><em>A video tour will be added here when it is ready.</em></p>
+</div>
+
+<!-- When the walkthrough is ready, replace the image above with a linked video thumbnail or a GitHub-hosted video URL. -->
+
+## Showcase
+
+These mockups use screenshots captured from the running Stack Studio site. Open an image to see it at full size.
+
+### Desktop
+
+<a href="docs/readme/desktop-home.webp"><img src="docs/readme/desktop-home.webp" alt="Stack Studio home page in a desktop browser mockup" width="100%" /></a>
+
+<a href="docs/readme/desktop-work.webp"><img src="docs/readme/desktop-work.webp" alt="Stack Studio work page showing completed client projects in a desktop browser mockup" width="100%" /></a>
+
+<a href="docs/readme/desktop-services.webp"><img src="docs/readme/desktop-services.webp" alt="Stack Studio services page in a desktop browser mockup" width="100%" /></a>
+
+### Mobile
+
+<p align="center">
+  <a href="docs/readme/mobile-home.webp"><img src="docs/readme/mobile-home.webp" alt="Stack Studio home page in a phone mockup" width="49%" /></a>
+  <a href="docs/readme/mobile-brief.webp"><img src="docs/readme/mobile-brief.webp" alt="Stack Studio project brief in a phone mockup" width="49%" /></a>
+</p>
+
+## Selected work
+
+| Project            | What we built                                                  | Case study                                                       |
+| ------------------ | -------------------------------------------------------------- | ---------------------------------------------------------------- |
+| **GC Solar**       | An immersive redesign for a Gauteng solar installer.           | [View project](https://stack-studio.web.app/work/gc-solar)       |
+| **MPG Foundation** | The foundation's first website, with ongoing updates and care. | [View project](https://stack-studio.web.app/work/mpg-foundation) |
+| **Salon Friend**   | A digital product for salon businesses.                        | [View project](https://stack-studio.web.app/work/salon-friend)   |
+
+## Built with
+
+| Layer                 | Tools                                               |
+| --------------------- | --------------------------------------------------- |
+| Interface             | React 19, TypeScript, Vite, Tailwind CSS v4         |
+| Navigation and motion | React Router, GSAP, ScrollTrigger, SplitText, Lenis |
+| Forms and validation  | zod, Firebase, EmailJS, optional JSON form endpoint |
+| Quality               | ESLint, Prettier, `node:test`                       |
+| Hosting               | Firebase Hosting                                    |
+
+## Run locally
+
+Use Node.js **24** (Vite also supports Node 20.19+ and 22.12+).
 
 ```bash
-npm install
-cp .env.example .env.local   # optional, see Environment below
-npm run dev                  # http://localhost:5173
+npm ci
+cp .env.example .env.local
+npm run dev
 ```
 
-## Scripts
+Open `http://localhost:5173`. The site can run without provider credentials, but live form delivery requires configuration. Copy only the values you use into `.env.local`:
 
-| Command                                  | What it does                                            |
-| ---------------------------------------- | ------------------------------------------------------- |
-| `npm run dev`                            | Dev server with HMR                                     |
-| `npm run build`                          | Type-check (`tsc -b`), then production build to `dist/` |
-| `npm run preview`                        | Serve the built `dist/` locally                         |
-| `npm run lint` / `lint:fix`              | ESLint (flat config)                                    |
-| `npm run format` / `format:check`        | Prettier (sorts Tailwind classes)                       |
-| `npm run typecheck`                      | TypeScript only                                         |
-| `npm test`                               | Unit tests (node:test, no extra dependencies)           |
-| `node scripts/generate-placeholders.mjs` | Regenerate placeholder favicon, icons and OG image      |
+| Variables            | Purpose                                                         |
+| -------------------- | --------------------------------------------------------------- |
+| `VITE_FIREBASE_*`    | Firebase web app, anonymous auth and Firestore enquiry storage. |
+| `VITE_EMAILJS_*`     | Team notifications and client email replies.                    |
+| `VITE_FORM_ENDPOINT` | Optional secondary JSON endpoint for project briefs.            |
+| `VITE_ANALYTICS_ID`  | Optional Plausible-compatible analytics site ID.                |
 
-## Environment
+The exact variable names and notes are in [`.env.example`](.env.example). All `VITE_*` values are exposed to the browser, so do not put private keys or server secrets there. See the [Firebase](docs/firebase-setup.md) and [EmailJS](docs/emailjs-setup.md) guides for form setup.
 
-All variables are read in one place, `src/lib/config.ts`. Only `VITE_*` variables reach the
-browser, so never put secrets here.
+### Useful commands
 
-| Variable             | Purpose                                                                                                                                 |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `VITE_FORM_ENDPOINT` | Where the Start a project brief is POSTed as JSON (e.g. `https://formspree.io/f/xxxx`). Empty = local stub that logs and shows success. |
-| `VITE_ANALYTICS_ID`  | Plausible site id (your domain). Empty = analytics fully disabled; no script is loaded.                                                 |
+| Command                 | Purpose                                                     |
+| ----------------------- | ----------------------------------------------------------- |
+| `npm run dev`           | Start the local development server.                         |
+| `npm run build`         | Type-check and build the production site into `dist/`.      |
+| `npm run preview`       | Preview the production build locally.                       |
+| `npm run lint`          | Run ESLint.                                                 |
+| `npm run typecheck`     | Run TypeScript checks.                                      |
+| `npm test`              | Run the unit tests.                                         |
+| `npm run format:check`  | Check formatting.                                           |
+| `npm run readme:render` | Capture the local site and regenerate these README mockups. |
 
-Tracked events: `Start project click` (with `location`), `Brief step complete` (`step`,
-`index`), `Brief submitted`, `Brief submit error`, `WhatsApp click`, `Email click`, plus
-pageviews on route change. In Plausible, add goals with these names for conversion
-reporting.
+To update the README artwork after changing the site, start `npm run dev -- --host 127.0.0.1` in one terminal and run `npm run readme:render` in another. The generator needs local Chrome or Edge (or `CHROME_PATH`) and writes images to `docs/readme/`.
 
-## Where to replace things
+## Project map
 
-Every placeholder string in `src/data` is marked `// COPY:`. List them all with:
-
-```bash
-grep -rn "COPY:" src/data
-```
-
-| What                                           | Where                                                                                                                                                        |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **All copy**                                   | `src/data/*.ts` (`pages.ts` for page copy, `brief.ts` for the enquiry flow, `navigation.ts` for chrome labels)                                               |
-| **Contact details, WhatsApp, socials, domain** | `src/data/site.ts`                                                                                                                                           |
-| **Case studies**                               | `src/data/projects.ts` (add an entry for a new `/work/:slug` page; update `public/sitemap.xml`)                                                              |
-| **Prices, packages, plans, add-ons**           | `src/data/pricing.ts` (placeholders; set `isPlaceholder: false` when final)                                                                                  |
-| **Images and videos**                          | `src/data/media.ts`. Put files in `public/media/` and reference them as `/media/…`. Videos use the file names already listed (see `public/media/README.md`). |
-| **Client logos**                               | Add SVGs to `public/logos/` and set `logo: '/logos/x.svg'` in `src/data/clients.ts` (text tiles until then)                                                  |
-| **Stack logo**                                 | `src/components/ui/Logo/Logo.tsx` (inline SVG placeholder), `public/favicon.svg`, and the inline shell in `index.html`                                       |
-| **Favicon, touch icons, OG image**             | Replace the files in `public/` (`favicon.ico`, `favicon.svg`, `apple-touch-icon.png`, `icon-192/512.png`, `og-image.png` at 1200×630)                        |
-| **Founder portraits**                          | `src/data/media.ts` → `founders`                                                                                                                             |
-| **Privacy notice**                             | `src/data/pages.ts` → `privacyContent` (have it reviewed for POPIA before launch)                                                                            |
-| **Static SEO fallbacks**                       | `<head>` in `index.html` (used by link previews that don't run JavaScript)                                                                                   |
-| **Fonts**                                      | `@fontsource` imports in `src/main.tsx` plus the `--font-*` tokens in `src/styles/tokens.css`                                                                |
-
-When you move images from picsum to local files, remove the two `preconnect` links in
-`index.html`.
-
-The home technology strip is configured in `src/data/technologies.ts`. Edit its typed,
-categorised catalogue to add or remove tools; primary categories determine the two
-rows. SVGs are served locally from `public/logos/technologies/` with pinned sources
-and licences documented in that folder. Run `node scripts/sync-technology-logos.mjs`
-to fetch the selected assets again. The strip pauses on hover or with its keyboard /
-touch control and becomes static, wrapped rows with reduced motion enabled.
-
-## Connecting the enquiry form
-
-1. For EmailJS team notifications, client auto-replies and brief PDFs, follow [the EmailJS setup guide](docs/emailjs-setup.md).
-2. To store project briefs and Contact messages in Firestore, follow [the Firebase setup guide](docs/firebase-setup.md).
-3. Optionally set `VITE_FORM_ENDPOINT` to a Formspree-compatible JSON endpoint as a secondary brief delivery channel.
-4. Set the values in your hosting build environment and rebuild before publishing.
-
-The brief sends the validated answers, a human-readable summary, the estimate and page
-metadata. It includes a honeypot field; also enable the provider's spam protection.
-
-## Deploying to GoDaddy (cPanel / Apache)
-
-1. **Build locally:** `npm run build`. The output is in `dist/`, and includes
-   `dist/.htaccess` (copied from `public/`).
-2. **Open the File Manager** in GoDaddy (My Products → Web Hosting → Manage → cPanel
-   Admin → File Manager), or connect with FTP/SFTP (e.g. FileZilla, using the FTP account
-   from cPanel).
-3. **Go to `public_html/`** (or the domain's document root). Back up or remove any old
-   site files.
-4. **Upload the contents of `dist/`**, not the folder itself: `index.html`, `.htaccess`,
-   `assets/`, `media/` and the icon files. In File Manager, enable _Settings → Show Hidden
-   Files_ to confirm `.htaccess` is there.
-5. **Enable SSL** (cPanel → SSL/TLS Status → AutoSSL). Once HTTPS works, uncomment the
-   HTTPS redirect in `.htaccess`.
-6. **Test:** load a deep link directly (e.g. `https://stackstudio.co.za/work/gc-solar`) and
-   refresh. It should load the page, not a 404. `/nope` should show the on-brand 404.
-7. **Submit** `https://stackstudio.co.za/sitemap.xml` in Google Search Console.
-
-`.htaccess` handles SPA fallback, real 404s for missing assets and media, long-term
-caching for hashed assets, compression and basic security headers. If deep links 404,
-check that `mod_rewrite` is enabled and that `.htaccess` was uploaded.
-
-To redeploy, rebuild and upload `dist/` again. The old hashed `assets/` files can be
-deleted.
-
-## Project structure (short)
-
-```
+```text
 src/
-  app/        App shell, router (lazy routes), providers (Lenis, intro state)
-  pages/      One folder per route
-  sections/   Page sections grouped by page, plus shared/
-  components/ ui, layout, media, motion, seo
-  hooks/      useLenis, useReducedMotion, useIsTouch, useMediaQuery, useInView, useAnalytics,
-              useScrollRefresh
-  lib/        gsap, lenis, estimate, brief schema/reducer/submit, config, analytics, motion tokens,
-              scroll refresh, pure motion maths (tone, count-up, reel, path layout)
-  data/       All content (typed)
-  types/      Content types
-  styles/     tokens, base, typography, utilities
-tests/        node:test unit tests (npm test)
+  app/          App shell, providers and route table
+  pages/        Home, Work, Services, Process, Studio, Start and other routes
+  sections/     Page sections and shared content
+  components/   UI, layout, media, motion and SEO components
+  data/         Typed copy, projects, services, pricing and site settings
+  lib/          Forms, analytics, motion, configuration and helpers
+  styles/       Tokens, base styles and utilities
+scripts/        Asset and mockup generators
+docs/           Design, flow, provider setup and README artwork
+public/         Static media, icons and hosting assets
+tests/          Unit tests
 ```
 
-Motion per section and the page-flow rules: [docs/motion-map.md](docs/motion-map.md).
+The [design system](docs/design-system.md), [sitemap](docs/sitemap.md), [user flow](docs/user-flow.md) and [motion map](docs/motion-map.md) explain the site's structure and interaction rules. Contributors should also read [`CLAUDE.md`](CLAUDE.md).
 
-See `CLAUDE.md` for the full conventions.
+## Deployment
+
+The live site is hosted at **[stack-studio.web.app](https://stack-studio.web.app/)**. This repository's `.firebaserc` selects Firebase project `stack-studio-2f8a1`; `firebase.json` publishes `dist/` to Hosting site `stack-studio` and rewrites app routes to `index.html`.
+
+```bash
+npm run build
+firebase deploy --only hosting
+```
+
+Use a Firebase CLI account with access to that project. If you change Firestore rules or indexes, follow the [Firebase setup guide](docs/firebase-setup.md) before deploying them.
+
+---
+
+<div align="center">
+  <p><strong>Have something in mind?</strong> <a href="https://stack-studio.web.app/start">Let's build it.</a></p>
+  <p><a href="#top">Back to top ↑</a></p>
+</div>

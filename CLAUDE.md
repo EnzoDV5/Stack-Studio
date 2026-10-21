@@ -34,6 +34,7 @@ npm run preview      # serve dist/
 node scripts/generate-placeholders.mjs   # regenerate placeholder favicon/OG PNGs
 npm run mockups:capture  # screenshot the live client sites (local Chrome, puppeteer-core; --full for the laptop captures)
 npm run mockups:render   # render the project device mockups (public/media/README.md)
+npm run readme:render    # capture the local site and render README mockups (requires the dev server)
 node scripts/devices/render.mjs          # Services phone and laptop frames from the 3D models (local Chrome)
 node scripts/founders/encode.mjs <photo> public/media/founders/<id>  # 4:5 WebP founder portraits (local Chrome)
 node scripts/services-media/encode.mjs   # encode the service stage videos (needs ffmpeg; public/media/services/README.md)
@@ -271,8 +272,8 @@ Pageviews are tracked on route change.
 
 ## Deployment
 
-A static build is hosted on GoDaddy (Apache). `public/.htaccess` provides the SPA fallback,
-caching and compression. See the README.
+A static build is hosted on Firebase Hosting (`stack-studio-2f8a1`, site `stack-studio`).
+`firebase.json` provides the SPA fallback. See the README for the build and deploy commands.
 
 ## Git
 
