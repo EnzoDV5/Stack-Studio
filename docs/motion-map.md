@@ -99,7 +99,7 @@ No adjacent clashes.
 | #   | Section             | Tone   | Opener                  | Motion                                                  | Trigger       |
 | --- | ------------------- | ------ | ----------------------- | ------------------------------------------------------- | ------------- |
 | 1   | StudioHero          | dark   | own (PageTitle)         | Team illustration assembles beside the title + facts    | load          |
-| 2   | StudioIntro         | dark   | eyebrow + title         | Code editor types the build out, founders taking turns  | enter         |
+| 2   | StudioIntro         | dark   | eyebrow + title         | Editor opens and boots, then types the build out        | enter         |
 | 3   | FounderProfiles     | dark   | SectionHeader (stacked) | Parallax portraits                                      | scrub         |
 | 4   | ValuesGrid (how)    | dark   | SectionHeader (stacked) | MediaReveal on its image                                | enter         |
 | 5   | StackDiagram        | dark   | SectionHeader (split)   | Build filter lights the spine; tools open their details | hover (click) |
@@ -271,7 +271,7 @@ reduced motion they sit in order. CareSteps (on /process) pairs an editorial hea
 on how ongoing care runs, then links to the plans on /services. The video plays
 only while visible and stays on its poster with reduced motion.
 
-**Studio:** PageTitle (load: compile) · StudioIntro (enter: the illustration assembles at the middle of the screen) · FounderProfiles (enter:
+**Studio:** PageTitle (load: compile) · StudioIntro (enter: the code editor opens, boots and types the build out) · FounderProfiles (enter:
 MediaReveal; scrub: parallax) · ValuesGrid "How we work" (enter: MediaReveal on its image) · StackDiagram (hover and click) · ValuesGrid
 "Values" (none) · Testimonial (none) · ClosingCta (enter).
 Openers: split · stacked · inline.

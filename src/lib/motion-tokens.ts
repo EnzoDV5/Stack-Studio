@@ -321,12 +321,28 @@ export const illustrationScene = {
 } as const
 
 /**
- * CodeEditor (Studio, who we are): once the editor is well on screen the code types itself
- * out, line by line, at a steady keyboard pace (seconds, not scroll). The caret's name tag
- * shows whose turn it is; then the build command runs and its result lines appear.
+ * CodeEditor (Studio, who we are): once the editor is well on screen the window opens from a
+ * line across its middle as it rises into place, its parts boot in (icons, files, tabs, line
+ * numbers, status bar), then the code types itself out line by line at a steady keyboard pace
+ * (seconds, not scroll). The caret's name tag shows whose turn it is; then the build command
+ * runs and its result lines appear.
  */
 export const codeEditor = {
-  start: 'top 70%',
+  start: 'top 75%',
+  /** Seconds for the window to open. */
+  open: 1,
+  /** It rises this far (px) and grows from this scale as it opens. */
+  rise: 56,
+  scale: 0.92,
+  /** Corner radius (px) the opening clip follows: matches --radius-lg. */
+  radius: 16,
+  /** The boot starts this long before the window has fully opened. */
+  bootOverlap: 0.5,
+  /** Seconds for each part to settle, and the gap between parts in a group. */
+  boot: 0.6,
+  bootStagger: 0.035,
+  /** Pause after the boot before the first keystroke. */
+  typeDelay: 0.3,
   /** Seconds per typed character. */
   perCharacter: 0.016,
   /** Pause before each new line. */

@@ -99,8 +99,9 @@ function editorLines(content: CodeEditorContent) {
 
 /**
  * A VS Code-style editor where the founders write one build together. Once it's well on
- * screen the code types itself out line by line (seconds, not scroll), the caret's name tag
- * showing whose turn it is, then the build command runs and its results appear. The typing
+ * screen the window opens and boots (its parts settle in), then the code types itself out
+ * line by line (seconds, not scroll), the caret's name tag showing whose turn it is, then
+ * the build command runs and its results appear. The typing
  * only drives CSS variables (--typed per line clips it, --row and --col place the caret in
  * ch and line-height units), so it holds at any width. It's one image to screen readers.
  * With reduced motion (or no JS) it shows the finished file.
@@ -143,8 +144,64 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
 
       const tl = gsap.timeline({
         scrollTrigger: { trigger: root, start: motion.start, once: true },
-        onStart: () => setTyping(true),
       })
+      const parts = (name: string) => gsap.utils.toArray<HTMLElement>(`[data-boot="${name}"]`, root)
+      const settle = { duration: motion.boot, ease: ease.out }
+      const group = { ...settle, stagger: motion.bootStagger }
+
+      // The window opens from a line across its middle as it rises into place.
+      tl.fromTo(
+        root,
+        {
+          clipPath: `inset(50% 0% 50% 0% round ${motion.radius}px)`,
+          y: motion.rise,
+          scale: motion.scale,
+        },
+        {
+          clipPath: `inset(0% 0% 0% 0% round ${motion.radius}px)`,
+          y: 0,
+          scale: 1,
+          duration: motion.open,
+          ease: ease.out,
+          // The clip would cut off the drop shadow once open.
+          clearProps: 'clipPath',
+        },
+      )
+      // Then it boots: its parts settle in, a beat apart.
+      tl.addLabel('boot', `-=${motion.bootOverlap}`)
+      tl.fromTo(
+        parts('avatar'),
+        { opacity: 0, scale: 0.4 },
+        { opacity: 1, scale: 1, ...group, ease: ease.outQuart },
+        'boot',
+      )
+      tl.fromTo(parts('icon'), { opacity: 0, x: -10 }, { opacity: 1, x: 0, ...group }, 'boot')
+      tl.fromTo(parts('file'), { opacity: 0, x: -14 }, { opacity: 1, x: 0, ...group }, 'boot+=0.1')
+      tl.fromTo(
+        parts('tab'),
+        { opacity: 0, yPercent: -100 },
+        { opacity: 1, yPercent: 0, ...group, stagger: motion.bootStagger * 2 },
+        'boot+=0.1',
+      )
+      tl.fromTo(parts('panel'), { opacity: 0 }, { opacity: 1, ...settle }, 'boot+=0.2')
+      tl.fromTo(
+        parts('gutter'),
+        { opacity: 0 },
+        { opacity: 1, ...group, stagger: motion.bootStagger / 2 },
+        'boot+=0.2',
+      )
+      tl.fromTo(
+        parts('status'),
+        { clipPath: 'inset(0% 100% 0% 0%)' },
+        { clipPath: 'inset(0% 0% 0% 0%)', ...settle },
+        'boot+=0.15',
+      )
+      tl.fromTo(
+        parts('caret'),
+        { opacity: 0 },
+        { opacity: 1, duration: duration.micro, ease: ease.out },
+      )
+      tl.call(setTyping, [true], `+=${motion.typeDelay}`)
 
       let author = lines[0]?.author ?? 0
       lines.forEach((line, row) => {
@@ -227,12 +284,12 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
           <span className="size-2.5 rounded-pill bg-grey-700" />
           <span className="size-2.5 rounded-pill bg-grey-700" />
         </span>
-        <span className="min-w-0 flex-1 truncate text-center">
+        <span data-boot="panel" className="min-w-0 flex-1 truncate text-center">
           {active} — {content.project}
         </span>
         <span className="flex">
           {authors.map((name) => (
-            <span key={name} className={styles.avatar}>
+            <span key={name} data-boot="avatar" className={styles.avatar}>
               {name.charAt(0)}
             </span>
           ))}
@@ -245,6 +302,7 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
           {activityIcons.map((svg, i) => (
             <span
               key={i}
+              data-boot="icon"
               className={cn(
                 'relative grid w-full place-items-center',
                 i === 0 ? 'text-paper' : 'text-grey-600',
@@ -258,10 +316,16 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
 
         {/* Explorer */}
         <div className="hidden w-40 shrink-0 border-r border-tone py-3 text-[0.6875rem] @min-[38rem]:block">
-          <p className="px-4 pb-2.5 text-[0.625rem] tracking-[0.14em] text-grey-500 uppercase">
+          <p
+            data-boot="file"
+            className="px-4 pb-2.5 text-[0.625rem] tracking-[0.14em] text-grey-500 uppercase"
+          >
             {content.explorerTitle}
           </p>
-          <p className="flex items-center gap-1 px-3 py-1 font-semibold text-paper uppercase">
+          <p
+            data-boot="file"
+            className="flex items-center gap-1 px-3 py-1 font-semibold text-paper uppercase"
+          >
             {chevron}
             {content.project}
           </p>
@@ -269,6 +333,7 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
             {content.explorer.map((item) => (
               <li
                 key={item.name}
+                data-boot="file"
                 style={{ paddingLeft: `${1.25 + item.depth * 0.875}rem` }}
                 className={cn(
                   'flex items-center gap-1.5 py-1 pr-3',
@@ -292,6 +357,7 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
             {content.tabs.map((tab) => (
               <span
                 key={tab}
+                data-boot="tab"
                 className={cn(
                   'flex items-center gap-1.5 border-r border-tone px-3.5 py-2',
                   tab === active
@@ -304,7 +370,7 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
               </span>
             ))}
           </div>
-          <p className="truncate px-4 pt-2 text-[0.625rem] text-grey-500">
+          <p data-boot="panel" className="truncate px-4 pt-2 text-[0.625rem] text-grey-500">
             {content.breadcrumb.join('  ›  ')}
           </p>
 
@@ -317,7 +383,7 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
             <span className={styles.currentLine} />
             <ol className="shrink-0 pr-3 pl-3 text-right text-grey-600 @md:pr-4 @md:pl-4">
               {lines.map((_, row) => (
-                <li key={row} className={styles.row}>
+                <li key={row} data-boot="gutter" className={styles.row}>
                   {row + 1}
                 </li>
               ))}
@@ -332,7 +398,7 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
                   ))}
                 </div>
               ))}
-              <span className={styles.caret}>
+              <span data-boot="caret" className={styles.caret}>
                 <span className={styles.tag}>
                   {authors.map((name, i) => (
                     <span key={name} data-name={i}>
@@ -346,7 +412,10 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
 
           {/* Terminal */}
           <div className="border-t border-tone bg-ink px-4 pt-1.5 pb-2.5 text-[0.625rem] @sm:text-[0.6875rem]">
-            <div className="mb-2 flex gap-4 text-[0.625rem] tracking-[0.12em] uppercase">
+            <div
+              data-boot="panel"
+              className="mb-2 flex gap-4 text-[0.625rem] tracking-[0.12em] uppercase"
+            >
               {terminal.tabs.map((tab, i) => (
                 <span
                   key={tab}
@@ -373,7 +442,10 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
       </div>
 
       {/* Status bar */}
-      <div className="flex items-center gap-4 bg-orange px-3 py-1 text-[0.625rem] text-ink">
+      <div
+        data-boot="status"
+        className="flex items-center gap-4 bg-orange px-3 py-1 text-[0.625rem] text-ink"
+      >
         <span className="flex items-center gap-1 font-semibold">
           {icon(
             <>
