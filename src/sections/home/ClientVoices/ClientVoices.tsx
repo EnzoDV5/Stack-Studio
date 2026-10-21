@@ -47,27 +47,30 @@ export function ClientVoices({
       <div className="container-site">
         <SectionHeader id={headingId} index={index} eyebrow={eyebrow} title={title} />
 
-        <StaggerGroup as="ul" className="mt-14 grid gap-6 lg:mt-20 lg:grid-cols-2">
+        <StaggerGroup as="ul" className="mt-14 grid gap-6 lg:mt-20 lg:grid-cols-3">
           {voices.map((voice) => (
             <li key={voice.id}>
-              <figure className="flex h-full flex-col rounded-lg border border-tone p-8 md:p-10">
+              <figure className="flex h-full flex-col rounded-lg border border-tone p-7 xl:p-8">
                 <span
                   aria-hidden="true"
-                  className="font-display text-[5rem] leading-[0.6] text-accent"
+                  className="font-display text-[4rem] leading-[0.6] text-accent"
                 >
                   “
                 </span>
                 <blockquote className="mt-6 flex-1">
-                  <p className="font-display text-heading-lg md:text-heading-xl">{voice.quote}</p>
+                  <p className="font-display text-heading-md xl:text-heading-lg">{voice.quote}</p>
                 </blockquote>
-                <figcaption className="mt-10 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-tone pt-6">
-                  <QuoteCredit
-                    name={voice.name}
-                    role={voice.role}
-                    company={voice.company}
-                    logo={voice.logo}
-                    tone={tone}
-                  />
+                <figcaption className="mt-8 flex flex-col items-start gap-4 border-t border-tone pt-6">
+                  {/* One height for every credit, so the dividers line up across the row. */}
+                  <div className="flex min-h-16 items-center">
+                    <QuoteCredit
+                      name={voice.name}
+                      role={voice.role}
+                      company={voice.company}
+                      logo={voice.logo}
+                      tone={tone}
+                    />
+                  </div>
                   {voice.link && (
                     <TextLink to={voice.link.to} arrow className="text-small">
                       {voice.link.label}

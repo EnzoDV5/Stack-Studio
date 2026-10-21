@@ -353,18 +353,18 @@ export function WorkReel({
             <li data-reel-panel="" data-reel-chrome={chrome} className={panelClass[mode].outro}>
               <div
                 className={cn(
-                  'flex h-full flex-col rounded-lg border border-tone p-5 sm:p-8 lg:p-10',
+                  'flex h-full flex-col rounded-lg border border-tone p-5 sm:p-8',
                   mode !== 'pin' && 'min-h-[34rem]',
                 )}
               >
                 {/* Pinned, the card has a fixed height: the illustration takes whatever room is
-                    left (up to 18rem tall) and scales down with it in width and height (container
+                    left (up to 24rem tall) and scales down with it in width and height (container
                     units keep its aspect). Elsewhere the card can grow, so it just fills the
                     width (up to 24rem); container heights there resolve to 0 in Chrome. It
                     assembles once it's fully in view: at the end of the reel or carousel. */}
                 <div
                   className={cn(
-                    'relative mb-8 min-h-32 flex-1',
+                    'relative mb-6 min-h-32 flex-1',
                     mode === 'pin' ? '@container-size' : 'flex flex-col justify-center',
                   )}
                 >
@@ -375,7 +375,7 @@ export function WorkReel({
                     style={{
                       width:
                         mode === 'pin'
-                          ? `min(100cqw, ${outroAspect * 100}cqh, ${outroAspect * 18}rem)`
+                          ? `min(100cqw, ${outroAspect * 100}cqh, ${outroAspect * 24}rem)`
                           : undefined,
                       aspectRatio: outroAspect,
                     }}
@@ -387,9 +387,10 @@ export function WorkReel({
                     />
                   </div>
                 </div>
-                <div className="flex shrink-0 flex-col gap-10">
+                <div className="flex shrink-0 flex-col gap-6">
                   <p className="max-w-[14ch] font-display text-heading-xl">{outro.title}</p>
-                  <div className="flex flex-col items-start gap-6">
+                  {/* Side by side where they fit, so the illustration keeps the height. */}
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
                     <TextLink to={outro.allWork.to} arrow className="text-heading-md">
                       {outro.allWork.label}
                     </TextLink>
