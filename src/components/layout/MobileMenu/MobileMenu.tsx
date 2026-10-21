@@ -146,7 +146,7 @@ export function MobileMenu({
                     </span>
                     <span className={styles.index}>{pad2(i + 1)}</span>
                   </NavLink>
-                  {sections[item.to] && (
+                  {sections[item.to] ? (
                     <button
                       type="button"
                       className={styles.submenuToggle}
@@ -156,27 +156,49 @@ export function MobileMenu({
                         setExpanded((current) => (current === item.to ? null : item.to))
                       }
                     >
-                      <span aria-hidden="true">⌄</span>
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="m4 6 4 4 4-4" />
+                      </svg>
                     </button>
+                  ) : (
+                    // Keeps every row's number in the same column.
+                    <span aria-hidden="true" className={styles.toggleSpace} />
                   )}
                 </div>
-                {sections[item.to] && expanded === item.to && (
-                  <ul className={styles.submenu} aria-label={`${item.label} sections`}>
-                    {sections[item.to]?.map((section) => (
-                      <li key={section.to}>
-                        <NavLink
-                          to={section.to}
-                          onClick={() => {
-                            setExpanded(null)
-                            onClose()
-                          }}
-                        >
-                          {section.label}
-                          <span aria-hidden="true">↗</span>
-                        </NavLink>
-                      </li>
-                    ))}
-                  </ul>
+                {/* Always rendered so it can slide open and shut (grid rows 0fr → 1fr); inert
+                    while shut, so its links are out of the tab order. */}
+                {sections[item.to] && (
+                  <div
+                    className={cn(styles.submenuWrap, expanded === item.to && styles.submenuOpen)}
+                    inert={expanded !== item.to}
+                  >
+                    <div className={styles.submenuClip}>
+                      <ul className={styles.submenu} aria-label={`${item.label} sections`}>
+                        {sections[item.to]?.map((section) => (
+                          <li key={section.to}>
+                            <NavLink
+                              to={section.to}
+                              onClick={() => {
+                                setExpanded(null)
+                                onClose()
+                              }}
+                            >
+                              {section.label}
+                              <span aria-hidden="true">↗</span>
+                            </NavLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 )}
               </li>
             ))}

@@ -26,8 +26,8 @@ export interface HomeHeroProps {
  * set high in the viewport under the header. The Stack mark fills the right-hand side of
  * the background, running off the edge, and sinks as the page scrolls (scrubbed, slower
  * than the page), so it follows the visitor down and slips off the bottom of the hero,
- * behind the next section. On small screens the mark sits faintly behind the statement so
- * the text stays readable. Reduced motion: the mark stays put.
+ * behind the next section. On small screens the mark is massive and faint behind the
+ * statement (so the text stays readable), its base cut off by the bottom of the screen. Reduced motion: the mark stays put.
  */
 export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, video }: HomeHeroProps) {
   const frameRef = useRef<HTMLDivElement>(null)
@@ -75,17 +75,18 @@ export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, video }: Ho
       {/* The mark: huge and anchored to the right, bleeding off the edge.
           The hero clips it, so as it sinks it disappears behind the next section. On large
           screens its base already runs off the bottom: the triangle is about 0.98em tall and
-          centred in the image, so 62svh - 0.49em puts its base at 112svh at any size. */}
+          centred in the image, so 62svh - 0.49em puts its base at 112svh at any size. On
+          phones it's massive (wider than the screen) and runs off the bottom the same way. */}
       <div
         ref={frameRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 -z-10 flex items-center justify-end overflow-hidden opacity-15 lg:opacity-100"
+        className="pointer-events-none absolute inset-y-0 right-0 -z-10 flex items-center justify-end overflow-hidden opacity-20 lg:opacity-100"
       >
         <div ref={markRef}>
           <Logo
             variant="mark"
             title=""
-            className="-mr-[12vw] translate-y-[6svh] text-[min(62svh,52vw)] lg:-mr-[8vw] lg:translate-y-[calc(62svh-0.49em)] lg:text-[min(96svh,50vw)]"
+            className="-mr-[38vw] translate-y-[calc(62svh-0.49em)] text-[min(150vw,105svh)] lg:-mr-[8vw] lg:text-[min(96svh,50vw)]"
           />
         </div>
       </div>
@@ -97,7 +98,7 @@ export function HomeHero({ eyebrow, title, intro, cta, secondaryCta, video }: Ho
         <SplitReveal
           as="h1"
           trigger="intro"
-          className="mt-5 max-w-[4em] font-display text-display-2xl text-paper landscape:text-[length:min(var(--text-display-2xl),14.5svh)]"
+          className="mt-5 max-w-[4em] font-display text-display-2xl text-paper max-sm:text-[length:min(23vw,15svh)] landscape:text-[length:min(var(--text-display-2xl),14.5svh)]"
         >
           {title}
         </SplitReveal>

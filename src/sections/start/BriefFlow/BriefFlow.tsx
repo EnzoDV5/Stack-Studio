@@ -29,7 +29,7 @@ import { cn } from '@/lib/cn'
 import { estimate, type EstimateData } from '@/lib/estimate'
 import { summarizeResult } from '@/lib/estimate-summary'
 import { gsap, useGSAP } from '@/lib/gsap'
-import { scrollToElement } from '@/lib/lenis'
+import { scrollToElement, scrollToTop } from '@/lib/lenis'
 import { distance, duration, ease } from '@/lib/motion-tokens'
 import type { PriceLabels } from '@/lib/offer'
 import { submitBrief } from '@/lib/submit-brief'
@@ -128,6 +128,11 @@ export function BriefFlow({
     lastResultKind.current = result.kind
     trackEvent('Brief result shown', { kind: result.kind, path: answers.path ?? 'none' })
   }, [result.kind, answers.path])
+
+  // Sent: the success screen replaces the form, so take the visitor back to the top of the page.
+  useEffect(() => {
+    if (status === 'success') scrollToTop(reducedMotion)
+  }, [status, reducedMotion])
 
   // On step change: move focus to the question and keep it in view.
   useEffect(() => {
@@ -583,11 +588,27 @@ export function BriefFlow({
         />
       </div>
       <div className="sticky bottom-0 z-40 -mx-(--spacing-gutter) border-t border-tone bg-ink/95 backdrop-blur lg:hidden">
-        {drawerOpen && (
-          <div id={`${formId}-drawer`} className="max-h-[60svh] overflow-y-auto px-4 pt-4">
-            {panel(true)}
+        {/* Always rendered so it can open and close smoothly: grid rows 0fr → 1fr for the
+            height (like the Accordion), the content fading and settling in as it opens. */}
+        <div
+          id={`${formId}-drawer`}
+          inert={!drawerOpen}
+          className={cn(
+            'grid transition-[grid-template-rows] duration-(--duration-fast) ease-(--ease-in-out-expo) motion-reduce:transition-none',
+            drawerOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
+          )}
+        >
+          <div className="min-h-0 overflow-hidden">
+            <div
+              className={cn(
+                'max-h-[60svh] overflow-y-auto px-4 pt-4 transition-[opacity,translate] duration-(--duration-fast) ease-(--ease-out-expo) motion-reduce:transition-none',
+                drawerOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0',
+              )}
+            >
+              {panel(true)}
+            </div>
           </div>
-        )}
+        </div>
         <button
           type="button"
           onClick={() => setDrawerOpen((open) => !open)}
@@ -598,12 +619,21 @@ export function BriefFlow({
           <span className="shrink-0 eyebrow text-muted">{copy.estimate.mobileToggle}</span>
           <span className="flex min-w-0 items-center gap-3 numeric text-small font-semibold">
             <span className="truncate">{recommendation || '—'}</span>
-            <span
+            <svg
               aria-hidden="true"
-              className={cn('transition-transform', drawerOpen && 'rotate-180')}
+              viewBox="0 0 16 16"
+              className={cn(
+                'size-4 shrink-0 text-accent transition-transform duration-(--duration-fast) ease-(--ease-out-expo)',
+                drawerOpen && 'rotate-180',
+              )}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              ↑
-            </span>
+              <path d="m4 10 4-4 4 4" />
+            </svg>
           </span>
         </button>
       </div>
