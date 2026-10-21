@@ -11,6 +11,7 @@
 import type {
   ClientLogoSet,
   IllustrationPoint,
+  IllustrationJourneyAsset,
   IllustrationSceneAsset,
   ImageAsset,
   ImageSequenceAsset,
@@ -590,6 +591,178 @@ export const media = {
     ), // COPY: alt
   },
 
+  // Process, under the page title: the six steps along one path, from the client's brief to
+  // care after launch (ProcessJourney). Each piece plays in its step (0 Discover … 5 Care);
+  // coordinates are % of the cropped strip (scripts/illustrations crops the 16:9 source).
+  process: {
+    image: illustration(
+      'process',
+      [1480, 1150, 760, 480],
+      372 / 1480,
+      'One person sharing a brief, then a wireframe, a design, code, a rocket launching and a gear with a tick, joined by one path to a second person who looks after the site', // COPY: alt
+    ),
+    stops: [14.5, 26.2, 40.8, 55.9, 71.3, 85.2],
+    pieces: [
+      // 01 Discover: the brief pops out of the laptop and writes itself.
+      {
+        id: 'brief',
+        shape: rect(9.4, 13.2, 19.4, 35.3),
+        enter: 'pop',
+        origin: [11.5, 34],
+        idle: 'float',
+        step: 0,
+      },
+      {
+        id: 'brief-text',
+        parent: 'brief',
+        shape: rect(10.8, 17, 18.2, 26.5),
+        enter: 'draw',
+        step: 0,
+      },
+      // 02 Define: the path reaches the wireframe, which rises and sketches its layout.
+      {
+        id: 'path-define',
+        // From the top of the laptop, round it, to the wireframe.
+        shape: [
+          [11.2, 35.3],
+          [21, 35.3],
+          [21, 56],
+          [13.6, 56],
+          [13.6, 47.5],
+          [11.2, 47.5],
+        ],
+        enter: 'draw',
+        step: 1,
+      },
+      { id: 'wireframe', shape: rect(21, 26.6, 31.2, 71.4), enter: 'rise', step: 1 },
+      {
+        id: 'wireframe-sketch',
+        parent: 'wireframe',
+        shape: rect(22, 35.5, 30.4, 67.5),
+        enter: 'draw',
+        step: 1,
+      },
+      // 03 Design: the canvas pops up, the shapes and picture land, the cursor clicks, sparks fly.
+      { id: 'path-design', shape: rect(31.2, 39, 34.7, 56), enter: 'draw', step: 2 },
+      { id: 'design', shape: rect(34.7, 27.6, 46.6, 73.6), enter: 'pop', step: 2 },
+      {
+        id: 'design-shapes',
+        parent: 'design',
+        shape: rect(35.6, 33.5, 38.2, 61.5),
+        enter: 'pop',
+        step: 2,
+      },
+      {
+        id: 'design-picture',
+        parent: 'design',
+        shape: [
+          [38.4, 33.5],
+          [45.3, 33.5],
+          [45.3, 56.8],
+          [42.9, 56.8],
+          [42.9, 61.5],
+          [38.4, 61.5],
+        ],
+        enter: 'draw',
+        step: 2,
+      },
+      {
+        id: 'cursor',
+        parent: 'design',
+        shape: rect(42.9, 57, 46.5, 73.2),
+        enter: 'click',
+        origin: [43.2, 57.5],
+        step: 2,
+      },
+      {
+        id: 'design-sparks',
+        shape: rect(42, 16.5, 47.6, 27.6),
+        enter: 'pop',
+        origin: [43.5, 27],
+        idle: 'pulse',
+        step: 2,
+      },
+      // 04 Build: the editor rises, the tags pop in and the code writes itself.
+      { id: 'path-build', shape: rect(46.6, 41.5, 50.2, 62), enter: 'draw', step: 3 },
+      { id: 'code', shape: rect(50.2, 28.1, 61.2, 71.4), enter: 'rise', step: 3 },
+      { id: 'code-tags', parent: 'code', shape: rect(52, 38.8, 57.4, 49.6), enter: 'pop', step: 3 },
+      {
+        id: 'code-lines',
+        parent: 'code',
+        shape: rect(52, 51.8, 59.8, 66.5),
+        enter: 'draw',
+        step: 3,
+      },
+      // 05 Launch: the window rises and the rocket blasts up out of the clouds.
+      {
+        id: 'path-launch',
+        shape: [
+          [61.2, 41],
+          [65.6, 41],
+          [65.6, 59],
+          [70.5, 59],
+          [70.5, 63],
+          [61.2, 63],
+        ],
+        enter: 'draw',
+        step: 4,
+      },
+      { id: 'launch', shape: rect(65.6, 16.5, 77, 59), enter: 'rise', step: 4 },
+      {
+        id: 'rocket',
+        parent: 'launch',
+        // Narrow through the gap in the window's top border, so the border stays put as it hovers.
+        shape: [
+          [69.5, 16.7],
+          [72.3, 16.7],
+          [72.3, 21.2],
+          [73.8, 21.2],
+          [73.8, 45.5],
+          [69, 45.5],
+          [69, 21.2],
+          [69.5, 21.2],
+        ],
+        enter: 'launch',
+        idle: 'float',
+        step: 4,
+      },
+      {
+        id: 'launch-sparks',
+        shape: rect(68.6, 4.5, 74.4, 16.3),
+        enter: 'pop',
+        origin: [71.5, 16],
+        idle: 'pulse',
+        step: 4,
+      },
+      // 06 Care: the settings window pops up, the gear spins up and the tick stamps on.
+      { id: 'path-care', shape: rect(77, 33, 80.5, 56), enter: 'draw', step: 5 },
+      { id: 'care', shape: rect(80.5, 13.6, 89.5, 50.4), enter: 'pop', origin: [85, 49], step: 5 },
+      {
+        id: 'gear',
+        parent: 'care',
+        shape: octagon(84.65, 33, 2.5, 10),
+        enter: 'pop',
+        idle: 'spin',
+        step: 5,
+      },
+      {
+        id: 'tick',
+        parent: 'care',
+        shape: octagon(87.8, 19.9, 1.6, 6.3),
+        enter: 'pop',
+        idle: 'pulse',
+        step: 5,
+      },
+      {
+        id: 'plant',
+        shape: rect(93.9, 57.5, 99.3, 84.5),
+        enter: 'grow',
+        origin: [96.5, 84.5],
+        idle: 'sway',
+        step: 5,
+      },
+    ],
+  } satisfies IllustrationJourneyAsset,
   studio: {
     // "Design, motion and development in one team": the team around one site. The panels are
     // joined by the path, so the loose details move: the browser and panel content, the

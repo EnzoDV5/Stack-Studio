@@ -1,6 +1,7 @@
+import { ProcessJourney } from '@/components/media/ProcessJourney'
 import { PageMeta } from '@/components/seo/PageMeta'
 import { faqsFor } from '@/data/faqs'
-import { serviceMedia } from '@/data/media'
+import { media, serviceMedia } from '@/data/media'
 import { pageMeta, processContent } from '@/data/pages'
 import { policies } from '@/data/policies'
 import { processSteps } from '@/data/process'
@@ -44,7 +45,14 @@ export function ProcessPage() {
       <PageMeta {...pageMeta.process} />
       <SectionNavigator {...c.navigation} />
       <div id="process-top">
-        <PageTitle content={c.hero} />
+        <PageTitle content={c.hero}>
+          <ProcessJourney
+            scene={media.process}
+            steps={processSteps.map((step) => step.title)}
+            sizes="(min-width: 1248px) 1152px, 92vw"
+            className="mt-6 max-w-6xl md:mt-10"
+          />
+        </PageTitle>
       </div>
       {/* The step cards deal out on scroll, then the plan plays on entry, so the two never
           share a trigger. The title and next steps share one light chapter; the page turns

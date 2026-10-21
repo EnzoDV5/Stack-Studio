@@ -54,7 +54,7 @@ src/
     layout/     Header, Footer, MobileMenu, PageTransition, Preloader, Cursor, GridOverlay, GrainOverlay,
                 Section, SkipLink, DeferredSection, ToneController
     media/      Image, Video, MediaReveal, ServiceMedia, MacbookScroll, ClientLogo, ImageSequence,
-                IllustrationScene, CodeEditor
+                IllustrationScene, CodeEditor, ProcessJourney
     motion/     SplitReveal, Parallax, CountUp, DrawLine, StaggerGroup, MaskedHeading
     seo/        PageMeta
   hooks/        useLenis, useReducedMotion, useIsTouch, useMediaQuery, useInView, useAnalytics,

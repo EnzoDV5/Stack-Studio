@@ -318,6 +318,29 @@ export const illustrationScene = {
   spin: 9,
   sway: { angle: 2.5, duration: 3.8 },
   pulse: { scale: 1.06, duration: 1.4, offset: 0.35 },
+  /** `launch` pieces blast up from this far below (% of their own height). */
+  launch: { from: 70 },
+  /** `click` pieces press to this scale and back (seconds each way), most of the way in. */
+  click: { press: 0.82, duration: 0.12, at: 0.7 },
+} as const
+
+/**
+ * ProcessJourney (Process, under the page title): the six steps play one after another once
+ * the strip is in view. The path draws to each stage, the stage does its own move, and the
+ * step's label lights as the rail's fill reaches it. Then the idle loops take over.
+ */
+export const processJourney = {
+  start: 'top 85%',
+  /** Seconds before the first step, so the title has started compiling. */
+  lead: 0.35,
+  /** Seconds from one step's start to the next. */
+  step: 0.85,
+  /** Gap between the pieces within a step. */
+  piece: 0.12,
+  /** Seconds for the rail's fill to reach the next label. */
+  rail: 0.7,
+  /** How dim a label is before its step plays. */
+  dim: 0.3,
 } as const
 
 /**

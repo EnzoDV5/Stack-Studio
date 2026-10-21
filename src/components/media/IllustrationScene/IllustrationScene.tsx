@@ -3,9 +3,10 @@ import { useIntro } from '@/app/providers/IntroProvider'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
 import { gsap, useGSAP } from '@/lib/gsap'
-import { sceneLayout, type PieceLayout } from '@/lib/illustration-scene'
+import { sceneLayout } from '@/lib/illustration-scene'
 import { duration, ease, illustrationScene as motion } from '@/lib/motion-tokens'
 import type { IllustrationSceneAsset } from '@/types'
+import { addPieceEnter, flattenPieces, pieceLoops } from './scene-motion'
 import { ScenePiece } from './ScenePiece'
 
 export interface IllustrationSceneProps {
@@ -22,9 +23,6 @@ export interface IllustrationSceneProps {
   delay?: number
   className?: string
 }
-
-const flatten = (layouts: PieceLayout[]): PieceLayout[] =>
-  layouts.flatMap((layout) => [layout, ...flatten(layout.children)])
 
 /** Runs `callback` with each change in whether `el` meets the observer's conditions. */
 function observe(
@@ -71,13 +69,7 @@ export function IllustrationScene({
     () => {
       const root = rootRef.current
       if (!root || !animated) return
-      const pieces = flatten(layout.pieces)
-      const outer = (id: string) => root.querySelector<HTMLElement>(`[data-piece="${id}"]`)
-      const idle = (id: string) =>
-        outer(id)?.querySelector<HTMLElement>(':scope > [data-piece-idle]')
-      const clip = (id: string) =>
-        idle(id)?.querySelector<HTMLElement>(':scope > [data-piece-clip]')
-      const shift = () => Math.max(root.offsetWidth * motion.shift, motion.minShift)
+      const pieces = flattenPieces(layout.pieces)
 
       // Idle loops run once it's assembled, and only while it's on screen.
       let assembled = false
@@ -94,75 +86,8 @@ export function IllustrationScene({
           syncLoops()
         },
       })
-      pieces.forEach(({ piece, clip: shape, clipFrom }, i) => {
-        const node = outer(piece.id)
-        if (!node) return
-        const at = motion.lead + i * motion.step
-        switch (piece.enter) {
-          case 'left':
-          case 'right': {
-            const side = piece.enter === 'left' ? -1 : 1
-            tl.from(node, { x: () => side * shift(), rotation: side * motion.tilt, opacity: 0 }, at)
-            break
-          }
-          case 'rise':
-            tl.from(node, { y: () => shift() * 0.6, opacity: 0 }, at)
-            break
-          case 'pop':
-            tl.from(node, { scale: 0, opacity: 0 }, at)
-            break
-          case 'grow':
-            tl.from(node, { scaleY: 0.2, rotation: -motion.tilt, opacity: 0 }, at)
-            break
-          case 'draw': {
-            const target = clip(piece.id)
-            if (target)
-              tl.fromTo(
-                target,
-                { clipPath: clipFrom },
-                { clipPath: shape, ease: ease.outQuart },
-                at,
-              )
-            break
-          }
-        }
-      })
-
-      let pulses = 0
-      const loops = pieces.flatMap(({ piece }, i) => {
-        const node = idle(piece.id)
-        if (!node || !piece.idle) return []
-        const loop = { repeat: -1, yoyo: true, ease: motion.loopEase, paused: true }
-        switch (piece.idle) {
-          case 'float':
-            return gsap.to(node, {
-              ...loop,
-              y: -motion.float.y,
-              duration: motion.float.duration + (i % 3) * 0.45,
-            })
-          case 'spin':
-            return gsap.to(node, {
-              rotation: 360,
-              duration: motion.spin,
-              ease: ease.none,
-              repeat: -1,
-              paused: true,
-            })
-          case 'sway':
-            return gsap.fromTo(
-              node,
-              { rotation: -motion.sway.angle },
-              { ...loop, rotation: motion.sway.angle, duration: motion.sway.duration },
-            )
-          case 'pulse':
-            return gsap.to(node, {
-              ...loop,
-              scale: motion.pulse.scale,
-              duration: motion.pulse.duration,
-              delay: pulses++ * motion.pulse.offset,
-            })
-        }
-      })
+      pieces.forEach((piece, i) => addPieceEnter(tl, root, piece, motion.lead + i * motion.step))
+      const loops = pieceLoops(root, pieces)
 
       // Rebuilt after it has played (e.g. a wipe came and went): show it finished.
       if (played.current) tl.progress(1)

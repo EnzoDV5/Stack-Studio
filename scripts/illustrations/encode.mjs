@@ -15,7 +15,10 @@ import { launch } from '../mockups/browser.mjs'
 const [sourceDir = 'public/Illustrations', outDir = 'public/media/illustrations', quality = '0.9'] =
   process.argv.slice(2)
 
-/** Source file → id and widths (largest first). */
+/**
+ * Source file → id and widths (largest first), and an optional crop: [left, top, width,
+ * height] as fractions of the source, for art with wide empty margins.
+ */
 const illustrations = {
   // The work reel's closing card: at most ~384 CSS px wide, so 1200 covers 3× screens.
   'StartToFinish.svg': { id: 'start-to-finish', widths: [1200, 800, 480] },
@@ -23,6 +26,13 @@ const illustrations = {
   'FixOrImprove.svg': { id: 'fix-or-improve', widths: [1760, 1200, 800, 480] },
   // Studio, the intro beside the story: up to ~640 CSS px wide (40vw on large screens).
   'Studio.svg': { id: 'studio', widths: [1280, 960, 640, 480] },
+  // Process, the six steps under the page title: a strip up to 1152 CSS px wide, cropped to the
+  // drawing (the source is 16:9 with wide empty margins).
+  'Chatgptai.svg': {
+    id: 'process',
+    widths: [1480, 1150, 760, 480],
+    crop: [28 / 1536, 236 / 864, 1496 / 1536, 376 / 864],
+  },
   // Studio, the four value icons: 112 CSS px wide on their cards.
   'ValueProof.png': { id: 'value-proof', widths: [360, 240, 160] },
   'ValueCraft.png': { id: 'value-craft', widths: [360, 240, 160] },
@@ -34,21 +44,26 @@ mkdirSync(outDir, { recursive: true })
 const browser = await launch()
 const page = await browser.newPage()
 
-for (const [file, { id, widths }] of Object.entries(illustrations)) {
+for (const [file, { id, widths, crop = [0, 0, 1, 1] }] of Object.entries(illustrations)) {
   const source = readFileSync(join(sourceDir, file))
   const type = file.endsWith('.png') ? 'image/png' : 'image/svg+xml'
   const dataUrl = `data:${type};base64,${source.toString('base64')}`
 
   const results = await page.evaluate(
-    async (src, widths, quality) => {
+    async (src, widths, quality, crop) => {
       const img = new Image()
       img.src = src
       await img.decode()
-      const ratio = img.naturalHeight / img.naturalWidth
+      const [cx, cy, cw, ch] = crop
+      const sx = cx * img.naturalWidth
+      const sy = cy * img.naturalHeight
+      const sw = cw * img.naturalWidth
+      const sh = ch * img.naturalHeight
+      const ratio = sh / sw
       // Rasterise at twice the largest width, then halve in steps so the edges stay crisp.
       const first = widths[0] * 2
       let canvas = new OffscreenCanvas(first, Math.round(first * ratio))
-      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height)
+      canvas.getContext('2d').drawImage(img, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height)
 
       const out = []
       for (const w of widths) {
@@ -76,6 +91,7 @@ for (const [file, { id, widths }] of Object.entries(illustrations)) {
     dataUrl,
     widths,
     Number(quality),
+    crop,
   )
 
   for (const { w, h, type, b64 } of results) {

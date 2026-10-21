@@ -27,18 +27,29 @@ export interface IllustrationPiece {
   shape: readonly IllustrationPoint[]
   /** The piece this one sits inside. */
   parent?: string
-  /** How it assembles as the scene scrolls into view (`draw` wipes in from the left). */
-  enter: 'left' | 'right' | 'rise' | 'pop' | 'grow' | 'draw'
+  /**
+   * How it assembles as the scene scrolls into view (`draw` wipes in from the left, `launch`
+   * blasts up from below, `click` flies in and presses like a cursor).
+   */
+  enter: 'left' | 'right' | 'rise' | 'pop' | 'grow' | 'draw' | 'launch' | 'click'
   /** What it does once on screen. */
   idle?: 'float' | 'spin' | 'sway' | 'pulse'
   /** Pivot for pop, grow, spin, sway and pulse. Defaults to the centre of the shape. */
   origin?: IllustrationPoint
+  /** In a journey (ProcessJourney), the step (0-based) it plays in. */
+  step?: number
 }
 
 /** A flat illustration and the pieces it comes apart into. */
 export interface IllustrationSceneAsset {
   image: ImageAsset
   pieces: readonly IllustrationPiece[]
+}
+
+/** A scene that plays as a row of steps, left to right (ProcessJourney). */
+export interface IllustrationJourneyAsset extends IllustrationSceneAsset {
+  /** Where each step's stage sits, as % of the width: its label goes under it. */
+  stops: readonly number[]
 }
 
 /**
