@@ -52,8 +52,8 @@ export function ProcessPage() {
             <ProcessJourney
               scene={media.process}
               steps={processSteps.map((step) => step.title)}
-              sizes="(min-width: 1280px) 544px, (min-width: 1024px) 480px, 92vw"
-              className="w-full lg:w-[30rem] xl:w-[34rem]"
+              sizes="(min-width: 1280px) 704px, (min-width: 1024px) 512px, 92vw"
+              className="w-full lg:w-[32rem] xl:w-[44rem]"
             />
           }
         />
