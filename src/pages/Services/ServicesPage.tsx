@@ -144,7 +144,7 @@ export function ServicesPage() {
       <StageExplorer stages={improve} labels={c.labels} />
       <MonthlyPlans
         id="plans"
-        tone="paper"
+        tone="dark"
         title={homeContent.paths.prompts.run}
         more={c.plans.more}
         plans={monthlyPlans}

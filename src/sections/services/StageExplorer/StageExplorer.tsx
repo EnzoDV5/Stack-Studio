@@ -18,7 +18,7 @@ export function StageExplorer({
   stages,
   labels,
   lead,
-  tone = 'paper',
+  tone = 'dark',
   className,
 }: StageExplorerProps) {
   return (

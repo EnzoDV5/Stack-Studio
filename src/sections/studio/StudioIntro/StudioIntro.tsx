@@ -21,7 +21,7 @@ export function StudioIntro({
   title,
   paragraphs,
   illustration,
-  tone = 'paper',
+  tone = 'dark',
 }: StudioIntroProps) {
   return (
     <Section tone={tone} className="pt-8">

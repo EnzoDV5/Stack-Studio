@@ -46,7 +46,7 @@ export function WorkGrid({
   activeFilter,
   onFilterChange,
   labels,
-  tone = 'paper',
+  tone = 'dark',
 }: WorkGridProps) {
   const gridRef = useRef<HTMLDivElement>(null)
   const flipState = useRef<Flip.FlipState | null>(null)

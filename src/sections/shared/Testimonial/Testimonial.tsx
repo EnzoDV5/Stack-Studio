@@ -21,7 +21,7 @@ export interface TestimonialProps {
  * quotes they sit side by side in a native scroll-snap track (swipe, trackpad or the arrow
  * buttons), one per view, with a counter.
  */
-export function Testimonial({ testimonials, labels, eyebrow, tone = 'paper' }: TestimonialProps) {
+export function Testimonial({ testimonials, labels, eyebrow, tone = 'dark' }: TestimonialProps) {
   const trackRef = useRef<HTMLUListElement>(null)
   const [current, setCurrent] = useState(0)
   const reducedMotion = useReducedMotion()

@@ -98,12 +98,11 @@ tests/          node:test files for pure helpers (run with Node's TypeScript str
   mid-page CTA and `CaseOutro` at the end of a case study.
 - Pre-fill the brief from CTAs with `/start?type=<ProjectPackage id>` or
   `/start?plan=<MonthlyPlan id>`.
-- Sections render inside `<Section tone="dark|paper|white|orange">`. **Group neighbouring
-  sections into tone chapters** (e.g. dark → paper → dark → paper on Home) rather than
-  alternating every section: the page colour flows between tones, and a change every
-  section reads as flashing. Aim for a change no more than every ~2 viewports; a chapter (touching
-  same-tone sections) shorter than `tone.minSection` (0.9 viewport) never takes over the page
-  colour anyway.
+- Sections render inside `<Section tone="dark|paper|white|orange">`. **The site is
+  dark-only: every section uses `tone="dark"`** (and section `tone` props default to
+  `'dark'`), so the page background never switches colour as you scroll. The paper and
+  white tones and the tone flow remain available but are unused; don't reintroduce light
+  sections without a decision to bring back tone chapters.
   Use orange only for the single closing CTA band per page (it is `solid`, so it paints
   itself rather than turning the page orange).
 - Eyebrows follow `NN · LABEL` (mono, uppercase, letter-spaced) via `<Eyebrow index label />`.

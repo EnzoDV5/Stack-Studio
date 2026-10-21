@@ -50,7 +50,7 @@ export function ProcessPage() {
           share a trigger. The title and next steps share one light chapter; the page turns
           dark at the week-by-week timeline. */}
       <NextSteps
-        tone="paper"
+        tone="dark"
         eyebrow={c.nextSteps.eyebrow}
         title={c.nextSteps.title}
         intro={c.nextSteps.intro}
@@ -73,7 +73,7 @@ export function ProcessPage() {
       />
       <div id="terms">
         <PoliciesList
-          tone="paper"
+          tone="dark"
           eyebrow={c.terms.eyebrow}
           title={c.terms.title}
           scheduleLabel={c.terms.scheduleLabel}
@@ -83,10 +83,10 @@ export function ProcessPage() {
         />
       </div>
       <div id="care">
-        <CareSteps {...c.care} media={serviceMedia.partner} tone="paper" />
+        <CareSteps {...c.care} media={serviceMedia.partner} tone="dark" />
       </div>
       <div id="process-faq">
-        <FaqSection tone="paper" intro={c.faq} faqs={faqsFor('process')} />
+        <FaqSection tone="dark" intro={c.faq} faqs={faqsFor('process')} />
       </div>
     </>
   )

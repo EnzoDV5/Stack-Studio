@@ -144,7 +144,7 @@ export function HomePage() {
       </DeferredSection>
 
       <DeferredSection minHeight="430vh">
-        <ChapterFlow tone="paper" {...chapterFlow} eyebrow={undefined} items={chapters} />
+        <ChapterFlow tone="dark" {...chapterFlow} eyebrow={undefined} items={chapters} />
       </DeferredSection>
 
       <WorkReel
@@ -166,7 +166,7 @@ export function HomePage() {
 
       <DeferredSection minHeight="90vh">
         <ClientVoices
-          tone="paper"
+          tone="dark"
           title={clients.title}
           more={clients.more}
           voices={testimonials.map((t) => {
@@ -188,7 +188,7 @@ export function HomePage() {
 
       <DeferredSection minHeight="95vh">
         <StudioSnippet
-          tone="paper"
+          tone="dark"
           title={studio.title}
           intro={studio.intro}
           founders={founders}

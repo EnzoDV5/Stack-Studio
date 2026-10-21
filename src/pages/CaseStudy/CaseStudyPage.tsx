@@ -75,11 +75,11 @@ export function CaseStudyPage() {
         ]}
       />
 
-      <CaseGallery tone="paper" label={caseStudyContent.galleryLabel} items={project.gallery} />
+      <CaseGallery tone="dark" label={caseStudyContent.galleryLabel} items={project.gallery} />
 
       {project.metrics.length > 0 && (
         <CaseMetrics
-          tone="paper"
+          tone="dark"
           label={caseStudyContent.metricsLabel}
           metrics={project.metrics}
           note={caseStudyContent.metricsNote}

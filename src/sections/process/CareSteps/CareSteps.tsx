@@ -31,7 +31,7 @@ export function CareSteps({
   media,
   steps,
   cta,
-  tone = 'paper',
+  tone = 'dark',
 }: CareStepsProps) {
   const headingId = useId()
 

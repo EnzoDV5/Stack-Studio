@@ -40,7 +40,7 @@ export function BriefRecordView({
   record,
   copy,
   onDownload,
-  tone = 'paper',
+  tone = 'dark',
 }: BriefRecordViewProps) {
   const [downloading, setDownloading] = useState(false)
   const { contact } = record

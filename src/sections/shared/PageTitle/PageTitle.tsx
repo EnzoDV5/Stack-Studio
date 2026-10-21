@@ -18,7 +18,7 @@ export interface PageTitleProps {
  * keeps its own tone over the inset while the rest of the page tone flows. The h1 compiles
  * from code as soon as the preloader or page wipe lifts, like every section title.
  */
-export function PageTitle({ content, tone = 'paper', children, aside }: PageTitleProps) {
+export function PageTitle({ content, tone = 'dark', children, aside }: PageTitleProps) {
   return (
     <div className="bg-ink pt-(--spacing-header)">
       <Section as="header" tone={tone} solid spacing="none" className="py-8 md:pt-12">

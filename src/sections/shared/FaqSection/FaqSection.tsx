@@ -13,7 +13,7 @@ export interface FaqSectionProps {
 }
 
 /** Sticky heading on the left, accordion of questions on the right. */
-export function FaqSection({ intro, faqs, index, tone = 'paper' }: FaqSectionProps) {
+export function FaqSection({ intro, faqs, index, tone = 'dark' }: FaqSectionProps) {
   const headingId = useId()
   return (
     <Section tone={tone} aria-labelledby={headingId}>

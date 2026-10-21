@@ -30,7 +30,7 @@ export function ServicesHero({
 
   return (
     <div className="bg-ink pt-(--spacing-header)">
-      <Section as="header" tone="paper" solid spacing="none" className={styles.section}>
+      <Section as="header" tone="dark" solid spacing="none" className={styles.section}>
         <div className="container-site">
           <Eyebrow label={content.eyebrow} className={styles.eyebrow} />
           <MaskedHeading

@@ -39,7 +39,7 @@ export function ValuesGrid({
   headerVariant = 'stacked',
   titleSize,
   image,
-  tone = 'paper',
+  tone = 'dark',
 }: ValuesGridProps) {
   const headingId = useId()
   const cols = items.length % 3 === 0 ? 'lg:grid-cols-3' : 'lg:grid-cols-4'

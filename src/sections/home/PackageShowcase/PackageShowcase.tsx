@@ -68,7 +68,7 @@ export function PackageShowcase({
   phone,
   labels,
   more,
-  tone = 'paper',
+  tone = 'dark',
 }: PackageShowcaseProps) {
   const headingId = useId()
   const [active, setActive] = useState(0)

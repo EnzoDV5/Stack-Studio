@@ -46,7 +46,7 @@ export function StudioPage() {
         items={values}
         headerVariant="minimal"
         titleSize="display-lg"
-        tone="paper"
+        tone="dark"
       />
       <Testimonial testimonials={testimonials} labels={testimonialLabels} />
     </>

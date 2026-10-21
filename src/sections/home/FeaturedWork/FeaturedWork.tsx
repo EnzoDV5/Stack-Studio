@@ -30,7 +30,7 @@ export function FeaturedWork({
   cardCta,
   cursorLabel,
   sampleLabel,
-  tone = 'paper',
+  tone = 'dark',
 }: FeaturedWorkProps) {
   const headingId = useId()
   return (

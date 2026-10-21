@@ -10,7 +10,7 @@ export interface CaseNarrativeProps {
 }
 
 /** Editorial chapters: the number and label above each statement, then the body. Static text. */
-export function CaseNarrative({ chapters, tone = 'paper' }: CaseNarrativeProps) {
+export function CaseNarrative({ chapters, tone = 'dark' }: CaseNarrativeProps) {
   return (
     <Section tone={tone}>
       <div className="container-site space-y-24 md:space-y-36">

@@ -88,7 +88,7 @@ export function WorkReel({
   more,
   outro,
   outroIllustration,
-  tone = 'paper',
+  tone = 'dark',
 }: WorkReelProps) {
   const headingId = useId()
   const reducedMotion = useReducedMotion()

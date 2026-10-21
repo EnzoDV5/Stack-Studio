@@ -17,7 +17,7 @@ export function PrivacyNotice({
   sections,
   contact,
   back,
-  tone = 'paper',
+  tone = 'dark',
 }: PrivacyNoticeProps) {
   return (
     <Section tone={tone} className="pt-8">
