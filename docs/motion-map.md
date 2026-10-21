@@ -256,7 +256,7 @@ dashed slot and dots pulse). Reduced motion: the plain image. Hosting and care i
 and Partner). Framed images and video reveal on
 scroll; loops only play while on screen.
 
-**Process:** PageTitle (load: compile; ProcessJourney under it plays the six steps in turn on entry: the path draws to each stage, the stage does its own move, the rail lights its label) · NextSteps (scrub: the step cards deal out) ·
+**Process:** PageTitle (load: compile; ProcessJourney beside it plays the six steps in turn on entry: the path draws to each stage, the stage does its own move, the rail lights its label) · NextSteps (scrub: the step cards deal out) ·
 ProcessLine (enter + hover: how a project runs, week by week) · PoliciesList (none) ·
 CareSteps (enter: one care video) · FaqSection (click) · ClosingCta (enter). Openers: split ·
 minimal · split · own · own. NextSteps shows what happens once someone gets in touch, shown

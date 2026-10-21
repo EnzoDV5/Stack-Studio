@@ -25,7 +25,8 @@ export interface ProcessJourneyProps {
 const number = (i: number) => String(i + 1).padStart(2, '0')
 
 /**
- * The process as one illustrated path, with a rail of numbered steps under it. Once it's in
+ * The process as one illustrated path, with a rail of numbered steps under it (its labels size
+ * to the strip: numbers only when narrow). Once it's in
  * view (after the preloader or page wipe) the steps play one after another: the path draws to
  * each stage, the stage does its own move (the brief pops out and writes itself, the wireframe
  * sketches, the cursor clicks, the code types, the rocket launches, the gear spins up), and
@@ -123,7 +124,7 @@ export function ProcessJourney({ scene, steps, sizes, className }: ProcessJourne
   )
 
   return (
-    <div ref={rootRef} className={cn('relative', className)}>
+    <div ref={rootRef} className={cn('@container relative', className)}>
       <div className="relative">
         <img
           src={image.src}
@@ -167,7 +168,7 @@ export function ProcessJourney({ scene, steps, sizes, className }: ProcessJourne
               />
               <span data-stop-label className="mt-2.5 flex flex-col items-center gap-1">
                 <span className="eyebrow text-accent">{number(i)}</span>
-                <span className="hidden text-small font-medium whitespace-nowrap sm:block">
+                <span className="hidden text-[0.6875rem] font-medium whitespace-nowrap @min-[26rem]:block @min-[44rem]:text-small">
                   {title}
                 </span>
               </span>

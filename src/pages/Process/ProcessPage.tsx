@@ -45,14 +45,18 @@ export function ProcessPage() {
       <PageMeta {...pageMeta.process} />
       <SectionNavigator {...c.navigation} />
       <div id="process-top">
-        <PageTitle content={c.hero}>
-          <ProcessJourney
-            scene={media.process}
-            steps={processSteps.map((step) => step.title)}
-            sizes="(min-width: 1248px) 1152px, 92vw"
-            className="mt-6 max-w-6xl md:mt-10"
-          />
-        </PageTitle>
+        <PageTitle
+          content={c.hero}
+          asidePlacement="beside"
+          aside={
+            <ProcessJourney
+              scene={media.process}
+              steps={processSteps.map((step) => step.title)}
+              sizes="(min-width: 1280px) 544px, (min-width: 1024px) 480px, 92vw"
+              className="w-full lg:w-[30rem] xl:w-[34rem]"
+            />
+          }
+        />
       </div>
       {/* The step cards deal out on scroll, then the plan plays on entry, so the two never
           share a trigger. The title and next steps share one light chapter; the page turns
