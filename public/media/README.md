@@ -27,6 +27,10 @@ It prints each page's CSS height: update it in `src/data/media.ts` (`siteCapture
 changed. 1.5× is the ceiling, because WebP can't exceed 16383 px on a side and the MPG page is
 about 9600 CSS px tall.
 
+MPG uses `scripts/mockups/capture-full-mpg.mjs` to stitch viewport captures. Its animated
+sections disappear in Chrome's ordinary full-page screenshot; the stitched capture keeps the
+content visible at all four output widths.
+
 ## Device mockups (/public/media/projects/mockups)
 
 Every project card, Home showcase, case study hero and gallery image is a device mockup of

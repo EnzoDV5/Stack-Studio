@@ -17,6 +17,7 @@
 import { mkdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { launch } from './browser.mjs'
+import { captureFullMpg } from './capture-full-mpg.mjs'
 import { devices, shots, sites } from './shots.mjs'
 
 const root = join(import.meta.dirname, '../..')
@@ -76,6 +77,10 @@ const browser = await launch()
 
 if (full) {
   for (const project of Object.keys(sites).filter((id) => !only || id === only)) {
+    if (project === 'mpg-foundation') {
+      await captureFullMpg(browser, fullDir)
+      continue
+    }
     const page = await open(browser, project, '/', 'desktop', {
       width: 1440,
       height: 900,
