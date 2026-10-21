@@ -77,3 +77,50 @@ export interface ValueItem {
   /** A small line icon that assembles with the list (Studio values). */
   icon?: IllustrationSceneAsset
 }
+
+/** A short fact under the Studio page title, e.g. "Based in" · "Centurion, South Africa". */
+export interface StudioFact {
+  label: string
+  value: string
+}
+
+/** One founder's turn at the keyboard in the Studio code editor. */
+export interface CodeEditorRun {
+  /** Shown on the caret's name tag while these lines type. */
+  author: string
+  lines: string[]
+}
+
+export interface CodeEditorExplorerItem {
+  name: string
+  /** Nesting under the project root (0 = top level). */
+  depth: number
+  folder?: boolean
+}
+
+/** The VS Code-style editor beside "Who we are" (CodeEditor): the team building as code. */
+export interface CodeEditorContent {
+  /** What the scene shows, for screen readers (the editor is presented as one image). */
+  label: string
+  project: string
+  explorerTitle: string
+  explorer: CodeEditorExplorerItem[]
+  /** Open tabs; the first is the file on screen. */
+  tabs: string[]
+  /** The path above the code, e.g. ['stack-studio', 'one-team.ts', 'build()']. */
+  breadcrumb: string[]
+  runs: CodeEditorRun[]
+  terminal: {
+    tabs: string[]
+    prompt: string
+    command: string
+    output: string[]
+  }
+  status: {
+    branch: string
+    live: string
+    items: string[]
+    /** The caret position, e.g. "Ln 12, Col 8". */
+    position: (line: number, column: number) => string
+  }
+}

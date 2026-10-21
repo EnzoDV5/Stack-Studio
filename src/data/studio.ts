@@ -1,4 +1,4 @@
-import type { Founder, ValueItem } from '@/types'
+import type { CodeEditorContent, Founder, StudioFact, ValueItem } from '@/types'
 import { media } from './media'
 
 export const founders: Founder[] = [
@@ -70,3 +70,101 @@ export const principles: ValueItem[] = [
     body: 'Design and development under one roof, so what you approve is what gets built.', // COPY:
   },
 ]
+
+/** Under the Studio page title, beside the team illustration. */
+export const studioFacts: StudioFact[] = [
+  { label: 'Based in', value: 'Centurion, South Africa' }, // COPY:
+  { label: 'Founded by', value: 'Enzo and Armand' }, // COPY:
+  { label: 'We build', value: 'Websites, apps and software' }, // COPY:
+]
+
+/**
+ * "Who we are" as code: the founders take turns typing one build, each in their own area
+ * (Enzo design and front-end, Armand back-end and delivery) and across both. Keep every line
+ * under ~46 characters so it fits the editor on a phone.
+ */
+export const teamEditor: CodeEditorContent = {
+  label:
+    'A code editor where Enzo and Armand write one build together: strategy, UX, visual design and motion, then the API and data, then launch with hosting and care. The build passes.', // COPY:
+  project: 'stack-studio',
+  explorerTitle: 'Explorer', // COPY:
+  explorer: [
+    { name: 'design', depth: 0, folder: true },
+    { name: 'strategy.ts', depth: 1 },
+    { name: 'ux.ts', depth: 1 },
+    { name: 'visual.ts', depth: 1 },
+    { name: 'motion.ts', depth: 1 },
+    { name: 'dev', depth: 0, folder: true },
+    { name: 'api.ts', depth: 1 },
+    { name: 'data.ts', depth: 1 },
+    { name: 'hosting.ts', depth: 1 },
+    { name: 'one-team.ts', depth: 0 },
+  ],
+  tabs: ['one-team.ts', 'motion.ts', 'api.ts'],
+  breadcrumb: ['stack-studio', 'one-team.ts', 'build()'],
+  // COPY: the code itself (it should read like the "Who we are" paragraphs)
+  runs: [
+    {
+      author: 'Enzo',
+      lines: [
+        '// one team, both ends of every build',
+        'import { strategy, ux, visual, motion }',
+        "  from './design'",
+      ],
+    },
+    {
+      author: 'Armand',
+      lines: ["import { api, data, hosting } from './dev'", ''],
+    },
+    {
+      author: 'Enzo',
+      lines: [
+        'export const team = {',
+        "  base: 'Centurion, ZA',",
+        "  founders: ['Enzo', 'Armand'],",
+        "  crafts: ['strategy', 'ux', 'visual',",
+        "    'motion', 'front-end', 'back-end'],",
+        '}',
+        '',
+      ],
+    },
+    {
+      author: 'Armand',
+      lines: ['export async function build(business) {'],
+    },
+    {
+      author: 'Enzo',
+      lines: [
+        '  const story = strategy(business.difference)',
+        '  const site = await ux(story, business.users)',
+        '    .then(visual)',
+        '    .then(motion)',
+      ],
+    },
+    {
+      author: 'Armand',
+      lines: [
+        '  await api(site).connect(data)',
+        '  // after launch: host, care, keep improving',
+        '  return hosting.launch(site, { care: true })',
+        '}',
+      ],
+    },
+  ],
+  terminal: {
+    tabs: ['Terminal', 'Problems', 'Output'], // COPY:
+    prompt: '~/stack-studio $',
+    command: 'npm run build',
+    output: [
+      'design   strategy · ux · visual · motion', // COPY:
+      'develop  front-end · back-end · data', // COPY:
+      'launch   live, hosted and cared for', // COPY:
+    ],
+  },
+  status: {
+    branch: 'main',
+    live: 'Live · Enzo, Armand', // COPY:
+    items: ['TypeScript', 'UTF-8'],
+    position: (line, column) => `Ln ${line}, Col ${column}`, // COPY:
+  },
+}

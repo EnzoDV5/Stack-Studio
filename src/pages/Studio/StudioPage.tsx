@@ -1,13 +1,13 @@
 import { PageMeta } from '@/components/seo/PageMeta'
 import { media } from '@/data/media'
 import { pageMeta, studioContent } from '@/data/pages'
-import { founders, principles, values } from '@/data/studio'
+import { founders, principles, studioFacts, teamEditor, values } from '@/data/studio'
 import { stackBuilds, stackContent, technologies, technologyLayers } from '@/data/technologies'
 import { testimonialLabels, testimonials } from '@/data/testimonials'
-import { PageTitle } from '@/sections/shared/PageTitle'
 import { Testimonial } from '@/sections/shared/Testimonial'
 import { FounderProfiles } from '@/sections/studio/FounderProfiles'
 import { StackDiagram } from '@/sections/studio/StackDiagram'
+import { StudioHero } from '@/sections/studio/StudioHero'
 import { StudioIntro } from '@/sections/studio/StudioIntro'
 import { ValuesGrid } from '@/sections/studio/ValuesGrid'
 
@@ -15,12 +15,16 @@ export function StudioPage() {
   return (
     <>
       <PageMeta {...pageMeta.studio} />
-      <PageTitle content={studioContent.hero} />
+      <StudioHero
+        content={studioContent.hero}
+        facts={studioFacts}
+        illustration={media.studio.oneTeam}
+      />
       <StudioIntro
         eyebrow={studioContent.intro.eyebrow}
         title={studioContent.intro.title}
         paragraphs={studioContent.intro.paragraphs}
-        illustration={media.studio.oneTeam}
+        editor={teamEditor}
       />
       <FounderProfiles
         intro={studioContent.founders}

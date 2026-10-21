@@ -53,7 +53,8 @@ src/
                 Logo, StackMark, WhatsAppButton
     layout/     Header, Footer, MobileMenu, PageTransition, Preloader, Cursor, GridOverlay, GrainOverlay,
                 Section, SkipLink, DeferredSection, ToneController
-    media/      Image, Video, MediaReveal, ServiceMedia, MacbookScroll, ClientLogo, ImageSequence
+    media/      Image, Video, MediaReveal, ServiceMedia, MacbookScroll, ClientLogo, ImageSequence,
+                IllustrationScene, CodeEditor
     motion/     SplitReveal, Parallax, CountUp, DrawLine, StaggerGroup, MaskedHeading
     seo/        PageMeta
   hooks/        useLenis, useReducedMotion, useIsTouch, useMediaQuery, useInView, useAnalytics,
@@ -61,7 +62,8 @@ src/
   lib/          gsap.ts (plugins registered ONCE), lenis.ts, estimate.ts, cn.ts, motion-tokens.ts,
                 config.ts (env), analytics.ts, format.ts, lazy-page.ts, brief-schema.ts (zod),
                 brief-reducer.ts, brief-draft.ts, submit-brief.ts, scroll-refresh.ts (debounced
-                ScrollTrigger.refresh), tone.ts, count-up.ts, reel.ts, path-layout.ts (pure motion maths)
+                ScrollTrigger.refresh), tone.ts, count-up.ts, reel.ts, path-layout.ts (pure motion maths),
+                code-highlight.ts (CodeEditor syntax colours)
   data/         ALL copy + content (typed): site, navigation, projects, services, process, pricing,
                 faqs, testimonials, clients, media, studio, pages, brief
   types/        shared content types (one file per domain, re-exported from types/index.ts)

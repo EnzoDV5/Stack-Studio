@@ -320,6 +320,27 @@ export const illustrationScene = {
   pulse: { scale: 1.06, duration: 1.4, offset: 0.35 },
 } as const
 
+/**
+ * CodeEditor (Studio, who we are): once the editor is well on screen the code types itself
+ * out, line by line, at a steady keyboard pace (seconds, not scroll). The caret's name tag
+ * shows whose turn it is; then the build command runs and its result lines appear.
+ */
+export const codeEditor = {
+  start: 'top 70%',
+  /** Seconds per typed character. */
+  perCharacter: 0.016,
+  /** Pause before each new line. */
+  linePause: 0.07,
+  /** Pause when the keyboard passes to the other founder. */
+  handoff: 0.35,
+  /** Pause between the last line of code and the build command. */
+  commandDelay: 0.45,
+  /** Pause between the command and its first result line. */
+  outputDelay: 0.3,
+  /** Gap between the build's result lines. */
+  outputStagger: 0.22,
+} as const
+
 export const heroMark = {
   /** Travel over the hero's scroll, as a percentage of the mark's own height. */
   travel: 70,

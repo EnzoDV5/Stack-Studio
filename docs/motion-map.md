@@ -98,8 +98,8 @@ No adjacent clashes.
 
 | #   | Section             | Tone   | Opener                  | Motion                                                  | Trigger       |
 | --- | ------------------- | ------ | ----------------------- | ------------------------------------------------------- | ------------- |
-| 1   | PageTitle           | paper  | own                     | Static                                                  | none          |
-| 2   | StudioIntro         | paper  | eyebrow + title         | Illustration assembles                                  | enter         |
+| 1   | StudioHero          | dark   | own (PageTitle)         | Team illustration assembles beside the title + facts    | load          |
+| 2   | StudioIntro         | dark   | eyebrow + title         | Code editor types the build out, founders taking turns  | enter         |
 | 3   | FounderProfiles     | dark   | SectionHeader (stacked) | Parallax portraits                                      | scrub         |
 | 4   | ValuesGrid (how)    | dark   | SectionHeader (stacked) | MediaReveal on its image                                | enter         |
 | 5   | StackDiagram        | dark   | SectionHeader (split)   | Build filter lights the spine; tools open their details | hover (click) |
