@@ -72,7 +72,7 @@ export function EstimatePanel({
             )}
             <Notes items={[copy.range.careNudge(formatPrice(result.careFrom))]} />
             <details className="group mt-6 border-t border-tone pt-5 text-small">
-              <summary className="flex cursor-pointer list-none items-center justify-between text-muted hover:text-paper [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-(--cursor-pointer) list-none items-center justify-between text-muted hover:text-paper [&::-webkit-details-marker]:hidden">
                 {copy.breakdownLabel}
                 <span aria-hidden="true" className="transition-transform group-open:rotate-45">
                   +

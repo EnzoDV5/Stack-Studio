@@ -14,7 +14,6 @@ export interface FeaturedWorkProps {
   cta: CtaLink
   projects: Project[]
   cardCta: string
-  cursorLabel: string
   sampleLabel: string
   tone?: Tone
 }
@@ -28,7 +27,6 @@ export function FeaturedWork({
   cta,
   projects,
   cardCta,
-  cursorLabel,
   sampleLabel,
   tone = 'paper',
 }: FeaturedWorkProps) {
@@ -56,7 +54,6 @@ export function FeaturedWork({
               project={project}
               variant="feature"
               ctaLabel={cardCta}
-              cursorLabel={cursorLabel}
               sampleLabel={sampleLabel}
               className={cn(
                 i % 2 === 0 ? 'lg:col-span-7' : 'lg:col-span-5 lg:col-start-8 lg:mt-56',

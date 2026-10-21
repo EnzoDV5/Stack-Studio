@@ -12,7 +12,6 @@ export interface CaseOutroProps {
   cta: CtaContent
   next?: Project
   nextLabel: string
-  cursorLabel: string
   tone?: Tone
 }
 
@@ -20,7 +19,7 @@ export interface CaseOutroProps {
  * End of a case study. Readers who got this far trust us most, so the pre-filled CTA
  * comes first and the next-project link second.
  */
-export function CaseOutro({ cta, next, nextLabel, cursorLabel, tone = 'dark' }: CaseOutroProps) {
+export function CaseOutro({ cta, next, nextLabel, tone = 'dark' }: CaseOutroProps) {
   return (
     <Section tone={tone} className="border-t border-tone">
       <div className="container-site grid gap-16 lg:grid-cols-12">
@@ -43,11 +42,7 @@ export function CaseOutro({ cta, next, nextLabel, cursorLabel, tone = 'dark' }: 
         </div>
 
         {next && (
-          <Link
-            to={`/work/${next.slug}`}
-            className="group block lg:col-span-6 lg:col-start-7"
-            data-cursor-label={cursorLabel}
-          >
+          <Link to={`/work/${next.slug}`} className="group block lg:col-span-6 lg:col-start-7">
             <p className="mb-6 eyebrow text-muted">{nextLabel} →</p>
             <MediaReveal className="aspect-video rounded-lg bg-ink-700">
               <Image

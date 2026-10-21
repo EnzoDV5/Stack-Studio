@@ -1,6 +1,5 @@
 import { Suspense } from 'react'
 import { AppRoutes, preloadRoute } from '@/app/router'
-import { Cursor } from '@/components/layout/Cursor'
 import { Footer } from '@/components/layout/Footer'
 import { GrainOverlay } from '@/components/layout/GrainOverlay'
 import { Header } from '@/components/layout/Header'
@@ -92,7 +91,6 @@ export function App() {
         )}
       </PageTransition>
 
-      <Cursor />
       <GrainOverlay />
     </>
   )

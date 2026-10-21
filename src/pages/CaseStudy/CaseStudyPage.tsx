@@ -95,7 +95,6 @@ export function CaseStudyPage() {
         }}
         next={next}
         nextLabel={caseStudyContent.nextLabel}
-        cursorLabel={next?.name ?? ''}
       />
     </>
   )

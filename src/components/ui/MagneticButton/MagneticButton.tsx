@@ -67,11 +67,7 @@ export function MagneticButton(props: MagneticButtonProps) {
   )
 
   return (
-    <span
-      ref={zoneRef}
-      className={cn('-m-4 inline-flex p-4', wrapperClassName)}
-      data-cursor="magnetic"
-    >
+    <span ref={zoneRef} className={cn('-m-4 inline-flex p-4', wrapperClassName)}>
       <Button {...(buttonProps as ButtonProps)} />
     </span>
   )

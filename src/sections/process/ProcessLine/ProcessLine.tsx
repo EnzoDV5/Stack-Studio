@@ -367,7 +367,7 @@ export function ProcessLine({
             onClick={onBoardClick}
             className={cn(
               'self-start overflow-hidden rounded-lg border border-tone',
-              interactive && 'cursor-pointer',
+              interactive && 'cursor-(--cursor-pointer)',
             )}
             style={{ '--label-w': readout ? '13rem' : '22rem' } as CSSProperties}
           >

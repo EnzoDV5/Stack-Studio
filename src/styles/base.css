@@ -51,11 +51,26 @@
     height: auto;
   }
 
-  button {
-    cursor: pointer;
+  /* The Stack mark replaces the system cursor (tokens.css); text fields keep the I-beam. */
+  html {
+    cursor: var(--cursor-default);
   }
 
-  button:disabled {
+  a,
+  button,
+  [role='button'],
+  summary,
+  select,
+  input:is([type='checkbox'], [type='radio']) {
+    cursor: var(--cursor-pointer);
+  }
+
+  input,
+  textarea {
+    cursor: text;
+  }
+
+  :disabled {
     cursor: not-allowed;
   }
 
@@ -72,21 +87,6 @@
     outline: 2px solid var(--focus-ring);
     outline-offset: 3px;
     border-radius: var(--radius-xs);
-  }
-
-  /* Custom cursor: hide the native cursor only when <Cursor> is active (desktop pointer). */
-  html.has-custom-cursor,
-  html.has-custom-cursor a,
-  html.has-custom-cursor button,
-  html.has-custom-cursor [role='button'],
-  html.has-custom-cursor label {
-    cursor: none;
-  }
-
-  html.has-custom-cursor input,
-  html.has-custom-cursor textarea,
-  html.has-custom-cursor select {
-    cursor: auto;
   }
 
   /* Lock scroll while menu / preloader is open (Lenis is also stopped). */

@@ -36,7 +36,7 @@ export function ConsentField({
           onChange={(e) => onChange(e.target.checked)}
           aria-invalid={error ? true : undefined}
           aria-describedby={cn(noteId, error && errorId) || undefined}
-          className="mt-0.5 size-5 shrink-0 cursor-pointer accent-orange"
+          className="mt-0.5 size-5 shrink-0 cursor-(--cursor-pointer) accent-orange"
         />
         <label htmlFor={id} className="text-small">
           {label}{' '}

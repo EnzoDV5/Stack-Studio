@@ -170,12 +170,12 @@ Neighbouring sections never share a trigger type, and every section's motion is 
 | Monthly plans       | Two fixed bundles shown side by side for comparison                                                   | `MonthlyPlans`, `PlanCard`       |
 | Portraits, images   | Gentle parallax (scroll, or pointer on Home)                                                          | `Parallax`                       |
 | Technologies        | CSS marquee, hover pause and pause control                                                            | `TechnologyMarquee`, `Marquee`   |
-| Chrome              | Header hides on scroll and follows the page tone; cursor; magnetic CTAs                               | `Header`, `Cursor`               |
+| Chrome              | Header hides on scroll and follows the page tone; magnetic CTAs                                       | `Header`, `MagneticButton`       |
 
 **Reduced motion** (`prefers-reduced-motion: reduce`): Lenis is not created (native
 scroll), there's no preloader, no page wipe (instant swap plus scroll reset), no text
 splitting, no parallax, pins, scrubs, Flip or tone flow (sections keep solid backgrounds
-and the work reel is a grid), no cursor or magnetic effects, a static marquee and no video
+and the work reel is a grid), no magnetic effects, a static marquee and no video
 autoplay. All content stays visible.
 
 ## Grain and texture

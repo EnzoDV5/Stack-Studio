@@ -50,7 +50,7 @@ src/
   components/
     ui/         Button, MagneticButton, Eyebrow, Heading, Container, Tag, Accordion, Marquee, TextLink, Divider,
                 Logo, StackMark, WhatsAppButton
-    layout/     Header, Footer, MobileMenu, PageTransition, Preloader, Cursor, GridOverlay, GrainOverlay,
+    layout/     Header, Footer, MobileMenu, PageTransition, Preloader, GridOverlay, GrainOverlay,
                 Section, SkipLink, DeferredSection, ToneController
     media/      Image, Video, MediaReveal, ServiceMedia, MacbookScroll, ClientLogo, ImageSequence
     motion/     SplitReveal, Parallax, CountUp, DrawLine, StaggerGroup, MaskedHeading
@@ -159,7 +159,10 @@ cleared: use only `ink`, `ink-*`, `paper`, `paper-*`, `white`, `orange`, `orange
 - `prefers-reduced-motion`: Lenis is not created (native scroll), SplitText is skipped,
   Parallax is static, the preloader and page-wipe are skipped, the marquee stops. Content is
   always visible. Check `useReducedMotion()` in every motion component.
-- Cursor and magnetic effects only on `(hover: hover) and (pointer: fine)` (`useIsTouch`).
+- The cursor is the Stack mark as a native CSS cursor (`public/cursor`, `--cursor-default` /
+  `--cursor-pointer` in `tokens.css`, desktop pointers only). Use `cursor-(--cursor-pointer)`,
+  not `cursor-pointer`, on custom clickable elements. Magnetic effects only on
+  `(hover: hover) and (pointer: fine)` (`useIsTouch`).
 - The preloader runs once per session (`sessionStorage`) and takes under 1.5s. The page
   transition is an orange/black panel wipe with a scroll reset. The header hides on scroll
   down and shows on scroll up.

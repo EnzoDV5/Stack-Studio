@@ -136,7 +136,17 @@
   --z-header: 50;
   --z-menu: 60;
   --z-grain: 90;
-  --z-cursor: 100;
   --z-transition: 110;
   --z-preloader: 120;
+
+  /* Cursors: the Stack mark (public/cursor) on desktop pointers, system cursors elsewhere. */
+  --cursor-default: auto;
+  --cursor-pointer: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :root {
+    --cursor-default: url('/cursor/default.svg') 16 2, url('/cursor/default.png') 16 2, auto;
+    --cursor-pointer: url('/cursor/pointer.svg') 16 2, url('/cursor/pointer.png') 16 2, pointer;
+  }
 }

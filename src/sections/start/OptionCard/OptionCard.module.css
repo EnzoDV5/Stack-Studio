@@ -7,7 +7,7 @@
     padding: 1.25rem 1.25rem 1.25rem 1.1rem;
     border: 1px solid var(--tone-border);
     border-radius: var(--radius-md);
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     transition:
       border-color var(--duration-micro) ease,
       background-color var(--duration-micro) ease,

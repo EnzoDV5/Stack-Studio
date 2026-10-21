@@ -6,7 +6,7 @@
  */
 
 export const duration = {
-  /** Hover colour/opacity swaps, cursor scale. */
+  /** Hover colour/opacity swaps. */
   micro: 0.25,
   /** Small UI: menu items, accordion, step changes. */
   fast: 0.6,
@@ -77,11 +77,6 @@ export const magnetic = {
   ease: 'power3.out',
   release: 'elastic.out(1, 0.45)',
   releaseDuration: 1.1,
-} as const
-
-export const cursor = {
-  follow: 0.5,
-  followEase: 'power3.out',
 } as const
 
 /**
