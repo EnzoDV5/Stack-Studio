@@ -63,7 +63,8 @@ const panelClass: Record<Mode, { project: string; outro: string }> = {
     // As wide as the height allows: the panel's media is 16:9 and the lines under it take
     // about 7.5rem, so a short window gets a narrower panel rather than a cropped mockup, and
     // a tall one a wider panel rather than empty space.
-    project: 'h-full w-[min(72vw,84rem,calc((100cqh-7.5rem)*16/9))] shrink-0',
+    project:
+      'h-full w-[min(72vw,84rem,calc((100cqh-7.5rem)*16/9))] shrink-0 low:w-[min(72vw,84rem,calc((100cqh-3.5rem)*16/9))]',
     outro: 'h-full w-[min(42vw,38rem)] shrink-0',
   },
   carousel: {
@@ -299,16 +300,16 @@ export function WorkReel({
                     </div>
                     <div
                       data-reel-chrome={isCover ? '' : undefined}
-                      className="mt-4 flex flex-wrap items-end justify-between gap-x-10 gap-y-3"
+                      className="mt-4 flex flex-wrap items-end justify-between gap-x-10 gap-y-3 low:mt-3 low:flex-nowrap low:items-center low:gap-x-4"
                     >
                       <div className="min-w-0">
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                          <h3 className="text-heading-lg">{project.name}</h3>
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 low:flex-nowrap">
+                          <h3 className="text-heading-lg low:text-heading-md">{project.name}</h3>
                           {client?.logo && (
                             <span
                               role="img"
                               aria-label={`${client.name} logo`}
-                              className="block h-8 w-24 shrink-0 bg-grey-700 sm:h-9 sm:w-28"
+                              className="block h-8 w-24 shrink-0 bg-grey-700 sm:h-9 sm:w-28 low:h-7 low:w-20"
                               style={{
                                 maskImage: `url(${client.logo})`,
                                 maskRepeat: 'no-repeat',
@@ -318,7 +319,7 @@ export function WorkReel({
                             />
                           )}
                         </div>
-                        <dl className="mt-3 flex flex-wrap gap-x-8 gap-y-2 text-small">
+                        <dl className="mt-3 flex flex-wrap gap-x-8 gap-y-2 text-small low:hidden">
                           <div>
                             <dt className="eyebrow text-muted">{labels.sector}</dt>
                             <dd className="mt-1">{project.sector}</dd>
@@ -331,7 +332,7 @@ export function WorkReel({
                           </div>
                         </dl>
                       </div>
-                      <span className="flex items-center gap-2 eyebrow">
+                      <span className="flex shrink-0 items-center gap-2 eyebrow">
                         {project.isSample && (
                           <span className="rounded-pill bg-orange px-2.5 py-1 text-ink">
                             {labels.sample}
@@ -352,7 +353,11 @@ export function WorkReel({
             })}
 
             <li data-reel-panel="" data-reel-chrome={chrome} className={panelClass[mode].outro}>
-              <div className={cn('flex h-full flex-col rounded-lg border border-tone p-5 sm:p-7')}>
+              <div
+                className={cn(
+                  'flex h-full flex-col rounded-lg border border-tone p-5 sm:p-7 low:p-5',
+                )}
+              >
                 {/* Pinned, the card has a fixed height: the illustration takes whatever room is
                     left (up to 30rem tall) and scales down with it in width and height (container
                     units keep its aspect). Elsewhere the card can grow, so it just fills the
@@ -386,18 +391,20 @@ export function WorkReel({
                     />
                   </div>
                 </div>
-                <div className="flex shrink-0 flex-col gap-6">
-                  <p className="max-w-[16ch] font-display text-heading-lg xl:text-heading-xl">
+                <div className="flex shrink-0 flex-col gap-6 low:gap-4">
+                  <p className="max-w-[16ch] font-display text-heading-lg xl:text-heading-xl low:text-heading-md xl:low:text-heading-md">
                     {outro.title}
                   </p>
                   {/* Side by side where they fit, so the illustration keeps the height. */}
                   <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
-                    <TextLink to={outro.allWork.to} arrow className="text-heading-md">
+                    {/* On a short window the section header's own "All work" link is enough. */}
+                    <TextLink to={outro.allWork.to} arrow className="text-heading-md low:hidden">
                       {outro.allWork.label}
                     </TextLink>
                     <Button
                       to={outro.start.to}
                       withArrow
+                      className="low:h-10 low:px-5 low:text-small"
                       analytics={{ event: 'Start project click', props: { location: 'home-reel' } }}
                     >
                       {outro.start.label}

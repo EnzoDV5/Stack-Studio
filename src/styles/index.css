@@ -7,3 +7,6 @@
 
 /* Short landscape screens (a phone on its side): trim layouts built around a full viewport. */
 @custom-variant short (@media (orientation: landscape) and (max-height: 32rem));
+/* Laptops with a short window (a small screen, or a browser not maximised): the pinned work
+   reel has little height, so it drops detail to keep the mockups whole. */
+@custom-variant low (@media (min-width: 64rem) and (max-height: 40rem));
