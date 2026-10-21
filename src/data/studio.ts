@@ -75,7 +75,7 @@ export const principles: ValueItem[] = [
 export const studioFacts: StudioFact[] = [
   { label: 'Based in', value: 'Centurion, South Africa' }, // COPY:
   { label: 'Founded by', value: 'Enzo and Armand' }, // COPY:
-  { label: 'We build', value: 'Websites, apps and software' }, // COPY:
+  { label: 'We build', value: 'Websites, apps, systems and AI' }, // COPY:
 ]
 
 /**
@@ -85,7 +85,7 @@ export const studioFacts: StudioFact[] = [
  */
 export const teamEditor: CodeEditorContent = {
   label:
-    'A code editor where Enzo and Armand write one build together: strategy, UX, visual design and motion, then the API and data, then launch with hosting and care. The build passes.', // COPY:
+    'A code editor where Enzo and Armand write one build together, for websites, apps, systems and AI: strategy, UX, visual design and motion, then the API, data and AI, then launch with hosting and care. The build passes.', // COPY:
   project: 'stack-studio',
   explorerTitle: 'Explorer', // COPY:
   explorer: [
@@ -97,6 +97,7 @@ export const teamEditor: CodeEditorContent = {
     { name: 'dev', depth: 0, folder: true },
     { name: 'api.ts', depth: 1 },
     { name: 'data.ts', depth: 1 },
+    { name: 'ai.ts', depth: 1 },
     { name: 'hosting.ts', depth: 1 },
     { name: 'one-team.ts', depth: 0 },
   ],
@@ -114,7 +115,7 @@ export const teamEditor: CodeEditorContent = {
     },
     {
       author: 'Armand',
-      lines: ["import { api, data, hosting } from './dev'", ''],
+      lines: ["import { api, data, ai, hosting } from './dev'", ''],
     },
     {
       author: 'Enzo',
@@ -122,6 +123,7 @@ export const teamEditor: CodeEditorContent = {
         'export const team = {',
         "  base: 'Centurion, ZA',",
         "  founders: ['Enzo', 'Armand'],",
+        "  builds: ['sites', 'apps', 'systems', 'ai'],",
         "  crafts: ['strategy', 'ux', 'visual',",
         "    'motion', 'front-end', 'back-end'],",
         '}',
@@ -136,17 +138,16 @@ export const teamEditor: CodeEditorContent = {
       author: 'Enzo',
       lines: [
         '  const story = strategy(business.difference)',
-        '  const site = await ux(story, business.users)',
-        '    .then(visual)',
-        '    .then(motion)',
+        '  const product = await ux(story, business)',
+        '    .then(visual).then(motion)',
       ],
     },
     {
       author: 'Armand',
       lines: [
-        '  await api(site).connect(data)',
+        '  await api(product).connect(data, ai)',
         '  // after launch: host, care, keep improving',
-        '  return hosting.launch(site, { care: true })',
+        '  return hosting.launch(product).care()',
         '}',
       ],
     },
@@ -157,7 +158,7 @@ export const teamEditor: CodeEditorContent = {
     command: 'npm run build',
     output: [
       'design   strategy · ux · visual · motion', // COPY:
-      'develop  front-end · back-end · data', // COPY:
+      'develop  front-end · back-end · systems · ai', // COPY:
       'launch   live, hosted and cared for', // COPY:
     ],
   },

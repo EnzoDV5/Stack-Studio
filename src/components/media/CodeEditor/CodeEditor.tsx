@@ -311,7 +311,7 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
           <div
             className={cn(
               styles.codeArea,
-              'text-[0.625rem] @sm:text-[0.6875rem] @md:text-[0.8125rem]',
+              'text-[0.625rem] @sm:text-[0.6875rem] @md:text-[0.75rem]',
             )}
           >
             <span className={styles.currentLine} />
@@ -345,7 +345,7 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
           </div>
 
           {/* Terminal */}
-          <div className="border-t border-tone bg-ink px-4 pt-2 pb-3 text-[0.6875rem] @md:text-[0.75rem]">
+          <div className="border-t border-tone bg-ink px-4 pt-1.5 pb-2.5 text-[0.625rem] @sm:text-[0.6875rem]">
             <div className="mb-2 flex gap-4 text-[0.625rem] tracking-[0.12em] uppercase">
               {terminal.tabs.map((tab, i) => (
                 <span
@@ -359,12 +359,12 @@ export function CodeEditor({ content, className }: CodeEditorProps) {
                 </span>
               ))}
             </div>
-            <p data-command className={cn(styles.typed, 'leading-[1.8] whitespace-pre')}>
+            <p data-command className={cn(styles.typed, 'leading-[1.7] whitespace-pre')}>
               <span className="text-orange">{terminal.prompt}</span>{' '}
               <span className="text-paper">{terminal.command}</span>
             </p>
             {terminal.output.map((line) => (
-              <p key={line} data-output className="leading-[1.8] whitespace-pre text-grey-300">
+              <p key={line} data-output className="leading-[1.7] whitespace-pre text-grey-300">
                 <span className="text-orange">✓</span> {line}
               </p>
             ))}

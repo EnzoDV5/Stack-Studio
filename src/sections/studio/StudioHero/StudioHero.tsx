@@ -17,6 +17,7 @@ export function StudioHero({ content, facts, illustration }: StudioHeroProps) {
   return (
     <PageTitle
       content={content}
+      asidePlacement="beside"
       aside={
         <IllustrationScene
           scene={illustration}
@@ -26,7 +27,7 @@ export function StudioHero({ content, facts, illustration }: StudioHeroProps) {
         />
       }
     >
-      <dl className="grid max-w-[46rem] gap-x-8 gap-y-5 border-t border-tone pt-6 sm:grid-cols-3">
+      <dl className="grid gap-x-8 gap-y-5 border-t border-tone pt-6 sm:grid-cols-3">
         {facts.map((fact) => (
           <div key={fact.label}>
             <dt className="eyebrow text-muted">{fact.label}</dt>

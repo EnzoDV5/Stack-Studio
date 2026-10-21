@@ -11,6 +11,11 @@ export interface PageTitleProps {
   children?: ReactNode
   /** Right-hand slot beside the title on large screens, below it on small ones (e.g. a logo). */
   aside?: ReactNode
+  /**
+   * Where the aside sits on large screens: `edge` at the right edge, level with the bottom of
+   * the text (a logo), or `beside` right next to the text, centred on it (an illustration).
+   */
+  asidePlacement?: 'edge' | 'beside'
 }
 
 /**
@@ -18,15 +23,24 @@ export interface PageTitleProps {
  * keeps its own tone over the inset while the rest of the page tone flows. The h1 compiles
  * from code as soon as the preloader or page wipe lifts, like every section title.
  */
-export function PageTitle({ content, tone = 'dark', children, aside }: PageTitleProps) {
+export function PageTitle({
+  content,
+  tone = 'dark',
+  children,
+  aside,
+  asidePlacement = 'edge',
+}: PageTitleProps) {
   return (
     <div className="bg-ink pt-(--spacing-header)">
       <Section as="header" tone={tone} solid spacing="none" className="py-8 md:pt-12">
         <div
           className={cn(
             'container-site',
+            Boolean(aside) && 'flex flex-col gap-8 lg:flex-row',
             Boolean(aside) &&
-              'flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12',
+              (asidePlacement === 'edge'
+                ? 'lg:items-end lg:justify-between lg:gap-12'
+                : 'lg:items-center lg:gap-16 xl:gap-24'),
           )}
         >
           <div className="min-w-0">

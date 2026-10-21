@@ -30,10 +30,10 @@
   /* The code and its gutter share one line height, so the caret and the current-line bar
      can find a row from --row alone, at any font size. */
   .codeArea {
-    --lh: 1.75em;
+    --lh: 1.65em;
     position: relative;
     display: flex;
-    padding-block: 0.75rem;
+    padding-block: 0.625rem;
   }
 
   .row {
@@ -50,7 +50,7 @@
 
   .currentLine {
     position: absolute;
-    top: 0.75rem;
+    top: 0.625rem;
     right: 0;
     left: 0;
     height: var(--lh);

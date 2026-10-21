@@ -32,7 +32,7 @@ export const pageMeta = {
   studio: {
     title: 'Studio', // COPY:
     description:
-      'Meet Stack Studio, the Centurion team building websites, apps and software to help businesses stand out, work better and grow.', // COPY:
+      'Meet Stack Studio, the Centurion team building websites, apps, large systems and AI to help businesses stand out, work better and grow.', // COPY:
     path: '/studio',
   },
   start: {
@@ -530,14 +530,14 @@ export const studioContent = {
     eyebrow: 'Studio', // COPY:
     title: 'A growing studio with big standards.', // COPY:
     intro:
-      'Stack Studio was founded in Centurion to help businesses stand out and grow through carefully built websites, apps and software.', // COPY:
+      'Stack Studio was founded in Centurion to help businesses stand out and grow through carefully built websites, apps, large systems and AI.', // COPY:
   } satisfies PageHeroContent,
   intro: {
     eyebrow: 'Who we are', // COPY:
     title: 'Design, motion and development in one team.', // COPY:
     paragraphs: [
       'A strong digital product needs good design and solid development working together. At Stack, strategy, UX, visual design, motion, front-end and back-end sit in one team. We each have our focus, but we work across both ends of every build.', // COPY:
-      'We build websites that show why a business is different, and apps and software shaped around what its customers and team need. After launch, we can host and maintain your site or app, and keep improving it as your business grows.', // COPY:
+      'We build websites that show why a business is different, apps shaped around what its customers and team need, and the large systems and AI that do the heavy lifting behind them. After launch, we can host and maintain your site or app, and keep improving it as your business grows.', // COPY:
     ],
   },
   founders: {
