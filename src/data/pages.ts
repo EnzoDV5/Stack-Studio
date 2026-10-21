@@ -6,7 +6,7 @@ import type { CtaContent, PageHeroContent, PageMetaContent, SectionIntro } from 
 
 export const pageMeta = {
   home: {
-    title: 'Stack Studio — Websites, apps and software that help businesses grow', // COPY:
+    title: 'Stack Studio — Websites, apps, systems and AI that help businesses grow', // COPY:
     description:
       'Stack Studio builds custom websites, apps, software and AI systems, then helps businesses host, maintain and improve them. Based in Centurion, South Africa.', // COPY:
     path: '/',
