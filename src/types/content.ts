@@ -48,6 +48,9 @@ export interface TestimonialLabels {
   next: string
   /** The accessible name of each slide, e.g. "2 of 3". */
   slide: (index: number, count: number) => string
+  /** The auto-advancing carousel's pause and play button (Home, on phones). */
+  pause: string
+  play: string
 }
 
 export interface Client {

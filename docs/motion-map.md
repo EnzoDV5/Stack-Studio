@@ -137,16 +137,16 @@ Home leads with the visitor's need, then shows the services and the way a projec
 the work, client voices and founders. It stays a summary; full offer and process detail live
 on their pages.
 
-| #   | Section                | Tone   | Opener                | Signature motion                                                | Trigger      |
-| --- | ---------------------- | ------ | --------------------- | --------------------------------------------------------------- | ------------ |
-| 1   | HomeHero               | dark   | own                   | Statement line reveal and showreel                              | load + scrub |
-| 2   | PathChooser            | dark   | SectionHeader split   | Horizontal accordion; technology marquee along the bottom       | hover        |
-| 3   | ServicesSnippet        | paper  | SectionHeader stacked | Static editorial service rows                                   | none         |
-| 4   | ProcessSnippet         | dark   | SectionHeader minimal | Vertical rail and markers reveal as the steps enter             | enter        |
-| 5   | WorkReel               | paper  | SectionHeader inline  | Full-bleed entrance, then the page's only pin and sideways reel | scrub + pin  |
-| 6   | ClientVoices           | paper  | SectionHeader stacked | Quote cards rise in sequence                                    | enter        |
-| 7   | StudioSnippet          | paper  | SectionHeader split   | Portraits drift toward the pointer                              | hover        |
-| 8   | ClosingCta (app shell) | orange | eyebrow               | Code compiles into the title on entry                           | enter        |
+| #   | Section                | Tone   | Opener                | Signature motion                                                                     | Trigger      |
+| --- | ---------------------- | ------ | --------------------- | ------------------------------------------------------------------------------------ | ------------ |
+| 1   | HomeHero               | dark   | own                   | Statement line reveal and showreel                                                   | load + scrub |
+| 2   | PathChooser            | dark   | SectionHeader split   | Horizontal accordion; technology marquee along the bottom                            | hover        |
+| 3   | ServicesSnippet        | paper  | SectionHeader stacked | Static editorial service rows                                                        | none         |
+| 4   | ProcessSnippet         | dark   | SectionHeader minimal | Vertical rail and markers reveal as the steps enter                                  | enter        |
+| 5   | WorkReel               | paper  | SectionHeader inline  | Full-bleed entrance, then the page's only pin and sideways reel                      | scrub + pin  |
+| 6   | ClientVoices           | paper  | SectionHeader stacked | Quote cards rise in sequence; below lg an auto-advancing carousel (`voicesCarousel`) | enter        |
+| 7   | StudioSnippet          | paper  | SectionHeader split   | Portraits drift toward the pointer                                                   | hover        |
+| 8   | ClosingCta (app shell) | orange | eyebrow               | Code compiles into the title on entry                                                | enter        |
 
 ProcessSnippet keeps the summary to four steps. The vertical rail and markers reveal once
 on entry using transform and opacity. With reduced motion, the complete timeline is visible.

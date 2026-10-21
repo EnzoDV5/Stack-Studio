@@ -10,7 +10,7 @@ import { rates } from '@/data/rates'
 import { offerings, serviceStages } from '@/data/services'
 import { founders } from '@/data/studio'
 import { technologies, technologyContent } from '@/data/technologies'
-import { testimonials } from '@/data/testimonials'
+import { testimonialLabels, testimonials } from '@/data/testimonials'
 import { stageRows } from '@/lib/offer'
 import { HomeHero } from '@/sections/home/HomeHero'
 import type { ChapterFlowItem } from '@/sections/home/ChapterFlow'
@@ -169,6 +169,7 @@ export function HomePage() {
           tone="dark"
           title={clients.title}
           more={clients.more}
+          labels={testimonialLabels}
           voices={testimonials.map((t) => {
             const project = getProject(t.projectSlug)
             return {

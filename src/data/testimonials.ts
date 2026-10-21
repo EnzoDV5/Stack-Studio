@@ -49,4 +49,6 @@ export const testimonialLabels: TestimonialLabels = {
   previous: 'Previous testimonial', // COPY:
   next: 'Next testimonial', // COPY:
   slide: (index, count) => `${index} of ${count}`, // COPY:
+  pause: 'Pause testimonials', // COPY:
+  play: 'Play testimonials', // COPY:
 }

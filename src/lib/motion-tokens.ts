@@ -396,6 +396,15 @@ export const codeEditor = {
   outputStagger: 0.22,
 } as const
 
+/**
+ * ClientVoices (Home, below lg): the quote carousel moves on to the next quote on its own
+ * every `interval` seconds while it's on screen, unless the visitor is touching, hovering or
+ * focusing it, or has paused it. A swipe restarts the wait. Never with reduced motion.
+ */
+export const voicesCarousel = {
+  interval: 6,
+} as const
+
 export const heroMark = {
   /** Travel over the hero's scroll, as a percentage of the mark's own height. */
   travel: 70,
