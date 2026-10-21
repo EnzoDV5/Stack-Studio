@@ -27,6 +27,16 @@ export const testimonials: Testimonial[] = [
     logo: media.clients.mpgFoundation,
     projectSlug: 'mpg-foundation',
   },
+  {
+    id: 'salon-friend',
+    quote:
+      'We went from chasing orders through Facebook and WhatsApp to a shop that takes them for us, and we can see every order, payment and delivery in one place.', // COPY: PLACEHOLDER QUOTE
+    // COPY: add the name of the person quoted (shown above the role once set)
+    role: 'Owner', // COPY:
+    company: 'Salon Friend',
+    logo: media.clients.salonFriend,
+    projectSlug: 'salon-friend',
+  },
 ]
 
 export function getTestimonial(id: string | undefined): Testimonial | undefined {

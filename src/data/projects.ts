@@ -179,6 +179,7 @@ export const projects: Project[] = [
       }, // COPY:
     ],
     metrics: [], // COPY: add real, client-approved results when there are some
+    testimonialId: 'salon-friend',
     briefType: 'ecommerce',
   },
 ]
