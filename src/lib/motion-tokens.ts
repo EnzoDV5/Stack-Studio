@@ -83,8 +83,6 @@ export const magnetic = {
 export const cursor = {
   follow: 0.15,
   followEase: 'power3.out',
-  /** Leaving plays the morph back faster than it came in. */
-  leaveSpeed: 1.6,
 } as const
 
 /**

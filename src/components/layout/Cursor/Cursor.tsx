@@ -41,28 +41,14 @@ function CursorInner() {
         ease: cursorTokens.followEase,
       })
 
-      // The mark shrinks into the hotspot as the bubble grows out of it.
+      // The mark shrinks into the hotspot as the bubble grows out of it. Enter and leave are
+      // separate ease-out tweens: reversing an ease-out starts on its slow tail, which reads
+      // as a delay before the bubble lets go.
       const [hx, hy] = MARK.hotspot
-      const morph = gsap
-        .timeline({
-          paused: true,
-          defaults: { duration: duration.fast, ease: ease.out },
-          onReverseComplete: () => root.classList.remove(styles.visible ?? ''),
-        })
-        .to(
-          mark,
-          {
-            scale: 0,
-            rotate: MARK.tilt,
-            opacity: 0,
-            transformOrigin: `${hx}px ${hy}px`,
-            duration: duration.micro,
-          },
-          0,
-        )
-        .fromTo(bubble, { scale: 0.15 }, { scale: 1 }, 0)
-        .fromTo(bubble, { opacity: 0 }, { opacity: 1, duration: duration.micro }, 0)
-        .fromTo(label, { opacity: 0 }, { opacity: 1, duration: duration.micro }, duration.micro / 2)
+      const visible = styles.visible ?? ''
+      gsap.set(mark, { transformOrigin: `${hx}px ${hy}px` })
+      gsap.set(bubble, { scale: 0, opacity: 0 })
+      gsap.set(label, { opacity: 0 })
 
       let active = false
 
@@ -70,22 +56,57 @@ function CursorInner() {
         label.textContent = text
         if (active) return
         active = true
-        // Jump to the pointer so the mark sits exactly where the system cursor was.
-        xTo(event.clientX, event.clientX)
-        yTo(event.clientY, event.clientY)
-        root.classList.add(styles.visible ?? '')
-        morph.timeScale(1).play()
+        if (!root.classList.contains(visible)) {
+          // Jump to the pointer so the mark sits exactly where the system cursor was.
+          xTo(event.clientX, event.clientX)
+          yTo(event.clientY, event.clientY)
+          gsap.set(mark, { scale: 1, rotate: 0, opacity: 1 })
+          gsap.set(bubble, { scale: 0.15, opacity: 0 })
+          root.classList.add(visible)
+        }
+        gsap.to(mark, {
+          scale: 0,
+          rotate: MARK.tilt,
+          opacity: 0,
+          duration: duration.micro,
+          ease: ease.out,
+          overwrite: 'auto',
+        })
+        gsap.to(bubble, {
+          scale: 1,
+          opacity: 1,
+          duration: duration.fast,
+          ease: ease.out,
+          overwrite: 'auto',
+        })
+        gsap.to(label, {
+          opacity: 1,
+          duration: duration.micro,
+          delay: duration.micro / 2,
+          overwrite: 'auto',
+        })
       }
 
+      // The system cursor is back the moment the pointer leaves the card, so the bubble
+      // starts shrinking into the pointer straight away instead of handing back to the mark.
       const deactivate = () => {
         if (!active) return
         active = false
-        morph.timeScale(cursorTokens.leaveSpeed).reverse()
+        gsap.to(label, { opacity: 0, duration: duration.micro / 2, overwrite: 'auto' })
+        gsap.to(bubble, {
+          scale: 0,
+          opacity: 0,
+          duration: duration.micro,
+          ease: ease.outQuart,
+          overwrite: 'auto',
+          onComplete: () => root.classList.remove(visible),
+        })
       }
 
       const onMove = (event: PointerEvent) => {
         if (event.pointerType !== 'mouse') return
-        if (active) {
+        // Glide while the bubble is on screen (shrinking away too), jump while it's hidden.
+        if (root.classList.contains(visible)) {
           xTo(event.clientX)
           yTo(event.clientY)
         } else {
