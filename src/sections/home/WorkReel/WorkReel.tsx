@@ -256,7 +256,8 @@ export function WorkReel({
             onFocus={onFocus}
             className={cn(
               mode === 'pin' && 'flex h-full w-max gap-8 px-(--spacing-gutter)',
-              mode === 'carousel' && 'flex w-max gap-4 px-(--spacing-gutter)',
+              // Each card its own height, so a short one never stretches to match the tallest.
+              mode === 'carousel' && 'flex w-max items-start gap-4 px-(--spacing-gutter)',
               mode === 'grid' && 'grid gap-x-8 gap-y-14 md:grid-cols-2',
             )}
           >
@@ -351,26 +352,24 @@ export function WorkReel({
             })}
 
             <li data-reel-panel="" data-reel-chrome={chrome} className={panelClass[mode].outro}>
-              <div
-                className={cn(
-                  'flex h-full flex-col rounded-lg border border-tone p-5 sm:p-7',
-                  mode !== 'pin' && 'min-h-[34rem]',
-                )}
-              >
+              <div className={cn('flex h-full flex-col rounded-lg border border-tone p-5 sm:p-7')}>
                 {/* Pinned, the card has a fixed height: the illustration takes whatever room is
                     left (up to 30rem tall) and scales down with it in width and height (container
                     units keep its aspect). Elsewhere the card can grow, so it just fills the
-                    width (up to 24rem); container heights there resolve to 0 in Chrome. It
+                    width (up to 18rem); container heights there resolve to 0 in Chrome. It
                     assembles once it's fully in view: at the end of the reel or carousel. */}
                 <div
                   className={cn(
-                    'relative mb-5 min-h-32 flex-1',
+                    'relative mb-5 flex-1',
+                    mode === 'pin' && 'min-h-32',
                     mode === 'pin' ? '@container-size' : 'flex flex-col justify-center',
                   )}
                 >
                   <div
                     className={
-                      mode === 'pin' ? 'absolute inset-0 m-auto' : 'mx-auto w-full max-w-96'
+                      mode === 'pin'
+                        ? 'absolute inset-0 m-auto'
+                        : 'mx-auto w-full max-w-60 sm:max-w-72'
                     }
                     style={{
                       width:
