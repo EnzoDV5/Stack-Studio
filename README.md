@@ -46,14 +46,17 @@ The site follows a simple journey: **find → understand → trust → contact**
 
 The interface includes route transitions, scroll-led motion, responsive media and reduced-motion support. The project brief can use Firebase, EmailJS and an optional form endpoint; configuration and provider setup are documented below.
 
-## Walkthrough
+## Promo video
+
+A 32-second introduction to Stack Studio, our services and website.
 
 <div align="center">
-  <img src="docs/readme/video-placeholder.webp" alt="Stack Studio walkthrough video placeholder: A closer look is coming." width="100%" />
-  <p><em>A video tour will be added here when it is ready.</em></p>
+  <a href="docs/readme/stack-studio-promo.mp4?raw=true">
+    <img src="docs/readme/promo-poster.webp" alt="Watch the Stack Studio promo video with sound: a preview of the studio's services and client work" width="100%" />
+  </a>
+  <p><a href="docs/readme/stack-studio-promo.mp4?raw=true"><strong>▶ Watch the promo video with sound</strong></a></p>
+  <p>Click the preview to open or download the MP4, then press play and enable sound in your player.</p>
 </div>
-
-<!-- When the walkthrough is ready, replace the image above with a linked video thumbnail or a GitHub-hosted video URL. -->
 
 ## Showcase
 

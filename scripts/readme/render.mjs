@@ -170,23 +170,4 @@ for (const [name, label, screenshot] of [
   )
 }
 
-await render(
-  'video-placeholder.webp',
-  1600,
-  800,
-  `
-  <div class="canvas">
-    <img src="${home}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18;filter:blur(3px)" alt="" />
-    <div style="position:absolute;inset:0;background:linear-gradient(90deg,#0b0a0af2,#190e0bcb)"></div>
-    <div class="eyebrow" style="position:absolute;left:100px;top:96px">Stack Studio / Site walkthrough</div>
-    <h2 style="position:absolute;left:92px;top:218px;margin:0;font-size:102px;line-height:.95;letter-spacing:-.06em">A closer look<br><span style="color:#ff5a16">is coming.</span></h2>
-    <p style="position:absolute;left:100px;top:525px;font-size:28px;color:#d6ccc5">A video tour of the website will live here.</p>
-    <div style="position:absolute;left:1220px;top:285px;width:210px;height:210px;border:3px solid #ff5a16;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 80px #ff5a1655">
-      <div style="margin-left:18px;width:0;height:0;border-top:45px solid transparent;border-bottom:45px solid transparent;border-left:72px solid #ff5a16"></div>
-    </div>
-    <div class="eyebrow" style="position:absolute;left:100px;bottom:67px;color:#aaa;font-size:16px">Video placeholder · Replace when the walkthrough is ready</div>
-  </div>
-`,
-)
-
 await browser.close()
