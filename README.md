@@ -51,11 +51,11 @@ The interface includes route transitions, scroll-led motion, responsive media an
 A 32-second introduction to Stack Studio, our services and website.
 
 <div align="center">
-  <a href="docs/readme/stack-studio-promo.mp4?raw=true">
+  <a href="https://drive.google.com/file/d/1y_sKVunUR1TJbQ-wuSLVPSI5on-fRKaN/view?usp=sharing">
     <img src="docs/readme/promo-poster.webp" alt="Watch the Stack Studio promo video with sound: a preview of the studio's services and client work" width="100%" />
   </a>
-  <p><a href="docs/readme/stack-studio-promo.mp4?raw=true"><strong>▶ Watch the promo video with sound</strong></a></p>
-  <p>Click the preview to open or download the MP4, then press play and enable sound in your player.</p>
+  <p><a href="https://drive.google.com/file/d/1y_sKVunUR1TJbQ-wuSLVPSI5on-fRKaN/view?usp=sharing"><strong>▶ Watch the promo video with sound</strong></a></p>
+  <p>Click the preview to watch on Google Drive, then press play and enable sound in the video player.</p>
 </div>
 
 ## Showcase
