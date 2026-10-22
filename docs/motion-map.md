@@ -289,7 +289,8 @@ success heading no longer line-reveals.
 **Recoverable failures:** brief and contact delivery failures show a persistent `ErrorToast`
 and an inline `AnimatedAlert`. PDF download failures use the same toast. Notifications slide
 down 16px and fade in over `duration.fast`, then fade out over `duration.micro` on dismissal
-or retry. They keep keyboard focus in the form, fit mobile gutters, and show immediately with
+or retry. Inline errors also fade out when closed with ×. Changing steps clears both the
+popup and the inline error. They keep keyboard focus in the form, fit mobile gutters, and show immediately with
 reduced motion. Field validation stays beside the relevant input; the toast announces only
 delivery and download failures.
 

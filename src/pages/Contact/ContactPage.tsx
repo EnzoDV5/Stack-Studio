@@ -42,7 +42,10 @@ export function ContactPage() {
     savedEnquiryId.current = null
     setEnquiry((current) => ({ ...current, [field]: value }))
     setErrors((current) => ({ ...current, [field]: undefined }))
-    if (status === 'error') setStatus('idle')
+    if (status === 'error') {
+      setStatus('idle')
+      clearError()
+    }
   }
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
@@ -81,7 +84,11 @@ export function ContactPage() {
       }
       console.error('[contact] Submission failed', error)
       setStatus('error')
-      showError({ title: contactContent.failedTitle, body: contactContent.failed })
+      showError({
+        title: contactContent.failedTitle,
+        body: contactContent.failed,
+        onDismiss: () => setStatus('idle'),
+      })
     }
   }
 
@@ -175,6 +182,10 @@ export function ContactPage() {
                   onChange={(value) => {
                     setConsent(value)
                     setErrors((current) => ({ ...current, consent: undefined }))
+                    if (status === 'error') {
+                      setStatus('idle')
+                      clearError()
+                    }
                   }}
                   label={briefCopy.consent.label}
                   linkLabel={briefCopy.consent.linkLabel}
@@ -183,7 +194,15 @@ export function ContactPage() {
                   error={errors.consent}
                 />
                 {status === 'error' && (
-                  <AnimatedAlert announce={false} className="text-small text-error">
+                  <AnimatedAlert
+                    announce={false}
+                    className="text-small text-error"
+                    dismissLabel={contactContent.dismissError}
+                    onDismiss={() => {
+                      setStatus('idle')
+                      clearError()
+                    }}
+                  >
                     {contactContent.failed}
                   </AnimatedAlert>
                 )}

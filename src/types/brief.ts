@@ -158,6 +158,7 @@ export type BriefAction =
   | { type: 'submit' }
   | { type: 'success' }
   | { type: 'failure' }
+  | { type: 'dismissError' }
 
 /**
  * A ready-made starting quote: a set of brief answers with a name. The Pricing page shows

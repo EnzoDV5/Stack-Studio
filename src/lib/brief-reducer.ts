@@ -72,11 +72,13 @@ export function briefReducer(state: BriefState, action: BriefAction): BriefState
     case 'errors':
       return { ...state, errors: action.errors }
     case 'goTo':
+      if (state.status === 'submitting') return state
       return {
         ...state,
         stepId: action.stepId,
         direction: action.direction,
         errors: {},
+        status: 'editing',
         visited: state.visited.includes(action.stepId)
           ? state.visited
           : [...state.visited, action.stepId],
@@ -87,5 +89,7 @@ export function briefReducer(state: BriefState, action: BriefAction): BriefState
       return { ...state, status: 'success' }
     case 'failure':
       return { ...state, status: 'error' }
+    case 'dismissError':
+      return { ...state, errors: {}, status: state.status === 'error' ? 'editing' : state.status }
   }
 }

@@ -179,6 +179,17 @@ export function BriefFlow({
     el?.focus()
   }
 
+  const navigateTo = (stepId: string, direction: 1 | -1) => {
+    if (status === 'submitting') return
+    clearError()
+    dispatch({ type: 'goTo', stepId, direction })
+  }
+
+  const dismissErrors = () => {
+    clearError()
+    dispatch({ type: 'dismissError' })
+  }
+
   const goNext = () => {
     const stepErrors = validateStep(step, answers)
     const keys = Object.keys(stepErrors)
@@ -201,20 +212,20 @@ export function BriefFlow({
     const nextOpen = nextStep?.kind === 'single' && !answers[nextStep.field]
     if (returnToReview.current && step.kind !== 'review' && !nextOpen) {
       returnToReview.current = false
-      dispatch({ type: 'goTo', stepId: 'review', direction: 1 })
+      navigateTo('review', 1)
       return
     }
-    if (next) dispatch({ type: 'goTo', stepId: next, direction: 1 })
+    if (next) navigateTo(next, 1)
   }
 
   const goBack = () => {
     if (returnToReview.current) {
       returnToReview.current = false
-      dispatch({ type: 'goTo', stepId: 'review', direction: 1 })
+      navigateTo('review', 1)
       return
     }
     const prev = prevStepId(steps, step.id, answers, ctx)
-    if (prev) dispatch({ type: 'goTo', stepId: prev, direction: -1 })
+    if (prev) navigateTo(prev, -1)
   }
 
   const reviewRows = visible
@@ -243,7 +254,7 @@ export function BriefFlow({
     for (const s of visible) {
       const stepErrors = validateStep(s, answers)
       if (Object.keys(stepErrors).length) {
-        dispatch({ type: 'goTo', stepId: s.id, direction: -1 })
+        navigateTo(s.id, -1)
         dispatch({ type: 'errors', errors: stepErrors })
         return
       }
@@ -300,7 +311,11 @@ export function BriefFlow({
       console.error(error)
       trackEvent('Brief submit error', { path: valid.data.path })
       dispatch({ type: 'failure' })
-      showError({ title: copy.failure.title, body: copy.failure.body })
+      showError({
+        title: copy.failure.title,
+        body: copy.failure.body,
+        onDismiss: () => dispatch({ type: 'dismissError' }),
+      })
     }
   }
 
@@ -473,8 +488,9 @@ export function BriefFlow({
             rows={reviewRows}
             editLabel={copy.nav.edit}
             onEdit={(stepId) => {
+              if (status === 'submitting') return
               returnToReview.current = true
-              dispatch({ type: 'goTo', stepId, direction: -1 })
+              navigateTo(stepId, -1)
             }}
           />
         )
@@ -512,7 +528,7 @@ export function BriefFlow({
             {copy.prefill.notice(prefillName)}
             <button
               type="button"
-              onClick={() => dispatch({ type: 'goTo', stepId: 'path', direction: -1 })}
+              onClick={() => navigateTo('path', -1)}
               className="underline underline-offset-4 hover:text-paper"
             >
               {copy.prefill.change}
@@ -530,13 +546,23 @@ export function BriefFlow({
             <p className="mt-4 max-w-[52ch] text-body-lg text-muted">{step.hint}</p>
 
             {hasErrors && (
-              <AnimatedAlert id={errorSummaryId} className="mt-6 text-error">
+              <AnimatedAlert
+                id={errorSummaryId}
+                className="mt-6 text-error"
+                onDismiss={dismissErrors}
+                dismissLabel={copy.failure.dismiss}
+              >
                 {singleError ?? copy.errors.summary}
               </AnimatedAlert>
             )}
 
             {status === 'error' && (
-              <AnimatedAlert announce={false} className="mt-6 rounded-md border border-error p-5">
+              <AnimatedAlert
+                announce={false}
+                className="mt-6 rounded-md border border-error p-5"
+                onDismiss={dismissErrors}
+                dismissLabel={copy.failure.dismiss}
+              >
                 <p className="font-semibold text-error">{copy.failure.title}</p>
                 <p className="mt-2 text-small text-muted">{copy.failure.body}</p>
               </AnimatedAlert>

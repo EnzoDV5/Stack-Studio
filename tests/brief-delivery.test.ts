@@ -125,3 +125,65 @@ describe('partnership email', () => {
     assert.equal(params.logo_url, `${site.url}/StackLogo2.png`)
   })
 })
+
+describe('shared EmailJS template compatibility', () => {
+  const templates = ['team-template.html', 'client-template.html'].map((name) =>
+    readFileSync(new URL(`../docs/emailjs/${name}`, import.meta.url), 'utf8'),
+  )
+  const variables = new Set(
+    templates.flatMap((html) =>
+      Array.from(html.matchAll(/\{\{\{?([a-z_]+)\}\}\}?/g), (match) => match[1]),
+    ),
+  )
+
+  for (const path of ['build', 'existing', 'run', 'develop', 'unsure'] as const) {
+    it(`populates both existing templates for the ${path} path`, () => {
+      const params = briefEmailParams(
+        { ...record, path },
+        {
+          copy: briefRecordCopy,
+          studio: {
+            name: site.name,
+            email: site.email,
+            url: site.url,
+            responsePromise: site.responsePromise,
+          },
+          pdfUrl: `${site.url}/brief#test-record`,
+        },
+      )
+      for (const variable of variables)
+        assert.ok(variable && params[variable], `${path}: ${variable}`)
+      assert.equal(params.client_email, record.contact.email)
+      assert.equal(params.reply_to, record.contact.email)
+      assert.match(params.message ?? '', /R 20 000 – R 30 000/)
+    })
+  }
+
+  it('identifies a plan-only enquiry and includes the plan in both email formats', () => {
+    const careRecord: BriefRecord = {
+      ...record,
+      path: 'run',
+      answers: [
+        ['What we look after', 'An existing website'],
+        ['Your setup', 'WordPress'],
+      ],
+      estimate: { kind: 'plan', recommendation: 'Website Care Essential R 1 250/month' },
+    }
+    const params = briefEmailParams(careRecord, {
+      copy: briefRecordCopy,
+      studio: {
+        name: site.name,
+        email: site.email,
+        url: site.url,
+        responsePromise: site.responsePromise,
+      },
+      pdfUrl: `${site.url}/brief#test-record`,
+    })
+    assert.match(params.subject ?? '', /^Hosting and care enquiry/)
+    assert.match(params.client_subject ?? '', /hosting and care/)
+    assert.match(params.client_intro ?? '', /look after your website or app/)
+    assert.match(params.message ?? '', /Website Care Essential R 1 250\/month/)
+    assert.match(params.content_html ?? '', /Website Care Essential R 1 250\/month/)
+    assert.doesNotMatch(params.message ?? '', /new build/i)
+  })
+})

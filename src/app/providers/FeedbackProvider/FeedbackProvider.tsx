@@ -28,7 +28,10 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
           body={message.body}
           label={feedbackCopy.label}
           dismissLabel={feedbackCopy.dismiss}
-          onDismiss={clearError}
+          onDismiss={() => {
+            message.onDismiss?.()
+            clearError()
+          }}
           onExited={() => {
             // An older toast finishing its exit must not clear a newer failure.
             setMessage((current) => (current?.id === message.id ? null : current))

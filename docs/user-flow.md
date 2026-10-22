@@ -93,6 +93,8 @@ There is no budget question: visitors have already seen the plan prices and the 
 - Validation runs per step with zod. Errors are announced and focus moves to them.
 - Delivery failures keep the visitor's answers and show a dismissible notification plus
   inline guidance to retry or contact the studio. PDF download failures also show a notification.
+- Going Back or editing a previous step clears delivery errors. Both the popup and inline
+  error have an × close button; closing either preserves the entered answers for a retry.
 - The contact step requires POPIA consent and links to `/privacy`.
 - Success replaces the form introduction with a thank-you heading and shows what happens next (reply within one business day, discovery call, proposal)
   and offers WhatsApp for anything urgent.

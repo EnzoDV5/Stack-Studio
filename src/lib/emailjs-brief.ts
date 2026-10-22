@@ -3,12 +3,12 @@
  * the client auto-reply linked to it in the EmailJS dashboard (so each brief uses two of the
  * monthly requests). Setup: docs/emailjs-setup.md. Loaded on submit only.
  */
-import emailjs from '@emailjs/browser'
 import { briefRecordCopy } from '@/data/brief'
 import { site, whatsappHref } from '@/data/site'
 import { briefEmailParams } from './brief-email'
 import { briefRecordUrl, type BriefRecord } from './brief-record'
 import { config } from './config'
+import { sendEmailTemplate } from './emailjs-send'
 import type { SubmissionWriteResult } from './firebase-submissions'
 
 export async function sendBriefEmails(
@@ -49,11 +49,5 @@ export async function sendBriefEmails(
     params.brief_pdf_filename = briefPdfFilename(record)
   }
 
-  await emailjs.send(config.emailjs.serviceId, config.emailjs.briefTemplateId, params, {
-    publicKey: config.emailjs.publicKey,
-    // Drops sends from headless browsers (most form bots).
-    blockHeadless: true,
-    // One brief per 10 seconds per browser, against double submits and simple floods.
-    limitRate: { id: 'stack-studio-brief', throttle: 10_000 },
-  })
+  await sendEmailTemplate(config.emailjs.briefTemplateId, params)
 }

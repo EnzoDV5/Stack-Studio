@@ -90,6 +90,7 @@ export function briefEmailParams(record: BriefRecord, ctx: BriefEmailContext): B
   const { contact } = record
   const reason = copy.reasons[record.path]
   const isPartner = record.path === 'develop'
+  const isCare = record.path === 'run'
   const submittedAt = formatSubmitted(record.submittedAt)
   const plainBrief = [
     `Reference: ${record.ref}`,
@@ -103,6 +104,9 @@ export function briefEmailParams(record: BriefRecord, ctx: BriefEmailContext): B
     '',
     ...record.answers.map(([label, value]) => `${label}: ${value || copy.none}`),
     ...(contact.message ? ['', `${copy.sections.message}: ${contact.message}`] : []),
+    ...(record.estimate.recommendation
+      ? ['', `${copy.sections.estimate}: ${record.estimate.recommendation}`]
+      : []),
     '',
     `PDF: ${ctx.pdfUrl}`,
   ].join('\n')
@@ -120,16 +124,30 @@ export function briefEmailParams(record: BriefRecord, ctx: BriefEmailContext): B
     // Subjects: the team template uses {{subject}}, the auto-reply {{client_subject}}.
     subject: isPartner
       ? `Partnership enquiry ${record.ref} from ${contact.name}`
-      : copy.email.teamSubject(record.ref, reason, contact.name),
+      : isCare
+        ? `Hosting and care enquiry ${record.ref} from ${contact.name}`
+        : copy.email.teamSubject(record.ref, reason, contact.name),
     client_subject: isPartner
       ? `We received your partnership enquiry (${record.ref}) | Stack Studio`
-      : copy.email.clientSubject(record.ref),
-    team_eyebrow: isPartner ? 'Partnership enquiry' : 'Project brief',
-    team_heading: isPartner ? 'A potential partner wants to talk' : 'A new project brief is ready',
-    client_eyebrow: isPartner ? 'Partnership enquiry received' : 'Project brief received',
+      : isCare
+        ? `We received your hosting and care enquiry (${record.ref}) | Stack Studio`
+        : copy.email.clientSubject(record.ref),
+    team_eyebrow: isPartner ? 'Partnership enquiry' : isCare ? 'Hosting and care' : 'Project brief',
+    team_heading: isPartner
+      ? 'A potential partner wants to talk'
+      : isCare
+        ? 'A hosting and care request is ready'
+        : 'A new project brief is ready',
+    client_eyebrow: isPartner
+      ? 'Partnership enquiry received'
+      : isCare
+        ? 'Hosting and care enquiry received'
+        : 'Project brief received',
     client_intro: isPartner
       ? 'Thank you for considering a partnership with Stack Studio. We will review your idea and get back to you within one business day.'
-      : 'Thank you for telling us about your project. We will review your brief and get back to you within one business day.',
+      : isCare
+        ? 'Thank you for asking us to look after your website or app. We will review your hosting and care needs and get back to you within one business day.'
+        : 'Thank you for telling us about your project. We will review your brief and get back to you within one business day.',
     client_copy_intro:
       'Please check the details below. If anything is incorrect or you want to add something, reply to this email.',
     logo_url: `${studio.url}/StackLogo2.png`,

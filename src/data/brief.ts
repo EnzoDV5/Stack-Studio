@@ -503,6 +503,7 @@ export const briefCopy = {
   },
 
   failure: {
+    dismiss: 'Dismiss error', // COPY:
     title: 'That didn’t send.', // COPY:
     body: 'Something went wrong on our side. Your answers are saved. Try again, or reach us on WhatsApp or email.', // COPY:
     retry: 'Try again', // COPY:

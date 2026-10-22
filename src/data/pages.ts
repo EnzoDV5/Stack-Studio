@@ -83,6 +83,7 @@ export const contactContent = {
     'Thanks for getting in touch. We’ll read your message and reply within one business day.',
   again: 'Send another message',
   failedTitle: 'Your message didn’t send.',
+  dismissError: 'Dismiss error',
   failed:
     'Something went wrong on our side. Your message is still here. Please try again or email us directly.',
   unavailable: 'The contact form is temporarily unavailable. Please email us directly.',

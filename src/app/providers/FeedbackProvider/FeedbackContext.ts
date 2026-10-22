@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react'
 export interface ErrorFeedback {
   title: string
   body: string
+  onDismiss?: () => void
 }
 
 export interface FeedbackActions {
