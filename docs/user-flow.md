@@ -92,7 +92,7 @@ There is no budget question: visitors have already seen the plan prices and the 
 - The live estimate panel updates with every answer and is always labelled indicative.
 - Validation runs per step with zod. Errors are announced and focus moves to them.
 - The contact step requires POPIA consent and links to `/privacy`.
-- Success shows what happens next (reply within one business day, discovery call, proposal)
+- Success replaces the form introduction with a thank-you heading and shows what happens next (reply within one business day, discovery call, proposal)
   and offers WhatsApp for anything urgent.
 - Analytics: a `Start project click` event with its location on every CTA, and
   `Brief step complete` (step id) plus `Brief submitted` so drop-off can be measured.

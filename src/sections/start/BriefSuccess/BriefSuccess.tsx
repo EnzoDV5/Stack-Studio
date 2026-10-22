@@ -60,7 +60,7 @@ export function BriefSuccess({
     <div role="status" aria-live="polite">
       <div ref={headingRef} tabIndex={-1} className="outline-none">
         <Eyebrow label={eyebrow} className="mb-6" />
-        <Heading size="display-lg" className="max-w-[14ch]" compile>
+        <Heading as="h1" size="display-lg" className="max-w-[14ch]" compile>
           {title}
         </Heading>
       </div>

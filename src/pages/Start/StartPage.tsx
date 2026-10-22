@@ -25,6 +25,7 @@ const partnerNote = planFamilies.find((f) => f.id === 'partner')?.note
  */
 export function StartPage() {
   const [params] = useSearchParams()
+  const [submitted, setSubmitted] = useState(false)
   const whatsapp = whatsappHref(briefCopy.aside.whatsappMessage)
   const [initial] = useState(() => {
     const prefill = prefillFromParams(params, { ...defaultEstimateData, quotes: quotePresets })
@@ -41,8 +42,16 @@ export function StartPage() {
   return (
     <>
       <PageMeta {...pageMeta.start} />
-      <PageTitle content={briefCopy.intro} tone="dark" />
-      <Section tone="dark" spacing="none" className="pt-4">
+      {!submitted && <PageTitle content={briefCopy.intro} tone="dark" />}
+      <Section
+        tone="dark"
+        spacing="none"
+        className={
+          submitted
+            ? 'pt-[calc(var(--spacing-header)+2rem)] md:pt-[calc(var(--spacing-header)+3rem)]'
+            : 'pt-4'
+        }
+      >
         <BriefFlow
           copy={briefCopy}
           steps={briefSteps}
@@ -55,6 +64,7 @@ export function StartPage() {
           privacyHref="/privacy"
           whatsapp={whatsapp ? { href: whatsapp, label: briefCopy.aside.whatsappLabel } : undefined}
           email={site.email}
+          onSuccess={() => setSubmitted(true)}
         />
       </Section>
     </>

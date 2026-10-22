@@ -60,6 +60,8 @@ export interface BriefFlowProps {
   privacyHref: string
   whatsapp?: { href: string; label: string }
   email: string
+  /** Let the page replace its form introduction once the brief is sent. */
+  onSuccess?: () => void
 }
 
 const TEXT_INPUT =
@@ -82,6 +84,7 @@ export function BriefFlow({
   privacyHref,
   whatsapp,
   email,
+  onSuccess,
 }: BriefFlowProps) {
   const [state, dispatch] = useReducer(briefReducer, undefined, () =>
     initBriefState(initialAnswers, initialStepId),
@@ -229,6 +232,7 @@ export function BriefFlow({
     // Bots fill hidden fields; humans don't. Pretend success, send nothing.
     if (honeypotRef.current?.value) {
       dispatch({ type: 'success' })
+      onSuccess?.()
       return
     }
     // Re-check every visible step and jump to the first one with a problem.
@@ -286,6 +290,7 @@ export function BriefFlow({
       clearDraft()
       setSent({ record, emailed })
       dispatch({ type: 'success' })
+      onSuccess?.()
     } catch (error) {
       console.error(error)
       trackEvent('Brief submit error', { path: valid.data.path })
