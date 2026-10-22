@@ -34,48 +34,50 @@ export function CountStep({
   const errorId = `${id}-error`
   return (
     <div>
-      <div className="flex items-center gap-4">
-        <button
-          type="button"
-          className={stepButton}
-          onClick={() => onChange(clamp(value - 1))}
-          disabled={value <= min}
-          aria-label={labels.decrease}
-          aria-controls={id}
-        >
-          −
-        </button>
-        <label htmlFor={id} className="visually-hidden">
-          {label}
-        </label>
-        <input
-          id={id}
-          type="number"
-          inputMode="numeric"
-          min={min}
-          max={max}
-          value={value}
-          onChange={(e) => {
-            const n = Number(e.target.value)
-            if (Number.isFinite(n)) onChange(clamp(n))
-          }}
-          aria-invalid={error ? true : undefined}
-          aria-describedby={error ? errorId : undefined}
-          className={cn(
-            'h-14 w-24 rounded-md border bg-ink-800 text-center numeric text-heading-lg text-paper',
-            error ? 'border-error' : 'border-tone',
-          )}
-        />
-        <button
-          type="button"
-          className={stepButton}
-          onClick={() => onChange(clamp(value + 1))}
-          disabled={value >= max}
-          aria-label={labels.increase}
-          aria-controls={id}
-        >
-          +
-        </button>
+      <div className="flex flex-wrap items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <button
+            type="button"
+            className={stepButton}
+            onClick={() => onChange(clamp(value - 1))}
+            disabled={value <= min}
+            aria-label={labels.decrease}
+            aria-controls={id}
+          >
+            −
+          </button>
+          <label htmlFor={id} className="visually-hidden">
+            {label}
+          </label>
+          <input
+            id={id}
+            type="number"
+            inputMode="numeric"
+            min={min}
+            max={max}
+            value={value}
+            onChange={(e) => {
+              const n = Number(e.target.value)
+              if (Number.isFinite(n)) onChange(clamp(n))
+            }}
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error ? errorId : undefined}
+            className={cn(
+              'h-14 w-24 rounded-md border bg-ink-800 text-center numeric text-heading-lg text-paper',
+              error ? 'border-error' : 'border-tone',
+            )}
+          />
+          <button
+            type="button"
+            className={stepButton}
+            onClick={() => onChange(clamp(value + 1))}
+            disabled={value >= max}
+            aria-label={labels.increase}
+            aria-controls={id}
+          >
+            +
+          </button>
+        </div>
         <span className="text-body-lg text-muted" aria-hidden="true">
           {value === 1 ? unit.one : unit.other}
         </span>

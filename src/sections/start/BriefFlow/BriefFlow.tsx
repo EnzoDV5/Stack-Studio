@@ -358,8 +358,8 @@ export function BriefFlow({
   /* ---------- Success ---------- */
   if (status === 'success') {
     return (
-      <div className="container-site grid gap-12 pb-section lg:grid-cols-12">
-        <div className="lg:col-span-7">
+      <div className="container-site grid grid-cols-1 gap-12 pb-section lg:grid-cols-12">
+        <div className="min-w-0 lg:col-span-7">
           <BriefSuccess
             eyebrow={copy.success.eyebrow}
             title={copy.success.title(answers.contact.name)}
@@ -379,7 +379,7 @@ export function BriefFlow({
           />
         </div>
         {result.kind !== 'none' && (
-          <div className="lg:col-span-4 lg:col-start-9">{panel(false)}</div>
+          <div className="min-w-0 lg:col-span-4 lg:col-start-9">{panel(false)}</div>
         )}
       </div>
     )
@@ -488,8 +488,11 @@ export function BriefFlow({
         : copy.nav.submit
 
   return (
-    <div ref={rootRef} className="container-site grid gap-12 pb-section lg:grid-cols-12 lg:gap-10">
-      <div className="lg:col-span-7">
+    <div
+      ref={rootRef}
+      className="container-site grid grid-cols-1 gap-12 pb-section lg:grid-cols-12 lg:gap-10"
+    >
+      <div className="min-w-0 lg:col-span-7">
         <BriefProgress
           current={stepIndex}
           labels={visible.map((s) => s.label)}
@@ -549,7 +552,7 @@ export function BriefFlow({
           </div>
 
           <div className="mt-12 flex flex-wrap items-center justify-between gap-6 border-t border-tone pt-8">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               {stepIndex > 0 && (
                 <Button type="button" variant="secondary" onClick={goBack} disabled={submitting}>
                   {copy.nav.back}
@@ -571,7 +574,7 @@ export function BriefFlow({
         </form>
       </div>
 
-      <aside className="hidden lg:col-span-4 lg:col-start-9 lg:block">
+      <aside className="hidden min-w-0 lg:col-span-4 lg:col-start-9 lg:block">
         <div className="sticky top-[calc(var(--spacing-header)+1.5rem)] space-y-5">
           {panel(false)}
           <BriefAside
@@ -592,7 +595,7 @@ export function BriefFlow({
           email={email}
         />
       </div>
-      <div className="sticky bottom-0 z-40 -mx-(--spacing-gutter) border-t border-tone bg-ink/95 backdrop-blur lg:hidden">
+      <div className="sticky bottom-0 z-40 -mx-(--spacing-gutter) min-w-0 border-t border-tone bg-ink/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
         {/* Always rendered so it can open and close smoothly: grid rows 0fr → 1fr for the
             height (like the Accordion), the content fading and settling in as it opens. */}
         <div
@@ -622,7 +625,7 @@ export function BriefFlow({
           className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
         >
           <span className="shrink-0 eyebrow text-muted">{copy.estimate.mobileToggle}</span>
-          <span className="flex min-w-0 items-center gap-3 numeric text-small font-semibold">
+          <span className="flex min-w-0 flex-1 items-center justify-end gap-3 numeric text-small font-semibold">
             <span className="truncate">{recommendation || '—'}</span>
             <svg
               aria-hidden="true"

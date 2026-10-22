@@ -18,10 +18,12 @@ export function BriefReview({ rows, editLabel, onEdit }: BriefReviewProps) {
       {rows.map((row) => (
         <div
           key={row.label}
-          className="grid grid-cols-[1fr_auto] gap-x-6 gap-y-1 py-4 sm:grid-cols-[10rem_1fr_auto]"
+          className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-6 gap-y-1 py-4 sm:grid-cols-[10rem_minmax(0,1fr)_auto]"
         >
           <dt className="self-center eyebrow text-muted">{row.label}</dt>
-          <dd className="col-start-1 row-start-2 sm:col-start-2 sm:row-start-1">{row.value}</dd>
+          <dd className="col-start-1 row-start-2 min-w-0 wrap-anywhere sm:col-start-2 sm:row-start-1">
+            {row.value}
+          </dd>
           <dd className="col-start-2 row-span-2 row-start-1 self-center sm:col-start-3 sm:row-span-1">
             <button
               type="button"

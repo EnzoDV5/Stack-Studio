@@ -16,7 +16,7 @@ export interface BriefFieldProps {
 }
 
 const inputClass =
-  'mt-2 block w-full rounded-md border bg-ink-800 px-4 py-3.5 text-body text-paper placeholder:text-grey-400 transition-colors duration-(--duration-micro) focus-visible:border-orange'
+  'mt-2 block w-full min-w-0 max-w-full rounded-md border bg-ink-800 px-4 py-3.5 text-body text-paper placeholder:text-grey-400 transition-colors duration-(--duration-micro) focus-visible:border-orange'
 
 /** Labelled text input/textarea with an inline, announced error. */
 export function BriefField({
@@ -47,12 +47,17 @@ export function BriefField({
   }
 
   return (
-    <div>
+    <div className="min-w-0">
       <label htmlFor={id} className="text-small font-medium">
         {label}
       </label>
       {multiline ? (
-        <textarea {...shared} rows={4} onChange={(e) => onChange(e.target.value)} />
+        <textarea
+          {...shared}
+          className={cn(shared.className, 'resize-y')}
+          rows={4}
+          onChange={(e) => onChange(e.target.value)}
+        />
       ) : (
         <input
           {...shared}

@@ -23,9 +23,9 @@ export function SingleChoiceStep({
   describedBy,
 }: SingleChoiceStepProps) {
   return (
-    <fieldset aria-describedby={describedBy}>
+    <fieldset className="min-w-0" aria-describedby={describedBy}>
       <legend className="visually-hidden">{legend}</legend>
-      <div id={id} tabIndex={-1} className="grid gap-3 outline-none sm:grid-cols-2">
+      <div id={id} tabIndex={-1} className="grid grid-cols-1 gap-3 outline-none sm:grid-cols-2">
         {options.map((option, i) => (
           <OptionCard
             key={option.value}
