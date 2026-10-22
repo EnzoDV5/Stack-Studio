@@ -148,7 +148,7 @@ public/         Static media, icons and hosting assets
 tests/          Unit tests
 ```
 
-The [design system](docs/design-system.md), [sitemap](docs/sitemap.md), [user flow](docs/user-flow.md) and [motion map](docs/motion-map.md) explain the site's structure and interaction rules. Contributors should also read [`CLAUDE.md`](CLAUDE.md).
+The [design system](docs/design-system.md), [sitemap](docs/sitemap.md), [user flow](docs/user-flow.md) and [motion map](docs/motion-map.md) explain the site's structure and interaction rules. Contributors should also read the [contributing guide](docs/contributing.md).
 
 ## Deployment
 

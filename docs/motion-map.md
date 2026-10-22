@@ -286,12 +286,19 @@ success heading no longer line-reveals.
 
 **Privacy, 404:** static.
 
+**Recoverable failures:** brief and contact delivery failures show a persistent `ErrorToast`
+and an inline `AnimatedAlert`. PDF download failures use the same toast. Notifications slide
+down 16px and fade in over `duration.fast`, then fade out over `duration.micro` on dismissal
+or retry. They keep keyboard focus in the form, fit mobile gutters, and show immediately with
+reduced motion. Field validation stays beside the relevant input; the toast announces only
+delivery and download failures.
+
 `none` next to `none` is not a clash: the rule is about motion. Sticky navigation aids
 (StageNav, the FAQ heading) are layout, not pins.
 
 ## 3. Rules
 
-These are also in CLAUDE.md. Check every change against them and update the tables above.
+These are also in the [contributing guide](contributing.md). Check every change against them and update the tables above.
 
 1. **One signature motion per section.** Two neighbouring sections never share a trigger
    type (no scrub after scrub, pin after pin or enter after enter). The app-shell

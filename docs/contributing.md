@@ -1,4 +1,4 @@
-# CLAUDE.md — Stack Studio website
+# Contributing to the Stack Studio website
 
 Production marketing site for **Stack Studio**, a two-person web studio in Centurion, South
 Africa (founders Enzo De Vittorio and Armand Naudé). The site removes four doubts in order

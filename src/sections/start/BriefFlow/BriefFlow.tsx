@@ -8,11 +8,13 @@ import {
   type FormEvent,
   type KeyboardEvent,
 } from 'react'
+import { useFeedback } from '@/app/providers/FeedbackProvider'
+import { AnimatedAlert } from '@/components/ui/AnimatedAlert'
 import { Button } from '@/components/ui/Button'
 import type { briefCopy as BriefCopy } from '@/data/brief'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useBriefDownload } from '@/hooks/useBriefDownload'
 import { trackEvent } from '@/lib/analytics'
-import { downloadBriefPdf } from '@/lib/brief-download'
 import { clearDraft, saveDraft } from '@/lib/brief-draft'
 import { createBriefRef, type BriefRecord } from '@/lib/brief-record'
 import { briefReducer, initBriefState } from '@/lib/brief-reducer'
@@ -86,6 +88,8 @@ export function BriefFlow({
   email,
   onSuccess,
 }: BriefFlowProps) {
+  const { showError, clearError } = useFeedback()
+  const downloadBriefPdf = useBriefDownload()
   const [state, dispatch] = useReducer(briefReducer, undefined, () =>
     initBriefState(initialAnswers, initialStepId),
   )
@@ -251,6 +255,7 @@ export function BriefFlow({
     }
 
     dispatch({ type: 'submit' })
+    clearError()
     try {
       const answersForDelivery = {
         path: valid.data.path,
@@ -295,6 +300,7 @@ export function BriefFlow({
       console.error(error)
       trackEvent('Brief submit error', { path: valid.data.path })
       dispatch({ type: 'failure' })
+      showError({ title: copy.failure.title, body: copy.failure.body })
     }
   }
 
@@ -524,16 +530,16 @@ export function BriefFlow({
             <p className="mt-4 max-w-[52ch] text-body-lg text-muted">{step.hint}</p>
 
             {hasErrors && (
-              <p id={errorSummaryId} role="alert" className="mt-6 text-error">
+              <AnimatedAlert id={errorSummaryId} className="mt-6 text-error">
                 {singleError ?? copy.errors.summary}
-              </p>
+              </AnimatedAlert>
             )}
 
             {status === 'error' && (
-              <div role="alert" className="mt-6 rounded-md border border-error p-5">
+              <AnimatedAlert announce={false} className="mt-6 rounded-md border border-error p-5">
                 <p className="font-semibold text-error">{copy.failure.title}</p>
                 <p className="mt-2 text-small text-muted">{copy.failure.body}</p>
-              </div>
+              </AnimatedAlert>
             )}
 
             <div className="mt-10">{body}</div>

@@ -1,7 +1,9 @@
 import { useRef, useState, type FormEvent } from 'react'
 import { Link } from 'react-router'
+import { useFeedback } from '@/app/providers/FeedbackProvider'
 import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
+import { AnimatedAlert } from '@/components/ui/AnimatedAlert'
 import { briefCopy } from '@/data/brief'
 import { contactContent, pageMeta } from '@/data/pages'
 import { site } from '@/data/site'
@@ -29,6 +31,7 @@ function validate(enquiry: ContactEnquiry, consent: boolean): Partial<Record<Fie
 }
 
 export function ContactPage() {
+  const { showError, clearError } = useFeedback()
   const [enquiry, setEnquiry] = useState<ContactEnquiry>(emptyEnquiry)
   const [consent, setConsent] = useState(false)
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
@@ -50,6 +53,7 @@ export function ContactPage() {
     if (Object.keys(nextErrors).length) return
 
     setStatus('sending')
+    clearError()
     try {
       if (config.firebase && !savedEnquiryId.current) {
         const { saveContactToFirebase } = await import('@/lib/firebase-submissions')
@@ -77,6 +81,7 @@ export function ContactPage() {
       }
       console.error('[contact] Submission failed', error)
       setStatus('error')
+      showError({ title: contactContent.failedTitle, body: contactContent.failed })
     }
   }
 
@@ -178,9 +183,9 @@ export function ContactPage() {
                   error={errors.consent}
                 />
                 {status === 'error' && (
-                  <p className="text-small text-error" role="alert">
+                  <AnimatedAlert announce={false} className="text-small text-error">
                     {contactContent.failed}
-                  </p>
+                  </AnimatedAlert>
                 )}
                 <button
                   type="submit"

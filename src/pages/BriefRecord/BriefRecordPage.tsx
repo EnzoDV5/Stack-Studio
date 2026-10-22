@@ -4,7 +4,7 @@ import { PageMeta } from '@/components/seo/PageMeta'
 import { Button } from '@/components/ui/Button'
 import { briefRecordCopy } from '@/data/brief'
 import { pageMeta } from '@/data/pages'
-import { downloadBriefPdf } from '@/lib/brief-download'
+import { useBriefDownload } from '@/hooks/useBriefDownload'
 import { decodeBriefRecord, formatSubmitted, type BriefRecord } from '@/lib/brief-record'
 import { BriefRecordView } from '@/sections/brief/BriefRecordView'
 import { PageTitle } from '@/sections/shared/PageTitle'
@@ -17,6 +17,7 @@ const copy = briefRecordCopy
  * nothing is fetched. `?download` saves the PDF as soon as it opens. Not indexed.
  */
 export function BriefRecordPage() {
+  const downloadBriefPdf = useBriefDownload()
   const { hash, search } = useLocation()
   const navigate = useNavigate()
   const encoded = hash.slice(1)
@@ -39,7 +40,7 @@ export function BriefRecordPage() {
     return () => {
       cancelled = true
     }
-  }, [encoded, hash, autoDownload, navigate])
+  }, [encoded, hash, autoDownload, navigate, downloadBriefPdf])
 
   const current = decoded?.encoded === encoded ? decoded : null
   const record = current?.record ?? null

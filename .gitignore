@@ -32,5 +32,12 @@ Thumbs.db
 # original downloads for scripts/services-media
 .media-cache
 
+# Local assistant settings and scratch captures
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+.pricing-*.png
+.services-phone.png
+
 # loose copies of textures already embedded in the .glb (scripts/phone)
 assets/models/*/textures/

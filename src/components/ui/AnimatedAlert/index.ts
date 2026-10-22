@@ -1,0 +1,1 @@
+export { AnimatedAlert } from './AnimatedAlert'

@@ -162,14 +162,6 @@ export const reel = {
   radius: 16,
 } as const
 
-/** Legacy package showcase, retained for the package section. */
-export const packageShowcase = {
-  lidFrom: -72,
-  start: 'top 75%',
-  secondsPerScreen: 8,
-  hold: 1,
-} as const
-
 /**
  * ProcessLine (Home): when the plan enters, the steps slide in and a playhead sweeps the
  * weeks once on its own, drawing each bar under it; then it glides to whichever week is
