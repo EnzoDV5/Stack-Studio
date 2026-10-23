@@ -9,6 +9,7 @@ import { contactContent, pageMeta } from '@/data/pages'
 import { site } from '@/data/site'
 import { config } from '@/lib/config'
 import type { ContactEnquiry } from '@/lib/contact-email'
+import { emailFailureMessage } from '@/lib/email-delivery'
 import { BriefField } from '@/sections/start/BriefField'
 import { ConsentField } from '@/sections/start/ConsentField'
 import { PageTitle } from '@/sections/shared/PageTitle'
@@ -36,6 +37,7 @@ export function ContactPage() {
   const [consent, setConsent] = useState(false)
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
   const [status, setStatus] = useState<Status>('idle')
+  const [failureMessage, setFailureMessage] = useState<string>(contactContent.failed)
   const savedEnquiryId = useRef<string | null>(null)
 
   const change = (field: keyof ContactEnquiry, value: string) => {
@@ -83,10 +85,12 @@ export function ContactPage() {
         )
       }
       console.error('[contact] Submission failed', error)
+      const message = emailFailureMessage(error, contactContent.failed)
+      setFailureMessage(message)
       setStatus('error')
       showError({
         title: contactContent.failedTitle,
-        body: contactContent.failed,
+        body: message,
         onDismiss: () => setStatus('idle'),
       })
     }
@@ -203,7 +207,7 @@ export function ContactPage() {
                       clearError()
                     }}
                   >
-                    {contactContent.failed}
+                    {failureMessage}
                   </AnimatedAlert>
                 )}
                 <button

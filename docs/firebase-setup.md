@@ -17,6 +17,22 @@ Firestore rules; staff access requires the Firebase console or an admin service 
 `package.json` pins `@firebase/app` to the version required by the installed Firebase SDK.
 Auth and Firestore must share the same app instance; two installed core versions caused
 `Component auth has not been registered yet` and prevented every browser submission.
+Vite also deduplicates `@firebase/app` so every Firebase product uses one component registry.
+
+If that error appears, run `npm ci` to replace stale installed packages with the exact
+lockfile versions, then rebuild. A package override alone does not repair an existing
+`node_modules` tree. This failure occurs before EmailJS is called, so changing email
+templates cannot resolve it.
+
+Run `npm run test:firebase` to verify the production bundle initializes Auth, signs in
+an anonymous visitor, and initializes Firestore with the same Firebase app. The check
+intercepts authentication requests with a test response and performs no live sign-ins,
+Firestore writes, or email sends. It requires Chrome; set `CHROME_PATH` to a working
+Chrome or Chromium executable if necessary. Run it when changing Firebase versions
+or bundler configuration, alongside `npm test` and `npm run test:email`.
+
+After rebuilding, redeploy Hosting to replace the old JavaScript bundle. Refresh the
+deployed site and confirm a real test submission reaches Firestore and both email inboxes.
 
 ## Console Setup
 

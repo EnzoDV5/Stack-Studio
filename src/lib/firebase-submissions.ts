@@ -2,6 +2,7 @@ import { collection, doc, serverTimestamp, updateDoc, writeBatch } from 'firebas
 import type { ContactEnquiry } from './contact-email'
 import type { BriefPayload } from './submit-brief'
 import { firebaseServices } from './firebase'
+import { EmailDeliveryError } from './email-delivery'
 
 export const firebaseCollections = {
   contacts: 'client_contacts',
@@ -169,7 +170,11 @@ export async function updateContactEmailAutomation(
   error?: unknown,
 ): Promise<void> {
   const { db } = await firebaseServices()
-  const message = error instanceof Error ? error.message : error ? String(error) : null
+  const message = error
+    ? error instanceof Error
+      ? error.message
+      : new EmailDeliveryError(error).message
+    : null
   await updateDoc(doc(db, firebaseCollections.contactEnquiries, enquiryId), {
     emailAutomation: {
       provider: 'emailjs',
@@ -188,7 +193,11 @@ export async function updateBriefEmailAutomation(
 ): Promise<void> {
   const { db } = await firebaseServices()
   const enquiryRef = doc(db, firebaseCollections.enquiries, enquiryId)
-  const message = error instanceof Error ? error.message : error ? String(error) : null
+  const message = error
+    ? error instanceof Error
+      ? error.message
+      : new EmailDeliveryError(error).message
+    : null
 
   await updateDoc(enquiryRef, {
     emailAutomation: {

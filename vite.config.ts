@@ -6,6 +6,9 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
+    // All Firebase products must register against the app's one component registry.
+    // A stale nested SDK core otherwise breaks Auth before form delivery begins.
+    dedupe: ['@firebase/app'],
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },

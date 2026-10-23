@@ -14,6 +14,8 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc -b",
     "test": "node --import ./scripts/test-register.mjs --test \"tests/**/*.test.ts\"",
+    "test:email": "node scripts/check-email-flow.mjs",
+    "test:firebase": "node scripts/check-firebase-build.mjs",
     "mockups:capture": "node scripts/mockups/capture.mjs",
     "mockups:render": "node scripts/mockups/render.mjs",
     "readme:render": "node scripts/readme/render.mjs"

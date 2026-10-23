@@ -28,6 +28,7 @@ import {
   type OptionData,
 } from '@/lib/brief-steps'
 import { cn } from '@/lib/cn'
+import { emailFailureMessage } from '@/lib/email-delivery'
 import { estimate, type EstimateData } from '@/lib/estimate'
 import { summarizeResult } from '@/lib/estimate-summary'
 import { gsap, useGSAP } from '@/lib/gsap'
@@ -95,6 +96,7 @@ export function BriefFlow({
   )
   const { answers, errors, status } = state
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [failureMessage, setFailureMessage] = useState<string>(copy.failure.body)
   // What was sent, for the success screen's reference and PDF copy.
   const [sent, setSent] = useState<{ record: BriefRecord; emailed: boolean } | null>(null)
   const reducedMotion = useReducedMotion()
@@ -310,10 +312,12 @@ export function BriefFlow({
     } catch (error) {
       console.error(error)
       trackEvent('Brief submit error', { path: valid.data.path })
+      const message = emailFailureMessage(error, copy.failure.body)
+      setFailureMessage(message)
       dispatch({ type: 'failure' })
       showError({
         title: copy.failure.title,
-        body: copy.failure.body,
+        body: message,
         onDismiss: () => dispatch({ type: 'dismissError' }),
       })
     }
@@ -564,7 +568,7 @@ export function BriefFlow({
                 dismissLabel={copy.failure.dismiss}
               >
                 <p className="font-semibold text-error">{copy.failure.title}</p>
-                <p className="mt-2 text-small text-muted">{copy.failure.body}</p>
+                <p className="mt-2 text-small text-muted">{failureMessage}</p>
               </AnimatedAlert>
             )}
 

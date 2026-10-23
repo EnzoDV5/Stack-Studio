@@ -2,6 +2,31 @@
 
 The site uses one team template for every brief path (new build, existing-project help, care plan, Partner, and not sure) and the general Contact form. Its linked auto-reply sends each visitor a copy of their own submission. The shared template fields change the subject and introduction for each path, including care-plan-only enquiries. The team recipient and reply address are `stackstudio26@gmail.com`.
 
+## Correct the settings shown in the screenshots
+
+The screenshots show older dashboard settings. Update **Contact Us → To Email** from `enzo.devittorio03@gmail.com` to `stackstudio26@gmail.com` if the studio inbox is the intended destination. The Gmail service may stay connected to `enzo.devittorio5@gmail.com`: the sending account and receiving inbox do not have to match. Keep **Use Default Email Address** checked on both templates.
+
+Use the exact fields and HTML below. In particular, the team subject should be `{{subject}}`, and the confirmation subject should be `{{client_subject}}`. The site still supplies `email`, `title`, `name`, `time`, `client_first_name`, and `content_html` for the older templates shown, so those older variable names alone do not explain a failed request.
+
+Keep **Contact Us → Auto-Reply → Auto-Reply** linked. Clear **Auto-Reply → Auto-Reply → Contact Us** and save both templates. EmailJS ignores chained links; linking both ways is unnecessary and does not prove that a loop caused the error. [EmailJS linked-template rules](https://www.emailjs.com/docs/user-guide/auto-reply/).
+
+## Diagnose an actual send error
+
+Check the failed entry in **Email History**, including the linked confirmation entry. The website now retains the provider's status and text in the developer console and saved email status, while showing a readable error to visitors.
+
+| Error/detail                                                                | Fix                                                                                                                                                |
+| --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Gmail API, insufficient authentication scopes, OAuth, or expired connection | Reconnect Gmail under **Email Services → Stack Studio** and grant **Send email on your behalf**. Run the service test afterward.                   |
+| Invalid public key, service ID, or template ID                              | Compare **Account → API Keys**, the service ID, and template IDs with `.env.local`; restart Vite after changing values.                            |
+| Empty or invalid recipient                                                  | Check the fixed team inbox and the confirmation's `{{client_email}}`; a dashboard test must supply a real address for that variable.               |
+| Origin/domain blocked                                                       | Check the EmailJS origin allowlist against the exact local or hosted origin being used.                                                            |
+| 429 / too many requests                                                     | Wait and retry once. The site queues sends with at least 1.1 seconds between starts.                                                               |
+| Monthly quota reached                                                       | Wait for quota renewal or change the EmailJS plan. Repeated retries cannot restore quota.                                                          |
+| Template variables exceed 50 KB                                             | Shorten the free-text message or send it directly by email. The site checks UTF-8 size before sending and preserves the original answers.          |
+| Network/fetch failure                                                       | Check connectivity and browser request blocking; check Email History before retrying because an interrupted response can leave delivery uncertain. |
+
+The site cannot update your EmailJS dashboard or prove inbox delivery from local tests. A successful API response confirms acceptance of the main request; verify both messages and their Reply-To addresses in real inboxes.
+
 The current EmailJS Free account has two templates and does not support attachments. Brief emails therefore include a **Download your PDF brief** link; the same branded PDF is available on the success page. A real PDF attachment requires a paid plan and the extra setup below. [EmailJS pricing](https://www.emailjs.com/pricing/).
 
 ## 1. Team notification: Contact Us
@@ -72,6 +97,12 @@ not retried automatically, to avoid sending duplicate mail after an uncertain re
 Failed sends retain the answers and saved enquiry for a manual retry. Back, Edit, and the ×
 buttons clear the visible error state without clearing those answers. Template configuration,
 service availability, account quota, and final inbox delivery still need checking in EmailJS.
+
+### Local regression checks
+
+Run `npm test` for template data, HTML escaping, PDF records, provider errors, request size, and send-queue checks. Run `npm run test:email` for a browser check of the Contact form's failed send and manual retry, plus the email request for all five brief paths. This browser check uses dummy EmailJS identifiers, disables Firebase only inside the test page, intercepts every external request, and sends no real emails. It verifies the request and UI behavior; it does not verify Gmail delivery or dashboard templates.
+
+The browser check needs Chrome or Chromium. Set `CHROME_PATH=/path/to/chrome npm run test:email` to use a different executable if the installed browser fails to launch.
 
 ## Actual PDF attachments (paid EmailJS plan)
 
