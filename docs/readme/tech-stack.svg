@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="160" viewBox="0 0 1040 160" role="img" aria-labelledby="title description">
+<svg xmlns="http://www.w3.org/2000/svg" width="915" height="160" viewBox="0 0 915 160" role="img" aria-labelledby="title description">
   <title id="title">The Stack Studio website toolkit</title>
-  <desc id="description">React, TypeScript, Vite, Tailwind CSS, GSAP, Firebase, Zod and Node.js tooling. Brand marks from the repository's Simple Icons assets.</desc>
+  <desc id="description">React, TypeScript, Vite, Tailwind CSS, GSAP, Firebase and Node.js tooling. Brand marks from the repository's Simple Icons assets.</desc>
   <!-- Brand geometry: public/logos/technologies; attribution and CC0 licence in that directory. -->
-  <rect width="1040" height="160" rx="18" fill="#101010"/>
+  <rect width="915" height="160" rx="18" fill="#101010"/>
   <text x="24" y="30" fill="#ff6b2c" font-family="Arial, sans-serif" font-size="11" font-weight="700" letter-spacing="2">THE STACK BEHIND THE STUDIO</text>
   <g transform="translate(24 46)">
     <rect width="117" height="94" rx="10" fill="#1b1b1b" stroke="#333333"/>
@@ -35,11 +35,6 @@
     <text x="58.5" y="74" text-anchor="middle" fill="#f5f1ec" font-family="Arial, sans-serif" font-size="12" font-weight="600">Firebase</text>
   </g>
   <g transform="translate(774 46)">
-    <rect width="117" height="94" rx="10" fill="#1b1b1b" stroke="#333333"/>
-    <svg x="41" y="13" width="35" height="35" viewBox="0 0 24 24" fill="#8ab4f8"><path xmlns="http://www.w3.org/2000/svg" d="M2.584 3.582a2.247 2.247 0 0 1 2.112-1.479h14.617c.948 0 1.794.595 2.115 1.487l2.44 6.777a2.248 2.248 0 0 1-.624 2.443l-9.61 8.52a2.247 2.247 0 0 1-2.963.018L.776 12.773a2.248 2.248 0 0 1-.64-2.467Zm12.038 4.887-9.11 5.537 5.74 5.007c.456.399 1.139.396 1.593-.006l5.643-5.001H14.4l6.239-3.957c.488-.328.69-.947.491-1.5l-1.24-3.446a1.535 1.535 0 0 0-1.456-1.015H5.545a1.535 1.535 0 0 0-1.431 1.01l-1.228 3.37z" /></svg>
-    <text x="58.5" y="74" text-anchor="middle" fill="#f5f1ec" font-family="Arial, sans-serif" font-size="12" font-weight="600">Zod</text>
-  </g>
-  <g transform="translate(899 46)">
     <rect width="117" height="94" rx="10" fill="#1b1b1b" stroke="#333333"/>
     <svg x="41" y="13" width="35" height="35" viewBox="0 0 24 24" fill="#83cd29"><path xmlns="http://www.w3.org/2000/svg" d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z M19.099,13.993 c0-1.9-1.284-2.406-3.987-2.763c-2.731-0.361-3.009-0.548-3.009-1.187c0-0.528,0.235-1.233,2.258-1.233 c1.807,0,2.473,0.389,2.747,1.607c0.024,0.115,0.129,0.199,0.247,0.199h1.141c0.071,0,0.138-0.031,0.186-0.081 c0.048-0.054,0.074-0.123,0.067-0.196c-0.177-2.098-1.571-3.076-4.388-3.076c-2.508,0-4.004,1.058-4.004,2.833 c0,1.925,1.488,2.457,3.895,2.695c2.88,0.282,3.103,0.703,3.103,1.269c0,0.983-0.789,1.402-2.642,1.402 c-2.327,0-2.839-0.584-3.011-1.742c-0.02-0.124-0.126-0.215-0.253-0.215h-1.137c-0.141,0-0.254,0.112-0.254,0.253 c0,1.482,0.806,3.248,4.655,3.248C17.501,17.007,19.099,15.91,19.099,13.993z" /></svg>
     <text x="58.5" y="74" text-anchor="middle" fill="#f5f1ec" font-family="Arial, sans-serif" font-size="12" font-weight="600">Node.js</text>

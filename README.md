@@ -19,7 +19,7 @@
   </p>
 
   <a href="#tech-stack">
-    <img src="docs/readme/tech-stack.svg" alt="Built with React, TypeScript, Vite, Tailwind CSS, GSAP, Firebase, Zod and Node.js tooling" width="100%" />
+    <img src="docs/readme/tech-stack.svg" alt="Built with React, TypeScript, Vite, Tailwind CSS, GSAP, Firebase and Node.js tooling" width="100%" />
   </a>
 
   <p><strong>Design with intent. Motion with purpose. A clear next step.</strong></p>
@@ -129,7 +129,7 @@ open it at full size.
 | ⚛️ Interface             | **React 19**, **TypeScript**, **Vite**                          | Typed components, local development and production builds.          |
 | 🎨 Styling               | **Tailwind CSS v4**, CSS Modules                                | Shared design tokens, responsive layouts and custom visual effects. |
 | 🎞️ Navigation and motion | **React Router**, **GSAP**, ScrollTrigger, SplitText, **Lenis** | Route transitions, reveal effects and scroll interactions.          |
-| 📝 Forms and documents   | **Zod**, **jsPDF**                                              | Validated answers and downloadable project briefs.                  |
+| 📝 Forms and documents   | **jsPDF**                                              | Validated answers and downloadable project briefs.                  |
 | 🔥 Storage and delivery  | **Firebase**, **EmailJS**, optional JSON endpoint               | Enquiry persistence, team notifications and client replies.         |
 | ✅ Development tools     | **Node.js**, ESLint, Prettier, `node:test`                      | Scripts, linting, formatting and unit tests.                        |
 | ☁️ Hosting               | **Firebase Hosting**                                            | Static deployment with a fallback for application routes.           |
